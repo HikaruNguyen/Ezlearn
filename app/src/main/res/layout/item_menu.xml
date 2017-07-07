@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="itemMenuViewModel"
+            type="com.vn.ezlearn.viewmodel.ItemMenuViewModel" />
+    </data>
+
+    <com.github.aakira.expandablelayout.ExpandableLinearLayout
+        android:id="@+id/expandableLayout"
+        android:layout_width="match_parent"
+        android:layout_height="120dp"
+        android:orientation="vertical"
+        app:ael_duration="400"
+        app:ael_expanded="false">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:gravity="center"
+            android:padding="5dp"
+            android:text="
+    sample.sample.sample.sample.sample.sample.sample.sample.sample.sample.\n
+    "
+            android:textSize="16sp" />
+    </com.github.aakira.expandablelayout.ExpandableLinearLayout>
+</layout>
