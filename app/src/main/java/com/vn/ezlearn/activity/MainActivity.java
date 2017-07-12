@@ -15,15 +15,22 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.vn.ezlearn.R;
+import com.vn.ezlearn.adapter.NavigationAdapter;
 import com.vn.ezlearn.databinding.ActivityMainBinding;
 import com.vn.ezlearn.fragment.HomeFragment;
+import com.vn.ezlearn.model.ItemMenu;
 import com.vn.ezlearn.widget.CRecyclerView;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     private Toolbar toolbar;
     private CRecyclerView rvNavigation;
     private ActivityMainBinding mainBinding;
+    private List<ItemMenu> menuList;
+    private NavigationAdapter navigationAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +63,15 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
+
+        menuList = new ArrayList<>();
+        menuList.add(new ItemMenu(1, "Home", ItemMenu.TYPE_NORMAL));
+        for (int i = 2; i < 6; i++) {
+            menuList.add(new ItemMenu(i, "aaa", ItemMenu.TYPE_PARENT, 1));
+        }
+        navigationAdapter = new NavigationAdapter(this, menuList);
+        mainBinding.rvNavigation.setAdapter(navigationAdapter);
+        mainBinding.rvNavigation.setDivider();
     }
 
     @Override
