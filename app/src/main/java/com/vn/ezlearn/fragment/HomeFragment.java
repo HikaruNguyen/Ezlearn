@@ -44,7 +44,7 @@ public class HomeFragment extends Fragment implements BaseSliderView.OnSliderCli
         DisplayMetrics displayMetrics = getActivity().getResources().getDisplayMetrics();
         int width = displayMetrics.widthPixels;
         float height = width* 485/1366;
-
+        homeBinding.rlSlide.setVisibility(View.VISIBLE);
         homeBinding.rlSlide.setLayoutParams(new RelativeLayout.LayoutParams(width, (int) height));
 
         homeBinding.slider.setPresetTransformer(SliderLayout.Transformer.Accordion);
