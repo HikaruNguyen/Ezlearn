@@ -7,8 +7,9 @@
     <color name="black">#000000</color>
 
     <color name="color_button">#1abc9c</color>
-    <color name="bg_main">#F4F4F5</color>
-    <color name="grey">#a6a9ab</color>
+    <color name="bg_main">#EEEEEE</color>
+    <color name="grey_line">#dbdbdb</color>
+    <color name="red_title">#DD1948</color>
 
     <color name="first_slide_background">#3C8CCB</color>
     <color name="first_slide_buttons">#2980b9</color>

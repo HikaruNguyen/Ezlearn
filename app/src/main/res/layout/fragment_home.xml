@@ -1,410 +1,121 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:custom="http://schemas.android.com/apk/res-auto">
 
-
-    <RelativeLayout
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/bg_main"
-        android:orientation="vertical">
+        android:background="@color/bg_main">
 
-        <RelativeLayout
-            android:id="@+id/rlSlide"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:visibility="gone">
+            android:orientation="vertical">
 
-            <com.daimajia.slider.library.SliderLayout
-                android:id="@+id/slider"
+            <RelativeLayout
+                android:id="@+id/rlSlide"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                custom:auto_cycle="true"
-                custom:indicator_visibility="visible"
-                custom:pager_animation="Accordion"
-                custom:pager_animation_span="1100" />
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:visibility="gone">
 
-            <com.daimajia.slider.library.Indicators.PagerIndicator
-                android:id="@+id/custom_indicator2"
-                style="@style/AndroidImageSlider_Corner_Oval_Orange"
-                android:layout_alignParentBottom="true"
-                android:layout_centerHorizontal="true"
-                android:layout_marginBottom="5dp" />
-        </RelativeLayout>
+                <com.daimajia.slider.library.SliderLayout
+                    android:id="@+id/slider"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    custom:auto_cycle="true"
+                    custom:indicator_visibility="visible"
+                    custom:pager_animation="Accordion"
+                    custom:pager_animation_span="1100" />
 
-        <ScrollView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_below="@+id/rlSlide">
+                <com.daimajia.slider.library.Indicators.PagerIndicator
+                    android:id="@+id/custom_indicator2"
+                    style="@style/AndroidImageSlider_Corner_Oval_Orange"
+                    android:layout_alignParentBottom="true"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginBottom="5dp" />
+            </RelativeLayout>
+
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="10dp">
+                android:background="@color/white"
+                android:orientation="vertical">
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Thi thử"
+                    android:padding="10dp"
+                    android:text="THPT QUỐC GIA"
                     android:textAllCaps="true"
                     android:textColor="@color/colorAccent"
                     android:textSize="15sp"
                     android:textStyle="bold" />
 
-                <RelativeLayout
+                <View
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp">
+                    android:layout_height="1dp"
+                    android:background="@color/grey_line" />
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/bg_exams"
-                        android:orientation="vertical"
-                        android:padding="10dp">
+                <include layout="@layout/item_exams" />
 
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="5dp"
-                            android:text="Grammar G153- Preposition (*Free)"
-                            android:textAllCaps="true"
-                            android:textColor="@color/colorPrimaryDark"
-                            android:textStyle="bold" />
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="5dp"
-                            android:orientation="horizontal">
-
-                            <TextView
-                                android:layout_width="0dip"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:text="Từ:"
-                                android:textColor="@color/black"
-                                android:textStyle="bold" />
-
-                            <TextView
-                                android:layout_width="0dip"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="5"
-                                android:text="00:00 12/06/2017"
-                                android:textColor="@color/black"
-                                android:textStyle="italic" />
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="5dp"
-                            android:orientation="horizontal">
-
-                            <TextView
-                                android:layout_width="0dip"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:text="Đến:"
-                                android:textColor="@color/black"
-                                android:textStyle="bold" />
-
-                            <TextView
-                                android:layout_width="0dip"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="5"
-                                android:text="00:00 15/06/2017"
-                                android:textColor="@color/black"
-                                android:textStyle="italic" />
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginBottom="8dp"
-                            android:layout_marginTop="10dp"
-                            android:orientation="horizontal"
-                            android:weightSum="2">
-
-                            <Button
-                                android:layout_width="0dip"
-                                android:layout_height="wrap_content"
-                                android:layout_marginRight="5dp"
-                                android:layout_weight="1"
-                                android:background="@drawable/bg_button"
-                                android:text="Xem Kết Quả"
-                                android:textAllCaps="false"
-                                android:textColor="@color/white" />
-
-                            <Button
-                                android:layout_width="0dip"
-                                android:layout_height="wrap_content"
-                                android:layout_marginLeft="5dp"
-                                android:layout_weight="1"
-                                android:background="@drawable/bg_button"
-                                android:text="Thi lại"
-                                android:textAllCaps="false"
-                                android:textColor="@color/white" />
-                        </LinearLayout>
-                    </LinearLayout>
-
-                    <RelativeLayout
-                        android:layout_width="100dp"
-                        android:layout_height="100dp"
-                        android:layout_alignParentRight="true"
-                        android:layout_marginRight="-28dp">
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentRight="true"
-                            android:layout_marginTop="16dp"
-                            android:background="@color/color_free"
-                            android:gravity="center"
-                            android:maxLines="1"
-                            android:rotation="45"
-                            android:text="Free"
-                            android:textColor="@color/white" />
-                    </RelativeLayout>
-                </RelativeLayout>
-
-                <RelativeLayout
+                <View
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp">
+                    android:layout_height="1dp"
+                    android:background="@color/bg_main" />
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/bg_exams"
-                        android:orientation="vertical"
-                        android:padding="10dp">
+                <include layout="@layout/item_exams" />
 
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="5dp"
-                            android:text="Grammar G153- Preposition (*Free)"
-                            android:textAllCaps="true"
-                            android:textColor="@color/colorPrimaryDark"
-                            android:textStyle="bold" />
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="5dp"
-                            android:orientation="horizontal">
-
-                            <TextView
-                                android:layout_width="0dip"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:text="Từ:"
-                                android:textColor="@color/black"
-                                android:textStyle="bold" />
-
-                            <TextView
-                                android:layout_width="0dip"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="5"
-                                android:text="00:00 12/06/2017"
-                                android:textColor="@color/black"
-                                android:textStyle="italic" />
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="5dp"
-                            android:orientation="horizontal">
-
-                            <TextView
-                                android:layout_width="0dip"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:text="Đến:"
-                                android:textColor="@color/black"
-                                android:textStyle="bold" />
-
-                            <TextView
-                                android:layout_width="0dip"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="5"
-                                android:text="00:00 15/06/2017"
-                                android:textColor="@color/black"
-                                android:textStyle="italic" />
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginBottom="8dp"
-                            android:layout_marginTop="10dp"
-                            android:orientation="horizontal"
-                            android:weightSum="2">
-
-                            <Button
-                                android:layout_width="0dip"
-                                android:layout_height="wrap_content"
-                                android:layout_marginRight="5dp"
-                                android:layout_weight="1"
-                                android:background="@drawable/bg_button"
-                                android:text="Xem Kết Quả"
-                                android:textAllCaps="false"
-                                android:textColor="@color/white" />
-
-                            <Button
-                                android:layout_width="0dip"
-                                android:layout_height="wrap_content"
-                                android:layout_marginLeft="5dp"
-                                android:layout_weight="1"
-                                android:background="@drawable/bg_button"
-                                android:text="Thi lại"
-                                android:textAllCaps="false"
-                                android:textColor="@color/white" />
-                        </LinearLayout>
-                    </LinearLayout>
-
-                    <RelativeLayout
-                        android:layout_width="100dp"
-                        android:layout_height="100dp"
-                        android:layout_alignParentRight="true"
-                        android:layout_marginRight="-28dp">
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentRight="true"
-                            android:layout_marginTop="16dp"
-                            android:background="@color/color_free"
-                            android:gravity="center"
-                            android:maxLines="1"
-                            android:rotation="45"
-                            android:text="Free"
-                            android:textColor="@color/white" />
-                    </RelativeLayout>
-                </RelativeLayout>
-
-                <RelativeLayout
+                <View
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp">
+                    android:layout_height="1dp"
+                    android:background="@color/bg_main" />
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/bg_exams"
-                        android:orientation="vertical"
-                        android:padding="10dp">
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="5dp"
-                            android:text="Grammar G153- Preposition (*Free)"
-                            android:textAllCaps="true"
-                            android:textColor="@color/colorPrimaryDark"
-                            android:textStyle="bold" />
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="5dp"
-                            android:orientation="horizontal">
-
-                            <TextView
-                                android:layout_width="0dip"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:text="Từ:"
-                                android:textColor="@color/black"
-                                android:textStyle="bold" />
-
-                            <TextView
-                                android:layout_width="0dip"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="5"
-                                android:text="00:00 12/06/2017"
-                                android:textColor="@color/black"
-                                android:textStyle="italic" />
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="5dp"
-                            android:orientation="horizontal">
-
-                            <TextView
-                                android:layout_width="0dip"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:text="Đến:"
-                                android:textColor="@color/black"
-                                android:textStyle="bold" />
-
-                            <TextView
-                                android:layout_width="0dip"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="5"
-                                android:text="00:00 15/06/2017"
-                                android:textColor="@color/black"
-                                android:textStyle="italic" />
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginBottom="8dp"
-                            android:layout_marginTop="10dp"
-                            android:orientation="horizontal"
-                            android:weightSum="2">
-
-                            <Button
-                                android:layout_width="0dip"
-                                android:layout_height="wrap_content"
-                                android:layout_marginRight="5dp"
-                                android:layout_weight="1"
-                                android:background="@drawable/bg_button"
-                                android:text="Xem Kết Quả"
-                                android:textAllCaps="false"
-                                android:textColor="@color/white" />
-
-                            <Button
-                                android:layout_width="0dip"
-                                android:layout_height="wrap_content"
-                                android:layout_marginLeft="5dp"
-                                android:layout_weight="1"
-                                android:background="@drawable/bg_button"
-                                android:text="Thi lại"
-                                android:textAllCaps="false"
-                                android:textColor="@color/white" />
-                        </LinearLayout>
-                    </LinearLayout>
-
-                    <RelativeLayout
-                        android:layout_width="100dp"
-                        android:layout_height="100dp"
-                        android:layout_alignParentRight="true"
-                        android:layout_marginRight="-28dp">
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentRight="true"
-                            android:layout_marginTop="16dp"
-                            android:background="@color/color_free"
-                            android:gravity="center"
-                            android:maxLines="1"
-                            android:rotation="45"
-                            android:text="Free"
-                            android:textColor="@color/white" />
-                    </RelativeLayout>
-                </RelativeLayout>
+                <include layout="@layout/item_exams" />
             </LinearLayout>
-        </ScrollView>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@color/white"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="10dp"
+                    android:text="THI CHUYÊN 10"
+                    android:textAllCaps="true"
+                    android:textColor="@color/colorAccent"
+                    android:textSize="15sp"
+                    android:textStyle="bold" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/grey_line" />
+
+                <include layout="@layout/item_exams" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/bg_main" />
+
+                <include layout="@layout/item_exams" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/bg_main" />
+
+                <include layout="@layout/item_exams" />
+            </LinearLayout>
 
 
-    </RelativeLayout>
+        </LinearLayout>
+    </ScrollView>
+
 
 </layout>

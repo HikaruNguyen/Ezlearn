@@ -30,4 +30,5 @@
 
     <string name="exams_title">Đề thi chất lượng</string>
     <string name="exams_description">Ngân hàng câu hỏi trắc nghiệm được phân loại theo chuyên đề rõ ràng, đảm bảo theo từng cấp độ, giúp bạn củng cố ngay lập tức kiến thức trọng điểm và nâng cao trình độ nhanh chóng. Giải thích, chiến lược, kĩ thuật làm bài chi tiết giúp hiểu sâu vấn đề, tiết kiệm 100% thời gian tra cứu. </string>
+    <string name="search">Tìm kiếm</string>
 </resources>

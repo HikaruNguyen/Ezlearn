@@ -8,7 +8,7 @@ import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.RelativeLayout;
+import android.widget.LinearLayout;
 
 import com.daimajia.slider.library.Animations.DescriptionAnimation;
 import com.daimajia.slider.library.SliderLayout;
@@ -45,7 +45,7 @@ public class HomeFragment extends Fragment implements BaseSliderView.OnSliderCli
         int width = displayMetrics.widthPixels;
         float height = width* 485/1366;
         homeBinding.rlSlide.setVisibility(View.VISIBLE);
-        homeBinding.rlSlide.setLayoutParams(new RelativeLayout.LayoutParams(width, (int) height));
+        homeBinding.rlSlide.setLayoutParams(new LinearLayout.LayoutParams(width, (int) height));
 
         homeBinding.slider.setPresetTransformer(SliderLayout.Transformer.Accordion);
         homeBinding.slider.setCustomIndicator(homeBinding.customIndicator2);
