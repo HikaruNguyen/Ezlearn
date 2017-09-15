@@ -16,7 +16,10 @@ import com.github.aakira.expandablelayout.ExpandableLinearLayout;
 import com.github.aakira.expandablelayout.Utils;
 import com.vn.ezlearn.R;
 import com.vn.ezlearn.model.ItemMenu;
+import com.vn.ezlearn.model.ItemMenuChild;
+import com.vn.ezlearn.widget.CRecyclerView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -55,10 +58,12 @@ public class NavigationAdapter extends BaseRecyclerAdapter<ItemMenu, NavigationA
         final ItemMenu item = data.get(position);
         holder.setIsRecyclable(false);
         holder.tvName.setText(item.name);
-//        holder.itemView.setBackgroundColor(ContextCompat.getColor(context, R.color.material_light_blue_500));
+
         if (data.get(position).type != ItemMenu.TYPE_NORMAL) {
+            NavigationChildAdapter childAdapter = new NavigationChildAdapter(context, new ArrayList<ItemMenuChild>());
+            holder.rvItemMenuChild.setAdapter(childAdapter);
+            childAdapter.addAll(item.menuChildList);
             holder.expandableLayout.setInRecyclerView(true);
-//        holder.expandableLayout.setBackgroundColor(ContextCompat.getColor(context,  R.color.material_light_blue_300));
             holder.expandableLayout.setInterpolator(Utils.createInterpolator(Utils.FAST_OUT_SLOW_IN_INTERPOLATOR));
             holder.expandableLayout.setExpanded(expandState.get(position));
             holder.expandableLayout.setListener(new ExpandableLayoutListenerAdapter() {
@@ -103,10 +108,7 @@ public class NavigationAdapter extends BaseRecyclerAdapter<ItemMenu, NavigationA
     public static class ViewHolder extends RecyclerView.ViewHolder {
         public TextView tvName;
         public RelativeLayout buttonLayout;
-        /**
-         * You must use the ExpandableLinearLayout in the recycler view.
-         * The ExpandableRelativeLayout doesn't work.
-         */
+        public CRecyclerView rvItemMenuChild;
         public ExpandableLinearLayout expandableLayout;
 
         public ViewHolder(View v) {
@@ -114,6 +116,7 @@ public class NavigationAdapter extends BaseRecyclerAdapter<ItemMenu, NavigationA
             tvName = v.findViewById(R.id.tvName);
             buttonLayout = v.findViewById(R.id.button);
             expandableLayout = v.findViewById(R.id.expandableLayout);
+            rvItemMenuChild = v.findViewById(R.id.rvItemMenuChild);
         }
     }
 

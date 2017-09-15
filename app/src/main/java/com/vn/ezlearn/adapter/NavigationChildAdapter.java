@@ -11,11 +11,10 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.github.aakira.expandablelayout.ExpandableLayout;
-import com.github.aakira.expandablelayout.ExpandableLayoutListenerAdapter;
 import com.github.aakira.expandablelayout.ExpandableLinearLayout;
 import com.github.aakira.expandablelayout.Utils;
 import com.vn.ezlearn.R;
-import com.vn.ezlearn.model.ItemMenu;
+import com.vn.ezlearn.model.ItemMenuChild;
 
 import java.util.List;
 
@@ -23,13 +22,13 @@ import java.util.List;
  * Created by FRAMGIA\nguyen.duc.manh on 07/07/2017.
  */
 
-public class NavigationChildAdapter extends BaseRecyclerAdapter<ItemMenu, NavigationChildAdapter.ViewHolder> {
+public class NavigationChildAdapter extends BaseRecyclerAdapter<ItemMenuChild, NavigationChildAdapter.ViewHolder> {
 
-    private final List<ItemMenu> data;
+    private final List<ItemMenuChild> data;
     private Context context;
     private SparseBooleanArray expandState = new SparseBooleanArray();
 
-    public NavigationChildAdapter(Context context, List<ItemMenu> list) {
+    public NavigationChildAdapter(Context context, List<ItemMenuChild> list) {
         super(context, list);
         this.data = list;
         for (int i = 0; i < data.size(); i++) {
@@ -40,49 +39,50 @@ public class NavigationChildAdapter extends BaseRecyclerAdapter<ItemMenu, Naviga
     @Override
     public ViewHolder onCreateViewHolder(final ViewGroup parent, final int viewType) {
         this.context = parent.getContext();
-        if (viewType == ItemMenu.TYPE_NORMAL) {
-            return new ViewHolder(LayoutInflater.from(context)
-                    .inflate(R.layout.item_menu_normal, parent, false));
-        } else {
-            return new ViewHolder(LayoutInflater.from(context)
-                    .inflate(R.layout.item_menu, parent, false));
-        }
-
+//        if (viewType == ItemMenu.TYPE_NORMAL) {
+//            return new ViewHolder(LayoutInflater.from(context)
+//                    .inflate(R.layout.item_menu_normal, parent, false));
+//        } else {
+//            return new ViewHolder(LayoutInflater.from(context)
+//                    .inflate(R.layout.item_menu, parent, false));
+//        }
+        return new ViewHolder(LayoutInflater.from(context)
+                .inflate(R.layout.item_menu_child, parent, false));
     }
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
-        final ItemMenu item = data.get(position);
+        final ItemMenuChild item = data.get(position);
         holder.setIsRecyclable(false);
         holder.tvName.setText(item.name);
 //        holder.itemView.setBackgroundColor(ContextCompat.getColor(context, R.color.material_light_blue_500));
-        if (data.get(position).type != ItemMenu.TYPE_NORMAL) {
-            holder.expandableLayout.setInRecyclerView(true);
-//        holder.expandableLayout.setBackgroundColor(ContextCompat.getColor(context,  R.color.material_light_blue_300));
-            holder.expandableLayout.setInterpolator(Utils.createInterpolator(Utils.FAST_OUT_SLOW_IN_INTERPOLATOR));
-            holder.expandableLayout.setExpanded(expandState.get(position));
-            holder.expandableLayout.setListener(new ExpandableLayoutListenerAdapter() {
-                @Override
-                public void onPreOpen() {
-                    createRotateAnimator(holder.buttonLayout, 0f, 180f).start();
-                    expandState.put(position, true);
-                }
-
-                @Override
-                public void onPreClose() {
-                    createRotateAnimator(holder.buttonLayout, 180f, 0f).start();
-                    expandState.put(position, false);
-                }
-            });
-
-            holder.buttonLayout.setRotation(expandState.get(position) ? 180f : 0f);
-            holder.buttonLayout.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(final View v) {
-                    onClickButton(holder.expandableLayout);
-                }
-            });
-        }
+//        if (data.get(position).type != ItemMenu.TYPE_NORMAL) {
+//            holder.expandableLayout.setInRecyclerView(true);
+////        holder.expandableLayout.setBackgroundColor(ContextCompat.getColor(context,  R.color.material_light_blue_300));
+//            holder.expandableLayout.setInterpolator(Utils.createInterpolator(Utils.FAST_OUT_SLOW_IN_INTERPOLATOR));
+//            holder.expandableLayout.setExpanded(expandState.get(position));
+//            holder.expandableLayout.setListener(new ExpandableLayoutListenerAdapter() {
+//                @Override
+//                public void onPreOpen() {
+//                    createRotateAnimator(holder.buttonLayout, 0f, 180f).start();
+//                    expandState.put(position, true);
+//                }
+//
+//                @Override
+//                public void onPreClose() {
+//                    createRotateAnimator(holder.buttonLayout, 180f, 0f).start();
+//                    expandState.put(position, false);
+//                }
+//            });
+//
+//            holder.buttonLayout.setRotation(expandState.get(position) ? 180f : 0f);
+//            holder.buttonLayout.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(final View v) {
+//                    onClickButton(holder.expandableLayout);
+//                }
+//            });
+//        }
 
     }
 

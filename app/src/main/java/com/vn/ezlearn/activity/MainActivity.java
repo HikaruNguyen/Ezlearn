@@ -19,6 +19,7 @@ import com.vn.ezlearn.adapter.NavigationAdapter;
 import com.vn.ezlearn.databinding.ActivityMainBinding;
 import com.vn.ezlearn.fragment.HomeFragment;
 import com.vn.ezlearn.model.ItemMenu;
+import com.vn.ezlearn.model.ItemMenuChild;
 import com.vn.ezlearn.widget.CRecyclerView;
 
 import java.util.ArrayList;
@@ -65,10 +66,32 @@ public class MainActivity extends AppCompatActivity
 
 
         menuList = new ArrayList<>();
-        menuList.add(new ItemMenu(1, "Home", ItemMenu.TYPE_NORMAL));
-        for (int i = 2; i < 6; i++) {
-            menuList.add(new ItemMenu(i, "aaa", ItemMenu.TYPE_PARENT, 1));
-        }
+        menuList.add(new ItemMenu(1, "TRANG CHỦ", ItemMenu.TYPE_NORMAL));
+        ItemMenu itemMenu = new ItemMenu(2, "THPT QUỐC GIA", ItemMenu.TYPE_PARENT, 1);
+        itemMenu.menuChildList.add(new ItemMenuChild(5, "Đề thi", ItemMenu.TYPE_CHILD, 2));
+        itemMenu.menuChildList.add(new ItemMenuChild(6, "Ngữ âm", ItemMenu.TYPE_CHILD, 2));
+        itemMenu.menuChildList.add(new ItemMenuChild(7, "Ngữ pháp", ItemMenu.TYPE_CHILD, 2));
+        itemMenu.menuChildList.add(new ItemMenuChild(8, "Giao tiếp", ItemMenu.TYPE_CHILD, 2));
+        itemMenu.menuChildList.add(new ItemMenuChild(9, "Tìm lỗi sai", ItemMenu.TYPE_CHILD, 2));
+        itemMenu.menuChildList.add(new ItemMenuChild(10, "Từ đồng nghĩa", ItemMenu.TYPE_CHILD, 2));
+        itemMenu.menuChildList.add(new ItemMenuChild(11, "Từ trái nghĩa", ItemMenu.TYPE_CHILD, 2));
+        itemMenu.menuChildList.add(new ItemMenuChild(12, "Kết hợp câu", ItemMenu.TYPE_CHILD, 2));
+        itemMenu.menuChildList.add(new ItemMenuChild(13, "Câu tương đương", ItemMenu.TYPE_CHILD, 2));
+        itemMenu.menuChildList.add(new ItemMenuChild(14, "Điền từ", ItemMenu.TYPE_CHILD, 2));
+        itemMenu.menuChildList.add(new ItemMenuChild(15, "Đọc hiểu", ItemMenu.TYPE_CHILD, 2));
+        menuList.add(itemMenu);
+
+        itemMenu = new ItemMenu(3, "THI CHUYÊN 10", ItemMenu.TYPE_PARENT, 1);
+        itemMenu.menuChildList.add(new ItemMenuChild(16, "Đề thi", ItemMenu.TYPE_CHILD, 3));
+        itemMenu.menuChildList.add(new ItemMenuChild(17, "Ngữ âm", ItemMenu.TYPE_CHILD, 3));
+        itemMenu.menuChildList.add(new ItemMenuChild(18, "Ngữ pháp", ItemMenu.TYPE_CHILD, 3));
+        menuList.add(itemMenu);
+
+        itemMenu = new ItemMenu(4, "KỸ NĂNG", ItemMenu.TYPE_PARENT, 1);
+        itemMenu.menuChildList.add(new ItemMenuChild(19, "Ngữ pháp", ItemMenu.TYPE_CHILD, 4));
+        itemMenu.menuChildList.add(new ItemMenuChild(20, "Từ vựng", ItemMenu.TYPE_CHILD, 4));
+        menuList.add(itemMenu);
+
         navigationAdapter = new NavigationAdapter(this, menuList);
         mainBinding.rvNavigation.setAdapter(navigationAdapter);
         mainBinding.rvNavigation.setDivider();

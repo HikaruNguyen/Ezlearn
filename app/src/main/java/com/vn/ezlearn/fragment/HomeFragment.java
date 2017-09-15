@@ -16,6 +16,7 @@ import com.daimajia.slider.library.SliderTypes.BaseSliderView;
 import com.daimajia.slider.library.SliderTypes.DefaultSliderView;
 import com.vn.ezlearn.R;
 import com.vn.ezlearn.databinding.FragmentHomeBinding;
+import com.vn.ezlearn.viewmodel.HomeViewModel;
 
 
 /**
@@ -25,6 +26,7 @@ import com.vn.ezlearn.databinding.FragmentHomeBinding;
 public class HomeFragment extends Fragment implements BaseSliderView.OnSliderClickListener {
     private static final long SLIDE_DELAY = 5000;
     private FragmentHomeBinding homeBinding;
+    private HomeViewModel homeViewModel;
 
     public HomeFragment() {
         // Required empty public constructor
@@ -36,14 +38,21 @@ public class HomeFragment extends Fragment implements BaseSliderView.OnSliderCli
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         homeBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_home, container, false);
+        homeViewModel = new HomeViewModel(getActivity());
+        homeBinding.setHomeViewModel(homeViewModel);
         initBanner();
+        event();
         return homeBinding.getRoot();
+    }
+
+    private void event() {
+
     }
 
     private void initBanner() {
         DisplayMetrics displayMetrics = getActivity().getResources().getDisplayMetrics();
         int width = displayMetrics.widthPixels;
-        float height = width* 485/1366;
+        float height = width * 485 / 1366;
         homeBinding.rlSlide.setVisibility(View.VISIBLE);
         homeBinding.rlSlide.setLayoutParams(new LinearLayout.LayoutParams(width, (int) height));
 

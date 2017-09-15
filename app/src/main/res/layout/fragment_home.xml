@@ -1,5 +1,13 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:custom="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="homeViewModel"
+            type="com.vn.ezlearn.viewmodel.HomeViewModel" />
+    </data>
 
     <ScrollView
         android:layout_width="match_parent"
@@ -57,21 +65,27 @@
                     android:layout_height="1dp"
                     android:background="@color/grey_line" />
 
-                <include layout="@layout/item_exams" />
+                <include
+                    layout="@layout/item_exams"
+                    app:homeViewModel="@{homeViewModel}" />
 
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:background="@color/bg_main" />
 
-                <include layout="@layout/item_exams" />
+                <include
+                    layout="@layout/item_exams"
+                    app:homeViewModel="@{homeViewModel}" />
 
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:background="@color/bg_main" />
 
-                <include layout="@layout/item_exams" />
+                <include
+                    layout="@layout/item_exams"
+                    app:homeViewModel="@{homeViewModel}" />
             </LinearLayout>
 
             <LinearLayout
@@ -96,21 +110,27 @@
                     android:layout_height="1dp"
                     android:background="@color/grey_line" />
 
-                <include layout="@layout/item_exams" />
+                <include
+                    layout="@layout/item_exams"
+                    app:homeViewModel="@{homeViewModel}" />
 
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:background="@color/bg_main" />
 
-                <include layout="@layout/item_exams" />
+                <include
+                    layout="@layout/item_exams"
+                    app:homeViewModel="@{homeViewModel}" />
 
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:background="@color/bg_main" />
 
-                <include layout="@layout/item_exams" />
+                <include
+                    layout="@layout/item_exams"
+                    app:homeViewModel="@{homeViewModel}" />
             </LinearLayout>
 
 
