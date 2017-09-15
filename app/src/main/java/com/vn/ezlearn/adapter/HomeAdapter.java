@@ -96,10 +96,6 @@ public class HomeAdapter extends BaseRecyclerAdapter<HomeObject, HomeAdapter.Vie
 
     }
 
-    private void initBanner(ViewHolder holder, int position) {
-
-    }
-
     @Override
     public int getItemViewType(int position) {
         return data.get(position).type;
