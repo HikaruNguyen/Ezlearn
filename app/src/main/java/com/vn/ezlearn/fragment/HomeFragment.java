@@ -4,19 +4,22 @@ package com.vn.ezlearn.fragment;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 
-import com.daimajia.slider.library.Animations.DescriptionAnimation;
-import com.daimajia.slider.library.SliderLayout;
 import com.daimajia.slider.library.SliderTypes.BaseSliderView;
-import com.daimajia.slider.library.SliderTypes.DefaultSliderView;
 import com.vn.ezlearn.R;
+import com.vn.ezlearn.adapter.HomeAdapter;
 import com.vn.ezlearn.databinding.FragmentHomeBinding;
+import com.vn.ezlearn.model.Banner;
+import com.vn.ezlearn.model.Category;
+import com.vn.ezlearn.model.Exam;
+import com.vn.ezlearn.model.HomeObject;
 import com.vn.ezlearn.viewmodel.HomeViewModel;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -24,9 +27,12 @@ import com.vn.ezlearn.viewmodel.HomeViewModel;
  */
 
 public class HomeFragment extends Fragment implements BaseSliderView.OnSliderClickListener {
-    private static final long SLIDE_DELAY = 5000;
+
     private FragmentHomeBinding homeBinding;
     private HomeViewModel homeViewModel;
+    private HomeAdapter homeAdapter;
+    private List<HomeObject> list;
+    private List<Banner> bannerList;
 
     public HomeFragment() {
         // Required empty public constructor
@@ -41,46 +47,37 @@ public class HomeFragment extends Fragment implements BaseSliderView.OnSliderCli
         homeViewModel = new HomeViewModel(getActivity());
         homeBinding.setHomeViewModel(homeViewModel);
         initBanner();
-        event();
+        bindData();
         return homeBinding.getRoot();
     }
 
-    private void event() {
 
+    private void bindData() {
+        homeAdapter = new HomeAdapter(getActivity(), new ArrayList<HomeObject>());
+        homeBinding.rvHome.setAdapter(homeAdapter);
+
+        list = new ArrayList<>();
+        list.add(new HomeObject(bannerList));
+        list.add(new HomeObject(new Category()));
+        list.add(new HomeObject(new Exam()));
+        list.add(new HomeObject(new Exam()));
+        list.add(new HomeObject(new Exam()));
+        list.add(new HomeObject(new Category()));
+        list.add(new HomeObject(new Exam()));
+        list.add(new HomeObject(new Exam()));
+        list.add(new HomeObject(new Exam()));
+
+        homeAdapter.addAll(list);
     }
 
     private void initBanner() {
-        DisplayMetrics displayMetrics = getActivity().getResources().getDisplayMetrics();
-        int width = displayMetrics.widthPixels;
-        float height = width * 485 / 1366;
-        homeBinding.rlSlide.setVisibility(View.VISIBLE);
-        homeBinding.rlSlide.setLayoutParams(new LinearLayout.LayoutParams(width, (int) height));
+        bannerList = new ArrayList<>();
+        bannerList.add(new Banner(1, R.mipmap.banner01));
+        bannerList.add(new Banner(2, R.mipmap.banner02));
+        bannerList.add(new Banner(3, R.mipmap.banner03));
+    }
 
-        homeBinding.slider.setPresetTransformer(SliderLayout.Transformer.Accordion);
-        homeBinding.slider.setCustomIndicator(homeBinding.customIndicator2);
-        homeBinding.slider.setCustomAnimation(new DescriptionAnimation());
-        homeBinding.slider.setDuration(SLIDE_DELAY);
-
-        DefaultSliderView textSliderView = new DefaultSliderView(getActivity());
-        textSliderView
-                .image(R.mipmap.banner01)
-                .setScaleType(BaseSliderView.ScaleType.Fit)
-                .setOnSliderClickListener(this);
-        homeBinding.slider.addSlider(textSliderView);
-
-        textSliderView = new DefaultSliderView(getActivity());
-        textSliderView
-                .image(R.mipmap.banner02)
-                .setScaleType(BaseSliderView.ScaleType.FitCenterCrop)
-                .setOnSliderClickListener(this);
-        homeBinding.slider.addSlider(textSliderView);
-
-        textSliderView = new DefaultSliderView(getActivity());
-        textSliderView
-                .image(R.mipmap.banner03)
-                .setScaleType(BaseSliderView.ScaleType.FitCenterCrop)
-                .setOnSliderClickListener(this);
-        homeBinding.slider.addSlider(textSliderView);
+    private void initBanner1() {
 
 
     }

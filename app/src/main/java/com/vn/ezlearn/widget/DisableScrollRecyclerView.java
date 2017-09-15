@@ -1,7 +1,6 @@
 package com.vn.ezlearn.widget;
 
 import android.content.Context;
-import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
 import android.view.ViewGroup;
 
@@ -9,7 +8,7 @@ import android.view.ViewGroup;
  * Created by ANHTH on 06-Jun-16.
  */
 
-public class DisableScrollRecyclerView extends RecyclerView {
+public class DisableScrollRecyclerView extends CRecyclerView {
     public DisableScrollRecyclerView(Context context) {
         super(context);
     }

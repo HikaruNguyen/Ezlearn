@@ -1,6 +1,4 @@
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:custom="http://schemas.android.com/apk/res-auto">
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
 
     <data>
 
@@ -9,133 +7,11 @@
             type="com.vn.ezlearn.viewmodel.HomeViewModel" />
     </data>
 
-    <ScrollView
+    <com.vn.ezlearn.widget.CRecyclerView
+        android:id="@+id/rvHome"
+        android:background="@color/bg_main"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/bg_main">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <RelativeLayout
-                android:id="@+id/rlSlide"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/white"
-                android:visibility="gone">
-
-                <com.daimajia.slider.library.SliderLayout
-                    android:id="@+id/slider"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    custom:auto_cycle="true"
-                    custom:indicator_visibility="visible"
-                    custom:pager_animation="Accordion"
-                    custom:pager_animation_span="1100" />
-
-                <com.daimajia.slider.library.Indicators.PagerIndicator
-                    android:id="@+id/custom_indicator2"
-                    style="@style/AndroidImageSlider_Corner_Oval_Orange"
-                    android:layout_alignParentBottom="true"
-                    android:layout_centerHorizontal="true"
-                    android:layout_marginBottom="5dp" />
-            </RelativeLayout>
-
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/white"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:padding="10dp"
-                    android:text="THPT QUỐC GIA"
-                    android:textAllCaps="true"
-                    android:textColor="@color/colorAccent"
-                    android:textSize="15sp"
-                    android:textStyle="bold" />
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:background="@color/grey_line" />
-
-                <include
-                    layout="@layout/item_exams"
-                    app:homeViewModel="@{homeViewModel}" />
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:background="@color/bg_main" />
-
-                <include
-                    layout="@layout/item_exams"
-                    app:homeViewModel="@{homeViewModel}" />
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:background="@color/bg_main" />
-
-                <include
-                    layout="@layout/item_exams"
-                    app:homeViewModel="@{homeViewModel}" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:background="@color/white"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:padding="10dp"
-                    android:text="THI CHUYÊN 10"
-                    android:textAllCaps="true"
-                    android:textColor="@color/colorAccent"
-                    android:textSize="15sp"
-                    android:textStyle="bold" />
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:background="@color/grey_line" />
-
-                <include
-                    layout="@layout/item_exams"
-                    app:homeViewModel="@{homeViewModel}" />
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:background="@color/bg_main" />
-
-                <include
-                    layout="@layout/item_exams"
-                    app:homeViewModel="@{homeViewModel}" />
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:background="@color/bg_main" />
-
-                <include
-                    layout="@layout/item_exams"
-                    app:homeViewModel="@{homeViewModel}" />
-            </LinearLayout>
-
-
-        </LinearLayout>
-    </ScrollView>
+        android:layout_height="match_parent" />
 
 
 </layout>
