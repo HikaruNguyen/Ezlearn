@@ -17,6 +17,7 @@ import com.github.aakira.expandablelayout.Utils;
 import com.vn.ezlearn.R;
 import com.vn.ezlearn.model.ItemMenu;
 import com.vn.ezlearn.model.ItemMenuChild;
+import com.vn.ezlearn.utils.NavigationItemSelected;
 import com.vn.ezlearn.widget.CRecyclerView;
 
 import java.util.ArrayList;
@@ -31,10 +32,13 @@ public class NavigationAdapter extends BaseRecyclerAdapter<ItemMenu, NavigationA
     private final List<ItemMenu> data;
     private Context context;
     private SparseBooleanArray expandState = new SparseBooleanArray();
+    private NavigationItemSelected navigationItemSelected;
 
-    public NavigationAdapter(Context context, List<ItemMenu> list) {
+    public NavigationAdapter(Context context, List<ItemMenu> list,
+                             NavigationItemSelected navigationItemSelected) {
         super(context, list);
         this.data = list;
+        this.navigationItemSelected = navigationItemSelected;
         for (int i = 0; i < data.size(); i++) {
             expandState.append(i, false);
         }
@@ -60,7 +64,8 @@ public class NavigationAdapter extends BaseRecyclerAdapter<ItemMenu, NavigationA
         holder.tvName.setText(item.name);
 
         if (data.get(position).type != ItemMenu.TYPE_NORMAL) {
-            NavigationChildAdapter childAdapter = new NavigationChildAdapter(context, new ArrayList<ItemMenuChild>());
+            NavigationChildAdapter childAdapter = new NavigationChildAdapter(
+                    context, new ArrayList<ItemMenuChild>(),navigationItemSelected);
             holder.rvItemMenuChild.setAdapter(childAdapter);
             childAdapter.addAll(item.menuChildList);
             holder.expandableLayout.setInRecyclerView(true);

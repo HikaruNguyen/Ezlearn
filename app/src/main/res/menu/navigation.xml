@@ -5,19 +5,15 @@
         android:id="@+id/navigation_home"
         android:checked="true"
         android:icon="@mipmap/ic_profile"
-        android:title="@string/profile" />
+        android:title="@string/baiGiang" />
 
     <item
         android:id="@+id/navigation_dashboard"
         android:icon="@mipmap/ic_exam"
-        android:title="@string/lichSuThi" />
+        android:title="@string/deThi" />
 
     <item
         android:id="@+id/navigation_notifications"
         android:icon="@mipmap/ic_buy"
-        android:title="@string/lichSuNapTien" />
-    <item
-        android:id="@+id/buy_package"
-        android:icon="@mipmap/ic_package"
-        android:title="@string/lichSuMuaGoi" />
+        android:title="@string/luyenTap" />
 </menu>

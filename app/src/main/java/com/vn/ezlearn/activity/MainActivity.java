@@ -17,16 +17,17 @@ import android.view.MenuItem;
 import com.vn.ezlearn.R;
 import com.vn.ezlearn.adapter.NavigationAdapter;
 import com.vn.ezlearn.databinding.ActivityMainBinding;
+import com.vn.ezlearn.fragment.CategoryFragment;
 import com.vn.ezlearn.fragment.HomeFragment;
 import com.vn.ezlearn.model.ItemMenu;
 import com.vn.ezlearn.model.ItemMenuChild;
+import com.vn.ezlearn.utils.NavigationItemSelected;
 import com.vn.ezlearn.widget.CRecyclerView;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+public class MainActivity extends AppCompatActivity implements NavigationItemSelected {
     private Toolbar toolbar;
     private CRecyclerView rvNavigation;
     private ActivityMainBinding mainBinding;
@@ -62,29 +63,22 @@ public class MainActivity extends AppCompatActivity
         toggle.syncState();
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);
-
 
         menuList = new ArrayList<>();
         menuList.add(new ItemMenu(1, "TRANG CHỦ", ItemMenu.TYPE_NORMAL));
-        ItemMenu itemMenu = new ItemMenu(2, "THPT QUỐC GIA", ItemMenu.TYPE_PARENT, 1);
-        itemMenu.menuChildList.add(new ItemMenuChild(5, "Đề thi", ItemMenu.TYPE_CHILD, 2));
-        itemMenu.menuChildList.add(new ItemMenuChild(6, "Ngữ âm", ItemMenu.TYPE_CHILD, 2));
-        itemMenu.menuChildList.add(new ItemMenuChild(7, "Ngữ pháp", ItemMenu.TYPE_CHILD, 2));
-        itemMenu.menuChildList.add(new ItemMenuChild(8, "Giao tiếp", ItemMenu.TYPE_CHILD, 2));
-        itemMenu.menuChildList.add(new ItemMenuChild(9, "Tìm lỗi sai", ItemMenu.TYPE_CHILD, 2));
-        itemMenu.menuChildList.add(new ItemMenuChild(10, "Từ đồng nghĩa", ItemMenu.TYPE_CHILD, 2));
-        itemMenu.menuChildList.add(new ItemMenuChild(11, "Từ trái nghĩa", ItemMenu.TYPE_CHILD, 2));
-        itemMenu.menuChildList.add(new ItemMenuChild(12, "Kết hợp câu", ItemMenu.TYPE_CHILD, 2));
-        itemMenu.menuChildList.add(new ItemMenuChild(13, "Câu tương đương", ItemMenu.TYPE_CHILD, 2));
-        itemMenu.menuChildList.add(new ItemMenuChild(14, "Điền từ", ItemMenu.TYPE_CHILD, 2));
-        itemMenu.menuChildList.add(new ItemMenuChild(15, "Đọc hiểu", ItemMenu.TYPE_CHILD, 2));
+        ItemMenu itemMenu = new ItemMenu(2, "TRUNG HỌC CƠ ", ItemMenu.TYPE_PARENT, 1);
+        itemMenu.menuChildList.add(new ItemMenuChild(5, "LỚP 6", ItemMenu.TYPE_CHILD, 2));
+        itemMenu.menuChildList.add(new ItemMenuChild(6, "LỚP 7", ItemMenu.TYPE_CHILD, 2));
+        itemMenu.menuChildList.add(new ItemMenuChild(7, "LỚP 8", ItemMenu.TYPE_CHILD, 2));
+        itemMenu.menuChildList.add(new ItemMenuChild(8, "LỚP 9", ItemMenu.TYPE_CHILD, 2));
+        itemMenu.menuChildList.add(new ItemMenuChild(9, "THI VÀO 10", ItemMenu.TYPE_CHILD, 2));
         menuList.add(itemMenu);
 
-        itemMenu = new ItemMenu(3, "THI CHUYÊN 10", ItemMenu.TYPE_PARENT, 1);
-        itemMenu.menuChildList.add(new ItemMenuChild(16, "Đề thi", ItemMenu.TYPE_CHILD, 3));
-        itemMenu.menuChildList.add(new ItemMenuChild(17, "Ngữ âm", ItemMenu.TYPE_CHILD, 3));
-        itemMenu.menuChildList.add(new ItemMenuChild(18, "Ngữ pháp", ItemMenu.TYPE_CHILD, 3));
+        itemMenu = new ItemMenu(3, "TRUNG HỌC PHỔ THÔNG", ItemMenu.TYPE_PARENT, 1);
+        itemMenu.menuChildList.add(new ItemMenuChild(16, "LỚP 10", ItemMenu.TYPE_CHILD, 3));
+        itemMenu.menuChildList.add(new ItemMenuChild(17, "LỚP 11", ItemMenu.TYPE_CHILD, 3));
+        itemMenu.menuChildList.add(new ItemMenuChild(18, "LỚP 12", ItemMenu.TYPE_CHILD, 3));
+        itemMenu.menuChildList.add(new ItemMenuChild(18, "THI THPTQG", ItemMenu.TYPE_CHILD, 3));
         menuList.add(itemMenu);
 
         itemMenu = new ItemMenu(4, "KỸ NĂNG", ItemMenu.TYPE_PARENT, 1);
@@ -92,16 +86,33 @@ public class MainActivity extends AppCompatActivity
         itemMenu.menuChildList.add(new ItemMenuChild(20, "Từ vựng", ItemMenu.TYPE_CHILD, 4));
         menuList.add(itemMenu);
 
-        navigationAdapter = new NavigationAdapter(this, menuList);
+        itemMenu = new ItemMenu(4, "IELTS", ItemMenu.TYPE_PARENT, 1);
+        itemMenu.menuChildList.add(new ItemMenuChild(19, "3.5+", ItemMenu.TYPE_CHILD, 4));
+        itemMenu.menuChildList.add(new ItemMenuChild(20, "5.5+", ItemMenu.TYPE_CHILD, 4));
+        itemMenu.menuChildList.add(new ItemMenuChild(20, "6.5+", ItemMenu.TYPE_CHILD, 4));
+        menuList.add(itemMenu);
+
+        itemMenu = new ItemMenu(4, "TOEFL Junior", ItemMenu.TYPE_PARENT, 1);
+        itemMenu.menuChildList.add(new ItemMenuChild(19, "650+", ItemMenu.TYPE_CHILD, 4));
+        itemMenu.menuChildList.add(new ItemMenuChild(20, "750+", ItemMenu.TYPE_CHILD, 4));
+        itemMenu.menuChildList.add(new ItemMenuChild(20, "850+", ItemMenu.TYPE_CHILD, 4));
+        menuList.add(itemMenu);
+
+        itemMenu = new ItemMenu(4, "TOEIC", ItemMenu.TYPE_PARENT, 1);
+        itemMenu.menuChildList.add(new ItemMenuChild(19, "350+", ItemMenu.TYPE_CHILD, 4));
+        itemMenu.menuChildList.add(new ItemMenuChild(20, "550+", ItemMenu.TYPE_CHILD, 4));
+        itemMenu.menuChildList.add(new ItemMenuChild(20, "650+", ItemMenu.TYPE_CHILD, 4));
+        menuList.add(itemMenu);
+
+        navigationAdapter = new NavigationAdapter(this, menuList, this);
         mainBinding.rvNavigation.setAdapter(navigationAdapter);
         mainBinding.rvNavigation.setDivider();
     }
 
     @Override
     public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawer(GravityCompat.START);
+        if (mainBinding.drawerLayout.isDrawerOpen(GravityCompat.START)) {
+            mainBinding.drawerLayout.closeDrawer(GravityCompat.START);
         } else {
             super.onBackPressed();
         }
@@ -129,31 +140,6 @@ public class MainActivity extends AppCompatActivity
         return super.onOptionsItemSelected(item);
     }
 
-    @SuppressWarnings("StatementWithEmptyBody")
-    @Override
-    public boolean onNavigationItemSelected(MenuItem item) {
-        // Handle navigation view item clicks here.
-        int id = item.getItemId();
-
-        if (id == R.id.nav_camera) {
-            // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
-
-        } else if (id == R.id.nav_slideshow) {
-
-        } else if (id == R.id.nav_manage) {
-
-        } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
-
-        }
-
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        drawer.closeDrawer(GravityCompat.START);
-        return true;
-    }
-
     public void changeFragment(Fragment targetFragment) {
         getSupportFragmentManager()
                 .beginTransaction()
@@ -169,5 +155,14 @@ public class MainActivity extends AppCompatActivity
             manager.popBackStack(first.getId(),
                     FragmentManager.POP_BACK_STACK_INCLUSIVE);
         }
+    }
+
+    @Override
+    public void onSelected() {
+        changeFragment(new CategoryFragment());
+        if (mainBinding.drawerLayout.isDrawerOpen(GravityCompat.START)) {
+            mainBinding.drawerLayout.closeDrawer(GravityCompat.START);
+        }
+
     }
 }

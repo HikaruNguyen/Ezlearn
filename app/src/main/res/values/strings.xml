@@ -31,4 +31,10 @@
     <string name="exams_title">Đề thi chất lượng</string>
     <string name="exams_description">Ngân hàng câu hỏi trắc nghiệm được phân loại theo chuyên đề rõ ràng, đảm bảo theo từng cấp độ, giúp bạn củng cố ngay lập tức kiến thức trọng điểm và nâng cao trình độ nhanh chóng. Giải thích, chiến lược, kĩ thuật làm bài chi tiết giúp hiểu sâu vấn đề, tiết kiệm 100% thời gian tra cứu. </string>
     <string name="search">Tìm kiếm</string>
+    <string name="title_activity_question">QuestionActivity</string>
+    <string name="section_format">Hello World from section: %1$d</string>
+    <string name="title_activity_category">CategoryActivity</string>
+    <string name="baiGiang">Bài giảng</string>
+    <string name="deThi">Đề thi</string>
+    <string name="luyenTap">Luyện tập</string>
 </resources>

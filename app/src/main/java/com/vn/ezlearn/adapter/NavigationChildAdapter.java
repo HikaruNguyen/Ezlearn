@@ -15,6 +15,7 @@ import com.github.aakira.expandablelayout.ExpandableLinearLayout;
 import com.github.aakira.expandablelayout.Utils;
 import com.vn.ezlearn.R;
 import com.vn.ezlearn.model.ItemMenuChild;
+import com.vn.ezlearn.utils.NavigationItemSelected;
 
 import java.util.List;
 
@@ -27,10 +28,13 @@ public class NavigationChildAdapter extends BaseRecyclerAdapter<ItemMenuChild, N
     private final List<ItemMenuChild> data;
     private Context context;
     private SparseBooleanArray expandState = new SparseBooleanArray();
+    public NavigationItemSelected navigationItemSelected;
 
-    public NavigationChildAdapter(Context context, List<ItemMenuChild> list) {
+    public NavigationChildAdapter(Context context, List<ItemMenuChild> list,
+                                  NavigationItemSelected navigationItemSelected) {
         super(context, list);
         this.data = list;
+        this.navigationItemSelected = navigationItemSelected;
         for (int i = 0; i < data.size(); i++) {
             expandState.append(i, false);
         }
@@ -100,7 +104,7 @@ public class NavigationChildAdapter extends BaseRecyclerAdapter<ItemMenuChild, N
         return data.size();
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder {
+    public class ViewHolder extends RecyclerView.ViewHolder {
         public TextView tvName;
         public RelativeLayout buttonLayout;
         /**
@@ -114,6 +118,12 @@ public class NavigationChildAdapter extends BaseRecyclerAdapter<ItemMenuChild, N
             tvName = v.findViewById(R.id.tvName);
             buttonLayout = v.findViewById(R.id.button);
             expandableLayout = v.findViewById(R.id.expandableLayout);
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    navigationItemSelected.onSelected();
+                }
+            });
         }
     }
 
