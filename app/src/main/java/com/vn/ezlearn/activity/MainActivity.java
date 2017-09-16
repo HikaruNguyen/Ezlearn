@@ -33,6 +33,7 @@ public class MainActivity extends AppCompatActivity implements NavigationItemSel
     private ActivityMainBinding mainBinding;
     private List<ItemMenu> menuList;
     private NavigationAdapter navigationAdapter;
+    private int currentId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,7 +66,7 @@ public class MainActivity extends AppCompatActivity implements NavigationItemSel
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
 
         menuList = new ArrayList<>();
-        menuList.add(new ItemMenu(1, "TRANG CHỦ", ItemMenu.TYPE_NORMAL));
+        menuList.add(new ItemMenu(-1, "TRANG CHỦ", ItemMenu.TYPE_NORMAL));
         ItemMenu itemMenu = new ItemMenu(2, "TRUNG HỌC CƠ ", ItemMenu.TYPE_PARENT, 1);
         itemMenu.menuChildList.add(new ItemMenuChild(5, "LỚP 6", ItemMenu.TYPE_CHILD, 2));
         itemMenu.menuChildList.add(new ItemMenuChild(6, "LỚP 7", ItemMenu.TYPE_CHILD, 2));
@@ -114,7 +115,12 @@ public class MainActivity extends AppCompatActivity implements NavigationItemSel
         if (mainBinding.drawerLayout.isDrawerOpen(GravityCompat.START)) {
             mainBinding.drawerLayout.closeDrawer(GravityCompat.START);
         } else {
-            super.onBackPressed();
+            if (currentId != -1) {
+                changeFragment(new HomeFragment());
+            } else {
+                super.onBackPressed();
+            }
+
         }
     }
 
@@ -141,6 +147,7 @@ public class MainActivity extends AppCompatActivity implements NavigationItemSel
     }
 
     public void changeFragment(Fragment targetFragment) {
+        clearBackStack(getSupportFragmentManager());
         getSupportFragmentManager()
                 .beginTransaction()
                 .replace(R.id.container, targetFragment, "fragment")
@@ -158,11 +165,23 @@ public class MainActivity extends AppCompatActivity implements NavigationItemSel
     }
 
     @Override
-    public void onSelected() {
-        changeFragment(new CategoryFragment());
-        if (mainBinding.drawerLayout.isDrawerOpen(GravityCompat.START)) {
-            mainBinding.drawerLayout.closeDrawer(GravityCompat.START);
-        }
+    public void onSelected(String name, int id) {
+        if (id != currentId) {
+            if (id != -1) {
+                changeFragment(new CategoryFragment());
+                if (mainBinding.drawerLayout.isDrawerOpen(GravityCompat.START)) {
+                    mainBinding.drawerLayout.closeDrawer(GravityCompat.START);
+                    toolbar.setTitle(name);
+                }
+            } else {
+                changeFragment(new HomeFragment());
+                if (mainBinding.drawerLayout.isDrawerOpen(GravityCompat.START)) {
+                    mainBinding.drawerLayout.closeDrawer(GravityCompat.START);
+                    toolbar.setTitle(name);
+                }
+            }
 
+        }
+        currentId = id;
     }
 }

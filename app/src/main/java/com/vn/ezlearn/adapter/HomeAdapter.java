@@ -16,7 +16,7 @@ import com.daimajia.slider.library.SliderLayout;
 import com.daimajia.slider.library.SliderTypes.BaseSliderView;
 import com.daimajia.slider.library.SliderTypes.DefaultSliderView;
 import com.vn.ezlearn.R;
-import com.vn.ezlearn.activity.CategoryActivity;
+import com.vn.ezlearn.activity.QuestionActivity;
 import com.vn.ezlearn.model.HomeObject;
 
 import java.util.List;
@@ -88,7 +88,7 @@ public class HomeAdapter extends BaseRecyclerAdapter<HomeObject, HomeAdapter.Vie
             holder.lnExam.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Intent intent = new Intent(context, CategoryActivity.class);
+                    Intent intent = new Intent(context, QuestionActivity.class);
                     context.startActivity(intent);
                 }
             });

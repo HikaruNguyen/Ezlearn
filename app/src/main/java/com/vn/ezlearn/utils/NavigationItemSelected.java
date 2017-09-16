@@ -5,5 +5,5 @@ package com.vn.ezlearn.utils;
  */
 
 public interface NavigationItemSelected {
-    public void onSelected();
+    public void onSelected(String name, int id);
 }

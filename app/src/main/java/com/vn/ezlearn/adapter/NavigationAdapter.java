@@ -63,9 +63,9 @@ public class NavigationAdapter extends BaseRecyclerAdapter<ItemMenu, NavigationA
         holder.setIsRecyclable(false);
         holder.tvName.setText(item.name);
 
-        if (data.get(position).type != ItemMenu.TYPE_NORMAL) {
+        if (getItemViewType(position) != ItemMenu.TYPE_NORMAL) {
             NavigationChildAdapter childAdapter = new NavigationChildAdapter(
-                    context, new ArrayList<ItemMenuChild>(),navigationItemSelected);
+                    context, new ArrayList<ItemMenuChild>(), navigationItemSelected);
             holder.rvItemMenuChild.setAdapter(childAdapter);
             childAdapter.addAll(item.menuChildList);
             holder.expandableLayout.setInRecyclerView(true);
@@ -92,6 +92,19 @@ public class NavigationAdapter extends BaseRecyclerAdapter<ItemMenu, NavigationA
                     onClickButton(holder.expandableLayout);
                 }
             });
+            holder.item.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    onClickButton(holder.expandableLayout);
+                }
+            });
+        } else {
+            holder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    navigationItemSelected.onSelected(item.name, item.id);
+                }
+            });
         }
 
     }
@@ -110,16 +123,18 @@ public class NavigationAdapter extends BaseRecyclerAdapter<ItemMenu, NavigationA
         return data.size();
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder {
+    public class ViewHolder extends RecyclerView.ViewHolder {
         public TextView tvName;
         public RelativeLayout buttonLayout;
         public CRecyclerView rvItemMenuChild;
         public ExpandableLinearLayout expandableLayout;
+        public RelativeLayout item;
 
         public ViewHolder(View v) {
             super(v);
             tvName = v.findViewById(R.id.tvName);
             buttonLayout = v.findViewById(R.id.button);
+            item = v.findViewById(R.id.item);
             expandableLayout = v.findViewById(R.id.expandableLayout);
             rvItemMenuChild = v.findViewById(R.id.rvItemMenuChild);
         }

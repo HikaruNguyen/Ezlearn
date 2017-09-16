@@ -121,7 +121,8 @@ public class NavigationChildAdapter extends BaseRecyclerAdapter<ItemMenuChild, N
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    navigationItemSelected.onSelected();
+                    navigationItemSelected.onSelected(list.get(getAdapterPosition()).name,
+                            list.get(getAdapterPosition()).id);
                 }
             });
         }
