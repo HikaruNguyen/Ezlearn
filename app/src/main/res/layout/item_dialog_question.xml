@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="itemQuestionDialogViewModel"
+            type="com.vn.ezlearn.viewmodel.ItemQuestionDialogViewModel" />
+    </data>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/lnItem"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:backgroundResource="@{itemQuestionDialogViewModel.backgroundItem}"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/number"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:gravity="center"
+            android:text="1" />
+    </LinearLayout>
+</layout>

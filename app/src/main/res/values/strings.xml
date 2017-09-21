@@ -37,4 +37,5 @@
     <string name="baiGiang">Bài giảng</string>
     <string name="deThi">Đề thi</string>
     <string name="luyenTap">Luyện tập</string>
+    <string name="list_question">Danh sách câu hỏi</string>
 </resources>

@@ -5,7 +5,10 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.GridLayoutManager;
 import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -14,13 +17,22 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.vn.ezlearn.R;
+import com.vn.ezlearn.adapter.DialogListQuestionAdapter;
 import com.vn.ezlearn.databinding.ActivityQuestionBinding;
+import com.vn.ezlearn.databinding.DialogListAnswerBinding;
 import com.vn.ezlearn.databinding.FragmentQuestionBinding;
+import com.vn.ezlearn.model.Question;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 
 public class QuestionActivity extends AppCompatActivity {
 
     private ActivityQuestionBinding questionBinding;
     private SectionsPagerAdapter mSectionsPagerAdapter;
+    private AlertDialog dialogListAnswer;
+    private List<Question> questionList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,9 +40,19 @@ public class QuestionActivity extends AppCompatActivity {
         questionBinding = DataBindingUtil.setContentView(this, R.layout.activity_question);
 
         setSupportActionBar(questionBinding.toolbar);
-
+        bindData();
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
         questionBinding.container.setAdapter(mSectionsPagerAdapter);
+
+    }
+
+    private void bindData() {
+        questionList = new ArrayList<>();
+        Random rand = new Random();
+        for (int i = 0; i < 50; i++) {
+            questionList.add(new Question(i, rand.nextInt(3)));
+        }
+
 
     }
 
@@ -45,11 +67,32 @@ public class QuestionActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-        if (id == R.id.action_settings) {
+        if (id == R.id.action_review) {
+            showPopupListQuestion();
             return true;
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private void showPopupListQuestion() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        DialogListAnswerBinding dialogListAnswerBinding = DataBindingUtil.inflate(
+                LayoutInflater.from(this), R.layout.dialog_list_answer, null, false);
+        builder.setView(dialogListAnswerBinding.getRoot());
+
+        GridLayoutManager layoutManager = new GridLayoutManager(this, 5);
+        dialogListAnswerBinding.rvlist.setLayoutManager(layoutManager);
+        dialogListAnswerBinding.rvlist.setHasFixedSize(true);
+        dialogListAnswerBinding.rvlist.setItemAnimator(new DefaultItemAnimator());
+
+        DialogListQuestionAdapter listQuestionAdapter = new DialogListQuestionAdapter(
+                this, new ArrayList<Question>());
+        dialogListAnswerBinding.rvlist.setAdapter(listQuestionAdapter);
+        listQuestionAdapter.addAll(questionList);
+
+        dialogListAnswer = builder.create();
+        dialogListAnswer.show();
     }
 
     public static class QuestionFragment extends Fragment {
