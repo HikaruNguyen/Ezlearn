@@ -1,0 +1,107 @@
+<resources>
+  <dimen name="activity_horizontal_margin">
+    14.22dp
+  </dimen>
+  <dimen name="activity_vertical_margin">
+    14.22dp
+  </dimen>
+  <dimen name="nav_header_vertical_spacing">
+    14.22dp
+  </dimen>
+  <dimen name="nav_header_height">
+    142.22dp
+  </dimen>
+  <dimen name="fab_margin">
+    14.22dp
+  </dimen>
+  <dimen name="margin_small">
+    7.11dp
+  </dimen>
+  <dimen name="margin_normal">
+    14.22dp
+  </dimen>
+  <dimen name="appbar_padding_top">
+    7.11dp
+  </dimen>
+  <dimen name="margin__28dp">
+    -24.89dp
+  </dimen>
+  <dimen name="margin_5dp">
+    4.44dp
+  </dimen>
+  <dimen name="margin_8dp">
+    7.11dp
+  </dimen>
+  <dimen name="margin_10dp">
+    8.89dp
+  </dimen>
+  <dimen name="margin_16dp">
+    14.22dp
+  </dimen>
+  <dimen name="margin_20dp">
+    17.78dp
+  </dimen>
+  <dimen name="margin_30dp">
+    26.67dp
+  </dimen>
+  <dimen name="text_size_10sp">
+    8.89sp
+  </dimen>
+  <dimen name="text_size_12sp">
+    10.67sp
+  </dimen>
+  <dimen name="text_size_14sp">
+    12.44sp
+  </dimen>
+  <dimen name="text_size_15sp">
+    13.33sp
+  </dimen>
+  <dimen name="text_size_16sp">
+    14.22sp
+  </dimen>
+  <dimen name="text_size_17sp">
+    15.11sp
+  </dimen>
+  <dimen name="text_size_20sp">
+    17.78sp
+  </dimen>
+  <dimen name="text_size_30sp">
+    26.67sp
+  </dimen>
+  <dimen name="text_size_40sp">
+    35.56sp
+  </dimen>
+  <dimen name="image_size_12dp">
+    10.67dp
+  </dimen>
+  <dimen name="image_size_16dp">
+    14.22dp
+  </dimen>
+  <dimen name="image_size_36dp">
+    32.0dp
+  </dimen>
+  <dimen name="image_size_40dp">
+    35.56dp
+  </dimen>
+  <dimen name="image_size_48dp">
+    42.67dp
+  </dimen>
+  <dimen name="image_size_50dp">
+    44.44dp
+  </dimen>
+  <dimen name="image_size_100dp">
+    88.89dp
+  </dimen>
+  <dimen name="image_size_200dp">
+    177.78dp
+  </dimen>
+  <dimen name="image_size_64dp">
+    56.89dp
+  </dimen>
+  <dimen name="image_size_44dp">
+    39.11dp
+  </dimen>
+  <dimen name="image_size_175dp">
+    155.56dp
+  </dimen>
+</resources>

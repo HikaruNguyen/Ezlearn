@@ -31,7 +31,7 @@ public class DialogListQuestionAdapter extends BaseRecyclerAdapter<Question,
     public void onBindViewHolder(ViewHolder holder, final int position) {
         ViewDataBinding viewDataBinding = holder.getViewDataBinding();
         viewDataBinding.setVariable(BR.itemQuestionDialogViewModel,
-                new ItemQuestionDialogViewModel(mContext, list.get(position)));
+                new ItemQuestionDialogViewModel(mContext, list.get(position), position + 1));
     }
 
     @Override

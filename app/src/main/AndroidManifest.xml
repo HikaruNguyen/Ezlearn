@@ -31,7 +31,7 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".activity.CategoryActivity"
-            android:label="@string/title_activity_category"></activity>
+            android:label="@string/title_activity_category" />
     </application>
 
 </manifest>

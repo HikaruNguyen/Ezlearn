@@ -21,5 +21,5 @@
         style="@style/AndroidImageSlider_Corner_Oval_Orange"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="5dp" />
+        android:layout_marginBottom="@dimen/margin_5dp" />
 </RelativeLayout>

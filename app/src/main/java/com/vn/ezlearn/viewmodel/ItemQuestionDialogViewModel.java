@@ -2,6 +2,7 @@ package com.vn.ezlearn.viewmodel;
 
 import android.content.Context;
 import android.databinding.BaseObservable;
+import android.databinding.ObservableField;
 import android.databinding.ObservableInt;
 
 import com.vn.ezlearn.R;
@@ -16,8 +17,9 @@ public class ItemQuestionDialogViewModel extends BaseObservable {
     private Question question;
 
     public ObservableInt backgroundItem;
+    public ObservableField<String> position;
 
-    public ItemQuestionDialogViewModel(Context context, Question question) {
+    public ItemQuestionDialogViewModel(Context context, Question question, int position) {
         this.context = context;
         this.question = question;
         backgroundItem = new ObservableInt();
@@ -30,5 +32,6 @@ public class ItemQuestionDialogViewModel extends BaseObservable {
         } else {
             backgroundItem.set(R.drawable.bg_question_unanswer);
         }
+        this.position = new ObservableField<>(String.valueOf(position));
     }
 }

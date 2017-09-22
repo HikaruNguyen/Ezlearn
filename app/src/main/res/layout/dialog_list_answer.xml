@@ -1,24 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:padding="10dp">
 
         <TextView
+            android:id="@+id/tvTitle"
             android:layout_width="wrap_content"
+            android:layout_centerHorizontal="true"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:text="@string/list_question"
             android:layout_marginBottom="10dp"
+            android:text="@string/list_question"
             android:textSize="20sp"
             android:textStyle="bold" />
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/rvlist"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-    </LinearLayout>
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/btnNopBai"
+            android:layout_below="@+id/tvTitle" />
+
+        <Button
+            android:id="@+id/btnNopBai"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:textColor="@color/white"
+            android:layout_alignParentBottom="true"
+            android:background="@drawable/bg_button"
+            android:text="@string/nopBai" />
+    </RelativeLayout>
 </layout>

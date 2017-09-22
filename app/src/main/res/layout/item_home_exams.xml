@@ -10,15 +10,15 @@
         android:background="@drawable/bg_exams"
         android:clickable="true"
         android:orientation="vertical"
-        android:paddingBottom="10dp"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp"
-        android:paddingTop="5dp">
+        android:paddingBottom="@dimen/margin_10dp"
+        android:paddingLeft="@dimen/margin_10dp"
+        android:paddingRight="@dimen/margin_10dp"
+        android:paddingTop="@dimen/margin_5dp">
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="@dimen/margin_5dp"
             android:text="Grammar G153- Preposition (*Free)"
             android:textAllCaps="true"
             android:textColor="@color/colorPrimaryDark"
@@ -27,7 +27,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="@dimen/margin_5dp"
             android:orientation="horizontal">
 
             <TextView
@@ -50,7 +50,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="@dimen/margin_5dp"
             android:layout_weight="2"
             android:orientation="horizontal">
 
@@ -73,7 +73,7 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="5dp"
+                        android:layout_marginLeft="@dimen/margin_5dp"
                         android:text="50 câu" />
                 </LinearLayout>
 
@@ -81,7 +81,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
-                    android:layout_marginTop="5dp"
+                    android:layout_marginTop="@dimen/margin_5dp"
                     android:gravity="center_vertical">
 
                     <ImageView
@@ -92,7 +92,7 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="5dp"
+                        android:layout_marginLeft="@dimen/margin_5dp"
                         android:text="90 phút" />
                 </LinearLayout>
             </LinearLayout>
@@ -107,7 +107,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
-                    android:layout_marginTop="5dp"
+                    android:layout_marginTop="@dimen/margin_5dp"
                     android:gravity="center_vertical">
 
                     <ImageView
@@ -118,7 +118,7 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="5dp"
+                        android:layout_marginLeft="@dimen/margin_5dp"
                         android:text="221 lượt" />
                 </LinearLayout>
             </LinearLayout>
@@ -132,7 +132,7 @@
 
             <Button
                 android:layout_width="wrap_content"
-                android:layout_height="40dp"
+                android:layout_height="@dimen/image_size_40dp"
                 android:background="@drawable/bg_button"
                 android:text="Làm bài thi"
                 android:textAllCaps="false"
@@ -141,16 +141,16 @@
     </LinearLayout>
 
     <RelativeLayout
-        android:layout_width="100dp"
-        android:layout_height="100dp"
+        android:layout_width="@dimen/image_size_100dp"
+        android:layout_height="@dimen/image_size_100dp"
         android:layout_alignParentRight="true"
-        android:layout_marginRight="-28dp">
+        android:layout_marginRight="@dimen/margin__28dp">
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="@dimen/margin_16dp"
             android:background="@color/color_free"
             android:gravity="center"
             android:maxLines="1"

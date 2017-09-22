@@ -6,7 +6,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.text.Html;
@@ -27,7 +26,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public class QuestionActivity extends AppCompatActivity {
+public class QuestionActivity extends BaseActivity {
 
     private ActivityQuestionBinding questionBinding;
     private SectionsPagerAdapter mSectionsPagerAdapter;
@@ -40,17 +39,25 @@ public class QuestionActivity extends AppCompatActivity {
         questionBinding = DataBindingUtil.setContentView(this, R.layout.activity_question);
 
         setSupportActionBar(questionBinding.toolbar);
+        initUI();
         bindData();
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
         questionBinding.container.setAdapter(mSectionsPagerAdapter);
 
     }
 
+    private void initUI() {
+        setBackButtonToolbar();
+        questionBinding.toolbar.setTitle("00:45:00");
+    }
+
     private void bindData() {
         questionList = new ArrayList<>();
         Random rand = new Random();
-        for (int i = 0; i < 50; i++) {
-            questionList.add(new Question(i, rand.nextInt(3)));
+        int min = Question.TYPE_ANSWERED;
+        int max = Question.TYPE_LATE;
+        for (int i = 0; i < 25; i++) {
+            questionList.add(new Question(i, rand.nextInt(max + 1 - min) + min));
         }
 
 
@@ -81,7 +88,7 @@ public class QuestionActivity extends AppCompatActivity {
                 LayoutInflater.from(this), R.layout.dialog_list_answer, null, false);
         builder.setView(dialogListAnswerBinding.getRoot());
 
-        GridLayoutManager layoutManager = new GridLayoutManager(this, 5);
+        GridLayoutManager layoutManager = new GridLayoutManager(this, 6);
         dialogListAnswerBinding.rvlist.setLayoutManager(layoutManager);
         dialogListAnswerBinding.rvlist.setHasFixedSize(true);
         dialogListAnswerBinding.rvlist.setItemAnimator(new DefaultItemAnimator());

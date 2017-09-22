@@ -67,24 +67,35 @@ public class MainActivity extends AppCompatActivity implements NavigationItemSel
 
         menuList = new ArrayList<>();
         menuList.add(new ItemMenu(-1, "TRANG CHỦ", ItemMenu.TYPE_NORMAL));
-        ItemMenu itemMenu = new ItemMenu(2, "TRUNG HỌC CƠ ", ItemMenu.TYPE_PARENT, 1);
+        ItemMenu itemMenu = new ItemMenu(2, "TIẾNG ANH PHỔ THÔNG", ItemMenu.TYPE_PARENT, 1);
         itemMenu.menuChildList.add(new ItemMenuChild(5, "LỚP 6", ItemMenu.TYPE_CHILD, 2));
         itemMenu.menuChildList.add(new ItemMenuChild(6, "LỚP 7", ItemMenu.TYPE_CHILD, 2));
         itemMenu.menuChildList.add(new ItemMenuChild(7, "LỚP 8", ItemMenu.TYPE_CHILD, 2));
         itemMenu.menuChildList.add(new ItemMenuChild(8, "LỚP 9", ItemMenu.TYPE_CHILD, 2));
-        itemMenu.menuChildList.add(new ItemMenuChild(9, "THI VÀO 10", ItemMenu.TYPE_CHILD, 2));
-        menuList.add(itemMenu);
-
-        itemMenu = new ItemMenu(3, "TRUNG HỌC PHỔ THÔNG", ItemMenu.TYPE_PARENT, 1);
         itemMenu.menuChildList.add(new ItemMenuChild(16, "LỚP 10", ItemMenu.TYPE_CHILD, 3));
         itemMenu.menuChildList.add(new ItemMenuChild(17, "LỚP 11", ItemMenu.TYPE_CHILD, 3));
         itemMenu.menuChildList.add(new ItemMenuChild(18, "LỚP 12", ItemMenu.TYPE_CHILD, 3));
-        itemMenu.menuChildList.add(new ItemMenuChild(18, "THI THPTQG", ItemMenu.TYPE_CHILD, 3));
         menuList.add(itemMenu);
 
-        itemMenu = new ItemMenu(4, "KỸ NĂNG", ItemMenu.TYPE_PARENT, 1);
-        itemMenu.menuChildList.add(new ItemMenuChild(19, "Ngữ pháp", ItemMenu.TYPE_CHILD, 4));
-        itemMenu.menuChildList.add(new ItemMenuChild(20, "Từ vựng", ItemMenu.TYPE_CHILD, 4));
+        itemMenu = new ItemMenu(3, "THI CHUYÊN 10", ItemMenu.TYPE_PARENT, 1);
+        itemMenu.menuChildList.add(new ItemMenuChild(16, "ĐỀ THI", ItemMenu.TYPE_CHILD, 3));
+        itemMenu.menuChildList.add(new ItemMenuChild(17, "NGỮ ÂM", ItemMenu.TYPE_CHILD, 3));
+        itemMenu.menuChildList.add(new ItemMenuChild(18, "NGỮ PHÁP", ItemMenu.TYPE_CHILD, 3));
+        menuList.add(itemMenu);
+
+        itemMenu = new ItemMenu(4, "THI THPTQG", ItemMenu.TYPE_PARENT, 1);
+        itemMenu.menuChildList.add(new ItemMenuChild(19, "Kết hợp câu", ItemMenu.TYPE_CHILD, 4));
+        itemMenu.menuChildList.add(new ItemMenuChild(20, "Từ trái nghĩa", ItemMenu.TYPE_CHILD, 4));
+        itemMenu.menuChildList.add(new ItemMenuChild(20, "Từ đồng nghĩa", ItemMenu.TYPE_CHILD, 4));
+        itemMenu.menuChildList.add(new ItemMenuChild(20, "Từ đồng nghĩa", ItemMenu.TYPE_CHILD, 4));
+        itemMenu.menuChildList.add(new ItemMenuChild(20, "Tìm lỗi sai", ItemMenu.TYPE_CHILD, 4));
+        itemMenu.menuChildList.add(new ItemMenuChild(20, "Điền từ", ItemMenu.TYPE_CHILD, 4));
+        itemMenu.menuChildList.add(new ItemMenuChild(20, "Điền từ", ItemMenu.TYPE_CHILD, 4));
+        itemMenu.menuChildList.add(new ItemMenuChild(20, "Giao tiếp", ItemMenu.TYPE_CHILD, 4));
+        itemMenu.menuChildList.add(new ItemMenuChild(20, "Ngữ âm", ItemMenu.TYPE_CHILD, 4));
+        itemMenu.menuChildList.add(new ItemMenuChild(20, "Ngữ pháp", ItemMenu.TYPE_CHILD, 4));
+        itemMenu.menuChildList.add(new ItemMenuChild(20, "Đọc hiểu", ItemMenu.TYPE_CHILD, 4));
+        itemMenu.menuChildList.add(new ItemMenuChild(20, "Đề thi", ItemMenu.TYPE_CHILD, 4));
         menuList.add(itemMenu);
 
         itemMenu = new ItemMenu(4, "IELTS", ItemMenu.TYPE_PARENT, 1);

@@ -14,22 +14,22 @@
 
         <RelativeLayout
             android:id="@+id/button"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
+            android:layout_width="@dimen/image_size_48dp"
+            android:layout_height="@dimen/image_size_48dp"
             android:layout_alignParentRight="true"
             android:layout_alignParentTop="true"
             android:gravity="center">
 
             <View
-                android:layout_width="12dp"
-                android:layout_height="12dp"
+                android:layout_width="@dimen/image_size_12dp"
+                android:layout_height="@dimen/image_size_12dp"
                 android:background="@drawable/triangle" />
         </RelativeLayout>
 
         <TextView
             android:id="@+id/tvName"
             android:layout_width="match_parent"
-            android:layout_height="48dp"
+            android:layout_height="@dimen/image_size_48dp"
             android:layout_alignParentTop="true"
             android:layout_toLeftOf="@id/button"
             android:padding="8dp"
