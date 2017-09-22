@@ -10,8 +10,8 @@
         <TextView
             android:id="@+id/tvTitle"
             android:layout_width="wrap_content"
-            android:layout_centerHorizontal="true"
             android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
             android:layout_gravity="center_horizontal"
             android:layout_marginBottom="10dp"
             android:text="@string/list_question"
@@ -29,10 +29,19 @@
             android:id="@+id/btnNopBai"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_above="@+id/btnCancel"
             android:layout_marginTop="10dp"
-            android:textColor="@color/white"
-            android:layout_alignParentBottom="true"
             android:background="@drawable/bg_button"
-            android:text="@string/nopBai" />
+            android:text="@string/nopBai"
+            android:textColor="@color/white" />
+
+        <Button
+            android:id="@+id/btnCancel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/bg_cancel"
+            android:text="@string/cancel" />
     </RelativeLayout>
 </layout>

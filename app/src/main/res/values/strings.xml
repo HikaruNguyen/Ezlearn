@@ -40,4 +40,5 @@
     <string name="list_question">Danh sách câu hỏi</string>
     <string name="nopBai">Nộp bài</string>
     <string name="clickback">Nhấn \'back\' lần nữa để thoát</string>
+    <string name="cancel">Thoát</string>
 </resources>

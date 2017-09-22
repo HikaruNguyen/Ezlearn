@@ -1,43 +1,52 @@
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools">
-    <ScrollView
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+
+    <LinearLayout
         android:layout_width="match_parent"
-        android:background="@color/white"
-        android:layout_height="match_parent">
-        <LinearLayout
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/margin_30dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tvQuestion"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            tools:context="com.vn.ezlearn.activity.QuestionActivity$QuestionFragment">
+            android:paddingLeft="@dimen/margin_10dp"
+            android:paddingRight="@dimen/margin_10dp"
+            android:text="Question 31"
+            android:textColor="@color/black"
+            android:textStyle="bold" />
 
-            <TextView
+        <RadioGroup
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="@dimen/margin_10dp"
+            android:paddingRight="@dimen/margin_10dp"
+            android:paddingTop="@dimen/margin_10dp">
+
+            <RadioButton
+                android:id="@+id/rdAnswerA"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingBottom="@dimen/margin_10dp"
-                android:paddingLeft="@dimen/margin_10dp"
-                android:paddingRight="@dimen/margin_10dp"
-                android:paddingTop="@dimen/margin_10dp"
-                android:text="Part 10: Read the following passage and mark the letter A, B, C, or D on your answer sheet to indicate the correct word or phrase that best fits each of the numbered blanks "
-                android:textColor="@color/black"
-                android:textStyle="bold" />
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@color/bg_main" />
-
-            <TextView
-                android:id="@+id/tvPassage"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingBottom="@dimen/margin_10dp"
-                android:paddingLeft="@dimen/margin_10dp"
-                android:paddingRight="@dimen/margin_10dp"
-                android:paddingTop="@dimen/margin_10dp"
                 android:textColor="@color/black" />
 
-        </LinearLayout>
-    </ScrollView>
+            <RadioButton
+                android:id="@+id/rdAnswerB"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/black" />
 
+            <RadioButton
+                android:id="@+id/rdAnswerC"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/black" />
 
+            <RadioButton
+                android:id="@+id/rdAnswerD"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/black" />
+        </RadioGroup>
+    </LinearLayout>
 </layout>
