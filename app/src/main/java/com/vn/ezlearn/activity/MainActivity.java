@@ -2,6 +2,7 @@ package com.vn.ezlearn.activity;
 
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -13,6 +14,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.vn.ezlearn.R;
 import com.vn.ezlearn.adapter.NavigationAdapter;
@@ -33,7 +35,7 @@ public class MainActivity extends AppCompatActivity implements NavigationItemSel
     private ActivityMainBinding mainBinding;
     private List<ItemMenu> menuList;
     private NavigationAdapter navigationAdapter;
-    private int currentId;
+    private int currentId = -1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -121,6 +123,8 @@ public class MainActivity extends AppCompatActivity implements NavigationItemSel
         mainBinding.rvNavigation.setDivider();
     }
 
+    boolean doubleBackToExitPressedOnce = false;
+
     @Override
     public void onBackPressed() {
         if (mainBinding.drawerLayout.isDrawerOpen(GravityCompat.START)) {
@@ -128,8 +132,22 @@ public class MainActivity extends AppCompatActivity implements NavigationItemSel
         } else {
             if (currentId != -1) {
                 changeFragment(new HomeFragment());
+                currentId = -1;
             } else {
-                super.onBackPressed();
+                if (doubleBackToExitPressedOnce) {
+                    super.onBackPressed();
+                    return;
+                }
+
+                this.doubleBackToExitPressedOnce = true;
+                Toast.makeText(this, getString(R.string.clickback), Toast.LENGTH_SHORT).show();
+
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        doubleBackToExitPressedOnce = false;
+                    }
+                }, 2000);
             }
 
         }

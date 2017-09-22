@@ -97,7 +97,13 @@ public class QuestionActivity extends BaseActivity {
                 this, new ArrayList<Question>());
         dialogListAnswerBinding.rvlist.setAdapter(listQuestionAdapter);
         listQuestionAdapter.addAll(questionList);
-
+        dialogListAnswerBinding.btnNopBai.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialogListAnswer.dismiss();
+            }
+        });
+        builder.setCancelable(false);
         dialogListAnswer = builder.create();
         dialogListAnswer.show();
     }

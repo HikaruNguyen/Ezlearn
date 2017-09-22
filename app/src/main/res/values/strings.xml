@@ -39,4 +39,5 @@
     <string name="luyenTap">Luyện tập</string>
     <string name="list_question">Danh sách câu hỏi</string>
     <string name="nopBai">Nộp bài</string>
+    <string name="clickback">Nhấn \'back\' lần nữa để thoát</string>
 </resources>
