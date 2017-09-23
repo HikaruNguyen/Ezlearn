@@ -23,7 +23,8 @@ import java.util.List;
  * Created by FRAMGIA\nguyen.duc.manh on 07/07/2017.
  */
 
-public class NavigationChildAdapter extends BaseRecyclerAdapter<ItemMenuChild, NavigationChildAdapter.ViewHolder> {
+public class NavigationChildAdapter
+        extends BaseRecyclerAdapter<ItemMenuChild, NavigationChildAdapter.ViewHolder> {
 
     private final List<ItemMenuChild> data;
     private Context context;

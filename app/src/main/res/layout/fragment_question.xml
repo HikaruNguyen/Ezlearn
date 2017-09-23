@@ -1,5 +1,12 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
 
+    <data>
+
+        <variable
+            name="questionViewModel"
+            type="com.vn.ezlearn.viewmodel.QuestionViewModel" />
+    </data>
+
     <RelativeLayout
         android:id="@+id/lnFragment"
         android:layout_width="match_parent"
@@ -14,20 +21,34 @@
             android:paddingLeft="@dimen/margin_10dp"
             android:paddingRight="@dimen/margin_10dp"
             android:paddingTop="@dimen/margin_10dp"
+            android:text="@{questionViewModel.textPassage}"
             android:textColor="@color/text_color"
-            android:textSize="@dimen/text_size_15sp" />
+            android:textSize="@dimen/text_size_15sp"
+            android:visibility="@{questionViewModel.visiablePassage}" />
 
         <TextView
-            android:id="@+id/tvQuestion"
+            android:id="@+id/tvQuestionNum"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/tvPassage"
             android:paddingLeft="@dimen/margin_10dp"
             android:paddingRight="@dimen/margin_10dp"
-            android:text="Question 31"
+            android:text="Question"
             android:textColor="@color/colorPrimaryDark"
             android:textSize="@dimen/text_size_15sp"
             android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tvQuestion"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tvQuestionNum"
+            android:paddingLeft="@dimen/margin_10dp"
+            android:paddingRight="@dimen/margin_10dp"
+            android:text="@{questionViewModel.textQuestion}"
+            android:textColor="@color/text_color"
+            android:textSize="@dimen/text_size_15sp"
+            android:visibility="@{questionViewModel.visiableQuestion}" />
 
         <RadioGroup
             android:id="@+id/rgAnswer"

@@ -11,8 +11,20 @@ public class Question {
     public Integer id;
     public int type;
 
-    public Question(Integer id, int type) {
+    public String part;
+    public String passage;
+    public String question;
+
+//    public Question(Integer id, int type) {
+//        this.id = id;
+//        this.type = type;
+//    }
+
+    public Question(Integer id, int type, String part, String passage, String question) {
         this.id = id;
         this.type = type;
+        this.part = part;
+        this.passage = passage;
+        this.question = question;
     }
 }
