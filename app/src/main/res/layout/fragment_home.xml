@@ -7,7 +7,7 @@
             type="com.vn.ezlearn.viewmodel.HomeViewModel" />
     </data>
 
-    <com.vn.ezlearn.widget.CRecyclerView
+    <com.vn.ezlearn.widgets.CRecyclerView
         android:id="@+id/rvHome"
         android:background="@color/bg_main"
         android:layout_width="match_parent"

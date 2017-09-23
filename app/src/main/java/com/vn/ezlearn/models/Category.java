@@ -1,4 +1,4 @@
-package com.vn.ezlearn.model;
+package com.vn.ezlearn.models;
 
 /**
  * Created by FRAMGIA\nguyen.duc.manh on 15/09/2017.

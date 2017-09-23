@@ -21,10 +21,10 @@ import com.vn.ezlearn.adapter.NavigationAdapter;
 import com.vn.ezlearn.databinding.ActivityMainBinding;
 import com.vn.ezlearn.fragment.CategoryMainFragment;
 import com.vn.ezlearn.fragment.HomeFragment;
-import com.vn.ezlearn.model.ItemMenu;
-import com.vn.ezlearn.model.ItemMenuChild;
-import com.vn.ezlearn.utils.NavigationItemSelected;
-import com.vn.ezlearn.widget.CRecyclerView;
+import com.vn.ezlearn.models.ItemMenu;
+import com.vn.ezlearn.models.ItemMenuChild;
+import com.vn.ezlearn.interfaces.NavigationItemSelected;
+import com.vn.ezlearn.widgets.CRecyclerView;
 
 import java.util.ArrayList;
 import java.util.List;

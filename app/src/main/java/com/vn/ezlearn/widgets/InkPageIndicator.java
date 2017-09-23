@@ -1,4 +1,4 @@
-package com.vn.ezlearn.widget;
+package com.vn.ezlearn.widgets;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;

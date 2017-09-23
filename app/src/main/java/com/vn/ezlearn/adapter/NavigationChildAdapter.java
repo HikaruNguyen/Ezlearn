@@ -14,8 +14,8 @@ import com.github.aakira.expandablelayout.ExpandableLayout;
 import com.github.aakira.expandablelayout.ExpandableLinearLayout;
 import com.github.aakira.expandablelayout.Utils;
 import com.vn.ezlearn.R;
-import com.vn.ezlearn.model.ItemMenuChild;
-import com.vn.ezlearn.utils.NavigationItemSelected;
+import com.vn.ezlearn.models.ItemMenuChild;
+import com.vn.ezlearn.interfaces.NavigationItemSelected;
 
 import java.util.List;
 

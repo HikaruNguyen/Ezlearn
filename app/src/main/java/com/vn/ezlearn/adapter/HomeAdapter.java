@@ -17,7 +17,7 @@ import com.daimajia.slider.library.SliderTypes.BaseSliderView;
 import com.daimajia.slider.library.SliderTypes.DefaultSliderView;
 import com.vn.ezlearn.R;
 import com.vn.ezlearn.activity.TestActivity;
-import com.vn.ezlearn.model.HomeObject;
+import com.vn.ezlearn.models.HomeObject;
 
 import java.util.List;
 

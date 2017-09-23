@@ -12,10 +12,10 @@ import com.daimajia.slider.library.SliderTypes.BaseSliderView;
 import com.vn.ezlearn.R;
 import com.vn.ezlearn.adapter.HomeAdapter;
 import com.vn.ezlearn.databinding.FragmentHomeBinding;
-import com.vn.ezlearn.model.Banner;
-import com.vn.ezlearn.model.Category;
-import com.vn.ezlearn.model.Exam;
-import com.vn.ezlearn.model.HomeObject;
+import com.vn.ezlearn.models.Banner;
+import com.vn.ezlearn.models.Category;
+import com.vn.ezlearn.models.Exam;
+import com.vn.ezlearn.models.HomeObject;
 import com.vn.ezlearn.viewmodel.HomeViewModel;
 
 import java.util.ArrayList;

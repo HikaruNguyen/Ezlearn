@@ -2,16 +2,19 @@ package com.vn.ezlearn.fragment;
 
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
+import android.support.annotation.IdRes;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RadioGroup;
 
 import com.vn.ezlearn.R;
 import com.vn.ezlearn.databinding.FragmentQuestionBinding;
-import com.vn.ezlearn.model.Question;
+import com.vn.ezlearn.interfaces.OnCheckAnswerListener;
+import com.vn.ezlearn.models.Question;
 import com.vn.ezlearn.viewmodel.QuestionViewModel;
 
 /**
@@ -26,6 +29,7 @@ public class QuestionFragment extends Fragment {
     private int position;
     private int size;
     private Question question;
+    private OnCheckAnswerListener onCheckAnswerListener;
 
     public QuestionFragment() {
     }
@@ -39,8 +43,9 @@ public class QuestionFragment extends Fragment {
         return fragment;
     }
 
-    public void setQuestion(Question question) {
+    public void setQuestion(Question question, OnCheckAnswerListener onCheckAnswerListener) {
         this.question = question;
+        this.onCheckAnswerListener = onCheckAnswerListener;
     }
 
     @Override
@@ -59,13 +64,40 @@ public class QuestionFragment extends Fragment {
                 inflater, R.layout.fragment_question, container, false);
         questionViewModel = new QuestionViewModel(getActivity(), question);
         fragmentQuestionBinding.setQuestionViewModel(questionViewModel);
-//        fragmentQuestionBinding.tvPassage.setText(Html.fromHtml("<p><strong>HOW TRANSPORTATION AFFECTS OUR LIVES</strong></p>\n" +
-//                "\n" +
-//                "<p>Without transportation, our modern society could not exist. We would have no metals, no coal, and no oil (31)______ would we have any products made from these materials. Besides, we would have to (32) ______ most of our time raising food - and the food would be limited to the kinds that could grow in the climate and soil of our own neighborhoods.</p>\n" +
-//                "\n" +
-//                "<p>Transportation also affects our lives in (33) ______ ways. Transportation can speed a doctor to the sides of a sick person, even if the (34)______ lives on an isolated farm. It can take police to the scene of a crime within moments of being notified. Transportation enables teams of athletes to compete in national and international sports (35)______. In times of disasters, transportation can rush aid to persons in areas stricken by floods, famines, and earthquakes.</p>"));
+        bindData();
+        event();
+        return fragmentQuestionBinding.getRoot();
+    }
 
+    private void event() {
+        fragmentQuestionBinding.rgAnswer.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup radioGroup, @IdRes int i) {
+                switch (i) {
+                    case R.id.rdAnswerA:
+                        answer(0);
+                        break;
+                    case R.id.rdAnswerB:
+                        answer(1);
+                        break;
+                    case R.id.rdAnswerC:
+                        answer(2);
+                        break;
+                    case R.id.rdAnswerD:
+                        answer(3);
+                        break;
+                    default:
+                        break;
+                }
+            }
+        });
+    }
 
+    public void answer(int position) {
+        onCheckAnswerListener.OnCheckAnswer(position);
+    }
+
+    private void bindData() {
         fragmentQuestionBinding.rdAnswerA.setText(Html.fromHtml("either"));
         fragmentQuestionBinding.rdAnswerB.setText(Html.fromHtml("nor"));
         fragmentQuestionBinding.rdAnswerC.setText(Html.fromHtml("or"));
@@ -73,6 +105,5 @@ public class QuestionFragment extends Fragment {
         fragmentQuestionBinding.tvQuestionNum.setText(
                 getString(R.string.question) + " " + position + "/" + size);
 
-        return fragmentQuestionBinding.getRoot();
     }
 }

@@ -1,9 +1,9 @@
-package com.vn.ezlearn.utils;
+package com.vn.ezlearn.interfaces;
 
 /**
  * Created by admin on 9/16/17.
  */
 
 public interface NavigationItemSelected {
-    public void onSelected(String name, int id);
+    void onSelected(String name, int id);
 }

@@ -27,9 +27,9 @@ import com.vn.ezlearn.utils.MessageButtonBehaviourOnPageSelected;
 import com.vn.ezlearn.utils.ParallaxScrollListener;
 import com.vn.ezlearn.utils.PermissionNotGrantedClickListener;
 import com.vn.ezlearn.utils.ViewBehavioursOnPageChangeListener;
-import com.vn.ezlearn.widget.InkPageIndicator;
-import com.vn.ezlearn.widget.OverScrollViewPager;
-import com.vn.ezlearn.widget.SwipeableViewPager;
+import com.vn.ezlearn.widgets.InkPageIndicator;
+import com.vn.ezlearn.widgets.OverScrollViewPager;
+import com.vn.ezlearn.widgets.SwipeableViewPager;
 
 import agency.tango.materialintroscreen.MessageButtonBehaviour;
 import agency.tango.materialintroscreen.animations.ViewTranslationWrapper;

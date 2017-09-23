@@ -15,10 +15,10 @@ import com.github.aakira.expandablelayout.ExpandableLayoutListenerAdapter;
 import com.github.aakira.expandablelayout.ExpandableLinearLayout;
 import com.github.aakira.expandablelayout.Utils;
 import com.vn.ezlearn.R;
-import com.vn.ezlearn.model.ItemMenu;
-import com.vn.ezlearn.model.ItemMenuChild;
-import com.vn.ezlearn.utils.NavigationItemSelected;
-import com.vn.ezlearn.widget.CRecyclerView;
+import com.vn.ezlearn.models.ItemMenu;
+import com.vn.ezlearn.models.ItemMenuChild;
+import com.vn.ezlearn.interfaces.NavigationItemSelected;
+import com.vn.ezlearn.widgets.CRecyclerView;
 
 import java.util.ArrayList;
 import java.util.List;

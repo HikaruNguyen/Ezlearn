@@ -12,7 +12,8 @@ import android.widget.ImageView;
 
 import com.vn.ezlearn.BR;
 import com.vn.ezlearn.R;
-import com.vn.ezlearn.model.Question;
+import com.vn.ezlearn.interfaces.OnClickQuestionPopupListener;
+import com.vn.ezlearn.models.Question;
 import com.vn.ezlearn.viewmodel.ItemQuestionDialogViewModel;
 
 import java.util.List;
@@ -23,8 +24,12 @@ import java.util.List;
 
 public class DialogListQuestionAdapter extends BaseRecyclerAdapter<Question,
         DialogListQuestionAdapter.ViewHolder> {
-    public DialogListQuestionAdapter(Context context, List<Question> list) {
+    private OnClickQuestionPopupListener onClickQuestionPopupListener;
+
+    public DialogListQuestionAdapter(Context context, List<Question> list,
+                                     OnClickQuestionPopupListener onClickQuestionPopupListener) {
         super(context, list);
+        this.onClickQuestionPopupListener = onClickQuestionPopupListener;
     }
 
     @Override
@@ -54,7 +59,7 @@ public class DialogListQuestionAdapter extends BaseRecyclerAdapter<Question,
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-
+                    onClickQuestionPopupListener.onClick(getAdapterPosition());
                 }
             });
         }

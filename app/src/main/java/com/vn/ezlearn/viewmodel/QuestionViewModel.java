@@ -9,7 +9,7 @@ import android.text.Html;
 import android.text.Spanned;
 import android.view.View;
 
-import com.vn.ezlearn.model.Question;
+import com.vn.ezlearn.models.Question;
 
 /**
  * Created by FRAMGIA\nguyen.duc.manh on 15/09/2017.

@@ -1,4 +1,4 @@
-package com.vn.ezlearn.model;
+package com.vn.ezlearn.models;
 
 import java.util.ArrayList;
 import java.util.List;

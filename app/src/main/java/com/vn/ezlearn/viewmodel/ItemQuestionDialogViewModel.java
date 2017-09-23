@@ -6,7 +6,7 @@ import android.databinding.ObservableField;
 import android.databinding.ObservableInt;
 
 import com.vn.ezlearn.R;
-import com.vn.ezlearn.model.Question;
+import com.vn.ezlearn.models.Question;
 
 /**
  * Created by FRAMGIA\nguyen.duc.manh on 21/09/2017.

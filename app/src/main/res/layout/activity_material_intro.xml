@@ -11,7 +11,7 @@
     android:background="@android:color/transparent"
     android:orientation="vertical">
 
-    <com.vn.ezlearn.widget.OverScrollViewPager
+    <com.vn.ezlearn.widgets.OverScrollViewPager
         android:id="@+id/view_pager_slides"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
@@ -62,7 +62,7 @@
                 android:src="@drawable/ic_skip"
                 android:visibility="gone" />
 
-            <com.vn.ezlearn.widget.InkPageIndicator
+            <com.vn.ezlearn.widgets.InkPageIndicator
                 android:id="@+id/indicator"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"

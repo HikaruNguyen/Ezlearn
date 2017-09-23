@@ -3,7 +3,7 @@ package com.vn.ezlearn.viewmodel;
 import android.databinding.BaseObservable;
 import android.databinding.Bindable;
 
-import com.vn.ezlearn.model.ItemMenu;
+import com.vn.ezlearn.models.ItemMenu;
 
 /**
  * Created by FRAMGIA\nguyen.duc.manh on 07/07/2017.
