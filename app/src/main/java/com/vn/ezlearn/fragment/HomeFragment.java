@@ -72,9 +72,9 @@ public class HomeFragment extends Fragment implements BaseSliderView.OnSliderCli
 
     private void initBanner() {
         bannerList = new ArrayList<>();
-        bannerList.add(new Banner(1, R.mipmap.banner01));
-        bannerList.add(new Banner(2, R.mipmap.banner02));
-        bannerList.add(new Banner(3, R.mipmap.banner03));
+        bannerList.add(new Banner(1, R.drawable.banner01));
+        bannerList.add(new Banner(2, R.drawable.banner02));
+        bannerList.add(new Banner(3, R.drawable.banner03));
     }
 
     private void initBanner1() {

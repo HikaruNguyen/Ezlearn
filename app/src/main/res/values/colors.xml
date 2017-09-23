@@ -30,4 +30,7 @@
 
     <color name="color_free">#f36f6f</color>
     <color name="yellow">#FFFF41</color>
+
+    <color name="text_color">#636363</color>
+    <color name="title_color">#6A6A6A</color>
 </resources>

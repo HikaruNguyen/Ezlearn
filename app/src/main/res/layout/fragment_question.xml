@@ -1,25 +1,39 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
 
-
-    <LinearLayout
+    <RelativeLayout
+        android:id="@+id/lnFragment"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/margin_30dp"
-        android:orientation="vertical">
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:paddingBottom="@dimen/margin_20dp">
+
+        <TextView
+            android:id="@+id/tvPassage"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="@dimen/margin_10dp"
+            android:paddingRight="@dimen/margin_10dp"
+            android:paddingTop="@dimen/margin_10dp"
+            android:textColor="@color/text_color"
+            android:textSize="@dimen/text_size_15sp" />
 
         <TextView
             android:id="@+id/tvQuestion"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_below="@+id/tvPassage"
             android:paddingLeft="@dimen/margin_10dp"
             android:paddingRight="@dimen/margin_10dp"
             android:text="Question 31"
-            android:textColor="@color/black"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="@dimen/text_size_15sp"
             android:textStyle="bold" />
 
         <RadioGroup
+            android:id="@+id/rgAnswer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_below="@+id/tvQuestion"
             android:paddingLeft="@dimen/margin_10dp"
             android:paddingRight="@dimen/margin_10dp"
             android:paddingTop="@dimen/margin_10dp">
@@ -28,25 +42,29 @@
                 android:id="@+id/rdAnswerA"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="@color/black" />
+                android:textColor="@color/text_color"
+                android:textSize="@dimen/text_size_15sp" />
 
             <RadioButton
                 android:id="@+id/rdAnswerB"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="@color/black" />
+                android:textColor="@color/text_color"
+                android:textSize="@dimen/text_size_15sp" />
 
             <RadioButton
                 android:id="@+id/rdAnswerC"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="@color/black" />
+                android:textColor="@color/text_color"
+                android:textSize="@dimen/text_size_15sp" />
 
             <RadioButton
                 android:id="@+id/rdAnswerD"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="@color/black" />
+                android:textColor="@color/text_color"
+                android:textSize="@dimen/text_size_15sp" />
         </RadioGroup>
-    </LinearLayout>
+    </RelativeLayout>
 </layout>
