@@ -19,7 +19,7 @@ import android.widget.Toast;
 import com.vn.ezlearn.R;
 import com.vn.ezlearn.adapter.NavigationAdapter;
 import com.vn.ezlearn.databinding.ActivityMainBinding;
-import com.vn.ezlearn.fragment.CategoryFragment;
+import com.vn.ezlearn.fragment.CategoryMainFragment;
 import com.vn.ezlearn.fragment.HomeFragment;
 import com.vn.ezlearn.model.ItemMenu;
 import com.vn.ezlearn.model.ItemMenuChild;
@@ -197,17 +197,18 @@ public class MainActivity extends AppCompatActivity implements NavigationItemSel
     public void onSelected(String name, int id) {
         if (id != currentId) {
             if (id != -1) {
-                changeFragment(new CategoryFragment());
                 if (mainBinding.drawerLayout.isDrawerOpen(GravityCompat.START)) {
                     mainBinding.drawerLayout.closeDrawer(GravityCompat.START);
                     toolbar.setTitle(name);
                 }
+                changeFragment(new CategoryMainFragment());
             } else {
-                changeFragment(new HomeFragment());
+
                 if (mainBinding.drawerLayout.isDrawerOpen(GravityCompat.START)) {
                     mainBinding.drawerLayout.closeDrawer(GravityCompat.START);
                     toolbar.setTitle(name);
                 }
+                changeFragment(new HomeFragment());
             }
 
         }

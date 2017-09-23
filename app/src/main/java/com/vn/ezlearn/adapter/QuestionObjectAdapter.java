@@ -1,6 +1,7 @@
 package com.vn.ezlearn.adapter;
 
 import android.app.Activity;
+import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -23,7 +24,7 @@ import java.util.List;
 public class QuestionObjectAdapter extends BaseRecyclerAdapter<QuestionObject, QuestionObjectAdapter.ViewHolder> {
     private final List<QuestionObject> data;
     private Activity activity;
-    private List<QuestionFragment> questionFragments;
+    private List<Fragment> questionFragments;
     private ViewPagerAdapter viewPagerAdapter;
 
     public QuestionObjectAdapter(Activity activity, List<QuestionObject> list) {
@@ -54,7 +55,7 @@ public class QuestionObjectAdapter extends BaseRecyclerAdapter<QuestionObject, Q
             questionFragments = new ArrayList<>();
             if (questionList != null) {
                 for (int i = 0; i < questionList.size(); i++) {
-                    questionFragments.add(new QuestionFragment());
+                    questionFragments.add(QuestionFragment.newInstance(i+1));
                 }
             }
             viewPagerAdapter = new ViewPagerAdapter(

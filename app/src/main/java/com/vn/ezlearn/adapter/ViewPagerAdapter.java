@@ -5,8 +5,6 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.view.ViewGroup;
 
-import com.vn.ezlearn.fragment.QuestionFragment;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,9 +13,9 @@ import java.util.List;
  */
 
 public class ViewPagerAdapter extends FragmentPagerAdapter {
-    private List<QuestionFragment> fragmentList = new ArrayList<>();
+    private List<Fragment> fragmentList = new ArrayList<>();
 
-    public ViewPagerAdapter(FragmentManager manager, List<QuestionFragment> fragmentList) {
+    public ViewPagerAdapter(FragmentManager manager, List<Fragment> fragmentList) {
         super(manager);
         this.fragmentList = fragmentList;
     }
