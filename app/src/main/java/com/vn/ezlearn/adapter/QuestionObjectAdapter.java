@@ -79,7 +79,7 @@ public class QuestionObjectAdapter
             if (questionList != null) {
                 for (int i = 0; i < questionList.size(); i++) {
                     QuestionFragment questionFragment =
-                            QuestionFragment.newInstance(i + 1, questionList.size());
+                            QuestionFragment.newInstance(i, questionList.size());
                     questionFragment.setQuestion(questionList.get(i), onCheckAnswerListener);
                     questionFragments.add(questionFragment);
                 }

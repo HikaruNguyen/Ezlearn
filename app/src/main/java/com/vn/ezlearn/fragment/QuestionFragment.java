@@ -91,9 +91,17 @@ public class QuestionFragment extends Fragment {
                 }
             }
         });
+
+        fragmentQuestionBinding.tvNeedReview.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                questionViewModel.setNeedReview();
+                onCheckAnswerListener.onNeedReview(position);
+            }
+        });
     }
 
-    public void answer(int position) {
+    public void answer(int answer) {
         onCheckAnswerListener.OnCheckAnswer(position);
     }
 
@@ -103,7 +111,7 @@ public class QuestionFragment extends Fragment {
         fragmentQuestionBinding.rdAnswerC.setText(Html.fromHtml("or"));
         fragmentQuestionBinding.rdAnswerD.setText(Html.fromHtml("both"));
         fragmentQuestionBinding.tvQuestionNum.setText(
-                getString(R.string.question) + " " + position + "/" + size);
+                getString(R.string.question) + " " + (position + 1) + "/" + size);
 
     }
 }

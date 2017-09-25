@@ -6,4 +6,6 @@ package com.vn.ezlearn.interfaces;
 
 public interface OnCheckAnswerListener {
     void OnCheckAnswer(int position);
+
+    void onNeedReview(int position);
 }

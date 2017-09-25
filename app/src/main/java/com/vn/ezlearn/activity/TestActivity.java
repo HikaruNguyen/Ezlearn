@@ -1,7 +1,9 @@
 package com.vn.ezlearn.activity;
 
+import android.annotation.SuppressLint;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
@@ -15,35 +17,44 @@ import com.vn.ezlearn.adapter.DialogListQuestionAdapter;
 import com.vn.ezlearn.adapter.QuestionObjectAdapter;
 import com.vn.ezlearn.databinding.ActivityTestBinding;
 import com.vn.ezlearn.databinding.DialogListAnswerBinding;
+import com.vn.ezlearn.interfaces.ChangeQuestionListener;
 import com.vn.ezlearn.interfaces.OnCheckAnswerListener;
 import com.vn.ezlearn.interfaces.OnClickQuestionPopupListener;
 import com.vn.ezlearn.models.Question;
 import com.vn.ezlearn.models.QuestionObject;
-import com.vn.ezlearn.interfaces.ChangeQuestionListener;
+import com.vn.ezlearn.viewmodel.TestViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 public class TestActivity extends BaseActivity
         implements ChangeQuestionListener, OnCheckAnswerListener, OnClickQuestionPopupListener {
+    private static final String FORMAT = "%02d:%02d:%02d";
     private ActivityTestBinding testBinding;
+    private TestViewModel testViewModel;
     private QuestionObjectAdapter adapter;
     private List<QuestionObject> list;
     private List<Question> questionList;
     private AlertDialog dialogListAnswer;
+    private CountDownTimer countDownTimer;
+    private long time = 15 * 60 * 1000;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         testBinding = DataBindingUtil.setContentView(this, R.layout.activity_test);
+        setSupportActionBar(testBinding.toolbar);
+
         initUI();
         bindData();
+        countDown();
     }
 
     private void initUI() {
         setBackButtonToolbar();
-        setSupportActionBar(testBinding.toolbar);
-        testBinding.toolbar.setTitle("00:45:00");
+        testViewModel = new TestViewModel(this, getString(R.string.app_name));
+        testBinding.setTestViewModel(testViewModel);
     }
 
     private void bindData() {
@@ -119,19 +130,31 @@ public class TestActivity extends BaseActivity
     }
 
     @Override
-    public void onChange(int postion) {
+    public void onChange(int position) {
         if (questionList != null && questionList.size() > 0) {
             if (list != null && list.size() > 0) {
-                adapter.setData(0, new QuestionObject(questionList.get(postion).part));
+                adapter.setData(0, new QuestionObject(questionList.get(position).part));
             }
         }
     }
 
     @Override
     public void OnCheckAnswer(int position) {
-        Question question = questionList.get(position);
-        question.type = Question.TYPE_ANSWERED;
-        questionList.set(position, question);
+        if (questionList != null && questionList.size() > position) {
+            Question question = questionList.get(position);
+            question.type = Question.TYPE_ANSWERED;
+            questionList.set(position, question);
+        }
+
+    }
+
+    @Override
+    public void onNeedReview(int position) {
+        if (questionList != null && questionList.size() > position) {
+            Question question = questionList.get(position);
+            question.type = Question.TYPE_LATE;
+            questionList.set(position, question);
+        }
     }
 
     @Override
@@ -140,5 +163,30 @@ public class TestActivity extends BaseActivity
             dialogListAnswer.dismiss();
             adapter.onMoveQuestion(position);
         }
+    }
+
+    private void countDown() {
+        countDownTimer = new CountDownTimer(time, 1000) { // adjust the milli seconds here
+
+            @SuppressLint("DefaultLocale")
+            public void onTick(long millisUntilFinished) {
+                testViewModel.setTitle(
+                        "" + String.format(
+                                FORMAT,
+                                TimeUnit.MILLISECONDS.toHours(millisUntilFinished),
+                                TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished)
+                                        - TimeUnit.HOURS.toMinutes(
+                                        TimeUnit.MILLISECONDS.toHours(millisUntilFinished)),
+                                TimeUnit.MILLISECONDS.toSeconds(millisUntilFinished)
+                                        - TimeUnit.MINUTES.toSeconds(
+                                        TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished))));
+            }
+
+            public void onFinish() {
+                testViewModel.setTitle(getString(R.string.hetGio));
+            }
+        };
+        countDownTimer.start();
+
     }
 }
