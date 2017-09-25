@@ -59,7 +59,7 @@ public class NavigationChildAdapter
     public void onBindViewHolder(final ViewHolder holder, final int position) {
         final ItemMenuChild item = data.get(position);
         holder.setIsRecyclable(false);
-        holder.tvName.setText(item.name);
+        holder.tvName.setText(item.category_name);
 //        holder.itemView.setBackgroundColor(ContextCompat.getColor(context, R.color.material_light_blue_500));
 //        if (data.get(position).type != ItemMenu.TYPE_NORMAL) {
 //            holder.expandableLayout.setInRecyclerView(true);
@@ -122,8 +122,8 @@ public class NavigationChildAdapter
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    navigationItemSelected.onSelected(list.get(getAdapterPosition()).name,
-                            list.get(getAdapterPosition()).id);
+                    navigationItemSelected.onSelected(list.get(getAdapterPosition()).category_name,
+                            list.get(getAdapterPosition()).category_id);
                 }
             });
         }

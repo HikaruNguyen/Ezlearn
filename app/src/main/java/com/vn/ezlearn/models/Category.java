@@ -5,6 +5,10 @@ package com.vn.ezlearn.models;
  */
 
 public class Category {
-    public Integer id;
-    public String name;
+    public String category_id;
+    public String category_name;
+    public Integer type;
+    public String parent_id;
+    public String weight;
+    public String img_icon;
 }

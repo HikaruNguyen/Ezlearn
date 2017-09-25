@@ -61,13 +61,13 @@ public class NavigationAdapter extends BaseRecyclerAdapter<ItemMenu, NavigationA
     public void onBindViewHolder(final ViewHolder holder, final int position) {
         final ItemMenu item = data.get(position);
         holder.setIsRecyclable(false);
-        holder.tvName.setText(item.name);
+        holder.tvName.setText(item.category_name);
 
         if (getItemViewType(position) != ItemMenu.TYPE_NORMAL) {
             NavigationChildAdapter childAdapter = new NavigationChildAdapter(
                     context, new ArrayList<ItemMenuChild>(), navigationItemSelected);
             holder.rvItemMenuChild.setAdapter(childAdapter);
-            childAdapter.addAll(item.menuChildList);
+            childAdapter.addAll(item.children);
             holder.expandableLayout.setInRecyclerView(true);
             holder.expandableLayout.setInterpolator(Utils.createInterpolator(Utils.FAST_OUT_SLOW_IN_INTERPOLATOR));
             holder.expandableLayout.setExpanded(expandState.get(position));
@@ -102,7 +102,7 @@ public class NavigationAdapter extends BaseRecyclerAdapter<ItemMenu, NavigationA
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    navigationItemSelected.onSelected(item.name, item.id);
+                    navigationItemSelected.onSelected(item.category_name, item.category_id);
                 }
             });
         }
@@ -115,7 +115,7 @@ public class NavigationAdapter extends BaseRecyclerAdapter<ItemMenu, NavigationA
 
     @Override
     public int getItemViewType(int position) {
-        return data.get(position).type;
+        return data.get(position).typeMenu;
     }
 
     @Override

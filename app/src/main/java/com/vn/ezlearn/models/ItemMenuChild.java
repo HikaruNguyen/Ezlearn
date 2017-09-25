@@ -7,15 +7,17 @@ package com.vn.ezlearn.models;
 public class ItemMenuChild {
     public static final int TYPE_PARENT = 2;
     public static final int TYPE_CHILD = 3;
-    public int id;
-    public String name;
-    public int type;
-    public int parentId;
+    public String category_id;
+    public String category_name;
+    public Integer type;
+    public String parent_id;
+    public String weight;
+    public String img_icon;
 
-    public ItemMenuChild(int id, String name, int type, int parentId) {
-        this.id = id;
-        this.name = name;
+    public ItemMenuChild(String id, String name, int type, String parentId) {
+        this.category_id = id;
+        this.category_name = name;
         this.type = type;
-        this.parentId = parentId;
+        this.parent_id = parentId;
     }
 }
