@@ -1,5 +1,6 @@
 package com.vn.ezlearn.activity;
 
+import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.os.Handler;
@@ -12,6 +13,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Toast;
 
 import com.vn.ezlearn.R;
@@ -41,7 +43,20 @@ public class MainActivity extends AppCompatActivity implements NavigationItemSel
         mainBinding = DataBindingUtil.setContentView(this, R.layout.activity_main);
         initUI();
         bindData();
+        event();
+    }
 
+    private void event() {
+        mainBinding.navHeaderMain.rlHeader.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (mainBinding.drawerLayout.isDrawerOpen(GravityCompat.START)) {
+                    mainBinding.drawerLayout.closeDrawer(GravityCompat.START);
+                }
+                Intent intent = new Intent(MainActivity.this, UserProfile.class);
+                startActivity(intent);
+            }
+        });
     }
 
     private void bindData() {

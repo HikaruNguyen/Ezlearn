@@ -4,7 +4,7 @@
     <item
         android:id="@+id/navigation_home"
         android:checked="true"
-        android:icon="@mipmap/ic_profile"
+        android:icon="@mipmap/ic_lesson"
         android:title="@string/baiGiang" />
 
     <item
@@ -14,6 +14,6 @@
 
     <item
         android:id="@+id/navigation_notifications"
-        android:icon="@mipmap/ic_buy"
+        android:icon="@mipmap/ic_practice"
         android:title="@string/luyenTap" />
 </menu>

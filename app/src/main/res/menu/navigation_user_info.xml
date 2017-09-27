@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/navigation_profile"
+        android:checked="true"
+        android:icon="@mipmap/ic_profile"
+        android:title="@string/profile" />
+
+    <item
+        android:id="@+id/navigation_history_exam"
+        android:icon="@mipmap/ic_exam"
+        android:title="@string/lichSuThi" />
+
+    <item
+        android:id="@+id/navigation_history_topup"
+        android:icon="@mipmap/ic_buy"
+        android:title="@string/lichSuNapTien" />
+    <item
+        android:id="@+id/navigation_history_buy_package"
+        android:icon="@mipmap/ic_package"
+        android:title="@string/lichSuMuaGoi" />
+</menu>

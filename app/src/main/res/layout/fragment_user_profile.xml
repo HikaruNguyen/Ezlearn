@@ -5,5 +5,5 @@
     android:orientation="vertical"
     tools:context="com.vn.ezlearn.fragment.UserProfileFragment">
 
-
+    <include layout="@layout/content_test_scroll" />
 </LinearLayout>
