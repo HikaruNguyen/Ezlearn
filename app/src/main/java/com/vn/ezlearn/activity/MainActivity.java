@@ -77,10 +77,12 @@ public class MainActivity extends AppCompatActivity implements NavigationItemSel
                 }
                 menuList.add(itemMenu);
             }
-            navigationAdapter = new NavigationAdapter(this, menuList, this);
-            mainBinding.rvNavigation.setAdapter(navigationAdapter);
-            mainBinding.rvNavigation.setDivider();
+        } else {
+            fakeData();
         }
+        navigationAdapter = new NavigationAdapter(this, menuList, this);
+        mainBinding.rvNavigation.setAdapter(navigationAdapter);
+        mainBinding.rvNavigation.setDivider();
     }
 
     private void fakeData() {
