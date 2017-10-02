@@ -18,16 +18,25 @@ public class CustomSlideViewModel extends BaseObservable {
     public String description;
     @Bindable
     public int image;
+    @Bindable
+    public int colorBg;
 
-    public CustomSlideViewModel(Context context, String title, String description, int image) {
+    public CustomSlideViewModel(Context context, String title, String description, int image,
+                                int colorBg) {
         this.context = context;
         this.title = title;
         this.description = description;
         this.image = image;
+        this.colorBg = colorBg;
     }
 
     @BindingAdapter("imageResource")
     public static void setImageResource(ImageView imageView, int resource) {
         imageView.setImageResource(resource);
+    }
+
+    @BindingAdapter("backgroundResource")
+    public static void setBackgroudResource(ImageView imageView, int resource) {
+        imageView.setBackgroundResource(resource);
     }
 }

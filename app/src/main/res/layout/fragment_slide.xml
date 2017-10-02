@@ -10,17 +10,13 @@
             type="com.vn.ezlearn.viewmodel.CustomSlideViewModel" />
     </data>
 
-    <agency.tango.materialintroscreen.parallax.ParallaxLinearLayout
+    <LinearLayout
         android:id="@+id/slide_background"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
-        android:layout_marginTop="16dp"
-        android:background="@android:color/transparent"
-        android:clipToPadding="false"
         android:fitsSystemWindows="false"
         android:gravity="center"
+        app:backgroundResource="@{customSlideViewModel.colorBg}"
         android:orientation="vertical"
         android:paddingBottom="164dp">
 
@@ -36,16 +32,16 @@
             android:adjustViewBounds="true"
             android:gravity="center"
             app:imageResource="@{customSlideViewModel.image}"
-            app:layout_parallaxFactor="0.6" />
+            />
 
         <TextView
             android:id="@+id/txt_title_slide"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
+            android:textColor="@color/white"
             android:textAppearance="@style/TextAppearance.AppCompat.Headline"
             android:textStyle="bold"
-            app:layout_parallaxFactor="0.5"
             tools:text="@{customSlideViewModel.title}" />
 
         <TextView
@@ -53,13 +49,13 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
+            android:textColor="@color/white"
             android:layout_marginLeft="@dimen/activity_horizontal_margin"
             android:layout_marginRight="@dimen/activity_horizontal_margin"
             android:gravity="center"
             android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
-            app:layout_parallaxFactor="0.2"
             tools:text="@{customSlideViewModel.description}" />
 
-    </agency.tango.materialintroscreen.parallax.ParallaxLinearLayout>
+    </LinearLayout>
 
 </layout>

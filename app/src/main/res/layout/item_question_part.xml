@@ -15,7 +15,7 @@
             android:paddingRight="@dimen/margin_10dp"
             android:paddingTop="@dimen/margin_10dp"
             android:text="Part 10: Read the following passage and mark the letter A, B, C, or D on your answer sheet to indicate the correct word or phrase that best fits each of the numbered blanks"
-            android:textColor="@color/text_color"
+            android:textColor="@color/text_color_content"
             android:textStyle="bold" />
 
         <View

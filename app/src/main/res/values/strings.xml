@@ -135,4 +135,22 @@
         "For example, position the FAB to one side of stream of a cards so the FAB won’t interfere "
         "when a user tries to pick up one of cards.\n\n"
     </string>
+    <string name="service_package">Gói dịch vụ: </string>
+    <string name="balance">Số dư tài khoản:</string>
+    <string name="count_practice">Số lần luyện thi:</string>
+    <string name="expiry_date">Hạn sử dụng:</string>
+    <string name="achievements">Thành tích:</string>
+    <string name="rank">Xếp hạng:</string>
+    <string name="updating">Đang cập nhật</string>
+    <string name="need_complete_profile">Bạn cần hoàn thiện thông tin cá nhân để xem được thứ hạng của mình.</string>
+    <string name="update_profile">Cập nhật thông tin cá nhân</string>
+    <string name="nick_name">Nickname</string>
+    <string name="last_name">Họ</string>
+    <string name="first_name">Tên</string>
+    <string name="level_study">Cấp học</string>
+    <string name="update">Cập nhật</string>
+    <string name="change_password">Đổi mật khẩu</string>
+    <string name="next">NEXT</string>
+    <string name="done">DONE</string>
+    <string name="skip">SKIP</string>
 </resources>

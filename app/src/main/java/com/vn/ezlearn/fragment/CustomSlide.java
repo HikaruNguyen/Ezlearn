@@ -3,6 +3,7 @@ package com.vn.ezlearn.fragment;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,7 +17,7 @@ import com.vn.ezlearn.viewmodel.CustomSlideViewModel;
  * Created by FRAMGIA\nguyen.duc.manh on 13/09/2017.
  */
 
-public class CustomSlide extends SlideFragment {
+public class CustomSlide extends Fragment {
     private static final String ARG_IS_CAN_MOVE = "is_can_move";
     private static final String ARG_TITLE = "title";
     private static final String ARG_DESCRIPTION = "description";
@@ -27,7 +28,7 @@ public class CustomSlide extends SlideFragment {
     private boolean isCanMove;
     private String title;
     private String description;
-    private int backgroundColor;
+    public int backgroundColor;
     private int buttonColor;
     private int image;
 
@@ -68,23 +69,9 @@ public class CustomSlide extends SlideFragment {
                              @Nullable Bundle savedInstanceState) {
         slideBinding = DataBindingUtil.inflate(inflater,
                 R.layout.fragment_slide, container, false);
-        customSlideViewModel = new CustomSlideViewModel(getActivity(), title, description, image);
+        customSlideViewModel = new CustomSlideViewModel(getActivity(), title, description, image,
+                backgroundColor);
         slideBinding.setCustomSlideViewModel(customSlideViewModel);
         return slideBinding.getRoot();
-    }
-
-    @Override
-    public int backgroundColor() {
-        return backgroundColor;
-    }
-
-    @Override
-    public int buttonsColor() {
-        return buttonColor;
-    }
-
-    @Override
-    public boolean canMoveFurther() {
-        return isCanMove;
     }
 }

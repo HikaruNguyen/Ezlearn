@@ -23,7 +23,7 @@
             android:paddingRight="@dimen/margin_10dp"
             android:paddingTop="@dimen/margin_10dp"
             android:text="@{questionViewModel.textPassage}"
-            android:textColor="@color/text_color"
+            android:textColor="@color/text_color_content"
             android:textSize="@dimen/text_size_15sp"
             android:visibility="@{questionViewModel.visiablePassage}" />
 
@@ -77,7 +77,7 @@
             android:paddingLeft="@dimen/margin_10dp"
             android:paddingRight="@dimen/margin_10dp"
             android:text="@{questionViewModel.textQuestion}"
-            android:textColor="@color/text_color"
+            android:textColor="@color/text_color_content"
             android:textSize="@dimen/text_size_15sp"
             android:visibility="@{questionViewModel.visiableQuestion}" />
 
@@ -94,28 +94,28 @@
                 android:id="@+id/rdAnswerA"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="@color/text_color"
+                android:textColor="@color/text_color_content"
                 android:textSize="@dimen/text_size_15sp" />
 
             <RadioButton
                 android:id="@+id/rdAnswerB"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="@color/text_color"
+                android:textColor="@color/text_color_content"
                 android:textSize="@dimen/text_size_15sp" />
 
             <RadioButton
                 android:id="@+id/rdAnswerC"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="@color/text_color"
+                android:textColor="@color/text_color_content"
                 android:textSize="@dimen/text_size_15sp" />
 
             <RadioButton
                 android:id="@+id/rdAnswerD"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="@color/text_color"
+                android:textColor="@color/text_color_content"
                 android:textSize="@dimen/text_size_15sp" />
         </RadioGroup>
     </RelativeLayout>
