@@ -17,6 +17,7 @@ import com.daimajia.slider.library.SliderTypes.BaseSliderView;
 import com.daimajia.slider.library.SliderTypes.DefaultSliderView;
 import com.vn.ezlearn.R;
 import com.vn.ezlearn.activity.TestActivity;
+import com.vn.ezlearn.models.Banner;
 import com.vn.ezlearn.models.HomeObject;
 
 import java.util.List;
@@ -71,15 +72,28 @@ public class HomeAdapter extends BaseRecyclerAdapter<HomeObject, HomeAdapter.Vie
 
                 for (int i = 0; i < item.bannerList.size(); i++) {
                     DefaultSliderView textSliderView = new DefaultSliderView(context);
-                    textSliderView
-                            .image(item.bannerList.get(i).imageDrawable)
-                            .setScaleType(BaseSliderView.ScaleType.Fit)
-                            .setOnSliderClickListener(new BaseSliderView.OnSliderClickListener() {
-                                @Override
-                                public void onSliderClick(BaseSliderView slider) {
+                    if (item.bannerList.get(i).type == Banner.TYPE_DRAWABLE) {
+                        textSliderView
+                                .image(item.bannerList.get(i).imageDrawable)
+                                .setScaleType(BaseSliderView.ScaleType.Fit)
+                                .setOnSliderClickListener(new BaseSliderView.OnSliderClickListener() {
+                                    @Override
+                                    public void onSliderClick(BaseSliderView slider) {
 
-                                }
-                            });
+                                    }
+                                });
+                    } else {
+                        textSliderView
+                                .image(item.bannerList.get(i).imageUrl)
+                                .setScaleType(BaseSliderView.ScaleType.Fit)
+                                .setOnSliderClickListener(new BaseSliderView.OnSliderClickListener() {
+                                    @Override
+                                    public void onSliderClick(BaseSliderView slider) {
+
+                                    }
+                                });
+                    }
+
                     holder.slider.addSlider(textSliderView);
                 }
                 isAddedSlide = true;

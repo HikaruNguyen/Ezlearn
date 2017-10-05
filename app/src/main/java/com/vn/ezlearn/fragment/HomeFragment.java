@@ -10,8 +10,11 @@ import android.view.ViewGroup;
 
 import com.daimajia.slider.library.SliderTypes.BaseSliderView;
 import com.vn.ezlearn.R;
+import com.vn.ezlearn.activity.MyApplication;
 import com.vn.ezlearn.adapter.HomeAdapter;
+import com.vn.ezlearn.config.EzlearnService;
 import com.vn.ezlearn.databinding.FragmentHomeBinding;
+import com.vn.ezlearn.modelresult.BannerResult;
 import com.vn.ezlearn.models.Banner;
 import com.vn.ezlearn.models.CategoryFake;
 import com.vn.ezlearn.models.Exam;
@@ -20,6 +23,11 @@ import com.vn.ezlearn.viewmodel.HomeViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import rx.Subscriber;
+import rx.Subscription;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 
 /**
@@ -34,6 +42,11 @@ public class HomeFragment extends Fragment implements BaseSliderView.OnSliderCli
     private List<HomeObject> list;
     private List<Banner> bannerList;
 
+    private EzlearnService apiService;
+    private Subscription mSubscription;
+
+    private BannerResult mBannerResult;
+
     public HomeFragment() {
         // Required empty public constructor
 
@@ -46,18 +59,22 @@ public class HomeFragment extends Fragment implements BaseSliderView.OnSliderCli
         homeBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_home, container, false);
         homeViewModel = new HomeViewModel(getActivity());
         homeBinding.setHomeViewModel(homeViewModel);
+        initList();
         initBanner();
         bindData();
         return homeBinding.getRoot();
     }
 
-
-    private void bindData() {
+    private void initList() {
+        list = new ArrayList<>();
         homeAdapter = new HomeAdapter(getActivity(), new ArrayList<HomeObject>());
         homeBinding.rvHome.setAdapter(homeAdapter);
+    }
 
-        list = new ArrayList<>();
-        list.add(new HomeObject(bannerList));
+
+    private void bindData() {
+
+//        list.add(new HomeObject(bannerList));
         list.add(new HomeObject(new CategoryFake()));
         list.add(new HomeObject(new Exam()));
         list.add(new HomeObject(new Exam()));
@@ -72,18 +89,50 @@ public class HomeFragment extends Fragment implements BaseSliderView.OnSliderCli
 
     private void initBanner() {
         bannerList = new ArrayList<>();
-//        bannerList.add(new Banner(1, R.drawable.banner01));
-//        bannerList.add(new Banner(2, R.drawable.banner02));
-//        bannerList.add(new Banner(3, R.drawable.banner03));
+        apiService = MyApplication.with(getActivity()).getEzlearnService();
+        if (mSubscription != null && !mSubscription.isUnsubscribed())
+            mSubscription.unsubscribe();
+        mSubscription = apiService.getBanners()
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Subscriber<BannerResult>() {
+                    @Override
+                    public void onCompleted() {
+                        if (mBannerResult.success && mBannerResult.data != null
+                                && mBannerResult.data.size() > 0) {
+                            for (int i = 0; i < mBannerResult.data.size(); i++) {
+                                bannerList.add(new Banner(mBannerResult.data.get(i)));
+                            }
+                            homeAdapter.add(0, new HomeObject(bannerList));
+                            homeBinding.rvHome.smoothScrollToPosition(0);
+                        }
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onNext(BannerResult bannerResult) {
+                        if (bannerResult != null) {
+                            mBannerResult = bannerResult;
+                        }
+                    }
+                });
     }
 
-    private void initBanner1() {
-
-
-    }
 
     @Override
     public void onSliderClick(BaseSliderView slider) {
 
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        if (mSubscription != null && !mSubscription.isUnsubscribed()) mSubscription.unsubscribe();
+        mSubscription = null;
     }
 }

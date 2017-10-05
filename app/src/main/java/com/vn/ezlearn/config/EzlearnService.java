@@ -5,6 +5,7 @@ import android.content.Context;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.vn.ezlearn.BuildConfig;
+import com.vn.ezlearn.modelresult.BannerResult;
 import com.vn.ezlearn.modelresult.CategoryResult;
 import com.vn.ezlearn.modelresult.ExamsResult;
 import com.vn.ezlearn.network.NullOnEmptyConverterFactory;
@@ -37,6 +38,9 @@ public interface EzlearnService {
     Observable<ExamsResult> getListExams(@Query("category_id") int category_id,
                                          @Query("page") int page,
                                          @Query("per-page") int per_page);
+
+    @GET("index.php?r=site/get-banners")
+    Observable<BannerResult> getBanners();
 
     class Factory {
 

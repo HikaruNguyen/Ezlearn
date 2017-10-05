@@ -40,7 +40,15 @@ public class IntroActivity extends AppCompatActivity {
         introBinding = DataBindingUtil.setContentView(this, R.layout.activity_intro);
         introViewModel = new IntroViewModel(this);
         introBinding.setIntroViewModel(introViewModel);
-        initViewPager();
+        if (!AppConfig.getInstance(this).isShowIntro()) {
+            initViewPager();
+        } else {
+            AppConfig.getInstance(IntroActivity.this).setIsShowIntro(true);
+            Intent intent = new Intent(IntroActivity.this, SplashActivity.class);
+            startActivity(intent);
+            finish();
+        }
+
         event();
     }
 

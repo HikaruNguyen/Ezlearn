@@ -17,7 +17,10 @@ public class Banner {
         this.imageUrl = imageUrl;
         type = TYPE_URL;
     }
-
+    public Banner(String imageUrl) {
+        this.imageUrl = imageUrl;
+        type = TYPE_URL;
+    }
     public Banner(Integer id, int imageDrawable) {
         this.id = id;
         this.imageDrawable = imageDrawable;
