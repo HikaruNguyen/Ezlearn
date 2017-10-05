@@ -1,6 +1,6 @@
 package com.vn.ezlearn.modelresult;
 
-import com.vn.ezlearn.models.ItemMenu;
+import com.vn.ezlearn.models.Category;
 
 import java.io.Serializable;
 import java.util.List;
@@ -11,5 +11,5 @@ import java.util.List;
 
 public class CategoryResult implements Serializable {
     public Boolean success;
-    public List<ItemMenu> data;
+    public List<Category> data;
 }

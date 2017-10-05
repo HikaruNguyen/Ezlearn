@@ -22,10 +22,8 @@ import java.util.List;
 public class CategoryMainFragment extends Fragment {
 
 
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-    private String mParam1;
-    private String mParam2;
+    private static final String CATEGORY_ID = "CATEGORY_ID";
+    private String categoryID;
 
     private FragmentCategoryMainBinding categoryMainBinding;
     private ViewPagerAdapter viewPagerAdapter;
@@ -35,11 +33,10 @@ public class CategoryMainFragment extends Fragment {
         // Required empty public constructor
     }
 
-    public static CategoryMainFragment newInstance(String param1, String param2) {
+    public static CategoryMainFragment newInstance(String categoryID) {
         CategoryMainFragment fragment = new CategoryMainFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
+        args.putString(CATEGORY_ID, categoryID);
         fragment.setArguments(args);
         return fragment;
     }
@@ -48,8 +45,7 @@ public class CategoryMainFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
+            categoryID = getArguments().getString(CATEGORY_ID);
         }
     }
 
@@ -94,9 +90,12 @@ public class CategoryMainFragment extends Fragment {
 
     private void bindData() {
         fragmentList = new ArrayList<>();
-        fragmentList.add(new CategoryFragment());
-        fragmentList.add(new CategoryFragment());
-        fragmentList.add(new CategoryFragment());
+        fragmentList.add(CategoryFragment.newInstance(CategoryFragment.TYPE_BAI_GIANG,
+                Integer.parseInt(categoryID)));
+        fragmentList.add(CategoryFragment.newInstance(CategoryFragment.TYPE_DE_THI,
+                Integer.parseInt(categoryID)));
+        fragmentList.add(CategoryFragment.newInstance(CategoryFragment.TYPE_LUYEN_TAP,
+                Integer.parseInt(categoryID)));
         viewPagerAdapter = new ViewPagerAdapter(getChildFragmentManager(), fragmentList);
         categoryMainBinding.viewPager.setAdapter(viewPagerAdapter);
     }
@@ -108,15 +107,12 @@ public class CategoryMainFragment extends Fragment {
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             switch (item.getItemId()) {
                 case R.id.navigation_home:
-//                    mTextMessage.setText(R.string.title_home);
                     categoryMainBinding.viewPager.setCurrentItem(0);
                     return true;
                 case R.id.navigation_dashboard:
-//                    mTextMessage.setText(R.string.title_dashboard);
                     categoryMainBinding.viewPager.setCurrentItem(1);
                     return true;
                 case R.id.navigation_notifications:
-//                    mTextMessage.setText(R.string.title_notifications);
                     categoryMainBinding.viewPager.setCurrentItem(2);
                     return true;
             }

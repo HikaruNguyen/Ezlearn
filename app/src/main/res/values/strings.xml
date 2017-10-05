@@ -153,4 +153,8 @@
     <string name="next">NEXT</string>
     <string name="done">DONE</string>
     <string name="skip">SKIP</string>
+    <string name="minute">phút</string>
+    <string name="deadline">Thời hạn:</string>
+    <string name="free">Free</string>
+    <string name="view">lượt xem</string>
 </resources>

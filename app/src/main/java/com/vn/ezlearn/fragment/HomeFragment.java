@@ -13,7 +13,7 @@ import com.vn.ezlearn.R;
 import com.vn.ezlearn.adapter.HomeAdapter;
 import com.vn.ezlearn.databinding.FragmentHomeBinding;
 import com.vn.ezlearn.models.Banner;
-import com.vn.ezlearn.models.Category;
+import com.vn.ezlearn.models.CategoryFake;
 import com.vn.ezlearn.models.Exam;
 import com.vn.ezlearn.models.HomeObject;
 import com.vn.ezlearn.viewmodel.HomeViewModel;
@@ -58,11 +58,11 @@ public class HomeFragment extends Fragment implements BaseSliderView.OnSliderCli
 
         list = new ArrayList<>();
         list.add(new HomeObject(bannerList));
-        list.add(new HomeObject(new Category()));
+        list.add(new HomeObject(new CategoryFake()));
         list.add(new HomeObject(new Exam()));
         list.add(new HomeObject(new Exam()));
         list.add(new HomeObject(new Exam()));
-        list.add(new HomeObject(new Category()));
+        list.add(new HomeObject(new CategoryFake()));
         list.add(new HomeObject(new Exam()));
         list.add(new HomeObject(new Exam()));
         list.add(new HomeObject(new Exam()));
@@ -72,9 +72,9 @@ public class HomeFragment extends Fragment implements BaseSliderView.OnSliderCli
 
     private void initBanner() {
         bannerList = new ArrayList<>();
-        bannerList.add(new Banner(1, R.drawable.banner01));
-        bannerList.add(new Banner(2, R.drawable.banner02));
-        bannerList.add(new Banner(3, R.drawable.banner03));
+//        bannerList.add(new Banner(1, R.drawable.banner01));
+//        bannerList.add(new Banner(2, R.drawable.banner02));
+//        bannerList.add(new Banner(3, R.drawable.banner03));
     }
 
     private void initBanner1() {

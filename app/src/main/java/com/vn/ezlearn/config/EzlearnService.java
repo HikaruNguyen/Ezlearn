@@ -6,6 +6,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.vn.ezlearn.BuildConfig;
 import com.vn.ezlearn.modelresult.CategoryResult;
+import com.vn.ezlearn.modelresult.ExamsResult;
 import com.vn.ezlearn.network.NullOnEmptyConverterFactory;
 import com.vn.ezlearn.network.RxErrorHandlingCallAdapterFactory;
 
@@ -21,6 +22,7 @@ import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.http.GET;
+import retrofit2.http.Query;
 import rx.Observable;
 
 /**
@@ -30,6 +32,11 @@ import rx.Observable;
 public interface EzlearnService {
     @GET("index.php?r=category")
     Observable<CategoryResult> getCategory();
+
+    @GET("index.php?r=subjects/get-list-by-cate")
+    Observable<ExamsResult> getListExams(@Query("category_id") int category_id,
+                                         @Query("page") int page,
+                                         @Query("per-page") int per_page);
 
     class Factory {
 
@@ -59,7 +66,7 @@ public interface EzlearnService {
                     Request request = chain.request().newBuilder()
 ////                        .addHeader("Accept", "application/json")
 ////                        .addHeader("X-Math-Api-Key", APIConfig.X_Math_Api_Key)
-                        .build();
+                            .build();
                     return chain.proceed(request)
                             .newBuilder()
 //                        .addHeader("Cache-Control"

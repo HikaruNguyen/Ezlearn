@@ -4,7 +4,7 @@ package com.vn.ezlearn.models;
  * Created by FRAMGIA\nguyen.duc.manh on 07/07/2017.
  */
 
-public class ItemMenuChild {
+public class CategoryChild {
     public static final int TYPE_PARENT = 2;
     public static final int TYPE_CHILD = 3;
     public String category_id;
@@ -14,7 +14,7 @@ public class ItemMenuChild {
     public String weight;
     public String img_icon;
 
-    public ItemMenuChild(String id, String name, int type, String parentId) {
+    public CategoryChild(String id, String name, int type, String parentId) {
         this.category_id = id;
         this.category_name = name;
         this.type = type;

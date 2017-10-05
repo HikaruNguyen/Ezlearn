@@ -3,7 +3,7 @@ package com.vn.ezlearn.viewmodel;
 import android.databinding.BaseObservable;
 import android.databinding.Bindable;
 
-import com.vn.ezlearn.models.ItemMenu;
+import com.vn.ezlearn.models.Category;
 
 /**
  * Created by FRAMGIA\nguyen.duc.manh on 07/07/2017.
@@ -11,9 +11,9 @@ import com.vn.ezlearn.models.ItemMenu;
 
 public class ItemMenuViewModel extends BaseObservable {
     @Bindable
-    public ItemMenu itemMenu;
+    public Category category;
 
-    public ItemMenuViewModel(ItemMenu itemMenu) {
-        this.itemMenu = itemMenu;
+    public ItemMenuViewModel(Category category) {
+        this.category = category;
     }
 }

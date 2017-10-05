@@ -1,49 +1,54 @@
 package com.vn.ezlearn.fragment;
 
 
+import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import com.vn.ezlearn.R;
+import com.vn.ezlearn.activity.MyApplication;
+import com.vn.ezlearn.adapter.ExamsAdapter;
+import com.vn.ezlearn.config.EzlearnService;
+import com.vn.ezlearn.databinding.FragmentCategoryBinding;
+import com.vn.ezlearn.modelresult.ExamsResult;
+import com.vn.ezlearn.models.Exam;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link CategoryFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+import java.util.ArrayList;
+
+import rx.Subscriber;
+import rx.Subscription;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
+
 public class CategoryFragment extends Fragment {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    public static final int TYPE_BAI_GIANG = 1;
+    public static final int TYPE_DE_THI = 2;
+    public static final int TYPE_LUYEN_TAP = 3;
+    private static final String TYPE_CATEGORY = "TYPE_CATEGORY";
+    private static final String CATEGORY_ID = "CATEGORY_ID";
 
-    private TextView mTextMessage;
+    private FragmentCategoryBinding categoryBinding;
+    private EzlearnService apiService;
+    private Subscription mSubscription;
+
+    private int type_category;
+    private int category_id;
+    private ExamsResult mExamsResult;
+    private ExamsAdapter adapter;
+
     public CategoryFragment() {
-        // Required empty public constructor
+
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment CategoryFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static CategoryFragment newInstance(String param1, String param2) {
+    public static CategoryFragment newInstance(int type_category, int category_id) {
         CategoryFragment fragment = new CategoryFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
+        args.putInt(TYPE_CATEGORY, type_category);
+        args.putInt(CATEGORY_ID, category_id);
         fragment.setArguments(args);
         return fragment;
     }
@@ -52,15 +57,61 @@ public class CategoryFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
+            type_category = getArguments().getInt(TYPE_CATEGORY);
+            category_id = getArguments().getInt(CATEGORY_ID);
         }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_category, container, false);
-        return view;
+        categoryBinding = DataBindingUtil.inflate(
+                inflater, R.layout.fragment_category, container, false);
+        bindData();
+        return categoryBinding.getRoot();
+    }
+
+    private void bindData() {
+        adapter = new ExamsAdapter(getActivity(), new ArrayList<Exam>());
+        categoryBinding.rvListExam.setAdapter(adapter);
+        getDataApi(1);
+    }
+
+    private void getDataApi(int page) {
+        apiService = MyApplication.with(getActivity()).getEzlearnService();
+        if (mSubscription != null && !mSubscription.isUnsubscribed())
+            mSubscription.unsubscribe();
+        mSubscription = apiService.getListExams(category_id, page, 50)
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Subscriber<ExamsResult>() {
+                    @Override
+                    public void onCompleted() {
+                        if (mExamsResult.success && mExamsResult.data != null
+                                && mExamsResult.data.list != null
+                                && mExamsResult.data.list.size() > 0) {
+                            adapter.addAll(mExamsResult.data.list);
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onNext(ExamsResult examsResult) {
+                        if (examsResult != null) {
+                            mExamsResult = examsResult;
+                        }
+                    }
+                });
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        if (mSubscription != null && !mSubscription.isUnsubscribed()) mSubscription.unsubscribe();
+        mSubscription = null;
     }
 }

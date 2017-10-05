@@ -6,11 +6,21 @@ package com.vn.ezlearn.models;
 
 public class Exam {
     public Integer id;
-    public String name;
-    public String from;
-    public String to;
-    public boolean isFree;
-    public String totalQuestion;
-    public String totalTime;
-    public String totalView;
+    public String subject_code;
+    public Integer time;
+    public String question_id;
+    public String reading_id;
+    public String status;
+    public String created_at;
+    public String updated_at;
+    public String start_date;
+    public String end_date;
+    public Integer type;
+    public Integer honor;
+    public String file_image;
+    public Integer category_id;
+    public Integer template_id;
+    public Integer price;
+    public Integer is_free;
+    public Integer total_view;
 }

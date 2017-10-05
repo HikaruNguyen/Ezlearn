@@ -22,8 +22,8 @@ import com.vn.ezlearn.databinding.ActivityMainBinding;
 import com.vn.ezlearn.fragment.CategoryMainFragment;
 import com.vn.ezlearn.fragment.HomeFragment;
 import com.vn.ezlearn.interfaces.NavigationItemSelected;
-import com.vn.ezlearn.models.ItemMenu;
-import com.vn.ezlearn.models.ItemMenuChild;
+import com.vn.ezlearn.models.Category;
+import com.vn.ezlearn.models.CategoryChild;
 import com.vn.ezlearn.widgets.CRecyclerView;
 
 import java.util.ArrayList;
@@ -33,7 +33,7 @@ public class MainActivity extends AppCompatActivity implements NavigationItemSel
     private Toolbar toolbar;
     private CRecyclerView rvNavigation;
     private ActivityMainBinding mainBinding;
-    private List<ItemMenu> menuList;
+    private List<Category> menuList;
     private NavigationAdapter navigationAdapter;
     private String currentId = "-1";
 
@@ -80,17 +80,17 @@ public class MainActivity extends AppCompatActivity implements NavigationItemSel
 
 //        fakeData();
         menuList = new ArrayList<>();
-        menuList.add(new ItemMenu("-1", "TRANG CHỦ", ItemMenu.TYPE_NORMAL));
+        menuList.add(new Category("-1", "TRANG CHỦ", Category.TYPE_NORMAL));
         if (MyApplication.with(this).getCategoryResult() != null
                 && MyApplication.with(this).getCategoryResult().data != null
                 && MyApplication.with(this).getCategoryResult().data.size() > 0) {
-            for (ItemMenu itemMenu : MyApplication.with(this).getCategoryResult().data) {
-                if (itemMenu.children != null && itemMenu.children.size() > 0) {
-                    itemMenu.typeMenu = ItemMenu.TYPE_PARENT;
+            for (Category category : MyApplication.with(this).getCategoryResult().data) {
+                if (category.children != null && category.children.size() > 0) {
+                    category.typeMenu = Category.TYPE_PARENT;
                 } else {
-                    itemMenu.typeMenu = ItemMenu.TYPE_NORMAL;
+                    category.typeMenu = Category.TYPE_NORMAL;
                 }
-                menuList.add(itemMenu);
+                menuList.add(category);
             }
         } else {
             fakeData();
@@ -101,54 +101,54 @@ public class MainActivity extends AppCompatActivity implements NavigationItemSel
     }
 
     private void fakeData() {
-        ItemMenu itemMenu = new ItemMenu("2", "TIẾNG ANH PHỔ THÔNG", ItemMenu.TYPE_PARENT, "1");
-        itemMenu.children.add(new ItemMenuChild("2", "LỚP 6", ItemMenu.TYPE_CHILD, "2"));
-        itemMenu.children.add(new ItemMenuChild("2", "LỚP 7", ItemMenu.TYPE_CHILD, "2"));
-        itemMenu.children.add(new ItemMenuChild("2", "LỚP 8", ItemMenu.TYPE_CHILD, "2"));
-        itemMenu.children.add(new ItemMenuChild("2", "LỚP 9", ItemMenu.TYPE_CHILD, "2"));
-        itemMenu.children.add(new ItemMenuChild("2", "LỚP 10", ItemMenu.TYPE_CHILD, "2"));
-        itemMenu.children.add(new ItemMenuChild("2", "LỚP 11", ItemMenu.TYPE_CHILD, "2"));
-        itemMenu.children.add(new ItemMenuChild("2", "LỚP 12", ItemMenu.TYPE_CHILD, "2"));
-        menuList.add(itemMenu);
+        Category category = new Category("2", "TIẾNG ANH PHỔ THÔNG", Category.TYPE_PARENT, "1");
+        category.children.add(new CategoryChild("2", "LỚP 6", Category.TYPE_CHILD, "2"));
+        category.children.add(new CategoryChild("2", "LỚP 7", Category.TYPE_CHILD, "2"));
+        category.children.add(new CategoryChild("2", "LỚP 8", Category.TYPE_CHILD, "2"));
+        category.children.add(new CategoryChild("2", "LỚP 9", Category.TYPE_CHILD, "2"));
+        category.children.add(new CategoryChild("2", "LỚP 10", Category.TYPE_CHILD, "2"));
+        category.children.add(new CategoryChild("2", "LỚP 11", Category.TYPE_CHILD, "2"));
+        category.children.add(new CategoryChild("2", "LỚP 12", Category.TYPE_CHILD, "2"));
+        menuList.add(category);
 
-        itemMenu = new ItemMenu("3", "THI CHUYÊN 10", ItemMenu.TYPE_PARENT, "1");
-        itemMenu.children.add(new ItemMenuChild("2", "ĐỀ THI", ItemMenu.TYPE_CHILD, "3"));
-        itemMenu.children.add(new ItemMenuChild("2", "NGỮ ÂM", ItemMenu.TYPE_CHILD, "3"));
-        itemMenu.children.add(new ItemMenuChild("2", "NGỮ PHÁP", ItemMenu.TYPE_CHILD, "3"));
-        menuList.add(itemMenu);
+        category = new Category("3", "THI CHUYÊN 10", Category.TYPE_PARENT, "1");
+        category.children.add(new CategoryChild("2", "ĐỀ THI", Category.TYPE_CHILD, "3"));
+        category.children.add(new CategoryChild("2", "NGỮ ÂM", Category.TYPE_CHILD, "3"));
+        category.children.add(new CategoryChild("2", "NGỮ PHÁP", Category.TYPE_CHILD, "3"));
+        menuList.add(category);
 
-        itemMenu = new ItemMenu("4", "THI THPTQG", ItemMenu.TYPE_PARENT, "1");
-        itemMenu.children.add(new ItemMenuChild("2", "Kết hợp câu", ItemMenu.TYPE_CHILD, "4"));
-        itemMenu.children.add(new ItemMenuChild("2", "Từ trái nghĩa", ItemMenu.TYPE_CHILD, "4"));
-        itemMenu.children.add(new ItemMenuChild("2", "Từ đồng nghĩa", ItemMenu.TYPE_CHILD, "4"));
-        itemMenu.children.add(new ItemMenuChild("2", "Từ đồng nghĩa", ItemMenu.TYPE_CHILD, "4"));
-        itemMenu.children.add(new ItemMenuChild("2", "Tìm lỗi sai", ItemMenu.TYPE_CHILD, "4"));
-        itemMenu.children.add(new ItemMenuChild("2", "Điền từ", ItemMenu.TYPE_CHILD, "4"));
-        itemMenu.children.add(new ItemMenuChild("2", "Điền từ", ItemMenu.TYPE_CHILD, "4"));
-        itemMenu.children.add(new ItemMenuChild("2", "Giao tiếp", ItemMenu.TYPE_CHILD, "4"));
-        itemMenu.children.add(new ItemMenuChild("2", "Ngữ âm", ItemMenu.TYPE_CHILD, "4"));
-        itemMenu.children.add(new ItemMenuChild("2", "Ngữ pháp", ItemMenu.TYPE_CHILD, "4"));
-        itemMenu.children.add(new ItemMenuChild("2", "Đọc hiểu", ItemMenu.TYPE_CHILD, "4"));
-        itemMenu.children.add(new ItemMenuChild("2", "Đề thi", ItemMenu.TYPE_CHILD, "4"));
-        menuList.add(itemMenu);
+        category = new Category("4", "THI THPTQG", Category.TYPE_PARENT, "1");
+        category.children.add(new CategoryChild("2", "Kết hợp câu", Category.TYPE_CHILD, "4"));
+        category.children.add(new CategoryChild("2", "Từ trái nghĩa", Category.TYPE_CHILD, "4"));
+        category.children.add(new CategoryChild("2", "Từ đồng nghĩa", Category.TYPE_CHILD, "4"));
+        category.children.add(new CategoryChild("2", "Từ đồng nghĩa", Category.TYPE_CHILD, "4"));
+        category.children.add(new CategoryChild("2", "Tìm lỗi sai", Category.TYPE_CHILD, "4"));
+        category.children.add(new CategoryChild("2", "Điền từ", Category.TYPE_CHILD, "4"));
+        category.children.add(new CategoryChild("2", "Điền từ", Category.TYPE_CHILD, "4"));
+        category.children.add(new CategoryChild("2", "Giao tiếp", Category.TYPE_CHILD, "4"));
+        category.children.add(new CategoryChild("2", "Ngữ âm", Category.TYPE_CHILD, "4"));
+        category.children.add(new CategoryChild("2", "Ngữ pháp", Category.TYPE_CHILD, "4"));
+        category.children.add(new CategoryChild("2", "Đọc hiểu", Category.TYPE_CHILD, "4"));
+        category.children.add(new CategoryChild("2", "Đề thi", Category.TYPE_CHILD, "4"));
+        menuList.add(category);
 
-        itemMenu = new ItemMenu("4", "IELTS", ItemMenu.TYPE_PARENT, "1");
-        itemMenu.children.add(new ItemMenuChild("2", "3.5+", ItemMenu.TYPE_CHILD, "4"));
-        itemMenu.children.add(new ItemMenuChild("2", "5.5+", ItemMenu.TYPE_CHILD, "4"));
-        itemMenu.children.add(new ItemMenuChild("2", "6.5+", ItemMenu.TYPE_CHILD, "4"));
-        menuList.add(itemMenu);
+        category = new Category("4", "IELTS", Category.TYPE_PARENT, "1");
+        category.children.add(new CategoryChild("2", "3.5+", Category.TYPE_CHILD, "4"));
+        category.children.add(new CategoryChild("2", "5.5+", Category.TYPE_CHILD, "4"));
+        category.children.add(new CategoryChild("2", "6.5+", Category.TYPE_CHILD, "4"));
+        menuList.add(category);
 
-        itemMenu = new ItemMenu("5", "TOEFL Junior", ItemMenu.TYPE_PARENT, "1");
-        itemMenu.children.add(new ItemMenuChild("2", "650+", ItemMenu.TYPE_CHILD, "5"));
-        itemMenu.children.add(new ItemMenuChild("2", "750+", ItemMenu.TYPE_CHILD, "5"));
-        itemMenu.children.add(new ItemMenuChild("2", "850+", ItemMenu.TYPE_CHILD, "5"));
-        menuList.add(itemMenu);
+        category = new Category("5", "TOEFL Junior", Category.TYPE_PARENT, "1");
+        category.children.add(new CategoryChild("2", "650+", Category.TYPE_CHILD, "5"));
+        category.children.add(new CategoryChild("2", "750+", Category.TYPE_CHILD, "5"));
+        category.children.add(new CategoryChild("2", "850+", Category.TYPE_CHILD, "5"));
+        menuList.add(category);
 
-        itemMenu = new ItemMenu("6", "TOEIC", ItemMenu.TYPE_PARENT, "1");
-        itemMenu.children.add(new ItemMenuChild("2", "350+", ItemMenu.TYPE_CHILD, "6"));
-        itemMenu.children.add(new ItemMenuChild("2", "550+", ItemMenu.TYPE_CHILD, "6"));
-        itemMenu.children.add(new ItemMenuChild("2", "650+", ItemMenu.TYPE_CHILD, "6"));
-        menuList.add(itemMenu);
+        category = new Category("6", "TOEIC", Category.TYPE_PARENT, "1");
+        category.children.add(new CategoryChild("2", "350+", Category.TYPE_CHILD, "6"));
+        category.children.add(new CategoryChild("2", "550+", Category.TYPE_CHILD, "6"));
+        category.children.add(new CategoryChild("2", "650+", Category.TYPE_CHILD, "6"));
+        menuList.add(category);
     }
 
     boolean doubleBackToExitPressedOnce = false;
@@ -229,7 +229,7 @@ public class MainActivity extends AppCompatActivity implements NavigationItemSel
                     mainBinding.drawerLayout.closeDrawer(GravityCompat.START);
                     toolbar.setTitle(name);
                 }
-                changeFragment(new CategoryMainFragment());
+                changeFragment(CategoryMainFragment.newInstance(id));
             } else {
 
                 if (mainBinding.drawerLayout.isDrawerOpen(GravityCompat.START)) {

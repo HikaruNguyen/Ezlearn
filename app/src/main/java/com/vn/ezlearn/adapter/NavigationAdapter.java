@@ -15,8 +15,8 @@ import com.github.aakira.expandablelayout.ExpandableLayoutListenerAdapter;
 import com.github.aakira.expandablelayout.ExpandableLinearLayout;
 import com.github.aakira.expandablelayout.Utils;
 import com.vn.ezlearn.R;
-import com.vn.ezlearn.models.ItemMenu;
-import com.vn.ezlearn.models.ItemMenuChild;
+import com.vn.ezlearn.models.Category;
+import com.vn.ezlearn.models.CategoryChild;
 import com.vn.ezlearn.interfaces.NavigationItemSelected;
 import com.vn.ezlearn.widgets.CRecyclerView;
 
@@ -27,14 +27,14 @@ import java.util.List;
  * Created by FRAMGIA\nguyen.duc.manh on 07/07/2017.
  */
 
-public class NavigationAdapter extends BaseRecyclerAdapter<ItemMenu, NavigationAdapter.ViewHolder> {
+public class NavigationAdapter extends BaseRecyclerAdapter<Category, NavigationAdapter.ViewHolder> {
 
-    private final List<ItemMenu> data;
+    private final List<Category> data;
     private Context context;
     private SparseBooleanArray expandState = new SparseBooleanArray();
     private NavigationItemSelected navigationItemSelected;
 
-    public NavigationAdapter(Context context, List<ItemMenu> list,
+    public NavigationAdapter(Context context, List<Category> list,
                              NavigationItemSelected navigationItemSelected) {
         super(context, list);
         this.data = list;
@@ -47,7 +47,7 @@ public class NavigationAdapter extends BaseRecyclerAdapter<ItemMenu, NavigationA
     @Override
     public ViewHolder onCreateViewHolder(final ViewGroup parent, final int viewType) {
         this.context = parent.getContext();
-        if (viewType == ItemMenu.TYPE_NORMAL) {
+        if (viewType == Category.TYPE_NORMAL) {
             return new ViewHolder(LayoutInflater.from(context)
                     .inflate(R.layout.item_menu_normal, parent, false));
         } else {
@@ -59,13 +59,13 @@ public class NavigationAdapter extends BaseRecyclerAdapter<ItemMenu, NavigationA
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
-        final ItemMenu item = data.get(position);
+        final Category item = data.get(position);
         holder.setIsRecyclable(false);
         holder.tvName.setText(item.category_name);
 
-        if (getItemViewType(position) != ItemMenu.TYPE_NORMAL) {
+        if (getItemViewType(position) != Category.TYPE_NORMAL) {
             NavigationChildAdapter childAdapter = new NavigationChildAdapter(
-                    context, new ArrayList<ItemMenuChild>(), navigationItemSelected);
+                    context, new ArrayList<CategoryChild>(), navigationItemSelected);
             holder.rvItemMenuChild.setAdapter(childAdapter);
             childAdapter.addAll(item.children);
             holder.expandableLayout.setInRecyclerView(true);

@@ -14,7 +14,7 @@ import com.github.aakira.expandablelayout.ExpandableLayout;
 import com.github.aakira.expandablelayout.ExpandableLinearLayout;
 import com.github.aakira.expandablelayout.Utils;
 import com.vn.ezlearn.R;
-import com.vn.ezlearn.models.ItemMenuChild;
+import com.vn.ezlearn.models.CategoryChild;
 import com.vn.ezlearn.interfaces.NavigationItemSelected;
 
 import java.util.List;
@@ -24,14 +24,14 @@ import java.util.List;
  */
 
 public class NavigationChildAdapter
-        extends BaseRecyclerAdapter<ItemMenuChild, NavigationChildAdapter.ViewHolder> {
+        extends BaseRecyclerAdapter<CategoryChild, NavigationChildAdapter.ViewHolder> {
 
-    private final List<ItemMenuChild> data;
+    private final List<CategoryChild> data;
     private Context context;
     private SparseBooleanArray expandState = new SparseBooleanArray();
     public NavigationItemSelected navigationItemSelected;
 
-    public NavigationChildAdapter(Context context, List<ItemMenuChild> list,
+    public NavigationChildAdapter(Context context, List<CategoryChild> list,
                                   NavigationItemSelected navigationItemSelected) {
         super(context, list);
         this.data = list;
@@ -44,7 +44,7 @@ public class NavigationChildAdapter
     @Override
     public ViewHolder onCreateViewHolder(final ViewGroup parent, final int viewType) {
         this.context = parent.getContext();
-//        if (viewType == ItemMenu.TYPE_NORMAL) {
+//        if (viewType == Category.TYPE_NORMAL) {
 //            return new ViewHolder(LayoutInflater.from(context)
 //                    .inflate(R.layout.item_menu_normal, parent, false));
 //        } else {
@@ -57,11 +57,11 @@ public class NavigationChildAdapter
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
-        final ItemMenuChild item = data.get(position);
+        final CategoryChild item = data.get(position);
         holder.setIsRecyclable(false);
         holder.tvName.setText(item.category_name);
 //        holder.itemView.setBackgroundColor(ContextCompat.getColor(context, R.color.material_light_blue_500));
-//        if (data.get(position).type != ItemMenu.TYPE_NORMAL) {
+//        if (data.get(position).type != Category.TYPE_NORMAL) {
 //            holder.expandableLayout.setInRecyclerView(true);
 ////        holder.expandableLayout.setBackgroundColor(ContextCompat.getColor(context,  R.color.material_light_blue_300));
 //            holder.expandableLayout.setInterpolator(Utils.createInterpolator(Utils.FAST_OUT_SLOW_IN_INTERPOLATOR));

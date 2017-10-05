@@ -11,13 +11,13 @@ public class HomeObject {
     public static final int TYPE_HEADER = 2;
     public static final int TYPE_EXAM = 3;
 
-    public Category category;
+    public CategoryFake categoryFake;
     public Exam exam;
     public List<Banner> bannerList;
     public int type;
 
-    public HomeObject(Category category) {
-        this.category = category;
+    public HomeObject(CategoryFake categoryFake) {
+        this.categoryFake = categoryFake;
         type = TYPE_HEADER;
     }
 
