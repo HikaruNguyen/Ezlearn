@@ -2,17 +2,18 @@
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:background="@drawable/bg_exams"
-    android:clickable="true"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:background="@drawable/bg_item_navigation"
+    android:clickable="true">
 
     <TextView
         android:id="@+id/tvName"
         android:layout_width="match_parent"
         android:layout_height="@dimen/image_size_48dp"
         android:layout_alignParentTop="true"
-        android:padding="@dimen/margin_8dp"
-        android:textColor="@color/black"
+        android:layout_centerVertical="true"
+        android:paddingLeft="@dimen/image_size_16dp"
+        android:textColor="@color/white"
         android:textSize="15sp" />
 
 </RelativeLayout>

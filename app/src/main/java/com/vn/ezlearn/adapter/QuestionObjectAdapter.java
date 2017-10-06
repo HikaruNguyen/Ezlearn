@@ -128,15 +128,11 @@ public class QuestionObjectAdapter
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        //        private ViewPager viewPager;
-//        private TextView tvPart;
         private ItemQuestionPartBinding itemQuestionPartBinding;
         private ItemQuestionViewpagerBinding itemQuestionViewpagerBinding;
 
         public ViewHolder(ItemQuestionPartBinding itemQuestionPartBinding) {
             super(itemQuestionPartBinding.getRoot());
-//            viewPager = v.findViewById(R.id.container);
-//            tvPart = v.findViewById(R.id.tvPart);
             this.itemQuestionPartBinding = itemQuestionPartBinding;
             this.itemQuestionPartBinding.executePendingBindings();
             itemView.setOnClickListener(new View.OnClickListener() {

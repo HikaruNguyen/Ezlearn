@@ -42,14 +42,13 @@ public class IntroActivity extends AppCompatActivity {
         introBinding.setIntroViewModel(introViewModel);
         if (!AppConfig.getInstance(this).isShowIntro()) {
             initViewPager();
+            event();
         } else {
             AppConfig.getInstance(IntroActivity.this).setIsShowIntro(true);
             Intent intent = new Intent(IntroActivity.this, SplashActivity.class);
             startActivity(intent);
             finish();
         }
-
-        event();
     }
 
     private void event() {
@@ -62,7 +61,7 @@ public class IntroActivity extends AppCompatActivity {
             @Override
             public void onPageSelected(int position) {
                 positionViewPager = position;
-                colorStatusBar(((CustomSlide) fragmentList.get(position)).backgroundColor);
+//                colorStatusBar(((CustomSlide) fragmentList.get(position)).backgroundColor);
                 if (position < fragmentList.size() - 1) {
                     introViewModel.textNext.set(getString(R.string.next));
                 } else {
@@ -105,14 +104,14 @@ public class IntroActivity extends AppCompatActivity {
                 true,
                 getString(R.string.bank_exams_title),
                 getString(R.string.bank_exams_description),
-                R.color.first_slide_background,
+                R.drawable.bg_intro1,
                 Color.TRANSPARENT,
                 R.mipmap.clouds));
         addSlide(CustomSlide.newInstance(
                 true,
                 getString(R.string.route_title),
                 getString(R.string.route_description),
-                R.color.second_slide_background,
+                R.drawable.bg_intro1,
                 Color.TRANSPARENT,
                 R.mipmap.route));
 
@@ -120,7 +119,7 @@ public class IntroActivity extends AppCompatActivity {
                 false,
                 getString(R.string.exams_title),
                 getString(R.string.exams_description),
-                R.color.third_slide_background,
+                R.drawable.bg_intro1,
                 Color.TRANSPARENT,
                 R.mipmap.quality));
         pagerAdapter = new ViewPagerAdapter(getSupportFragmentManager(), fragmentList);

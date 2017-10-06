@@ -17,16 +17,16 @@
         android:focusableInTouchMode="true"
         android:orientation="vertical">
 
-        <com.vn.ezlearn.widgets.NonSwipeableViewPager
+        <android.support.v4.view.ViewPager
             android:id="@+id/view_pager"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
 
         <View
             android:layout_width="match_parent"
-            android:layout_height="1dp"
+            android:layout_height="0.5dp"
             android:layout_above="@+id/rlBottom"
-            android:background="@color/grey_line" />
+            android:background="@color/bg_main" />
 
         <RelativeLayout
             android:id="@+id/rlBottom"
@@ -40,12 +40,13 @@
                 android:layout_height="match_parent"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="@dimen/margin_20dp"
+                android:gravity="center_vertical"
                 android:text="@{introViewModel.textPreview}"
                 android:textAllCaps="true"
-                android:gravity="center_vertical"
                 android:textColor="@color/white"
                 android:textSize="@dimen/text_size_15sp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:visibility="gone" />
 
             <me.relex.circleindicator.CircleIndicator
                 android:id="@+id/indicator"
@@ -60,9 +61,9 @@
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:layout_marginRight="@dimen/margin_20dp"
+                android:gravity="center_vertical"
                 android:text="@{introViewModel.textNext}"
                 android:textAllCaps="true"
-                android:gravity="center_vertical"
                 android:textColor="@color/white"
                 android:textSize="@dimen/text_size_15sp"
                 android:textStyle="bold" />

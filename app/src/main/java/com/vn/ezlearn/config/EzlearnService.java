@@ -39,6 +39,10 @@ public interface EzlearnService {
                                          @Query("page") int page,
                                          @Query("per-page") int per_page);
 
+    @GET("index.php?r=subjects/get-list-free")
+    Observable<ExamsResult> getListFreeExams(@Query("page") int page,
+                                             @Query("per-page") int per_page);
+
     @GET("index.php?r=site/get-banners")
     Observable<BannerResult> getBanners();
 

@@ -26,7 +26,7 @@
                     android:id="@+id/collapsing"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    app:contentScrim="@color/colorPrimary"
+                    app:contentScrim="@color/first_slide_background1"
                     app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
                     <ImageView
@@ -42,6 +42,7 @@
                         android:id="@+id/toolbar"
                         android:layout_width="match_parent"
                         android:layout_height="?attr/actionBarSize"
+                        android:background="@drawable/bg_toolbar"
                         android:title=""
                         app:layout_collapseMode="pin"
                         app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />

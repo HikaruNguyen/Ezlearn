@@ -97,7 +97,7 @@ public class MainActivity extends AppCompatActivity implements NavigationItemSel
         }
         navigationAdapter = new NavigationAdapter(this, menuList, this);
         mainBinding.rvNavigation.setAdapter(navigationAdapter);
-        mainBinding.rvNavigation.setDivider();
+//        mainBinding.rvNavigation.setDivider();
     }
 
     private void fakeData() {

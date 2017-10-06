@@ -15,6 +15,7 @@ import com.vn.ezlearn.adapter.HomeAdapter;
 import com.vn.ezlearn.config.EzlearnService;
 import com.vn.ezlearn.databinding.FragmentHomeBinding;
 import com.vn.ezlearn.modelresult.BannerResult;
+import com.vn.ezlearn.modelresult.ExamsResult;
 import com.vn.ezlearn.models.Banner;
 import com.vn.ezlearn.models.HomeObject;
 import com.vn.ezlearn.viewmodel.HomeViewModel;
@@ -44,6 +45,7 @@ public class HomeFragment extends Fragment implements BaseSliderView.OnSliderCli
     private Subscription mSubscription;
 
     private BannerResult mBannerResult;
+    private ExamsResult mExamsResult;
 
     public HomeFragment() {
         // Required empty public constructor
@@ -71,7 +73,8 @@ public class HomeFragment extends Fragment implements BaseSliderView.OnSliderCli
 
 
     private void bindData() {
-
+        homeAdapter.add(new HomeObject(getString(R.string.tryExam)));
+        getListExamFree(1);
 //        list.add(new HomeObject(bannerList));
 //        list.add(new HomeObject(new CategoryFake()));
 //        list.add(new HomeObject(new Exam()));
@@ -82,7 +85,39 @@ public class HomeFragment extends Fragment implements BaseSliderView.OnSliderCli
 //        list.add(new HomeObject(new Exam()));
 //        list.add(new HomeObject(new Exam()));
 
-        homeAdapter.addAll(list);
+
+    }
+
+    private void getListExamFree(int page) {
+        apiService = MyApplication.with(getActivity()).getEzlearnService();
+        mSubscription = apiService.getListFreeExams(page, 10)
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Subscriber<ExamsResult>() {
+                    @Override
+                    public void onCompleted() {
+                        if (mExamsResult.success && mExamsResult.data != null
+                                && mExamsResult.data.list != null
+                                && mExamsResult.data.list.size() > 0) {
+                            for (int i = 0; i < mExamsResult.data.list.size(); i++) {
+                                homeAdapter.add(new HomeObject(mExamsResult.data.list.get(i)));
+                            }
+
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onNext(ExamsResult examsResult) {
+                        if (examsResult != null) {
+                            mExamsResult = examsResult;
+                        }
+                    }
+                });
     }
 
     private void initBanner() {

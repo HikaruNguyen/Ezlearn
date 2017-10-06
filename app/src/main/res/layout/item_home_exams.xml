@@ -16,7 +16,7 @@
             android:id="@+id/lnExam"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/bg_exams"
+            android:background="@drawable/bg_exam"
             android:clickable="true"
             android:orientation="vertical"
             android:paddingBottom="@dimen/margin_10dp"

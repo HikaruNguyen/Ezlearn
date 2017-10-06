@@ -12,12 +12,13 @@ public class HomeObject {
     public static final int TYPE_EXAM = 3;
 
     public CategoryFake categoryFake;
+    public String header;
     public Exam exam;
     public List<Banner> bannerList;
     public int type;
 
-    public HomeObject(CategoryFake categoryFake) {
-        this.categoryFake = categoryFake;
+    public HomeObject(String header) {
+        this.header = header;
         type = TYPE_HEADER;
     }
 

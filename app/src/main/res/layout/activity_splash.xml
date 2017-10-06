@@ -7,8 +7,15 @@
         android:id="@+id/activity_splash"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/colorPrimary"
+        android:background="@drawable/bg_intro1"
         tools:context=".activity.SplashActivity">
+
+        <com.vn.ezlearn.widgets.ResizableImageViewByWidth
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:src="@mipmap/england"
+            android:tint="@color/bg_main" />
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -36,6 +43,7 @@
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
             android:layout_marginBottom="@dimen/margin_10dp"
+            android:visibility="gone"
             wheel:matProg_barColor="@color/white"
             wheel:matProg_circleRadius="44dp"
             wheel:matProg_progressIndeterminate="true" />

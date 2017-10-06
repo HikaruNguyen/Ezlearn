@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#4b9236</color>
-    <color name="colorPrimaryDark">#448431</color>
+    <color name="colorPrimary">#5969fa</color>
+    <color name="colorPrimaryDark">#5969fa</color>
     <color name="colorAccent">#f39c12</color>
     <color name="white">#ffffff</color>
     <color name="black">#000000</color>
@@ -13,7 +13,9 @@
     <color name="grey_line_press">#d1d1d1</color>
     <color name="red_title">#DD1948</color>
 
-    <color name="first_slide_background">#3C8CCB</color>
+    <color name="first_slide_background">#5969fa</color>
+    <color name="first_slide_background1">#5d6af9</color>
+    <color name="first_slide_background2">#736bf2</color>
     <color name="first_slide_buttons">#2980b9</color>
 
     <color name="second_slide_background">#4b9236</color>
