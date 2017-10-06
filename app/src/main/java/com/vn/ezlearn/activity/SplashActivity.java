@@ -51,10 +51,7 @@ public class SplashActivity extends AppCompatActivity {
 
                     @Override
                     public void onError(Throwable e) {
-                        Intent intent = new Intent(SplashActivity.this, MainActivity.class);
-                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                        startActivity(intent);
-                        finish();
+                        goToMain();
                     }
 
                     @Override
@@ -77,12 +74,14 @@ public class SplashActivity extends AppCompatActivity {
             goToMain();
         }
 
-        private void goToMain() {
-            Intent intent = new Intent(SplashActivity.this, MainActivity.class);
-            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-            startActivity(intent);
-            finish();
-        }
+
+    }
+
+    private void goToMain() {
+        Intent intent = new Intent(SplashActivity.this, MainActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
+        finish();
     }
 
     @Override

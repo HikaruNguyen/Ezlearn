@@ -16,8 +16,6 @@ import com.vn.ezlearn.config.EzlearnService;
 import com.vn.ezlearn.databinding.FragmentHomeBinding;
 import com.vn.ezlearn.modelresult.BannerResult;
 import com.vn.ezlearn.models.Banner;
-import com.vn.ezlearn.models.CategoryFake;
-import com.vn.ezlearn.models.Exam;
 import com.vn.ezlearn.models.HomeObject;
 import com.vn.ezlearn.viewmodel.HomeViewModel;
 
@@ -75,14 +73,14 @@ public class HomeFragment extends Fragment implements BaseSliderView.OnSliderCli
     private void bindData() {
 
 //        list.add(new HomeObject(bannerList));
-        list.add(new HomeObject(new CategoryFake()));
-        list.add(new HomeObject(new Exam()));
-        list.add(new HomeObject(new Exam()));
-        list.add(new HomeObject(new Exam()));
-        list.add(new HomeObject(new CategoryFake()));
-        list.add(new HomeObject(new Exam()));
-        list.add(new HomeObject(new Exam()));
-        list.add(new HomeObject(new Exam()));
+//        list.add(new HomeObject(new CategoryFake()));
+//        list.add(new HomeObject(new Exam()));
+//        list.add(new HomeObject(new Exam()));
+//        list.add(new HomeObject(new Exam()));
+//        list.add(new HomeObject(new CategoryFake()));
+//        list.add(new HomeObject(new Exam()));
+//        list.add(new HomeObject(new Exam()));
+//        list.add(new HomeObject(new Exam()));
 
         homeAdapter.addAll(list);
     }
