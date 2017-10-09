@@ -53,9 +53,9 @@ public class ItemExamViewModel extends BaseObservable {
                 visiableFree.set(View.GONE);
             }
             if (exam.total_view != null) {
-                total_view.set("N/A");
-            } else {
                 total_view.set(exam.total_view + " " + context.getString(R.string.view));
+            } else {
+                total_view.set("N/A");
             }
         }
     }

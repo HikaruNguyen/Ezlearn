@@ -13,8 +13,10 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.vn.ezlearn.R;
+import com.vn.ezlearn.activity.MainActivity;
 import com.vn.ezlearn.adapter.ViewPagerAdapter;
 import com.vn.ezlearn.databinding.FragmentCategoryMainBinding;
+import com.vn.ezlearn.models.Category;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,6 +30,9 @@ public class CategoryMainFragment extends Fragment {
     private FragmentCategoryMainBinding categoryMainBinding;
     private ViewPagerAdapter viewPagerAdapter;
     private List<Fragment> fragmentList;
+    private List<String> fragmentListTitle;
+
+    private List<Category> categoryList;
 
     public CategoryMainFragment() {
         // Required empty public constructor
@@ -61,6 +66,10 @@ public class CategoryMainFragment extends Fragment {
         return categoryMainBinding.getRoot();
     }
 
+    public void setCategoryList(List<Category> categoryList) {
+        this.categoryList = categoryList;
+    }
+
     private void event() {
         categoryMainBinding.viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
@@ -76,6 +85,8 @@ public class CategoryMainFragment extends Fragment {
                     categoryMainBinding.navigation.setSelectedItemId(R.id.navigation_dashboard);
                 } else if (position == 2) {
                     categoryMainBinding.navigation.setSelectedItemId(R.id.navigation_notifications);
+                } else if (position == 3) {
+                    categoryMainBinding.navigation.setSelectedItemId(R.id.navigation_document);
                 } else {
                     categoryMainBinding.navigation.setSelectedItemId(R.id.navigation_home);
                 }
@@ -90,14 +101,27 @@ public class CategoryMainFragment extends Fragment {
 
     private void bindData() {
         fragmentList = new ArrayList<>();
-        fragmentList.add(CategoryFragment.newInstance(CategoryFragment.TYPE_BAI_GIANG,
+        fragmentListTitle = new ArrayList<>();
+        if (categoryList != null && categoryList.size() > 0) {
+            for (int i = 0; i < categoryList.size(); i++) {
+                fragmentList.add(CategoryFragment.newInstance(CategoryFragment.TYPE_BAI_GIANG,
+                        Integer.parseInt(categoryList.get(i).category_id)));
+                fragmentListTitle.add(categoryList.get(i).category_name);
+            }
+        }
+       /* fragmentList.add(CategoryFragment.newInstance(CategoryFragment.TYPE_BAI_GIANG,
                 Integer.parseInt(categoryID)));
         fragmentList.add(CategoryFragment.newInstance(CategoryFragment.TYPE_DE_THI,
                 Integer.parseInt(categoryID)));
         fragmentList.add(CategoryFragment.newInstance(CategoryFragment.TYPE_LUYEN_TAP,
                 Integer.parseInt(categoryID)));
-        viewPagerAdapter = new ViewPagerAdapter(getChildFragmentManager(), fragmentList);
+        fragmentList.add(CategoryFragment.newInstance(CategoryFragment.TYPE_LUYEN_TAP,
+                Integer.parseInt(categoryID)));*/
+        viewPagerAdapter = new ViewPagerAdapter(getChildFragmentManager(), fragmentList,
+                fragmentListTitle);
         categoryMainBinding.viewPager.setAdapter(viewPagerAdapter);
+        ((MainActivity) getActivity()).getTablayout().setupWithViewPager(
+                categoryMainBinding.viewPager);
     }
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
@@ -114,6 +138,9 @@ public class CategoryMainFragment extends Fragment {
                     return true;
                 case R.id.navigation_notifications:
                     categoryMainBinding.viewPager.setCurrentItem(2);
+                    return true;
+                case R.id.navigation_document:
+                    categoryMainBinding.viewPager.setCurrentItem(3);
                     return true;
             }
             return false;

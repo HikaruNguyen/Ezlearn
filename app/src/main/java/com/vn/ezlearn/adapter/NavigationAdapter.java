@@ -15,9 +15,8 @@ import com.github.aakira.expandablelayout.ExpandableLayoutListenerAdapter;
 import com.github.aakira.expandablelayout.ExpandableLinearLayout;
 import com.github.aakira.expandablelayout.Utils;
 import com.vn.ezlearn.R;
-import com.vn.ezlearn.models.Category;
-import com.vn.ezlearn.models.CategoryChild;
 import com.vn.ezlearn.interfaces.NavigationItemSelected;
+import com.vn.ezlearn.models.Category;
 import com.vn.ezlearn.widgets.CRecyclerView;
 
 import java.util.ArrayList;
@@ -69,7 +68,7 @@ public class NavigationAdapter extends BaseRecyclerAdapter<Category, NavigationA
 
             if (getItemViewType(position) != Category.TYPE_NORMAL) {
                 NavigationChildAdapter childAdapter = new NavigationChildAdapter(
-                        context, new ArrayList<CategoryChild>(), navigationItemSelected);
+                        context, new ArrayList<Category>(), navigationItemSelected);
                 holder.rvItemMenuChild.setAdapter(childAdapter);
                 childAdapter.addAll(item.children);
                 holder.expandableLayout.setInRecyclerView(true);
@@ -102,13 +101,26 @@ public class NavigationAdapter extends BaseRecyclerAdapter<Category, NavigationA
                         onClickButton(holder.expandableLayout);
                     }
                 });
-            }else {
-                holder.itemView.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        navigationItemSelected.onSelected(item.category_name, item.category_id);
-                    }
-                });
+            } else {
+                if (item.levelChild >= 2) {
+                    holder.itemView.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            navigationItemSelected.onSelected(item.category_name, item.category_id,
+                                    item.children);
+                        }
+                    });
+
+                } else {
+                    holder.itemView.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            navigationItemSelected.onSelected(item.category_name, item.category_id,
+                                    null);
+                        }
+                    });
+                }
+
             }
 
         }

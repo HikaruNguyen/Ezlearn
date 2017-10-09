@@ -14,8 +14,8 @@ import com.github.aakira.expandablelayout.ExpandableLayout;
 import com.github.aakira.expandablelayout.ExpandableLinearLayout;
 import com.github.aakira.expandablelayout.Utils;
 import com.vn.ezlearn.R;
-import com.vn.ezlearn.models.CategoryChild;
 import com.vn.ezlearn.interfaces.NavigationItemSelected;
+import com.vn.ezlearn.models.Category;
 
 import java.util.List;
 
@@ -24,14 +24,14 @@ import java.util.List;
  */
 
 public class NavigationChildAdapter
-        extends BaseRecyclerAdapter<CategoryChild, NavigationChildAdapter.ViewHolder> {
+        extends BaseRecyclerAdapter<Category, NavigationChildAdapter.ViewHolder> {
 
-    private final List<CategoryChild> data;
+    private final List<Category> data;
     private Context context;
     private SparseBooleanArray expandState = new SparseBooleanArray();
     public NavigationItemSelected navigationItemSelected;
 
-    public NavigationChildAdapter(Context context, List<CategoryChild> list,
+    public NavigationChildAdapter(Context context, List<Category> list,
                                   NavigationItemSelected navigationItemSelected) {
         super(context, list);
         this.data = list;
@@ -57,7 +57,7 @@ public class NavigationChildAdapter
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
-        final CategoryChild item = data.get(position);
+        final Category item = data.get(position);
         holder.setIsRecyclable(false);
         holder.tvName.setText(item.category_name);
 //        holder.itemView.setBackgroundColor(ContextCompat.getColor(context, R.color.material_light_blue_500));
@@ -123,7 +123,8 @@ public class NavigationChildAdapter
                 @Override
                 public void onClick(View view) {
                     navigationItemSelected.onSelected(list.get(getAdapterPosition()).category_name,
-                            list.get(getAdapterPosition()).category_id);
+                            list.get(getAdapterPosition()).category_id,
+                            list.get(getAdapterPosition()).children);
                 }
             });
         }

@@ -1,19 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
         android:id="@+id/navigation_home"
         android:checked="true"
         android:icon="@mipmap/ic_lesson"
-        android:title="@string/baiGiang" />
+        android:title="@string/baiGiang"
+        app:showAsAction="always" />
 
     <item
         android:id="@+id/navigation_dashboard"
         android:icon="@mipmap/ic_exam"
-        android:title="@string/deThi" />
+        android:title="@string/deThi"
+        app:showAsAction="always" />
 
     <item
         android:id="@+id/navigation_notifications"
         android:icon="@mipmap/ic_practice"
-        android:title="@string/luyenTap" />
+        android:title="@string/luyenTap"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/navigation_document"
+        android:checked="true"
+        android:icon="@mipmap/ic_exam"
+        android:title="@string/taiLieu"
+        app:showAsAction="always" />
 </menu>

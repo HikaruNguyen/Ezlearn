@@ -9,6 +9,7 @@ import com.vn.ezlearn.R;
 import com.vn.ezlearn.config.EzlearnService;
 import com.vn.ezlearn.databinding.ActivitySplashBinding;
 import com.vn.ezlearn.modelresult.CategoryResult;
+import com.vn.ezlearn.models.Category;
 
 import rx.Subscriber;
 import rx.Subscription;
@@ -41,6 +42,28 @@ public class SplashActivity extends AppCompatActivity {
                     @Override
                     public void onCompleted() {
                         if (mCategoryResult.success) {
+                            if (mCategoryResult.data != null && mCategoryResult.data.size() > 0) {
+                                for (Category category : mCategoryResult.data) {
+                                    if (category != null && category.children != null
+                                            && category.children.size() > 0) {
+                                        for (Category categoryChild : category.children) {
+                                            if (categoryChild != null
+                                                    && categoryChild.children != null
+                                                    && categoryChild.children.size() > 0) {
+                                                category.levelChild = Category.LEVEL_3;
+                                                category.typeMenu = Category.TYPE_PARENT;
+                                            } else {
+                                                category.levelChild = Category.LEVEL_2;
+                                                category.typeMenu = Category.TYPE_NORMAL;
+                                            }
+                                        }
+                                    } else {
+                                        category.levelChild = Category.LEVEL_1;
+                                        category.typeMenu = Category.TYPE_NORMAL;
+                                    }
+                                }
+                            }
+
                             Intent intent = new Intent(SplashActivity.this, MainActivity.class);
                             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
                             MyApplication.with(SplashActivity.this).setCategoryResult(mCategoryResult);

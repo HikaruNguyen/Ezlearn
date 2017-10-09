@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -18,12 +19,13 @@ import android.widget.Toast;
 
 import com.vn.ezlearn.R;
 import com.vn.ezlearn.adapter.NavigationAdapter;
+import com.vn.ezlearn.config.AppConstant;
 import com.vn.ezlearn.databinding.ActivityMainBinding;
 import com.vn.ezlearn.fragment.CategoryMainFragment;
 import com.vn.ezlearn.fragment.HomeFragment;
 import com.vn.ezlearn.interfaces.NavigationItemSelected;
 import com.vn.ezlearn.models.Category;
-import com.vn.ezlearn.models.CategoryChild;
+import com.vn.ezlearn.viewmodel.MainViewModel;
 import com.vn.ezlearn.widgets.CRecyclerView;
 
 import java.util.ArrayList;
@@ -33,14 +35,17 @@ public class MainActivity extends AppCompatActivity implements NavigationItemSel
     private Toolbar toolbar;
     private CRecyclerView rvNavigation;
     private ActivityMainBinding mainBinding;
+    private MainViewModel mainViewModel;
     private List<Category> menuList;
     private NavigationAdapter navigationAdapter;
-    private String currentId = "-1";
+    private String currentId = AppConstant.HOME_ID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mainBinding = DataBindingUtil.setContentView(this, R.layout.activity_main);
+        mainViewModel = new MainViewModel(this);
+        mainBinding.setMainViewModel(mainViewModel);
         initUI();
         bindData();
         event();
@@ -61,6 +66,7 @@ public class MainActivity extends AppCompatActivity implements NavigationItemSel
 
     private void bindData() {
         changeFragment(new HomeFragment());
+        toolbar.setTitle(getString(R.string.title_home));
     }
 
     private void initUI() {
@@ -68,7 +74,10 @@ public class MainActivity extends AppCompatActivity implements NavigationItemSel
         rvNavigation = mainBinding.rvNavigation;
         setSupportActionBar(toolbar);
         setupNavigation();
+    }
 
+    public TabLayout getTablayout() {
+        return mainBinding.tabs;
     }
 
     private void setupNavigation() {
@@ -80,81 +89,82 @@ public class MainActivity extends AppCompatActivity implements NavigationItemSel
 
 //        fakeData();
         menuList = new ArrayList<>();
-        menuList.add(new Category("-1", getString(R.string.title_home), Category.TYPE_NORMAL));
-        menuList.add(new Category("-2", getString(R.string.tryExam), Category.TYPE_NORMAL));
-        menuList.add(new Category("-3", getString(R.string.offlineExam), Category.TYPE_NORMAL));
+        menuList.add(new Category(AppConstant.HOME_ID, getString(R.string.title_home), Category.TYPE_NORMAL));
+        menuList.add(new Category(AppConstant.FREE_ID, getString(R.string.tryExam), Category.TYPE_NORMAL));
+        menuList.add(new Category(AppConstant.OFFLINE_ID, getString(R.string.offlineExam), Category.TYPE_NORMAL));
 
         menuList.add(new Category(Category.TYPE_LINE));
         if (MyApplication.with(this).getCategoryResult() != null
                 && MyApplication.with(this).getCategoryResult().data != null
                 && MyApplication.with(this).getCategoryResult().data.size() > 0) {
-            for (Category category : MyApplication.with(this).getCategoryResult().data) {
-                if (category.children != null && category.children.size() > 0) {
-                    category.typeMenu = Category.TYPE_PARENT;
-                } else {
-                    category.typeMenu = Category.TYPE_NORMAL;
-                }
-                menuList.add(category);
-            }
+//            for (Category category : MyApplication.with(this).getCategoryResult().data) {
+//                if (category.children != null && category.children.size() > 0) {
+//                    category.typeMenu = Category.TYPE_PARENT;
+//                } else {
+//                    category.typeMenu = Category.TYPE_NORMAL;
+//                }
+//                menuList.add(category);
+//            }
+            menuList.addAll(MyApplication.with(this).getCategoryResult().data);
         } else {
             fakeData();
         }
         menuList.add(new Category(Category.TYPE_LINE));
-        menuList.add(new Category("-4", getString(R.string.contact), Category.TYPE_NORMAL));
+        menuList.add(new Category(AppConstant.OFFLINE_ID, getString(R.string.contact), Category.TYPE_NORMAL));
         navigationAdapter = new NavigationAdapter(this, menuList, this);
         mainBinding.rvNavigation.setAdapter(navigationAdapter);
 //        mainBinding.rvNavigation.setDivider();
     }
 
     private void fakeData() {
-        Category category = new Category("2", "TIẾNG ANH PHỔ THÔNG", Category.TYPE_PARENT, "1");
-        category.children.add(new CategoryChild("2", "LỚP 6", Category.TYPE_CHILD, "2"));
-        category.children.add(new CategoryChild("2", "LỚP 7", Category.TYPE_CHILD, "2"));
-        category.children.add(new CategoryChild("2", "LỚP 8", Category.TYPE_CHILD, "2"));
-        category.children.add(new CategoryChild("2", "LỚP 9", Category.TYPE_CHILD, "2"));
-        category.children.add(new CategoryChild("2", "LỚP 10", Category.TYPE_CHILD, "2"));
-        category.children.add(new CategoryChild("2", "LỚP 11", Category.TYPE_CHILD, "2"));
-        category.children.add(new CategoryChild("2", "LỚP 12", Category.TYPE_CHILD, "2"));
-        menuList.add(category);
-
-        category = new Category("3", "THI CHUYÊN 10", Category.TYPE_PARENT, "1");
-        category.children.add(new CategoryChild("2", "ĐỀ THI", Category.TYPE_CHILD, "3"));
-        category.children.add(new CategoryChild("2", "NGỮ ÂM", Category.TYPE_CHILD, "3"));
-        category.children.add(new CategoryChild("2", "NGỮ PHÁP", Category.TYPE_CHILD, "3"));
-        menuList.add(category);
-
-        category = new Category("4", "THI THPTQG", Category.TYPE_PARENT, "1");
-        category.children.add(new CategoryChild("2", "Kết hợp câu", Category.TYPE_CHILD, "4"));
-        category.children.add(new CategoryChild("2", "Từ trái nghĩa", Category.TYPE_CHILD, "4"));
-        category.children.add(new CategoryChild("2", "Từ đồng nghĩa", Category.TYPE_CHILD, "4"));
-        category.children.add(new CategoryChild("2", "Từ đồng nghĩa", Category.TYPE_CHILD, "4"));
-        category.children.add(new CategoryChild("2", "Tìm lỗi sai", Category.TYPE_CHILD, "4"));
-        category.children.add(new CategoryChild("2", "Điền từ", Category.TYPE_CHILD, "4"));
-        category.children.add(new CategoryChild("2", "Điền từ", Category.TYPE_CHILD, "4"));
-        category.children.add(new CategoryChild("2", "Giao tiếp", Category.TYPE_CHILD, "4"));
-        category.children.add(new CategoryChild("2", "Ngữ âm", Category.TYPE_CHILD, "4"));
-        category.children.add(new CategoryChild("2", "Ngữ pháp", Category.TYPE_CHILD, "4"));
-        category.children.add(new CategoryChild("2", "Đọc hiểu", Category.TYPE_CHILD, "4"));
-        category.children.add(new CategoryChild("2", "Đề thi", Category.TYPE_CHILD, "4"));
-        menuList.add(category);
-
-        category = new Category("4", "IELTS", Category.TYPE_PARENT, "1");
-        category.children.add(new CategoryChild("2", "3.5+", Category.TYPE_CHILD, "4"));
-        category.children.add(new CategoryChild("2", "5.5+", Category.TYPE_CHILD, "4"));
-        category.children.add(new CategoryChild("2", "6.5+", Category.TYPE_CHILD, "4"));
-        menuList.add(category);
-
-        category = new Category("5", "TOEFL Junior", Category.TYPE_PARENT, "1");
-        category.children.add(new CategoryChild("2", "650+", Category.TYPE_CHILD, "5"));
-        category.children.add(new CategoryChild("2", "750+", Category.TYPE_CHILD, "5"));
-        category.children.add(new CategoryChild("2", "850+", Category.TYPE_CHILD, "5"));
-        menuList.add(category);
-
-        category = new Category("6", "TOEIC", Category.TYPE_PARENT, "1");
-        category.children.add(new CategoryChild("2", "350+", Category.TYPE_CHILD, "6"));
-        category.children.add(new CategoryChild("2", "550+", Category.TYPE_CHILD, "6"));
-        category.children.add(new CategoryChild("2", "650+", Category.TYPE_CHILD, "6"));
-        menuList.add(category);
+//        Category category = new Category("2", "TIẾNG ANH PHỔ THÔNG", Category.TYPE_PARENT, "1");
+//        category.children.add(new CategoryChild("2", "LỚP 6", Category.TYPE_CHILD, "2"));
+//        category.children.add(new CategoryChild("2", "LỚP 7", Category.TYPE_CHILD, "2"));
+//        category.children.add(new CategoryChild("2", "LỚP 8", Category.TYPE_CHILD, "2"));
+//        category.children.add(new CategoryChild("2", "LỚP 9", Category.TYPE_CHILD, "2"));
+//        category.children.add(new CategoryChild("2", "LỚP 10", Category.TYPE_CHILD, "2"));
+//        category.children.add(new CategoryChild("2", "LỚP 11", Category.TYPE_CHILD, "2"));
+//        category.children.add(new CategoryChild("2", "LỚP 12", Category.TYPE_CHILD, "2"));
+//        menuList.add(category);
+//
+//        category = new Category("3", "THI CHUYÊN 10", Category.TYPE_PARENT, "1");
+//        category.children.add(new CategoryChild("2", "ĐỀ THI", Category.TYPE_CHILD, "3"));
+//        category.children.add(new CategoryChild("2", "NGỮ ÂM", Category.TYPE_CHILD, "3"));
+//        category.children.add(new CategoryChild("2", "NGỮ PHÁP", Category.TYPE_CHILD, "3"));
+//        menuList.add(category);
+//
+//        category = new Category("4", "THI THPTQG", Category.TYPE_PARENT, "1");
+//        category.children.add(new CategoryChild("2", "Kết hợp câu", Category.TYPE_CHILD, "4"));
+//        category.children.add(new CategoryChild("2", "Từ trái nghĩa", Category.TYPE_CHILD, "4"));
+//        category.children.add(new CategoryChild("2", "Từ đồng nghĩa", Category.TYPE_CHILD, "4"));
+//        category.children.add(new CategoryChild("2", "Từ đồng nghĩa", Category.TYPE_CHILD, "4"));
+//        category.children.add(new CategoryChild("2", "Tìm lỗi sai", Category.TYPE_CHILD, "4"));
+//        category.children.add(new CategoryChild("2", "Điền từ", Category.TYPE_CHILD, "4"));
+//        category.children.add(new CategoryChild("2", "Điền từ", Category.TYPE_CHILD, "4"));
+//        category.children.add(new CategoryChild("2", "Giao tiếp", Category.TYPE_CHILD, "4"));
+//        category.children.add(new CategoryChild("2", "Ngữ âm", Category.TYPE_CHILD, "4"));
+//        category.children.add(new CategoryChild("2", "Ngữ pháp", Category.TYPE_CHILD, "4"));
+//        category.children.add(new CategoryChild("2", "Đọc hiểu", Category.TYPE_CHILD, "4"));
+//        category.children.add(new CategoryChild("2", "Đề thi", Category.TYPE_CHILD, "4"));
+//        menuList.add(category);
+//
+//        category = new Category("4", "IELTS", Category.TYPE_PARENT, "1");
+//        category.children.add(new CategoryChild("2", "3.5+", Category.TYPE_CHILD, "4"));
+//        category.children.add(new CategoryChild("2", "5.5+", Category.TYPE_CHILD, "4"));
+//        category.children.add(new CategoryChild("2", "6.5+", Category.TYPE_CHILD, "4"));
+//        menuList.add(category);
+//
+//        category = new Category("5", "TOEFL Junior", Category.TYPE_PARENT, "1");
+//        category.children.add(new CategoryChild("2", "650+", Category.TYPE_CHILD, "5"));
+//        category.children.add(new CategoryChild("2", "750+", Category.TYPE_CHILD, "5"));
+//        category.children.add(new CategoryChild("2", "850+", Category.TYPE_CHILD, "5"));
+//        menuList.add(category);
+//
+//        category = new Category("6", "TOEIC", Category.TYPE_PARENT, "1");
+//        category.children.add(new CategoryChild("2", "350+", Category.TYPE_CHILD, "6"));
+//        category.children.add(new CategoryChild("2", "550+", Category.TYPE_CHILD, "6"));
+//        category.children.add(new CategoryChild("2", "650+", Category.TYPE_CHILD, "6"));
+//        menuList.add(category);
     }
 
     boolean doubleBackToExitPressedOnce = false;
@@ -164,9 +174,11 @@ public class MainActivity extends AppCompatActivity implements NavigationItemSel
         if (mainBinding.drawerLayout.isDrawerOpen(GravityCompat.START)) {
             mainBinding.drawerLayout.closeDrawer(GravityCompat.START);
         } else {
-            if (!currentId.equals("-1")) {
+            if (!currentId.equals(AppConstant.HOME_ID)) {
                 changeFragment(new HomeFragment());
-                currentId = "-1";
+                currentId = AppConstant.HOME_ID;
+                mainViewModel.setVisiableTabBar(AppConstant.HOME_ID);
+                toolbar.setTitle(getString(R.string.title_home));
             } else {
                 if (doubleBackToExitPressedOnce) {
                     super.onBackPressed();
@@ -228,14 +240,17 @@ public class MainActivity extends AppCompatActivity implements NavigationItemSel
     }
 
     @Override
-    public void onSelected(String name, String id) {
+    public void onSelected(String name, String id, List<Category> categoryList) {
+        mainViewModel.setVisiableTabBar(id);
         if (!id.equals(currentId)) {
-            if (!id.equals("-1")) {
+            if (!id.equals(AppConstant.HOME_ID)) {
                 if (mainBinding.drawerLayout.isDrawerOpen(GravityCompat.START)) {
                     mainBinding.drawerLayout.closeDrawer(GravityCompat.START);
                     toolbar.setTitle(name);
                 }
-                changeFragment(CategoryMainFragment.newInstance(id));
+                CategoryMainFragment categoryMainFragment =new CategoryMainFragment();
+                categoryMainFragment.setCategoryList(categoryList);
+                changeFragment(categoryMainFragment);
             } else {
 
                 if (mainBinding.drawerLayout.isDrawerOpen(GravityCompat.START)) {

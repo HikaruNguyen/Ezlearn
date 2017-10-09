@@ -45,9 +45,6 @@
             android:name=".activity.TestActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".activity.LoginActivity" />
-        <activity
-            android:name=".activity.Main2Activity"
-            android:theme="@style/AppTheme.NoActionBar" />
     </application>
 
 </manifest>
