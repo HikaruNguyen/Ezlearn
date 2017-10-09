@@ -8,12 +8,14 @@ import android.content.SharedPreferences;
  */
 
 public class AppConfig {
-    public static final String Pref = "Pref";
+    private static final String Pref = "Pref";
 
-    public static final String KEY_IS_SHOW_INTRO = "key_is_shcow_intro";
+    private static final String KEY_IS_SHOW_INTRO = "key_is_shcow_intro";
+    private static final String KEY_TOKEN = "key_token";
+    private static final String KEY_NAME = "key_name";
+    private static final String KEY_EMAIL = "key_email";
 
     private SharedPreferences sharedPreferences;
-    private Context context;
     private static AppConfig appConfig;
 
     public static AppConfig getInstance(Context context) {
@@ -24,7 +26,6 @@ public class AppConfig {
     }
 
     private AppConfig(Context context) {
-        this.context = context;
         this.sharedPreferences = context.getSharedPreferences(Pref, Context.MODE_PRIVATE);
     }
 
@@ -34,5 +35,29 @@ public class AppConfig {
 
     public boolean isShowIntro() {
         return sharedPreferences.getBoolean(KEY_IS_SHOW_INTRO, false);
+    }
+
+    public void setToken(String token) {
+        sharedPreferences.edit().putString(KEY_TOKEN, token).apply();
+    }
+
+    public String getToken() {
+        return sharedPreferences.getString(KEY_TOKEN, "");
+    }
+
+    public void setEmail(String email) {
+        sharedPreferences.edit().putString(KEY_EMAIL, email).apply();
+    }
+
+    public String getEmail() {
+        return sharedPreferences.getString(KEY_EMAIL, "");
+    }
+
+    public void setName(String name) {
+        sharedPreferences.edit().putString(KEY_NAME, name).apply();
+    }
+
+    public String getName() {
+        return sharedPreferences.getString(KEY_NAME, "");
     }
 }

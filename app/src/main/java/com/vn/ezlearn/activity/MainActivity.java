@@ -19,6 +19,7 @@ import android.widget.Toast;
 
 import com.vn.ezlearn.R;
 import com.vn.ezlearn.adapter.NavigationAdapter;
+import com.vn.ezlearn.config.AppConfig;
 import com.vn.ezlearn.config.AppConstant;
 import com.vn.ezlearn.databinding.ActivityMainBinding;
 import com.vn.ezlearn.fragment.CategoryMainFragment;
@@ -52,13 +53,18 @@ public class MainActivity extends AppCompatActivity implements NavigationItemSel
     }
 
     private void event() {
-        mainBinding.navHeaderMain.rlHeader.setOnClickListener(new View.OnClickListener() {
+        mainBinding.rlHeader.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (mainBinding.drawerLayout.isDrawerOpen(GravityCompat.START)) {
                     mainBinding.drawerLayout.closeDrawer(GravityCompat.START);
                 }
-                Intent intent = new Intent(MainActivity.this, UserProfile.class);
+                Intent intent;
+                if (!AppConfig.getInstance(MainActivity.this).getToken().isEmpty()) {
+                    intent = new Intent(MainActivity.this, UserProfile.class);
+                } else {
+                    intent = new Intent(MainActivity.this, LoginActivity.class);
+                }
                 startActivity(intent);
             }
         });
@@ -248,7 +254,7 @@ public class MainActivity extends AppCompatActivity implements NavigationItemSel
                     mainBinding.drawerLayout.closeDrawer(GravityCompat.START);
                     toolbar.setTitle(name);
                 }
-                CategoryMainFragment categoryMainFragment =new CategoryMainFragment();
+                CategoryMainFragment categoryMainFragment = new CategoryMainFragment();
                 categoryMainFragment.setCategoryList(categoryList);
                 changeFragment(categoryMainFragment);
             } else {

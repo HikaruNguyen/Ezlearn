@@ -175,4 +175,8 @@
     <string name="offlineExam">ĐỀ THI OFFLINE</string>
     <string name="contact">LIÊN HỆ</string>
     <string name="taiLieu">Tài liệu</string>
+    <string name="login">ĐĂNG NHẬP</string>
+    <string name="user_name">Tên đăng nhập</string>
+    <string name="password">Mật khẩu</string>
+    <string name="register">Đăng ký</string>
 </resources>
