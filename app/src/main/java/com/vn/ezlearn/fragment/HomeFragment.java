@@ -73,7 +73,7 @@ public class HomeFragment extends Fragment implements BaseSliderView.OnSliderCli
 
 
     private void bindData() {
-        homeAdapter.add(new HomeObject(getString(R.string.tryExam)));
+
         getListExamFree(1);
 //        list.add(new HomeObject(bannerList));
 //        list.add(new HomeObject(new CategoryFake()));
@@ -90,7 +90,7 @@ public class HomeFragment extends Fragment implements BaseSliderView.OnSliderCli
 
     private void getListExamFree(int page) {
         apiService = MyApplication.with(getActivity()).getEzlearnService();
-        mSubscription = apiService.getListFreeExams(page, 10)
+        mSubscription = apiService.getListFreeExams(page, 3)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<ExamsResult>() {
@@ -99,6 +99,7 @@ public class HomeFragment extends Fragment implements BaseSliderView.OnSliderCli
                         if (mExamsResult.success && mExamsResult.data != null
                                 && mExamsResult.data.list != null
                                 && mExamsResult.data.list.size() > 0) {
+                            homeAdapter.add(new HomeObject(getString(R.string.tryExam)));
                             for (int i = 0; i < mExamsResult.data.list.size(); i++) {
                                 homeAdapter.add(new HomeObject(mExamsResult.data.list.get(i)));
                             }

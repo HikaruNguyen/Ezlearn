@@ -11,6 +11,7 @@ public class Category {
     public static final int TYPE_NORMAL = 1;
     public static final int TYPE_PARENT = 2;
     public static final int TYPE_CHILD = 3;
+    public static final int TYPE_LINE = 4;
 
     public String category_id;
     public String category_name;
@@ -44,5 +45,9 @@ public class Category {
         this.typeMenu = type;
         this.parent_id = "-1";
         children = new ArrayList<>();
+    }
+
+    public Category(Integer type) {
+        this.typeMenu = type;
     }
 }

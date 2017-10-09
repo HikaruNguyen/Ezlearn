@@ -80,7 +80,11 @@ public class MainActivity extends AppCompatActivity implements NavigationItemSel
 
 //        fakeData();
         menuList = new ArrayList<>();
-        menuList.add(new Category("-1", "TRANG CHỦ", Category.TYPE_NORMAL));
+        menuList.add(new Category("-1", getString(R.string.title_home), Category.TYPE_NORMAL));
+        menuList.add(new Category("-2", getString(R.string.tryExam), Category.TYPE_NORMAL));
+        menuList.add(new Category("-3", getString(R.string.offlineExam), Category.TYPE_NORMAL));
+
+        menuList.add(new Category(Category.TYPE_LINE));
         if (MyApplication.with(this).getCategoryResult() != null
                 && MyApplication.with(this).getCategoryResult().data != null
                 && MyApplication.with(this).getCategoryResult().data.size() > 0) {
@@ -95,6 +99,8 @@ public class MainActivity extends AppCompatActivity implements NavigationItemSel
         } else {
             fakeData();
         }
+        menuList.add(new Category(Category.TYPE_LINE));
+        menuList.add(new Category("-4", getString(R.string.contact), Category.TYPE_NORMAL));
         navigationAdapter = new NavigationAdapter(this, menuList, this);
         mainBinding.rvNavigation.setAdapter(navigationAdapter);
 //        mainBinding.rvNavigation.setDivider();

@@ -50,6 +50,9 @@ public class NavigationAdapter extends BaseRecyclerAdapter<Category, NavigationA
         if (viewType == Category.TYPE_NORMAL) {
             return new ViewHolder(LayoutInflater.from(context)
                     .inflate(R.layout.item_menu_normal, parent, false));
+        } else if (viewType == Category.TYPE_LINE) {
+            return new ViewHolder(LayoutInflater.from(context)
+                    .inflate(R.layout.item_menu_line, parent, false));
         } else {
             return new ViewHolder(LayoutInflater.from(context)
                     .inflate(R.layout.item_menu, parent, false));
@@ -59,52 +62,55 @@ public class NavigationAdapter extends BaseRecyclerAdapter<Category, NavigationA
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
-        final Category item = data.get(position);
-        holder.setIsRecyclable(false);
-        holder.tvName.setText(item.category_name);
+        if (getItemViewType(position) != Category.TYPE_LINE) {
+            final Category item = data.get(position);
+            holder.setIsRecyclable(false);
+            holder.tvName.setText(item.category_name);
 
-        if (getItemViewType(position) != Category.TYPE_NORMAL) {
-            NavigationChildAdapter childAdapter = new NavigationChildAdapter(
-                    context, new ArrayList<CategoryChild>(), navigationItemSelected);
-            holder.rvItemMenuChild.setAdapter(childAdapter);
-            childAdapter.addAll(item.children);
-            holder.expandableLayout.setInRecyclerView(true);
-            holder.expandableLayout.setInterpolator(Utils.createInterpolator(Utils.FAST_OUT_SLOW_IN_INTERPOLATOR));
-            holder.expandableLayout.setExpanded(expandState.get(position));
-            holder.expandableLayout.setListener(new ExpandableLayoutListenerAdapter() {
-                @Override
-                public void onPreOpen() {
-                    createRotateAnimator(holder.buttonLayout, 0f, 180f).start();
-                    expandState.put(position, true);
-                }
+            if (getItemViewType(position) != Category.TYPE_NORMAL) {
+                NavigationChildAdapter childAdapter = new NavigationChildAdapter(
+                        context, new ArrayList<CategoryChild>(), navigationItemSelected);
+                holder.rvItemMenuChild.setAdapter(childAdapter);
+                childAdapter.addAll(item.children);
+                holder.expandableLayout.setInRecyclerView(true);
+                holder.expandableLayout.setInterpolator(Utils.createInterpolator(Utils.FAST_OUT_SLOW_IN_INTERPOLATOR));
+                holder.expandableLayout.setExpanded(expandState.get(position));
+                holder.expandableLayout.setListener(new ExpandableLayoutListenerAdapter() {
+                    @Override
+                    public void onPreOpen() {
+                        createRotateAnimator(holder.buttonLayout, 0f, 180f).start();
+                        expandState.put(position, true);
+                    }
 
-                @Override
-                public void onPreClose() {
-                    createRotateAnimator(holder.buttonLayout, 180f, 0f).start();
-                    expandState.put(position, false);
-                }
-            });
+                    @Override
+                    public void onPreClose() {
+                        createRotateAnimator(holder.buttonLayout, 180f, 0f).start();
+                        expandState.put(position, false);
+                    }
+                });
 
-            holder.buttonLayout.setRotation(expandState.get(position) ? 180f : 0f);
-            holder.buttonLayout.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(final View v) {
-                    onClickButton(holder.expandableLayout);
-                }
-            });
-            holder.item.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    onClickButton(holder.expandableLayout);
-                }
-            });
-        } else {
-            holder.itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    navigationItemSelected.onSelected(item.category_name, item.category_id);
-                }
-            });
+                holder.buttonLayout.setRotation(expandState.get(position) ? 180f : 0f);
+                holder.buttonLayout.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(final View v) {
+                        onClickButton(holder.expandableLayout);
+                    }
+                });
+                holder.item.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        onClickButton(holder.expandableLayout);
+                    }
+                });
+            }else {
+                holder.itemView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        navigationItemSelected.onSelected(item.category_name, item.category_id);
+                    }
+                });
+            }
+
         }
 
     }
