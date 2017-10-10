@@ -11,7 +11,7 @@ public class QuestionObject {
     public static final int TYPE_VIEWPAGER = 3;
 
     public String part;
-    public List<Question> list;
+    public List<MyContent> list;
     public int type;
 
     public QuestionObject(String part) {
@@ -19,7 +19,7 @@ public class QuestionObject {
         this.type = TYPE_PART;
     }
 
-    public QuestionObject(List<Question> list) {
+    public QuestionObject(List<MyContent> list) {
         this.list = list;
         this.type = TYPE_VIEWPAGER;
     }

@@ -13,7 +13,7 @@ import android.widget.ImageView;
 import com.vn.ezlearn.BR;
 import com.vn.ezlearn.R;
 import com.vn.ezlearn.interfaces.OnClickQuestionPopupListener;
-import com.vn.ezlearn.models.Question;
+import com.vn.ezlearn.models.MyContent;
 import com.vn.ezlearn.viewmodel.ItemQuestionDialogViewModel;
 
 import java.util.List;
@@ -22,11 +22,11 @@ import java.util.List;
  * Created by FRAMGIA\nguyen.duc.manh on 21/09/2017.
  */
 
-public class DialogListQuestionAdapter extends BaseRecyclerAdapter<Question,
+public class DialogListQuestionAdapter extends BaseRecyclerAdapter<MyContent,
         DialogListQuestionAdapter.ViewHolder> {
     private OnClickQuestionPopupListener onClickQuestionPopupListener;
 
-    public DialogListQuestionAdapter(Context context, List<Question> list,
+    public DialogListQuestionAdapter(Context context, List<MyContent> list,
                                      OnClickQuestionPopupListener onClickQuestionPopupListener) {
         super(context, list);
         this.onClickQuestionPopupListener = onClickQuestionPopupListener;

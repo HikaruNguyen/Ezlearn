@@ -61,7 +61,7 @@ public class NavigationChildAdapter
         holder.setIsRecyclable(false);
         holder.tvName.setText(item.category_name);
 //        holder.itemView.setBackgroundColor(ContextCompat.getColor(context, R.color.material_light_blue_500));
-//        if (data.get(position).type != Category.TYPE_NORMAL) {
+//        if (data.get(position).typeQuestion != Category.TYPE_NORMAL) {
 //            holder.expandableLayout.setInRecyclerView(true);
 ////        holder.expandableLayout.setBackgroundColor(ContextCompat.getColor(context,  R.color.material_light_blue_300));
 //            holder.expandableLayout.setInterpolator(Utils.createInterpolator(Utils.FAST_OUT_SLOW_IN_INTERPOLATOR));

@@ -6,7 +6,7 @@ import android.databinding.ObservableField;
 import android.databinding.ObservableInt;
 
 import com.vn.ezlearn.R;
-import com.vn.ezlearn.models.Question;
+import com.vn.ezlearn.models.MyContent;
 
 /**
  * Created by FRAMGIA\nguyen.duc.manh on 21/09/2017.
@@ -14,20 +14,20 @@ import com.vn.ezlearn.models.Question;
 
 public class ItemQuestionDialogViewModel extends BaseObservable {
     private Context context;
-    private Question question;
+    private MyContent content;
 
     public ObservableInt backgroundItem;
     public ObservableField<String> position;
 
-    public ItemQuestionDialogViewModel(Context context, Question question, int position) {
+    public ItemQuestionDialogViewModel(Context context, MyContent content, int position) {
         this.context = context;
-        this.question = question;
+        this.content = content;
         backgroundItem = new ObservableInt();
-        if (question.type == Question.TYPE_ANSWERED) {
+        if (content.typeQuestion == MyContent.TYPE_ANSWERED) {
             backgroundItem.set(R.drawable.bg_question_answered);
-        } else if (question.type == Question.TYPE_UNANSWER) {
+        } else if (content.typeQuestion == MyContent.TYPE_UNANSWER) {
             backgroundItem.set(R.drawable.bg_question_unanswer);
-        } else if (question.type == Question.TYPE_LATE) {
+        } else if (content.typeQuestion == MyContent.TYPE_LATE) {
             backgroundItem.set(R.drawable.bg_question_review);
         } else {
             backgroundItem.set(R.drawable.bg_question_unanswer);

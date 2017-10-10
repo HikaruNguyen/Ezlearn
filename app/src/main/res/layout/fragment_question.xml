@@ -41,7 +41,7 @@
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_toLeftOf="@+id/icFlag"
-                android:text="@string/question"
+                android:text="@string/content"
                 android:textColor="@color/colorPrimaryDark"
                 android:textSize="@dimen/text_size_15sp"
                 android:textStyle="bold" />

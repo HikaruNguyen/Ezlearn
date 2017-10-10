@@ -13,7 +13,7 @@ import android.view.View;
 import android.widget.ImageView;
 
 import com.vn.ezlearn.R;
-import com.vn.ezlearn.models.Question;
+import com.vn.ezlearn.models.Content;
 
 /**
  * Created by FRAMGIA\nguyen.duc.manh on 15/09/2017.
@@ -22,7 +22,7 @@ import com.vn.ezlearn.models.Question;
 public class QuestionViewModel extends BaseObservable {
 
     private Context context;
-    private Question question;
+    private Content content;
 
     public ObservableField<Spanned> textPassage;
     public ObservableField<Spanned> textQuestion;
@@ -33,9 +33,9 @@ public class QuestionViewModel extends BaseObservable {
     public ObservableField<Spanned> textNeedReview;
     public ObservableInt drawableFlag;
 
-    public QuestionViewModel(Activity context, Question question) {
+    public QuestionViewModel(Activity context, Content content) {
         this.context = context;
-        this.question = question;
+        this.content = content;
         textPassage = new ObservableField<>();
         textQuestion = new ObservableField<>();
         visiablePassage = new ObservableInt(View.GONE);
@@ -44,20 +44,20 @@ public class QuestionViewModel extends BaseObservable {
         textNeedReview = new ObservableField<>(
                 Html.fromHtml(context.getString(R.string.needReview)));
         drawableFlag = new ObservableInt(R.mipmap.ic_flag);
-        if (question != null) {
+        if (content != null) {
             setQuestionData();
         }
     }
 
     private void setQuestionData() {
-        if (question.passage != null) {
-            textPassage.set(Html.fromHtml(question.passage));
+        if (content.passage != null) {
+            textPassage.set(Html.fromHtml(content.passage));
             visiablePassage.set(View.VISIBLE);
         } else {
             visiablePassage.set(View.GONE);
         }
-        if (question.question != null) {
-            textQuestion.set(Html.fromHtml(question.question));
+        if (content.question != null) {
+            textQuestion.set(Html.fromHtml(content.question));
             visiableQuestion.set(View.VISIBLE);
         } else {
             visiableQuestion.set(View.GONE);

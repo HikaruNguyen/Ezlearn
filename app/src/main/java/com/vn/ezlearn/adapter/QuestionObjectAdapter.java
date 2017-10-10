@@ -16,7 +16,7 @@ import com.vn.ezlearn.databinding.ItemQuestionViewpagerBinding;
 import com.vn.ezlearn.fragment.QuestionFragment;
 import com.vn.ezlearn.interfaces.ChangeQuestionListener;
 import com.vn.ezlearn.interfaces.OnCheckAnswerListener;
-import com.vn.ezlearn.models.Question;
+import com.vn.ezlearn.models.Content;
 import com.vn.ezlearn.models.QuestionObject;
 
 import java.util.ArrayList;
@@ -74,13 +74,13 @@ public class QuestionObjectAdapter
         } else if (getItemViewType(position) == QuestionObject.TYPE_VIEWPAGER) {
             itemQuestionViewpagerBinding =
                     holder.getItemQuestionViewpagerBinding();
-            List<Question> questionList = item.list;
+            List<Content> contentList = item.list;
             questionFragments = new ArrayList<>();
-            if (questionList != null) {
-                for (int i = 0; i < questionList.size(); i++) {
+            if (contentList != null) {
+                for (int i = 0; i < contentList.size(); i++) {
                     QuestionFragment questionFragment =
-                            QuestionFragment.newInstance(i, questionList.size());
-                    questionFragment.setQuestion(questionList.get(i), onCheckAnswerListener);
+                            QuestionFragment.newInstance(i, contentList.size());
+                    questionFragment.setQuestion(contentList.get(i), onCheckAnswerListener);
                     questionFragments.add(questionFragment);
                 }
             }

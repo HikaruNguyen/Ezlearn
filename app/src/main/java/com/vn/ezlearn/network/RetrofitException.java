@@ -98,10 +98,10 @@ class RetrofitException extends RuntimeException {
     }
 
     /**
-     * HTTP response body converted to specified {@code type}. {@code null} if there is no
+     * HTTP response body converted to specified {@code typeQuestion}. {@code null} if there is no
      * response.
      *
-     * @throws IOException if unable to convert the body to the specified {@code type}.
+     * @throws IOException if unable to convert the body to the specified {@code typeQuestion}.
      */
     private <T> T getErrorBodyAs(Class<T> type) throws IOException {
         if (response == null || response.errorBody() == null) {

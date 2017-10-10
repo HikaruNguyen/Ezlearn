@@ -14,7 +14,7 @@ import android.widget.RadioGroup;
 import com.vn.ezlearn.R;
 import com.vn.ezlearn.databinding.FragmentQuestionBinding;
 import com.vn.ezlearn.interfaces.OnCheckAnswerListener;
-import com.vn.ezlearn.models.Question;
+import com.vn.ezlearn.models.Content;
 import com.vn.ezlearn.viewmodel.QuestionViewModel;
 
 /**
@@ -28,7 +28,7 @@ public class QuestionFragment extends Fragment {
     private QuestionViewModel questionViewModel;
     private int position;
     private int size;
-    private Question question;
+    private Content content;
     private OnCheckAnswerListener onCheckAnswerListener;
 
     public QuestionFragment() {
@@ -43,8 +43,8 @@ public class QuestionFragment extends Fragment {
         return fragment;
     }
 
-    public void setQuestion(Question question, OnCheckAnswerListener onCheckAnswerListener) {
-        this.question = question;
+    public void setQuestion(Content content, OnCheckAnswerListener onCheckAnswerListener) {
+        this.content = content;
         this.onCheckAnswerListener = onCheckAnswerListener;
     }
 
@@ -62,7 +62,7 @@ public class QuestionFragment extends Fragment {
                              Bundle savedInstanceState) {
         fragmentQuestionBinding = DataBindingUtil.inflate(
                 inflater, R.layout.fragment_question, container, false);
-        questionViewModel = new QuestionViewModel(getActivity(), question);
+        questionViewModel = new QuestionViewModel(getActivity(), content);
         fragmentQuestionBinding.setQuestionViewModel(questionViewModel);
         bindData();
         event();
