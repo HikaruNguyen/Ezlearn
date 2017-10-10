@@ -62,10 +62,12 @@ public class MainActivity extends AppCompatActivity implements NavigationItemSel
                 Intent intent;
                 if (!AppConfig.getInstance(MainActivity.this).getToken().isEmpty()) {
                     intent = new Intent(MainActivity.this, UserProfile.class);
+                    startActivity(intent);
                 } else {
                     intent = new Intent(MainActivity.this, LoginActivity.class);
+                    startActivityForResult(intent, LoginActivity.LOGIN_REQUEST);
                 }
-                startActivity(intent);
+
             }
         });
     }
@@ -103,17 +105,7 @@ public class MainActivity extends AppCompatActivity implements NavigationItemSel
         if (MyApplication.with(this).getCategoryResult() != null
                 && MyApplication.with(this).getCategoryResult().data != null
                 && MyApplication.with(this).getCategoryResult().data.size() > 0) {
-//            for (Category category : MyApplication.with(this).getCategoryResult().data) {
-//                if (category.children != null && category.children.size() > 0) {
-//                    category.typeMenu = Category.TYPE_PARENT;
-//                } else {
-//                    category.typeMenu = Category.TYPE_NORMAL;
-//                }
-//                menuList.add(category);
-//            }
             menuList.addAll(MyApplication.with(this).getCategoryResult().data);
-        } else {
-            fakeData();
         }
         menuList.add(new Category(Category.TYPE_LINE));
         menuList.add(new Category(AppConstant.OFFLINE_ID, getString(R.string.contact), Category.TYPE_NORMAL));
@@ -122,56 +114,6 @@ public class MainActivity extends AppCompatActivity implements NavigationItemSel
 //        mainBinding.rvNavigation.setDivider();
     }
 
-    private void fakeData() {
-//        Category category = new Category("2", "TIẾNG ANH PHỔ THÔNG", Category.TYPE_PARENT, "1");
-//        category.children.add(new CategoryChild("2", "LỚP 6", Category.TYPE_CHILD, "2"));
-//        category.children.add(new CategoryChild("2", "LỚP 7", Category.TYPE_CHILD, "2"));
-//        category.children.add(new CategoryChild("2", "LỚP 8", Category.TYPE_CHILD, "2"));
-//        category.children.add(new CategoryChild("2", "LỚP 9", Category.TYPE_CHILD, "2"));
-//        category.children.add(new CategoryChild("2", "LỚP 10", Category.TYPE_CHILD, "2"));
-//        category.children.add(new CategoryChild("2", "LỚP 11", Category.TYPE_CHILD, "2"));
-//        category.children.add(new CategoryChild("2", "LỚP 12", Category.TYPE_CHILD, "2"));
-//        menuList.add(category);
-//
-//        category = new Category("3", "THI CHUYÊN 10", Category.TYPE_PARENT, "1");
-//        category.children.add(new CategoryChild("2", "ĐỀ THI", Category.TYPE_CHILD, "3"));
-//        category.children.add(new CategoryChild("2", "NGỮ ÂM", Category.TYPE_CHILD, "3"));
-//        category.children.add(new CategoryChild("2", "NGỮ PHÁP", Category.TYPE_CHILD, "3"));
-//        menuList.add(category);
-//
-//        category = new Category("4", "THI THPTQG", Category.TYPE_PARENT, "1");
-//        category.children.add(new CategoryChild("2", "Kết hợp câu", Category.TYPE_CHILD, "4"));
-//        category.children.add(new CategoryChild("2", "Từ trái nghĩa", Category.TYPE_CHILD, "4"));
-//        category.children.add(new CategoryChild("2", "Từ đồng nghĩa", Category.TYPE_CHILD, "4"));
-//        category.children.add(new CategoryChild("2", "Từ đồng nghĩa", Category.TYPE_CHILD, "4"));
-//        category.children.add(new CategoryChild("2", "Tìm lỗi sai", Category.TYPE_CHILD, "4"));
-//        category.children.add(new CategoryChild("2", "Điền từ", Category.TYPE_CHILD, "4"));
-//        category.children.add(new CategoryChild("2", "Điền từ", Category.TYPE_CHILD, "4"));
-//        category.children.add(new CategoryChild("2", "Giao tiếp", Category.TYPE_CHILD, "4"));
-//        category.children.add(new CategoryChild("2", "Ngữ âm", Category.TYPE_CHILD, "4"));
-//        category.children.add(new CategoryChild("2", "Ngữ pháp", Category.TYPE_CHILD, "4"));
-//        category.children.add(new CategoryChild("2", "Đọc hiểu", Category.TYPE_CHILD, "4"));
-//        category.children.add(new CategoryChild("2", "Đề thi", Category.TYPE_CHILD, "4"));
-//        menuList.add(category);
-//
-//        category = new Category("4", "IELTS", Category.TYPE_PARENT, "1");
-//        category.children.add(new CategoryChild("2", "3.5+", Category.TYPE_CHILD, "4"));
-//        category.children.add(new CategoryChild("2", "5.5+", Category.TYPE_CHILD, "4"));
-//        category.children.add(new CategoryChild("2", "6.5+", Category.TYPE_CHILD, "4"));
-//        menuList.add(category);
-//
-//        category = new Category("5", "TOEFL Junior", Category.TYPE_PARENT, "1");
-//        category.children.add(new CategoryChild("2", "650+", Category.TYPE_CHILD, "5"));
-//        category.children.add(new CategoryChild("2", "750+", Category.TYPE_CHILD, "5"));
-//        category.children.add(new CategoryChild("2", "850+", Category.TYPE_CHILD, "5"));
-//        menuList.add(category);
-//
-//        category = new Category("6", "TOEIC", Category.TYPE_PARENT, "1");
-//        category.children.add(new CategoryChild("2", "350+", Category.TYPE_CHILD, "6"));
-//        category.children.add(new CategoryChild("2", "550+", Category.TYPE_CHILD, "6"));
-//        category.children.add(new CategoryChild("2", "650+", Category.TYPE_CHILD, "6"));
-//        menuList.add(category);
-    }
 
     boolean doubleBackToExitPressedOnce = false;
 
@@ -268,5 +210,15 @@ public class MainActivity extends AppCompatActivity implements NavigationItemSel
 
         }
         currentId = id;
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK) {
+            if (requestCode == LoginActivity.LOGIN_REQUEST) {
+                mainViewModel.updateProfile();
+            }
+        }
     }
 }

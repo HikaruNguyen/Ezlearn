@@ -8,6 +8,7 @@ import com.vn.ezlearn.BuildConfig;
 import com.vn.ezlearn.modelresult.BannerResult;
 import com.vn.ezlearn.modelresult.CategoryResult;
 import com.vn.ezlearn.modelresult.ExamsResult;
+import com.vn.ezlearn.modelresult.LoginResult;
 import com.vn.ezlearn.network.NullOnEmptyConverterFactory;
 import com.vn.ezlearn.network.RxErrorHandlingCallAdapterFactory;
 
@@ -46,6 +47,10 @@ public interface EzlearnService {
     @GET("index.php?r=site/get-banners")
     Observable<BannerResult> getBanners();
 
+    @GET("index.php?r=user/login")
+    Observable<LoginResult> getLogin(@Query("username") String username,
+                                     @Query("password") String password);
+
     class Factory {
 
         public static EzlearnService create(Context context) {
@@ -61,7 +66,7 @@ public interface EzlearnService {
             return retrofit.create(EzlearnService.class);
         }
 
-        static OkHttpClient getOkHttp(Context context) {
+        static OkHttpClient getOkHttp(final Context context) {
             // Config Log
             HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
             logging.setLevel(HttpLoggingInterceptor.Level.BODY);
@@ -71,11 +76,13 @@ public interface EzlearnService {
             httpClient.addInterceptor(new Interceptor() {
                 @Override
                 public Response intercept(Chain chain) throws IOException {
-                    Request request = chain.request().newBuilder()
-////                        .addHeader("Accept", "application/json")
-////                        .addHeader("X-Math-Api-Key", APIConfig.X_Math_Api_Key)
-                            .build();
-                    return chain.proceed(request)
+                    Request.Builder builder = chain.request().newBuilder();
+                    if (AppConfig.getInstance(context).getToken() != null
+                            && !AppConfig.getInstance(context).getToken().isEmpty()) {
+                        builder.addHeader("Authorization", "Bearer "
+                                + AppConfig.getInstance(context).getToken());
+                    }
+                    return chain.proceed(builder.build())
                             .newBuilder()
 //                        .addHeader("Cache-Control"
 //                                ,String.format("max-age=%d, only-if-cached, max-stale=%d", 120, 0))

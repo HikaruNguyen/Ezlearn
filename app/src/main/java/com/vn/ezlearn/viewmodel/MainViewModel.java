@@ -26,10 +26,10 @@ public class MainViewModel extends BaseObservable {
         email = new ObservableField<>();
         name = new ObservableField<>();
         visiableProfile = new ObservableInt();
-        getProfile();
+        updateProfile();
     }
 
-    private void getProfile() {
+    public void updateProfile() {
         if (!AppConfig.getInstance(context).getToken().isEmpty()) {
             name.set(AppConfig.getInstance(context).getName());
             email.set(AppConfig.getInstance(context).getEmail());
