@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
     <RelativeLayout
@@ -52,13 +53,17 @@
                     android:id="@+id/edUserName"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/user_name" />
+                    android:maxLines="1"
+                    android:hint="@string/user_name"
+                    android:imeOptions="actionNext" />
 
                 <EditText
                     android:id="@+id/edPassword"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/password"
+                    android:maxLines="1"
+                    android:imeOptions="actionDone"
                     android:inputType="textPassword" />
             </LinearLayout>
         </LinearLayout>
@@ -95,6 +100,14 @@
             android:layout_alignParentBottom="true"
             android:src="@mipmap/england"
             android:tint="@color/first_slide_background2" />
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@android:color/transparent"
+            app:layout_collapseMode="pin"
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Dark" />
     </RelativeLayout>
 
 

@@ -6,6 +6,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.vn.ezlearn.BuildConfig;
 import com.vn.ezlearn.modelresult.BannerResult;
+import com.vn.ezlearn.modelresult.BaseResult;
 import com.vn.ezlearn.modelresult.CategoryResult;
 import com.vn.ezlearn.modelresult.ExamsResult;
 import com.vn.ezlearn.modelresult.LoginResult;
@@ -50,6 +51,9 @@ public interface EzlearnService {
     @GET("index.php?r=user/login")
     Observable<LoginResult> getLogin(@Query("username") String username,
                                      @Query("password") String password);
+
+    @GET("index.php?r=user/logout")
+    Observable<BaseResult> getLogout();
 
     class Factory {
 

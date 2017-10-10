@@ -21,16 +21,23 @@ import com.vn.ezlearn.R;
 import com.vn.ezlearn.adapter.NavigationAdapter;
 import com.vn.ezlearn.config.AppConfig;
 import com.vn.ezlearn.config.AppConstant;
+import com.vn.ezlearn.config.EzlearnService;
 import com.vn.ezlearn.databinding.ActivityMainBinding;
 import com.vn.ezlearn.fragment.CategoryMainFragment;
 import com.vn.ezlearn.fragment.HomeFragment;
 import com.vn.ezlearn.interfaces.NavigationItemSelected;
+import com.vn.ezlearn.modelresult.BaseResult;
 import com.vn.ezlearn.models.Category;
 import com.vn.ezlearn.viewmodel.MainViewModel;
 import com.vn.ezlearn.widgets.CRecyclerView;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import rx.Subscriber;
+import rx.Subscription;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 public class MainActivity extends AppCompatActivity implements NavigationItemSelected {
     private Toolbar toolbar;
@@ -40,6 +47,11 @@ public class MainActivity extends AppCompatActivity implements NavigationItemSel
     private List<Category> menuList;
     private NavigationAdapter navigationAdapter;
     private String currentId = AppConstant.HOME_ID;
+
+    private EzlearnService apiService;
+    private Subscription mSubscription;
+
+    private BaseResult baseResultLogout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,6 +82,53 @@ public class MainActivity extends AppCompatActivity implements NavigationItemSel
 
             }
         });
+        mainBinding.lnBottom.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                logout();
+            }
+        });
+    }
+
+    private void logout() {
+        apiService = MyApplication.with(this).getEzlearnService();
+        if (mSubscription != null && !mSubscription.isUnsubscribed())
+            mSubscription.unsubscribe();
+        mSubscription = apiService.getLogout()
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Subscriber<BaseResult>() {
+                    @Override
+                    public void onCompleted() {
+                        if (baseResultLogout.success) {
+                            if (baseResultLogout.data != null && baseResultLogout.data.message != null
+                                    && !baseResultLogout.data.message.isEmpty()) {
+                                Toast.makeText(MainActivity.this, baseResultLogout.data.message,
+                                        Toast.LENGTH_SHORT).show();
+                            } else {
+                                Toast.makeText(MainActivity.this, getString(R.string.logout_success),
+                                        Toast.LENGTH_SHORT).show();
+                            }
+                            AppConfig.getInstance(MainActivity.this).clearData();
+                            mainViewModel.updateProfile();
+                        } else {
+                            Toast.makeText(MainActivity.this, getString(R.string.error_connect),
+                                    Toast.LENGTH_SHORT).show();
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onNext(BaseResult baseResult) {
+                        if (baseResult != null) {
+                            baseResultLogout = baseResult;
+                        }
+                    }
+                });
     }
 
     private void bindData() {
@@ -220,5 +279,12 @@ public class MainActivity extends AppCompatActivity implements NavigationItemSel
                 mainViewModel.updateProfile();
             }
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (mSubscription != null && !mSubscription.isUnsubscribed()) mSubscription.unsubscribe();
+        mSubscription = null;
     }
 }

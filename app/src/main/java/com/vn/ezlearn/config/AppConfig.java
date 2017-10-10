@@ -60,4 +60,8 @@ public class AppConfig {
     public String getName() {
         return sharedPreferences.getString(KEY_NAME, "");
     }
+
+    public void clearData() {
+        sharedPreferences.edit().clear().apply();
+    }
 }
