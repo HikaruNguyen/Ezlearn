@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.support.annotation.IdRes;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,7 +13,7 @@ import android.widget.RadioGroup;
 import com.vn.ezlearn.R;
 import com.vn.ezlearn.databinding.FragmentQuestionBinding;
 import com.vn.ezlearn.interfaces.OnCheckAnswerListener;
-import com.vn.ezlearn.models.Content;
+import com.vn.ezlearn.models.MyContent;
 import com.vn.ezlearn.viewmodel.QuestionViewModel;
 
 /**
@@ -28,7 +27,7 @@ public class QuestionFragment extends Fragment {
     private QuestionViewModel questionViewModel;
     private int position;
     private int size;
-    private Content content;
+    private MyContent content;
     private OnCheckAnswerListener onCheckAnswerListener;
 
     public QuestionFragment() {
@@ -43,7 +42,7 @@ public class QuestionFragment extends Fragment {
         return fragment;
     }
 
-    public void setQuestion(Content content, OnCheckAnswerListener onCheckAnswerListener) {
+    public void setQuestion(MyContent content, OnCheckAnswerListener onCheckAnswerListener) {
         this.content = content;
         this.onCheckAnswerListener = onCheckAnswerListener;
     }
@@ -62,9 +61,9 @@ public class QuestionFragment extends Fragment {
                              Bundle savedInstanceState) {
         fragmentQuestionBinding = DataBindingUtil.inflate(
                 inflater, R.layout.fragment_question, container, false);
-        questionViewModel = new QuestionViewModel(getActivity(), content);
+        questionViewModel = new QuestionViewModel(getActivity(), content, position, size);
         fragmentQuestionBinding.setQuestionViewModel(questionViewModel);
-        bindData();
+//        bindData();
         event();
         return fragmentQuestionBinding.getRoot();
     }
@@ -105,13 +104,4 @@ public class QuestionFragment extends Fragment {
         onCheckAnswerListener.OnCheckAnswer(position);
     }
 
-    private void bindData() {
-        fragmentQuestionBinding.rdAnswerA.setText(Html.fromHtml("either"));
-        fragmentQuestionBinding.rdAnswerB.setText(Html.fromHtml("nor"));
-        fragmentQuestionBinding.rdAnswerC.setText(Html.fromHtml("or"));
-        fragmentQuestionBinding.rdAnswerD.setText(Html.fromHtml("both"));
-        fragmentQuestionBinding.tvQuestionNum.setText(
-                getString(R.string.question) + " " + (position + 1) + "/" + size);
-
-    }
 }

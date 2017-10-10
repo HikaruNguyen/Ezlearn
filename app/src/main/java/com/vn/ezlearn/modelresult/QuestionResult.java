@@ -1,6 +1,6 @@
 package com.vn.ezlearn.modelresult;
 
-import com.vn.ezlearn.models.Content;
+import com.vn.ezlearn.models.Question;
 
 import java.util.List;
 
@@ -13,6 +13,6 @@ public class QuestionResult {
     public QuestionData data;
 
     public static class QuestionData {
-        public List<Content> data;
+        public List<Question> data;
     }
 }

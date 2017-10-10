@@ -16,8 +16,9 @@ import com.vn.ezlearn.databinding.ItemQuestionViewpagerBinding;
 import com.vn.ezlearn.fragment.QuestionFragment;
 import com.vn.ezlearn.interfaces.ChangeQuestionListener;
 import com.vn.ezlearn.interfaces.OnCheckAnswerListener;
-import com.vn.ezlearn.models.Content;
+import com.vn.ezlearn.models.MyContent;
 import com.vn.ezlearn.models.QuestionObject;
+import com.vn.ezlearn.viewmodel.ViewPagerQuestionViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -52,16 +53,20 @@ public class QuestionObjectAdapter
 //        this.context = parent.getContext();
         if (viewType == QuestionObject.TYPE_PART) {
             ItemQuestionPartBinding binding = DataBindingUtil.inflate(
-                    LayoutInflater.from(parent.getContext()), R.layout.item_question_part, parent, false);
+                    LayoutInflater.from(parent.getContext()), R.layout.item_question_part,
+                    parent, false);
             return new ViewHolder(binding);
         } else {
 //            return new ViewHolder(LayoutInflater.from(activity)
 //                    .inflate(R.layout.item_question_viewpager, parent, false));
             ItemQuestionViewpagerBinding binding = DataBindingUtil.inflate(
-                    LayoutInflater.from(parent.getContext()), R.layout.item_question_viewpager, parent, false);
+                    LayoutInflater.from(parent.getContext()), R.layout.item_question_viewpager,
+                    parent, false);
             return new ViewHolder(binding);
         }
     }
+
+    int positionViewPager = 0;
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
@@ -74,7 +79,11 @@ public class QuestionObjectAdapter
         } else if (getItemViewType(position) == QuestionObject.TYPE_VIEWPAGER) {
             itemQuestionViewpagerBinding =
                     holder.getItemQuestionViewpagerBinding();
-            List<Content> contentList = item.list;
+            List<MyContent> contentList = item.list;
+            final ViewPagerQuestionViewModel viewPagerQuestionViewModel
+                    = new ViewPagerQuestionViewModel(contentList.size());
+            itemQuestionViewpagerBinding.setViewPagerQuestionViewModel(viewPagerQuestionViewModel);
+
             questionFragments = new ArrayList<>();
             if (contentList != null) {
                 for (int i = 0; i < contentList.size(); i++) {
@@ -98,11 +107,29 @@ public class QuestionObjectAdapter
                 @Override
                 public void onPageSelected(int position) {
                     changeQuestionListener.onChange(position);
+                    viewPagerQuestionViewModel.updatePosition(position);
+                    positionViewPager = position;
+
                 }
 
                 @Override
                 public void onPageScrollStateChanged(int state) {
 
+                }
+            });
+
+            itemQuestionViewpagerBinding.imgNext.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (positionViewPager + 1 < item.list.size())
+                        itemQuestionViewpagerBinding.container.setCurrentItem(positionViewPager + 1);
+                }
+            });
+            itemQuestionViewpagerBinding.imgPre.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (positionViewPager > 0)
+                        itemQuestionViewpagerBinding.container.setCurrentItem(positionViewPager - 1);
                 }
             });
         }

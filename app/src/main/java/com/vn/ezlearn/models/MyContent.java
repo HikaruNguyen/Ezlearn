@@ -14,4 +14,18 @@ public class MyContent {
     public Region region;
     public Integer type;
     public Content content;
+    public String passage;
+
+    public MyContent(Region region, Integer type, Content content) {
+        this.region = region;
+        this.type = type;
+        this.content = content;
+    }
+
+    public MyContent(Region region, Integer type, Content content, String passage) {
+        this.region = region;
+        this.type = type;
+        this.content = content;
+        this.passage = passage;
+    }
 }

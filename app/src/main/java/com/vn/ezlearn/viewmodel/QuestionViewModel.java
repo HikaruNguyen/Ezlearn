@@ -13,7 +13,7 @@ import android.view.View;
 import android.widget.ImageView;
 
 import com.vn.ezlearn.R;
-import com.vn.ezlearn.models.Content;
+import com.vn.ezlearn.models.MyContent;
 
 /**
  * Created by FRAMGIA\nguyen.duc.manh on 15/09/2017.
@@ -22,8 +22,7 @@ import com.vn.ezlearn.models.Content;
 public class QuestionViewModel extends BaseObservable {
 
     private Context context;
-    private Content content;
-
+    private MyContent content;
     public ObservableField<Spanned> textPassage;
     public ObservableField<Spanned> textQuestion;
     public ObservableInt visiablePassage;
@@ -33,7 +32,17 @@ public class QuestionViewModel extends BaseObservable {
     public ObservableField<Spanned> textNeedReview;
     public ObservableInt drawableFlag;
 
-    public QuestionViewModel(Activity context, Content content) {
+    public ObservableField<Spanned> answerA;
+    public ObservableField<Spanned> answerB;
+    public ObservableField<Spanned> answerC;
+    public ObservableField<Spanned> answerD;
+
+    public ObservableField<String> tvQuestion;
+
+    public ObservableInt visiableNext;
+    public ObservableInt visiablePre;
+
+    public QuestionViewModel(Activity context, MyContent content, int position, int size) {
         this.context = context;
         this.content = content;
         textPassage = new ObservableField<>();
@@ -44,23 +53,55 @@ public class QuestionViewModel extends BaseObservable {
         textNeedReview = new ObservableField<>(
                 Html.fromHtml(context.getString(R.string.needReview)));
         drawableFlag = new ObservableInt(R.mipmap.ic_flag);
+
+        answerA = new ObservableField<>();
+        answerB = new ObservableField<>();
+        answerC = new ObservableField<>();
+        answerD = new ObservableField<>();
+
+        tvQuestion = new ObservableField<>(
+                context.getString(R.string.question) + " " + (position + 1) + "/" + size);
+
         if (content != null) {
             setQuestionData();
         }
     }
 
     private void setQuestionData() {
-        if (content.passage != null) {
-            textPassage.set(Html.fromHtml(content.passage));
+//        if (content.type == Question.TYPE_READING) {
+        if (content != null && content.passage != null && !content.passage.isEmpty()) {
+            textPassage.set(Html.fromHtml(content.passage.replace("&nbsp;", "")));
             visiablePassage.set(View.VISIBLE);
         } else {
             visiablePassage.set(View.GONE);
         }
-        if (content.question != null) {
-            textQuestion.set(Html.fromHtml(content.question));
+//        } else {
+        if (content != null && content.content != null && content.content.content != null
+                && !content.content.content.isEmpty()) {
+            textQuestion.set(Html.fromHtml(content.content.content));
             visiableQuestion.set(View.VISIBLE);
         } else {
             visiableQuestion.set(View.GONE);
+        }
+//        }
+
+//        if (content.question != null) {
+//            textQuestion.set(Html.fromHtml(content.question));
+//            visiableQuestion.set(View.VISIBLE);
+//        } else {
+//            visiableQuestion.set(View.GONE);
+//        }
+        visiableQuestion.set(View.GONE);
+        if (content != null && content.content != null && content.content.answer_list != null
+                && content.content.answer_list.size() >= 4) {
+            answerA.set(Html.fromHtml(content.content.answer_list.get(0).answer
+                    .replace("<p>", "").replace("</p>", "")));
+            answerB.set(Html.fromHtml(content.content.answer_list.get(1).answer
+                    .replace("<p>", "").replace("</p>", "")));
+            answerC.set(Html.fromHtml(content.content.answer_list.get(2).answer
+                    .replace("<p>", "").replace("</p>", "")));
+            answerD.set(Html.fromHtml(content.content.answer_list.get(3).answer
+                    .replace("<p>", "").replace("</p>", "")));
         }
     }
 

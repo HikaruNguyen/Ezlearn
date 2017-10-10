@@ -41,7 +41,7 @@
     <string name="nopBai">Nộp bài</string>
     <string name="clickback">Nhấn \'back\' lần nữa để thoát</string>
     <string name="cancel">Thoát</string>
-    <string name="content">Question</string>
+    <string name="question">Question</string>
     <string name="hetGio">Hết giờ</string>
     <string name="needReview"><u>Cần xem lại</u></string>
     <string name="unNeedReview"><u>Hủy xem lại</u></string>
@@ -174,4 +174,6 @@
     <string name="loading">Vui lòng chờ trong giây lát…</string>
     <string name="logout">ĐĂNG XUẤT</string>
     <string name="logout_success">Đăng xuất thành công!</string>
+    <string name="needLogin">Xin vui lòng đăng nhập để làm bài thi</string>
+    <string name="ok">OK</string>
 </resources>

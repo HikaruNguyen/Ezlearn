@@ -53,18 +53,20 @@
                     android:id="@+id/edUserName"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:maxLines="1"
                     android:hint="@string/user_name"
-                    android:imeOptions="actionNext" />
+                    android:imeOptions="actionNext"
+                    android:maxLines="1"
+                    android:singleLine="true" />
 
                 <EditText
                     android:id="@+id/edPassword"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/password"
-                    android:maxLines="1"
                     android:imeOptions="actionDone"
-                    android:inputType="textPassword" />
+                    android:inputType="textPassword"
+                    android:maxLines="1"
+                    android:singleLine="true" />
             </LinearLayout>
         </LinearLayout>
 

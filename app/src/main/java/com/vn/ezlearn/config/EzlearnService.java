@@ -10,6 +10,7 @@ import com.vn.ezlearn.modelresult.BaseResult;
 import com.vn.ezlearn.modelresult.CategoryResult;
 import com.vn.ezlearn.modelresult.ExamsResult;
 import com.vn.ezlearn.modelresult.LoginResult;
+import com.vn.ezlearn.modelresult.QuestionResult;
 import com.vn.ezlearn.network.NullOnEmptyConverterFactory;
 import com.vn.ezlearn.network.RxErrorHandlingCallAdapterFactory;
 
@@ -54,6 +55,9 @@ public interface EzlearnService {
 
     @GET("index.php?r=user/logout")
     Observable<BaseResult> getLogout();
+
+    @GET("index.php?r=subjects/begin-test")
+    Observable<QuestionResult> getContentExam(@Query("id") int id);
 
     class Factory {
 

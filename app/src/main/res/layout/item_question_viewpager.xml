@@ -1,14 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <LinearLayout
+    <data>
+
+        <variable
+            name="viewPagerQuestionViewModel"
+            type="com.vn.ezlearn.viewmodel.ViewPagerQuestionViewModel" />
+    </data>
+
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:orientation="vertical">
 
         <com.vn.ezlearn.widgets.WrapContentHeightViewPager
             android:id="@+id/container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
-    </LinearLayout>
+
+        <ImageView
+            android:id="@+id/imgPre"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_margin="@dimen/margin_5dp"
+            android:src="@mipmap/ic_pre"
+            android:tint="@color/first_slide_background2"
+            android:visibility="@{viewPagerQuestionViewModel.visiablePre}" />
+
+        <ImageView
+            android:id="@+id/imgNext"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:tint="@color/first_slide_background2"
+            android:layout_centerVertical="true"
+            android:layout_margin="@dimen/margin_5dp"
+            android:src="@mipmap/ic_next"
+            android:visibility="@{viewPagerQuestionViewModel.visiableNext}" />
+    </RelativeLayout>
 </layout>

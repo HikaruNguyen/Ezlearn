@@ -41,7 +41,7 @@
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_toLeftOf="@+id/icFlag"
-                android:text="@string/content"
+                android:text="@{questionViewModel.tvQuestion}"
                 android:textColor="@color/colorPrimaryDark"
                 android:textSize="@dimen/text_size_15sp"
                 android:textStyle="bold" />
@@ -86,6 +86,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/tvQuestion"
+            android:gravity="center_vertical"
             android:paddingLeft="@dimen/margin_10dp"
             android:paddingRight="@dimen/margin_10dp"
             android:paddingTop="@dimen/margin_10dp">
@@ -94,6 +95,9 @@
                 android:id="@+id/rdAnswerA"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:gravity="center_vertical"
+                android:text="@{questionViewModel.answerA}"
                 android:textColor="@color/text_color_content"
                 android:textSize="@dimen/text_size_15sp" />
 
@@ -101,6 +105,9 @@
                 android:id="@+id/rdAnswerB"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:gravity="center_vertical"
+                android:text="@{questionViewModel.answerB}"
                 android:textColor="@color/text_color_content"
                 android:textSize="@dimen/text_size_15sp" />
 
@@ -108,6 +115,9 @@
                 android:id="@+id/rdAnswerC"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:gravity="center_vertical"
+                android:text="@{questionViewModel.answerC}"
                 android:textColor="@color/text_color_content"
                 android:textSize="@dimen/text_size_15sp" />
 
@@ -115,6 +125,9 @@
                 android:id="@+id/rdAnswerD"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:gravity="center_vertical"
+                android:text="@{questionViewModel.answerD}"
                 android:textColor="@color/text_color_content"
                 android:textSize="@dimen/text_size_15sp" />
         </RadioGroup>

@@ -90,7 +90,7 @@ public class HomeFragment extends Fragment implements BaseSliderView.OnSliderCli
 
     private void getListExamFree(int page) {
         apiService = MyApplication.with(getActivity()).getEzlearnService();
-        mSubscription = apiService.getListFreeExams(page, 3)
+        mSubscription = apiService.getListFreeExams(page, 5)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<ExamsResult>() {

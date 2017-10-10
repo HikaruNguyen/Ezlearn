@@ -7,7 +7,10 @@ import java.util.List;
  */
 
 public class Question {
+    public static final int TYPE_QUESTION = 1;
+    public static final int TYPE_READING = 2;
     public Region region;
     public Integer type;
     public List<Content> question;
+    public List<Reading> reading;
 }

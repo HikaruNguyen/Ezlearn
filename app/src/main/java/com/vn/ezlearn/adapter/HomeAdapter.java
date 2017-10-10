@@ -1,8 +1,10 @@
 package com.vn.ezlearn.adapter;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
@@ -16,6 +18,7 @@ import com.daimajia.slider.library.SliderTypes.BaseSliderView;
 import com.daimajia.slider.library.SliderTypes.DefaultSliderView;
 import com.vn.ezlearn.R;
 import com.vn.ezlearn.activity.TestActivity;
+import com.vn.ezlearn.config.AppConfig;
 import com.vn.ezlearn.databinding.ItemHomeExamsBinding;
 import com.vn.ezlearn.databinding.ItemHomeHeaderBinding;
 import com.vn.ezlearn.databinding.ItemHomeSlideBinding;
@@ -34,7 +37,6 @@ public class HomeAdapter extends BaseRecyclerAdapter<HomeObject, HomeAdapter.Vie
     private final List<HomeObject> data;
     private Context context;
     private boolean isAddedSlide;
-
 
     public HomeAdapter(Context context, List<HomeObject> list) {
         super(context, list);
@@ -112,8 +114,23 @@ public class HomeAdapter extends BaseRecyclerAdapter<HomeObject, HomeAdapter.Vie
             itemHomeExamsBinding.lnExam.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Intent intent = new Intent(context, TestActivity.class);
-                    context.startActivity(intent);
+                    if (!AppConfig.getInstance(mContext).getToken().isEmpty()) {
+                        Intent intent = new Intent(mContext, TestActivity.class);
+                        intent.putExtra(TestActivity.KEY_ID, list.get(position).exam.id);
+                        mContext.startActivity(intent);
+                    } else {
+                        AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
+                        builder.setMessage(mContext.getString(R.string.needLogin));
+                        builder.setPositiveButton(R.string.ok,
+                                new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialogInterface, int i) {
+                                        dialogInterface.dismiss();
+                                    }
+                                });
+                        builder.show();
+                    }
+
                 }
             });
         } else if (getItemViewType(position) == HomeObject.TYPE_HEADER) {
@@ -133,7 +150,7 @@ public class HomeAdapter extends BaseRecyclerAdapter<HomeObject, HomeAdapter.Vie
         return data.size();
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder {
+    public class ViewHolder extends RecyclerView.ViewHolder {
         private ItemHomeSlideBinding itemHomeSlideBinding;
         private ItemHomeHeaderBinding itemHomeHeaderBinding;
         private ItemHomeExamsBinding itemHomeExamsBinding;
@@ -181,13 +198,6 @@ public class HomeAdapter extends BaseRecyclerAdapter<HomeObject, HomeAdapter.Vie
             super(itemHomeExamsBinding.getRoot());
             this.itemHomeExamsBinding = itemHomeExamsBinding;
             this.itemHomeExamsBinding.executePendingBindings();
-            itemView.setOnClickListener(new View.OnClickListener() {
-                                            @Override
-                                            public void onClick(View view) {
-
-                                            }
-                                        }
-            );
         }
     }
 }

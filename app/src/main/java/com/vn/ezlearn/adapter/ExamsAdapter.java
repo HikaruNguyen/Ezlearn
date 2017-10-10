@@ -1,15 +1,19 @@
 package com.vn.ezlearn.adapter;
 
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.databinding.DataBindingUtil;
-import android.databinding.ViewDataBinding;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.vn.ezlearn.BR;
 import com.vn.ezlearn.R;
+import com.vn.ezlearn.activity.TestActivity;
+import com.vn.ezlearn.config.AppConfig;
+import com.vn.ezlearn.databinding.ItemHomeExamsBinding;
 import com.vn.ezlearn.models.Exam;
 import com.vn.ezlearn.viewmodel.ItemExamViewModel;
 
@@ -28,14 +32,34 @@ public class ExamsAdapter extends BaseRecyclerAdapter<Exam,
 
     @Override
     public void onBindViewHolder(ViewHolder holder, final int position) {
-        ViewDataBinding viewDataBinding = holder.getViewDataBinding();
-        viewDataBinding.setVariable(BR.itemExamViewModel,
-                new ItemExamViewModel(mContext, list.get(position)));
+        ItemHomeExamsBinding viewDataBinding = holder.getViewDataBinding();
+        viewDataBinding.setItemExamViewModel(new ItemExamViewModel(mContext, list.get(position)));
+        viewDataBinding.lnExam.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (!AppConfig.getInstance(mContext).getToken().isEmpty()) {
+                    Intent intent = new Intent(mContext, TestActivity.class);
+                    intent.putExtra(TestActivity.KEY_ID, list.get(position).id);
+                    mContext.startActivity(intent);
+                } else {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
+                    builder.setMessage(mContext.getString(R.string.needLogin));
+                    builder.setPositiveButton(R.string.ok,
+                            new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+                                    dialogInterface.dismiss();
+                                }
+                            });
+                    builder.show();
+                }
+            }
+        });
     }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        ViewDataBinding binding = DataBindingUtil.inflate(LayoutInflater.from(parent.getContext()),
+        ItemHomeExamsBinding binding = DataBindingUtil.inflate(LayoutInflater.from(parent.getContext()),
                 R.layout.item_home_exams, parent, false);
 
         return new ViewHolder(binding);
@@ -43,22 +67,24 @@ public class ExamsAdapter extends BaseRecyclerAdapter<Exam,
 
     class ViewHolder extends RecyclerView.ViewHolder {
 
-        private ViewDataBinding mViewDataBinding;
+        private ItemHomeExamsBinding mViewDataBinding;
 
-        ViewHolder(ViewDataBinding viewDataBinding) {
+        ViewHolder(ItemHomeExamsBinding viewDataBinding) {
             super(viewDataBinding.getRoot());
 
             mViewDataBinding = viewDataBinding;
             mViewDataBinding.executePendingBindings();
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-
-                }
-            });
+//            itemView.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View view) {
+//                    Intent intent = new Intent(mContext, TestActivity.class);
+//                    intent.putExtra(TestActivity.KEY_ID, list.get(getAdapterPosition()).id);
+//                    mContext.startActivity(intent);
+//                }
+//            });
         }
 
-        ViewDataBinding getViewDataBinding() {
+        ItemHomeExamsBinding getViewDataBinding() {
             return mViewDataBinding;
         }
     }

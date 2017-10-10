@@ -1,6 +1,7 @@
 package com.vn.ezlearn.activity;
 
 import android.annotation.SuppressLint;
+import android.app.ProgressDialog;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -21,18 +22,26 @@ import com.vn.ezlearn.databinding.DialogListAnswerBinding;
 import com.vn.ezlearn.interfaces.ChangeQuestionListener;
 import com.vn.ezlearn.interfaces.OnCheckAnswerListener;
 import com.vn.ezlearn.interfaces.OnClickQuestionPopupListener;
+import com.vn.ezlearn.modelresult.QuestionResult;
+import com.vn.ezlearn.models.Content;
 import com.vn.ezlearn.models.MyContent;
+import com.vn.ezlearn.models.Question;
 import com.vn.ezlearn.models.QuestionObject;
+import com.vn.ezlearn.models.Reading;
 import com.vn.ezlearn.viewmodel.TestViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+import rx.Subscriber;
 import rx.Subscription;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 public class TestActivity extends BaseActivity
         implements ChangeQuestionListener, OnCheckAnswerListener, OnClickQuestionPopupListener {
+    public static final String KEY_ID = "id";
     private static final String FORMAT = "%02d:%02d:%02d";
     private ActivityTestBinding testBinding;
     private TestViewModel testViewModel;
@@ -45,15 +54,24 @@ public class TestActivity extends BaseActivity
 
     private EzlearnService apiService;
     private Subscription mSubscription;
+    private QuestionResult mQuestionResult;
+    private int id;
+
+    private boolean isAttach = true;
+    private ProgressDialog progressDialog;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         testBinding = DataBindingUtil.setContentView(this, R.layout.activity_test);
         setSupportActionBar(testBinding.toolbar);
-
+        getIntentData();
         initUI();
         bindData();
-        countDown();
+    }
+
+    private void getIntentData() {
+        id = getIntent().getIntExtra(KEY_ID, 0);
     }
 
     private void initUI() {
@@ -68,25 +86,77 @@ public class TestActivity extends BaseActivity
         list = new ArrayList<>();
         contentList = new ArrayList<>();
         callDataApi();
-//        contentList.add(new MyContent(1, MyContent.TYPE_UNANSWER,
-//                "Part 1: Mark the letter A, B, C, or D on your answer sheet to indicate the word whose underlined part differs from the other three in pronunciation in each of the following questions.",
-//                null, null));
-//        contentList.add(new MyContent(2, MyContent.TYPE_UNANSWER,
-//                "Part 3: Mark the letter A, B, C, or D on your answer sheet to indicate the underlined part that needs correction in each of the following questions.",
-//                null,
-//                "I (A) <u>found</u> it (B) <u>is necessary</u> for you to (C) <u>come here</u> (D) <u>on time</u>."));
-//        contentList.add(new MyContent(3, MyContent.TYPE_UNANSWER,
-//                "Part 10: Read the following passage and mark the letter A, B, C, or D on your answer sheet to indicate the correct word or phrase that best fits each of the numbered blanks ",
-//                "<p><strong>HOW TRANSPORTATION AFFECTS OUR LIVES</strong></p><p>Without transportation, our modern society could not exist. We would have no metals, no coal, and no oil (31)______ would we have any products made from these materials. Besides, we would have to (32) ______ most of our time raising food - and the food would be limited to the kinds that could grow in the climate and soil of our own neighborhoods.</p><p>Transportation also affects our lives in (33) ______ ways. Transportation can speed a doctor to the sides of a sick person, even if the (34)______ lives on an isolated farm. It can take police to the scene of a crime within moments of being notified. Transportation enables teams of athletes to compete in national and international sports (35)______. In times of disasters, transportation can rush aid to persons in areas stricken by floods, famines, and earthquakes.</p>",
-//                null));
-        list.add(new QuestionObject(contentList));
-        list.add(0, new QuestionObject(contentList.get(0).part));
-
-        adapter.addAll(list);
     }
 
     private void callDataApi() {
+        progressDialog = ProgressDialog.show(this, "", getString(R.string.loading), true, false);
+        apiService = MyApplication.with(this).getEzlearnService();
+        if (mSubscription != null && !mSubscription.isUnsubscribed())
+            mSubscription.unsubscribe();
+        mSubscription = apiService.getContentExam(id)
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Subscriber<QuestionResult>() {
+                    @Override
+                    public void onCompleted() {
+                        if (mQuestionResult.success && mQuestionResult.data != null
+                                && mQuestionResult.data.data != null
+                                && mQuestionResult.data.data.size() > 0) {
+                            for (Question question : mQuestionResult.data.data) {
+                                if (question != null) {
+                                    if (question.type == Question.TYPE_QUESTION) {
+                                        if (question.question != null
+                                                && question.question.size() > 0) {
+                                            for (Content content : question.question) {
+                                                MyContent myContent = new MyContent(
+                                                        question.region, question.type, content);
+                                                contentList.add(myContent);
+                                            }
+                                        }
+                                    } else if (question.type == Question.TYPE_READING) {
+                                        if (question.reading != null
+                                                && question.reading.size() > 0) {
+                                            for (Reading reading : question.reading) {
+                                                for (Content content : reading.questions) {
+                                                    MyContent myContent = new MyContent(
+                                                            question.region, question.type, content,
+                                                            reading.content);
+                                                    contentList.add(myContent);
+                                                }
+                                            }
+                                        }
+                                    }
 
+                                }
+                            }
+                            list.add(new QuestionObject(contentList));
+                            list.add(0, new QuestionObject(contentList.get(0).region.region_code
+                                    + " " + contentList.get(0).region.description));
+
+                            adapter.addAll(list);
+                            countDown();
+                        } else {
+
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        if (isAttach && progressDialog.isShowing()) {
+                            progressDialog.dismiss();
+                        }
+                    }
+
+                    @Override
+                    public void onNext(QuestionResult questionResult) {
+                        if (isAttach && progressDialog.isShowing()) {
+                            progressDialog.dismiss();
+                        }
+                        if (questionResult != null) {
+                            mQuestionResult = questionResult;
+                        }
+                    }
+                });
     }
 
     @Override
@@ -143,7 +213,12 @@ public class TestActivity extends BaseActivity
     public void onChange(int position) {
         if (contentList != null && contentList.size() > 0) {
             if (list != null && list.size() > 0) {
-                adapter.setData(0, new QuestionObject(contentList.get(position).part));
+                String part = contentList.get(position).region.region_code
+                        + " " + contentList.get(0).region.description;
+                if (!adapter.getItembyPostion(0).part.equals(part)) {
+                    adapter.setData(0, new QuestionObject(contentList.get(position).region.region_code
+                            + " " + contentList.get(0).region.description));
+                }
             }
         }
     }
@@ -198,5 +273,13 @@ public class TestActivity extends BaseActivity
         };
         countDownTimer.start();
 
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        isAttach = false;
+        if (mSubscription != null && !mSubscription.isUnsubscribed()) mSubscription.unsubscribe();
+        mSubscription = null;
     }
 }
