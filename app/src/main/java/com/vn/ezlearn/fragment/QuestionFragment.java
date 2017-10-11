@@ -101,7 +101,7 @@ public class QuestionFragment extends Fragment {
     }
 
     public void answer(int answer) {
-        onCheckAnswerListener.OnCheckAnswer(position);
+        onCheckAnswerListener.OnCheckAnswer(position, answer);
     }
 
 }

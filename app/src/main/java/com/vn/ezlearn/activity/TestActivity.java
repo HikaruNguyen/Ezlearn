@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import com.vn.ezlearn.R;
 import com.vn.ezlearn.adapter.DialogListQuestionAdapter;
@@ -23,6 +24,7 @@ import com.vn.ezlearn.interfaces.ChangeQuestionListener;
 import com.vn.ezlearn.interfaces.OnCheckAnswerListener;
 import com.vn.ezlearn.interfaces.OnClickQuestionPopupListener;
 import com.vn.ezlearn.modelresult.QuestionResult;
+import com.vn.ezlearn.models.Answer;
 import com.vn.ezlearn.models.Content;
 import com.vn.ezlearn.models.MyContent;
 import com.vn.ezlearn.models.Question;
@@ -121,12 +123,16 @@ public class TestActivity extends BaseActivity
                                 && mQuestionResult.data.data.size() > 0) {
                             for (Question question : mQuestionResult.data.data) {
                                 if (question != null) {
+                                    Float point = question.region.total_mark /
+                                            question.region.number_question;
                                     if (question.type == Question.TYPE_QUESTION) {
                                         if (question.question != null
                                                 && question.question.size() > 0) {
                                             for (Content content : question.question) {
+
                                                 MyContent myContent = new MyContent(
-                                                        question.region, question.type, content);
+                                                        question.region, question.type, content,
+                                                        point);
                                                 contentList.add(myContent);
                                             }
                                         }
@@ -137,7 +143,7 @@ public class TestActivity extends BaseActivity
                                                 for (Content content : reading.questions) {
                                                     MyContent myContent = new MyContent(
                                                             question.region, question.type, content,
-                                                            reading.content);
+                                                            reading.content, point);
                                                     contentList.add(myContent);
                                                 }
                                             }
@@ -212,6 +218,7 @@ public class TestActivity extends BaseActivity
         dialogListAnswerBinding.btnNopBai.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                calculateScore();
                 dialogListAnswer.dismiss();
             }
         });
@@ -224,6 +231,16 @@ public class TestActivity extends BaseActivity
         builder.setCancelable(false);
         dialogListAnswer = builder.create();
         dialogListAnswer.show();
+    }
+
+    private void calculateScore() {
+        float total = 0;
+        for (MyContent myContent : contentList) {
+            if (myContent.isCorrect) {
+                total += myContent.point;
+            }
+        }
+        Toast.makeText(this, "Total Point: " + total, Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -242,10 +259,15 @@ public class TestActivity extends BaseActivity
     }
 
     @Override
-    public void OnCheckAnswer(int position) {
+    public void OnCheckAnswer(int position, int answer) {
         if (contentList != null && contentList.size() > position) {
             MyContent content = contentList.get(position);
             content.typeQuestion = MyContent.TYPE_ANSWERED;
+            if (content.content.answer_list.get(answer).is_true.intValue() == Answer.IS_TRUE) {
+                content.isCorrect = true;
+            } else {
+                content.isCorrect = false;
+            }
             contentList.set(position, content);
         }
 

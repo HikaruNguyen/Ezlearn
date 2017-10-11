@@ -16,16 +16,23 @@ public class MyContent {
     public Content content;
     public String passage;
 
-    public MyContent(Region region, Integer type, Content content) {
+    public Float point;
+    public Boolean isCorrect;
+
+    public MyContent(Region region, Integer type, Content content, Float point) {
         this.region = region;
         this.type = type;
         this.content = content;
+        this.point = point;
+        this.isCorrect = false;
     }
 
-    public MyContent(Region region, Integer type, Content content, String passage) {
+    public MyContent(Region region, Integer type, Content content, String passage, Float point) {
         this.region = region;
         this.type = type;
         this.content = content;
         this.passage = passage;
+        this.point = point;
+        this.isCorrect = false;
     }
 }

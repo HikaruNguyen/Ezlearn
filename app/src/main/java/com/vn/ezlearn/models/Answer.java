@@ -5,13 +5,15 @@ package com.vn.ezlearn.models;
  */
 
 public class Answer {
+    public static final Integer IS_TRUE = 1;
+
     public Integer id;
-    public String question_id;
+    public Integer question_id;
     public String answer;
-    public String is_true;
+    public Integer is_true;
     public String mark;
     public String created_at;
     public String updated_at;
-    public String status;
+    public Integer status;
     public String weight;
 }
