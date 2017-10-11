@@ -36,11 +36,38 @@
 
         </android.support.design.widget.AppBarLayout>
 
-        <com.vn.ezlearn.widgets.CRecyclerView
-            android:id="@+id/rvList"
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+            <com.vn.ezlearn.widgets.CRecyclerView
+                android:id="@+id/rvList"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+            <ImageView
+                android:id="@+id/imgPre"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_margin="@dimen/margin_5dp"
+                android:src="@mipmap/ic_pre"
+                android:tint="@color/first_slide_background2"
+                android:visibility="@{testViewModel.visiablePre}" />
+
+            <ImageView
+                android:id="@+id/imgNext"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_margin="@dimen/margin_5dp"
+                android:src="@mipmap/ic_next"
+                android:tint="@color/first_slide_background2"
+                android:visibility="@{testViewModel.visiableNext}" />
+        </RelativeLayout>
+
     </android.support.design.widget.CoordinatorLayout>
 
 </layout>

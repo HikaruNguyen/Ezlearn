@@ -68,6 +68,23 @@ public class TestActivity extends BaseActivity
         getIntentData();
         initUI();
         bindData();
+        event();
+    }
+
+    private void event() {
+        testBinding.imgNext.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                adapter.onNextButton();
+            }
+        });
+
+        testBinding.imgPre.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                adapter.onPrevButton();
+            }
+        });
     }
 
     private void getIntentData() {
@@ -132,7 +149,7 @@ public class TestActivity extends BaseActivity
                             list.add(new QuestionObject(contentList));
                             list.add(0, new QuestionObject(contentList.get(0).region.region_code
                                     + " " + contentList.get(0).region.description));
-
+                            testViewModel.updatePosition(0, contentList.size());
                             adapter.addAll(list);
                             countDown();
                         } else {
@@ -221,6 +238,7 @@ public class TestActivity extends BaseActivity
                 }
             }
         }
+        testViewModel.updatePosition(position, contentList.size());
     }
 
     @Override
@@ -275,6 +293,7 @@ public class TestActivity extends BaseActivity
 
     }
 
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
@@ -282,4 +301,5 @@ public class TestActivity extends BaseActivity
         if (mSubscription != null && !mSubscription.isUnsubscribed()) mSubscription.unsubscribe();
         mSubscription = null;
     }
+
 }

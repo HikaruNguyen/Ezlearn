@@ -18,7 +18,6 @@ import com.vn.ezlearn.interfaces.ChangeQuestionListener;
 import com.vn.ezlearn.interfaces.OnCheckAnswerListener;
 import com.vn.ezlearn.models.MyContent;
 import com.vn.ezlearn.models.QuestionObject;
-import com.vn.ezlearn.viewmodel.ViewPagerQuestionViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -67,6 +66,7 @@ public class QuestionObjectAdapter
     }
 
     int positionViewPager = 0;
+    int size = 0;
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
@@ -80,10 +80,7 @@ public class QuestionObjectAdapter
             itemQuestionViewpagerBinding =
                     holder.getItemQuestionViewpagerBinding();
             List<MyContent> contentList = item.list;
-            final ViewPagerQuestionViewModel viewPagerQuestionViewModel
-                    = new ViewPagerQuestionViewModel(contentList.size());
-            itemQuestionViewpagerBinding.setViewPagerQuestionViewModel(viewPagerQuestionViewModel);
-
+            size = item.list.size();
             questionFragments = new ArrayList<>();
             if (contentList != null) {
                 for (int i = 0; i < contentList.size(); i++) {
@@ -97,44 +94,54 @@ public class QuestionObjectAdapter
                     ((TestActivity) activity).getSupportFragmentManager(), questionFragments);
             itemQuestionViewpagerBinding.container.setAdapter(viewPagerAdapter);
 
-            itemQuestionViewpagerBinding.container.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-                @Override
-                public void onPageScrolled(
-                        int position, float positionOffset, int positionOffsetPixels) {
+            itemQuestionViewpagerBinding.container.addOnPageChangeListener(
+                    new ViewPager.OnPageChangeListener() {
+                        @Override
+                        public void onPageScrolled(
+                                int position, float positionOffset, int positionOffsetPixels) {
 
-                }
+                        }
 
-                @Override
-                public void onPageSelected(int position) {
-                    changeQuestionListener.onChange(position);
-                    viewPagerQuestionViewModel.updatePosition(position);
-                    positionViewPager = position;
+                        @Override
+                        public void onPageSelected(int position) {
+                            changeQuestionListener.onChange(position);
+//                    viewPagerQuestionViewModel.updatePosition(position);
+                            positionViewPager = position;
+                        }
 
-                }
+                        @Override
+                        public void onPageScrollStateChanged(int state) {
 
-                @Override
-                public void onPageScrollStateChanged(int state) {
+                        }
+                    });
 
-                }
-            });
-
-            itemQuestionViewpagerBinding.imgNext.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    if (positionViewPager + 1 < item.list.size())
-                        itemQuestionViewpagerBinding.container.setCurrentItem(positionViewPager + 1);
-                }
-            });
-            itemQuestionViewpagerBinding.imgPre.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    if (positionViewPager > 0)
-                        itemQuestionViewpagerBinding.container.setCurrentItem(positionViewPager - 1);
-                }
-            });
+//            itemQuestionViewpagerBinding.imgNext.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View view) {
+//                    if (positionViewPager + 1 < item.list.size())
+//                        itemQuestionViewpagerBinding.container.setCurrentItem(positionViewPager + 1);
+//                }
+//            });
+//            itemQuestionViewpagerBinding.imgPre.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View view) {
+//                    if (positionViewPager > 0)
+//                        itemQuestionViewpagerBinding.container.setCurrentItem(positionViewPager - 1);
+//                }
+//            });
         }
-
     }
+
+    public void onNextButton() {
+        if (positionViewPager + 1 < size)
+            itemQuestionViewpagerBinding.container.setCurrentItem(positionViewPager + 1);
+    }
+
+    public void onPrevButton() {
+        if (positionViewPager > 0)
+            itemQuestionViewpagerBinding.container.setCurrentItem(positionViewPager - 1);
+    }
+
 
     @Override
     public int getItemViewType(int position) {
