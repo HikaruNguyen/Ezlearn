@@ -7,11 +7,7 @@
             android:pivotY="15%"
             android:toDegrees="45">
             <shape android:shape="rectangle">
-                <gradient
-                    android:angle="90"
-                    android:endColor="@color/first_slide_background"
-                    android:startColor="@color/first_slide_background2"
-                    android:type="linear" />
+               <solid android:color="@color/first_slide_background2"/>
             </shape>
         </rotate>
     </item>

@@ -37,4 +37,10 @@
     <color name="title_color">#6A6A6A</color>
 
     <color name="text_black">#585858</color>
+
+    <color name="point_3">#c0392b</color>
+    <color name="point_5">#e67e22</color>
+    <color name="point_7">#3498db</color>
+    <color name="point_9">#27ae60</color>
+    <color name="point_10">#2ecc71</color>
 </resources>

@@ -2,6 +2,7 @@ package com.vn.ezlearn.activity;
 
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -241,6 +242,9 @@ public class TestActivity extends BaseActivity
             }
         }
         Toast.makeText(this, "Total Point: " + total, Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(this, ShowPointActivity.class);
+        intent.putExtra(ShowPointActivity.KEY_POINT, total);
+        startActivity(intent);
     }
 
     @Override

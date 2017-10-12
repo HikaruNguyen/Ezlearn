@@ -176,4 +176,8 @@
     <string name="logout_success">Đăng xuất thành công!</string>
     <string name="needLogin">Xin vui lòng đăng nhập để làm bài thi</string>
     <string name="ok">OK</string>
+    <string name="yeu">Yếu</string>
+    <string name="xuatsac">Xuất sắc</string>
+    <string name="trungbinh">Trung bình</string>
+    <string name="point">Điểm</string>
 </resources>

@@ -95,6 +95,9 @@
   <dimen name="image_size_100dp">
     88.89dp
   </dimen>
+  <dimen name="image_size_120dp">
+    106.67dp
+  </dimen>
   <dimen name="image_size_200dp">
     177.78dp
   </dimen>

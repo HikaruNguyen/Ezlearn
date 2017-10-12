@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <data>
+
+        <variable
+            name="showPointViewModel"
+            type="com.vn.ezlearn.viewmodel.ShowPointViewModel" />
+    </data>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:orientation="vertical"
+        android:padding="@dimen/margin_16dp"
+        tools:context="com.vn.ezlearn.activity.ShowPointActivity">
+
+        <LinearLayout
+            android:id="@+id/rlPoint"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/lnPoint"
+                android:layout_width="@dimen/image_size_100dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_point_left"
+                android:gravity="center_horizontal|right"
+                android:padding="@dimen/margin_10dp"
+                android:text="@{showPointViewModel.tvPoint}"
+                android:textColor="@color/white" />
+
+            <ImageView
+                android:id="@+id/ivTriangle"
+                android:layout_width="@dimen/margin_10dp"
+                android:layout_height="@dimen/margin_10dp"
+                android:src="@drawable/triangle" />
+        </LinearLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <View
+                android:id="@+id/line_point"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/margin_10dp"
+                android:background="@drawable/seekbar_progress" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/line_point"
+                android:text="@string/yeu"
+                android:textColor="@color/text_color_content" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/line_point"
+                android:layout_centerHorizontal="true"
+                android:text="@string/trungbinh"
+                android:textColor="@color/text_color_content" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_below="@+id/line_point"
+                android:text="@string/xuatsac"
+                android:textColor="@color/text_color_content" />
+        </RelativeLayout>
+
+    </LinearLayout>
+
+</layout>
