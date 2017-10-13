@@ -117,6 +117,7 @@ public class HomeAdapter extends BaseRecyclerAdapter<HomeObject, HomeAdapter.Vie
                     if (!AppConfig.getInstance(mContext).getToken().isEmpty()) {
                         Intent intent = new Intent(mContext, TestActivity.class);
                         intent.putExtra(TestActivity.KEY_ID, list.get(position).exam.id);
+                        intent.putExtra(TestActivity.KEY_NAME, list.get(position).exam.subject_code);
                         mContext.startActivity(intent);
                     } else {
                         AlertDialog.Builder builder = new AlertDialog.Builder(mContext);

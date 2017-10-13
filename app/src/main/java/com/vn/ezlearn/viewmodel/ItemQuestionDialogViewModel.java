@@ -19,19 +19,32 @@ public class ItemQuestionDialogViewModel extends BaseObservable {
     public ObservableInt backgroundItem;
     public ObservableField<String> position;
 
-    public ItemQuestionDialogViewModel(Context context, MyContent content, int position) {
+    public ItemQuestionDialogViewModel(Context context, MyContent content, int position,
+                                       boolean isShowPoint) {
         this.context = context;
         this.content = content;
         backgroundItem = new ObservableInt();
-        if (content.typeQuestion == MyContent.TYPE_ANSWERED) {
-            backgroundItem.set(R.drawable.bg_question_answered);
-        } else if (content.typeQuestion == MyContent.TYPE_UNANSWER) {
+        if (content.typeQuestion == MyContent.TYPE_NO_ANSWER) {
             backgroundItem.set(R.drawable.bg_question_unanswer);
-        } else if (content.typeQuestion == MyContent.TYPE_LATE) {
-            backgroundItem.set(R.drawable.bg_question_review);
         } else {
-            backgroundItem.set(R.drawable.bg_question_unanswer);
+            if (isShowPoint) {
+                if (content.isCorrect) {
+                    backgroundItem.set(R.drawable.bg_question_correct);
+                }else {
+                    backgroundItem.set(R.drawable.bg_question_no_correct);
+                }
+            } else {
+                if (content.typeQuestion == MyContent.TYPE_ANSWERED) {
+                    backgroundItem.set(R.drawable.bg_question_answered);
+                } else if (content.typeQuestion == MyContent.TYPE_LATE) {
+                    backgroundItem.set(R.drawable.bg_question_review);
+                } else {
+                    backgroundItem.set(R.drawable.bg_question_unanswer);
+                }
+            }
+
         }
+
         this.position = new ObservableField<>(String.valueOf(position));
     }
 }

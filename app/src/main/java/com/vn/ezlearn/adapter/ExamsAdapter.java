@@ -40,6 +40,7 @@ public class ExamsAdapter extends BaseRecyclerAdapter<Exam,
                 if (!AppConfig.getInstance(mContext).getToken().isEmpty()) {
                     Intent intent = new Intent(mContext, TestActivity.class);
                     intent.putExtra(TestActivity.KEY_ID, list.get(position).id);
+                    intent.putExtra(TestActivity.KEY_NAME, list.get(position).subject_code);
                     mContext.startActivity(intent);
                 } else {
                     AlertDialog.Builder builder = new AlertDialog.Builder(mContext);

@@ -180,4 +180,12 @@
     <string name="xuatsac">Xuất sắc</string>
     <string name="trungbinh">Trung bình</string>
     <string name="point">Điểm</string>
+    <string name="your_point">ĐIỂM CỦA BẠN</string>
+    <string name="you_need_try">Bạn cần cố gắng thêm!</string>
+    <string name="detail">Chi tiết</string>
+    <string name="answer_correct">Trả lời đúng: %1$d</string>
+    <string name="answer_no_correct">Trả lời sai: %1$d</string>
+    <string name="no_answer">Chưa trả lời: %1$d</string>
+    <string name="time_answer"><![CDATA[Thời gian làm bài: <b>%1$d Giờ: %2$d Phút: %3$d Giây</b>]]></string>
+    <string name="review_answer">Xem đáp án</string>
 </resources>

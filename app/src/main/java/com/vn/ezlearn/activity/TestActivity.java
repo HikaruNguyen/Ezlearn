@@ -13,7 +13,6 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Toast;
 
 import com.vn.ezlearn.R;
 import com.vn.ezlearn.adapter.DialogListQuestionAdapter;
@@ -31,6 +30,7 @@ import com.vn.ezlearn.models.MyContent;
 import com.vn.ezlearn.models.Question;
 import com.vn.ezlearn.models.QuestionObject;
 import com.vn.ezlearn.models.Reading;
+import com.vn.ezlearn.utils.QuestionUtils;
 import com.vn.ezlearn.viewmodel.TestViewModel;
 
 import java.util.ArrayList;
@@ -44,7 +44,8 @@ import rx.schedulers.Schedulers;
 
 public class TestActivity extends BaseActivity
         implements ChangeQuestionListener, OnCheckAnswerListener, OnClickQuestionPopupListener {
-    public static final String KEY_ID = "id";
+    public static final String KEY_ID = "KEY_ID";
+    public static final String KEY_NAME = "KEY_NAME";
     private static final String FORMAT = "%02d:%02d:%02d";
     private ActivityTestBinding testBinding;
     private TestViewModel testViewModel;
@@ -59,9 +60,12 @@ public class TestActivity extends BaseActivity
     private Subscription mSubscription;
     private QuestionResult mQuestionResult;
     private int id;
+    private String name;
 
     private boolean isAttach = true;
     private ProgressDialog progressDialog;
+
+    private int seconds;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,6 +96,7 @@ public class TestActivity extends BaseActivity
 
     private void getIntentData() {
         id = getIntent().getIntExtra(KEY_ID, 0);
+        name = getIntent().getStringExtra(KEY_NAME);
     }
 
     private void initUI() {
@@ -235,16 +240,18 @@ public class TestActivity extends BaseActivity
     }
 
     private void calculateScore() {
-        float total = 0;
-        for (MyContent myContent : contentList) {
-            if (myContent.isCorrect) {
-                total += myContent.point;
-            }
-        }
-        Toast.makeText(this, "Total Point: " + total, Toast.LENGTH_SHORT).show();
+        countDownTimer.cancel();
+        int hours = seconds / 3600;
+        int minutes = (seconds % 3600) / 60;
+        seconds = seconds % 60;
+        QuestionUtils.getInstance().setMyContentList(contentList);
+
         Intent intent = new Intent(this, ShowPointActivity.class);
-        intent.putExtra(ShowPointActivity.KEY_POINT, total);
-        startActivity(intent);
+        intent.putExtra(ShowPointActivity.KEY_NAME, name);
+        intent.putExtra(ShowPointActivity.KEY_HOURS, hours);
+        intent.putExtra(ShowPointActivity.KEY_MINUTES, minutes);
+        intent.putExtra(ShowPointActivity.KEY_SECONDS, seconds);
+        startActivityForResult(intent, ShowPointActivity.KEY_REQUEST);
     }
 
     @Override
@@ -299,6 +306,7 @@ public class TestActivity extends BaseActivity
 
             @SuppressLint("DefaultLocale")
             public void onTick(long millisUntilFinished) {
+                seconds++;
                 testViewModel.setTitle(
                         "" + String.format(
                                 FORMAT,
@@ -309,10 +317,12 @@ public class TestActivity extends BaseActivity
                                 TimeUnit.MILLISECONDS.toSeconds(millisUntilFinished)
                                         - TimeUnit.MINUTES.toSeconds(
                                         TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished))));
+
             }
 
             public void onFinish() {
                 testViewModel.setTitle(getString(R.string.hetGio));
+                calculateScore();
             }
         };
         countDownTimer.start();
@@ -328,4 +338,16 @@ public class TestActivity extends BaseActivity
         mSubscription = null;
     }
 
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK) {
+            if (requestCode == ShowPointActivity.KEY_REQUEST) {
+
+            }
+        } else {
+            finish();
+        }
+    }
 }

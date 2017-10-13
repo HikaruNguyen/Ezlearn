@@ -25,18 +25,27 @@ import java.util.List;
 public class DialogListQuestionAdapter extends BaseRecyclerAdapter<MyContent,
         DialogListQuestionAdapter.ViewHolder> {
     private OnClickQuestionPopupListener onClickQuestionPopupListener;
+    private boolean isShowPoint;
 
     public DialogListQuestionAdapter(Context context, List<MyContent> list,
                                      OnClickQuestionPopupListener onClickQuestionPopupListener) {
         super(context, list);
         this.onClickQuestionPopupListener = onClickQuestionPopupListener;
+        isShowPoint = false;
     }
+
+    public DialogListQuestionAdapter(Context context, List<MyContent> list) {
+        super(context, list);
+        isShowPoint = true;
+    }
+
 
     @Override
     public void onBindViewHolder(ViewHolder holder, final int position) {
         ViewDataBinding viewDataBinding = holder.getViewDataBinding();
         viewDataBinding.setVariable(BR.itemQuestionDialogViewModel,
-                new ItemQuestionDialogViewModel(mContext, list.get(position), position + 1));
+                new ItemQuestionDialogViewModel(mContext, list.get(position), position + 1,
+                        isShowPoint));
     }
 
     @Override
@@ -59,7 +68,10 @@ public class DialogListQuestionAdapter extends BaseRecyclerAdapter<MyContent,
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    onClickQuestionPopupListener.onClick(getAdapterPosition());
+                    if (!isShowPoint) {
+                        onClickQuestionPopupListener.onClick(getAdapterPosition());
+                    }
+
                 }
             });
         }

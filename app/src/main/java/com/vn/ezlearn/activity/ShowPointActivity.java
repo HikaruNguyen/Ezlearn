@@ -3,35 +3,94 @@ package com.vn.ezlearn.activity;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.GridLayoutManager;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 
 import com.vn.ezlearn.R;
+import com.vn.ezlearn.adapter.DialogListQuestionAdapter;
 import com.vn.ezlearn.databinding.ActivityShowPointBinding;
+import com.vn.ezlearn.models.MyContent;
+import com.vn.ezlearn.utils.QuestionUtils;
 import com.vn.ezlearn.viewmodel.ShowPointViewModel;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class ShowPointActivity extends AppCompatActivity {
     private static final String TAG = ShowPointActivity.class.getSimpleName();
-    public static final String KEY_POINT = "point";
+    public static final int KEY_REQUEST = 22;
+    public static final String KEY_NAME = "KEY_NAME";
+    public static final String KEY_HOURS = "KEY_HOURS";
+    public static final String KEY_MINUTES = "KEY_MINUTES";
+    public static final String KEY_SECONDS = "KEY_SECONDS";
     private ActivityShowPointBinding showPointBinding;
     private ShowPointViewModel showPointViewModel;
     private float point;
+    private int numAnswerCorrect;
+    private int numAnswerNoCorrect;
+    private int numNoAnswer;
+
+    private List<MyContent> myContentList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         showPointBinding = DataBindingUtil.setContentView(this, R.layout.activity_show_point);
-        getIntentData();
+        getData();
         setProgressPoint();
+        bindListQuestion();
+        event();
+    }
+
+    private void event() {
+        showPointBinding.btnReviewAnswer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                setResult(RESULT_OK);
+                finish();
+            }
+        });
+    }
+
+    private void bindListQuestion() {
+        GridLayoutManager layoutManager = new GridLayoutManager(this, 7);
+        showPointBinding.rvQuestion.setLayoutManager(layoutManager);
+        showPointBinding.rvQuestion.setHasFixedSize(true);
+        showPointBinding.rvQuestion.setItemAnimator(new DefaultItemAnimator());
+
+        DialogListQuestionAdapter listQuestionAdapter = new DialogListQuestionAdapter(
+                this, new ArrayList<MyContent>());
+        showPointBinding.rvQuestion.setAdapter(listQuestionAdapter);
+        listQuestionAdapter.addAll(myContentList);
+        showPointBinding.scrollView.fullScroll(ScrollView.FOCUS_UP);
     }
 
 
-    private void getIntentData() {
-        point = getIntent().getFloatExtra(KEY_POINT, 0);
-        point = 9.75f;
-        showPointViewModel = new ShowPointViewModel(this, point);
+    private void getData() {
+        String name = getIntent().getStringExtra(KEY_NAME);
+        int hours = getIntent().getIntExtra(KEY_HOURS, 0);
+        int minutes = getIntent().getIntExtra(KEY_MINUTES, 0);
+        int seconds = getIntent().getIntExtra(KEY_SECONDS, 0);
+        myContentList = QuestionUtils.getInstance().getMyContentList();
+        for (MyContent myContent : myContentList) {
+            if (myContent.typeQuestion == MyContent.TYPE_NO_ANSWER) {
+                numNoAnswer++;
+            } else {
+                if (myContent.isCorrect) {
+                    point += myContent.point;
+                    numAnswerCorrect++;
+                }
+            }
+        }
+        numAnswerNoCorrect = myContentList.size() - numNoAnswer - numAnswerCorrect;
+        showPointViewModel = new ShowPointViewModel(this, point, numAnswerCorrect,
+                numAnswerNoCorrect, numNoAnswer, hours, minutes, seconds, name);
         showPointBinding.setShowPointViewModel(showPointViewModel);
     }
 

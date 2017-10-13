@@ -78,7 +78,8 @@ public class QuestionViewModel extends BaseObservable {
 //        } else {
         if (content != null && content.content != null && content.content.content != null
                 && !content.content.content.isEmpty()) {
-            textQuestion.set(Html.fromHtml(content.content.content));
+            textQuestion.set(Html.fromHtml(content.content.content
+                    .replace("<p>", "").replace("</p>", "")));
             visiableQuestion.set(View.VISIBLE);
         } else {
             visiableQuestion.set(View.GONE);

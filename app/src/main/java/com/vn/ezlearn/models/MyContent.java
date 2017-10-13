@@ -6,7 +6,7 @@ package com.vn.ezlearn.models;
 
 public class MyContent {
     public static final int TYPE_ANSWERED = 1;
-    public static final int TYPE_UNANSWER = 2;
+    public static final int TYPE_NO_ANSWER = 2;
     public static final int TYPE_LATE = 3;
 
     public int typeQuestion;
@@ -25,6 +25,7 @@ public class MyContent {
         this.content = content;
         this.point = point;
         this.isCorrect = false;
+        this.typeQuestion = TYPE_NO_ANSWER;
     }
 
     public MyContent(Region region, Integer type, Content content, String passage, Float point) {
@@ -34,5 +35,6 @@ public class MyContent {
         this.passage = passage;
         this.point = point;
         this.isCorrect = false;
+        this.typeQuestion = TYPE_NO_ANSWER;
     }
 }

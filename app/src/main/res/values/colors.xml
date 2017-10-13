@@ -11,14 +11,14 @@
     <color name="bg_main">#EEEEEE</color>
     <color name="grey_line">#dbdbdb</color>
     <color name="grey_line_press">#d1d1d1</color>
-    <color name="red_title">#DD1948</color>
+    <color name="red_title">#e74c3c</color>
 
     <color name="first_slide_background">#5969fa</color>
     <color name="first_slide_background1">#5d6af9</color>
     <color name="first_slide_background2">#736bf2</color>
     <color name="first_slide_buttons">#2980b9</color>
 
-    <color name="second_slide_background">#4b9236</color>
+    <color name="green">#2ecc71</color>
     <color name="second_slide_buttons">#448431</color>
 
     <color name="third_slide_background">#f1c40f</color>
