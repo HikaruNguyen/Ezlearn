@@ -93,7 +93,7 @@ public class QuestionObjectAdapter
             viewPagerAdapter = new ViewPagerAdapter(
                     ((TestActivity) activity).getSupportFragmentManager(), questionFragments);
             itemQuestionViewpagerBinding.container.setAdapter(viewPagerAdapter);
-
+            itemQuestionViewpagerBinding.container.setOffscreenPageLimit(item.list.size());
             itemQuestionViewpagerBinding.container.addOnPageChangeListener(
                     new ViewPager.OnPageChangeListener() {
                         @Override
@@ -159,6 +159,15 @@ public class QuestionObjectAdapter
                 itemQuestionViewpagerBinding.container.setCurrentItem(position);
             }
         }
+    }
+
+    public void showSuggest() {
+        if (list != null && list.size() > 1) {
+            for (int i = 0; i < list.get(1).list.size(); i++) {
+                ((QuestionFragment) questionFragments.get(i)).showSuggest();
+            }
+        }
+
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {

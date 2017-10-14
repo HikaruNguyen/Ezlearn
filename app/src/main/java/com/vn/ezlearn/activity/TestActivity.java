@@ -344,7 +344,7 @@ public class TestActivity extends BaseActivity
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK) {
             if (requestCode == ShowPointActivity.KEY_REQUEST) {
-
+                adapter.showSuggest();
             }
         } else {
             finish();

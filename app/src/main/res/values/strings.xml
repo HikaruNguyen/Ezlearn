@@ -188,4 +188,5 @@
     <string name="no_answer">Chưa trả lời: %1$d</string>
     <string name="time_answer"><![CDATA[Thời gian làm bài: <b>%1$d Giờ: %2$d Phút: %3$d Giây</b>]]></string>
     <string name="review_answer">Xem đáp án</string>
+    <string name="hint">Gợi ý</string>
 </resources>

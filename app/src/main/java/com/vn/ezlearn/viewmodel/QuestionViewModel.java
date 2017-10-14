@@ -42,6 +42,9 @@ public class QuestionViewModel extends BaseObservable {
     public ObservableInt visiableNext;
     public ObservableInt visiablePre;
 
+    public ObservableField<Spanned> suggest;
+    public ObservableInt visiableSuggest;
+
     public QuestionViewModel(Activity context, MyContent content, int position, int size) {
         this.context = context;
         this.content = content;
@@ -59,12 +62,16 @@ public class QuestionViewModel extends BaseObservable {
         answerC = new ObservableField<>();
         answerD = new ObservableField<>();
 
+        visiableSuggest = new ObservableInt(View.GONE);
+        suggest = new ObservableField<>();
+
         tvQuestion = new ObservableField<>(
                 context.getString(R.string.question) + " " + (position + 1) + "/" + size);
 
         if (content != null) {
             setQuestionData();
         }
+
     }
 
     private void setQuestionData() {
@@ -95,6 +102,9 @@ public class QuestionViewModel extends BaseObservable {
             answerD.set(Html.fromHtml(content.content.answer_list.get(3).answer
                     .replace("<p>", "").replace("</p>", "")));
         }
+        if (content != null && content.content != null && content.content.suggest != null) {
+            suggest.set(Html.fromHtml(content.content.suggest));
+        }
     }
 
     public void setNeedReview() {
@@ -107,6 +117,10 @@ public class QuestionViewModel extends BaseObservable {
             drawableFlag.set(R.mipmap.ic_flag);
 
         }
+    }
+
+    public void showSuggest(){
+        visiableSuggest.set(View.VISIBLE);
     }
 
     @BindingAdapter("imageResource")
