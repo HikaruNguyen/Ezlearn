@@ -66,15 +66,15 @@ public class RxErrorHandlingCallAdapterFactory extends CallAdapter.Factory {
             if (throwable instanceof HttpException) {
                 HttpException httpException = (HttpException) throwable;
                 Response response = httpException.response();
-                return RetrofitException.httpError(response.raw().request().url().toString(),
+                return RetrofitException.Companion.httpError(response.raw().request().url().toString(),
                         response, retrofit);
             }
             // A network error happened
             if (throwable instanceof IOException) {
-                return RetrofitException.networkError((IOException) throwable);
+                return RetrofitException.Companion.networkError((IOException) throwable);
             }
             // We don't know what happened. We need to simply convert to an unknown error
-            return RetrofitException.unexpectedError(throwable);
+            return RetrofitException.Companion.unexpectedError(throwable);
         }
     }
 }
