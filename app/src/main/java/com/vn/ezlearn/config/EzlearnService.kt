@@ -32,11 +32,16 @@ interface EzlearnService {
     @GET("index.php?r=subjects/get-list-by-cate")
     fun getListExams(@Query("category_id") category_id: Int,
                      @Query("page") page: Int,
-                     @Query("per-page") per_page: Int): Observable<ExamsResult>
+                     @Query("per-page") per_page: Int): Observable<ListExamsResult>
+
+    @GET("index.php?r=subjects/get-list-by-cate")
+    fun getListDocument(@Query("category_id") category_id: Int,
+                        @Query("page") page: Int,
+                        @Query("per-page") per_page: Int): Observable<ListDocumentResult>
 
     @GET("index.php?r=subjects/get-list-free")
     fun getListFreeExams(@Query("page") page: Int,
-                         @Query("per-page") per_page: Int): Observable<ExamsResult>
+                         @Query("per-page") per_page: Int): Observable<ListExamsResult>
 
     @GET("index.php?r=user/login")
     fun getLogin(@Query("username") username: String,

@@ -7,7 +7,7 @@ import com.vn.ezlearn.models.Exam
  * Created by FRAMGIA\nguyen.duc.manh on 05/10/2017.
  */
 
-class ExamsResult {
+class ListExamsResult {
     var success: Boolean = false
     var data: ExamsData? = null
 

@@ -100,21 +100,14 @@ class CategoryMainFragment : Fragment() {
     private fun bindData() {
         fragmentList = ArrayList()
         fragmentListTitle = ArrayList()
-        if (categoryList != null && categoryList!!.size > 0) {
+        if (categoryList != null && categoryList!!.isNotEmpty()) {
             for (i in categoryList!!.indices) {
-                fragmentList!!.add(CategoryFragment.newInstance(CategoryFragment.TYPE_BAI_GIANG,
-                        Integer.parseInt(categoryList!![i].category_id)))
+                fragmentList!!.add(CategoryFragment.newInstance(
+                        Integer.parseInt(categoryList!![i].category_id),
+                        Integer.parseInt(categoryList!![i].content_type)))
                 fragmentListTitle!!.add(categoryList!![i].category_name)
             }
         }
-        /* fragmentList.add(CategoryFragment.newInstance(CategoryFragment.TYPE_BAI_GIANG,
-                Integer.parseInt(categoryID)));
-        fragmentList.add(CategoryFragment.newInstance(CategoryFragment.TYPE_DE_THI,
-                Integer.parseInt(categoryID)));
-        fragmentList.add(CategoryFragment.newInstance(CategoryFragment.TYPE_LUYEN_TAP,
-                Integer.parseInt(categoryID)));
-        fragmentList.add(CategoryFragment.newInstance(CategoryFragment.TYPE_LUYEN_TAP,
-                Integer.parseInt(categoryID)));*/
         viewPagerAdapter = ViewPagerAdapter(childFragmentManager, fragmentList!!,
                 fragmentListTitle!!)
         categoryMainBinding!!.viewPager.adapter = viewPagerAdapter

@@ -7,8 +7,8 @@ package com.vn.ezlearn.models
 class HomeObject {
 
     var header: String = ""
-    var exam: Exam ?= null
-    var bannerList: List<Banner> ?= null
+    var exam: Exam? = null
+    var bannerList: List<Banner>? = null
     var type: Int = 0
 
     constructor(header: String) {

@@ -12,12 +12,13 @@ import com.vn.ezlearn.activity.MyApplication
 import com.vn.ezlearn.adapter.ExamsAdapter
 import com.vn.ezlearn.config.EzlearnService
 import com.vn.ezlearn.databinding.FragmentCategoryBinding
-import com.vn.ezlearn.modelresult.ExamsResult
+import com.vn.ezlearn.modelresult.ListDocumentResult
+import com.vn.ezlearn.modelresult.ListExamsResult
+import com.vn.ezlearn.models.ContentByCategory
 import rx.Subscriber
 import rx.Subscription
 import rx.android.schedulers.AndroidSchedulers
 import rx.schedulers.Schedulers
-import java.util.*
 
 class CategoryFragment : Fragment() {
 
@@ -25,16 +26,17 @@ class CategoryFragment : Fragment() {
     private var apiService: EzlearnService? = null
     private var mSubscription: Subscription? = null
 
-    private var type_category: Int = 0
     private var category_id: Int = 0
-    private var mExamsResult: ExamsResult? = null
-    private var adapter: ExamsAdapter? = null
-
+    private var contentType: Int = 0
+    private var mExamsResult: ListExamsResult? = null
+    private var mDocumentsResult: ListDocumentResult? = null
+    private lateinit var adapter: ExamsAdapter
+    private lateinit var list: MutableList<ContentByCategory>
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         if (arguments != null) {
-            type_category = arguments.getInt(TYPE_CATEGORY)
             category_id = arguments.getInt(CATEGORY_ID)
+            contentType = arguments.getInt(CONTENT_TYPE)
         }
     }
 
@@ -47,24 +49,39 @@ class CategoryFragment : Fragment() {
     }
 
     private fun bindData() {
+        list = ArrayList()
         adapter = ExamsAdapter(activity, ArrayList())
+
         categoryBinding!!.rvListExam.adapter = adapter
-        getDataApi(1)
+        getDataApi(1, contentType)
     }
 
-    private fun getDataApi(page: Int) {
+    private fun getDataApi(page: Int, contentType: Int) {
         apiService = MyApplication.with(activity).getEzlearnService()
         if (mSubscription != null && !mSubscription!!.isUnsubscribed)
             mSubscription!!.unsubscribe()
-        mSubscription = apiService!!.getListExams(category_id, page, 50)
+        when (contentType) {
+            ContentByCategory.CONTENT_TYPE_EXAM -> getDataExam(page)
+            ContentByCategory.CONTENT_TYPE_DOCUMENT -> getDataDocument(page)
+        }
+
+    }
+
+    private fun getDataDocument(page: Int) {
+        mSubscription = apiService!!.getListDocument(category_id, page, 50)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(object : Subscriber<ExamsResult>() {
+                .subscribe(object : Subscriber<ListDocumentResult>() {
                     override fun onCompleted() {
-                        if (mExamsResult!!.success && mExamsResult!!.data != null
-                                && mExamsResult!!.data!!.list != null
-                                && mExamsResult!!.data!!.list!!.size > 0) {
-                            adapter!!.addAll(mExamsResult!!.data!!.list!!)
+                        if (mDocumentsResult!!.success && mDocumentsResult!!.data != null
+                                && mDocumentsResult!!.data != null
+                                && mDocumentsResult!!.data!!.isNotEmpty()) {
+                            mDocumentsResult?.data!!
+                                    .map { ContentByCategory(
+                                            exam = null, document = it, contentType = contentType) }
+                                    .forEach { list.add(it) }
+
+                            adapter.addAll(list)
                         }
                     }
 
@@ -72,7 +89,37 @@ class CategoryFragment : Fragment() {
 
                     }
 
-                    override fun onNext(examsResult: ExamsResult?) {
+                    override fun onNext(documentResult: ListDocumentResult?) {
+                        if (documentResult != null) {
+                            mDocumentsResult = documentResult
+                        }
+                    }
+                })
+    }
+
+    private fun getDataExam(page: Int) {
+        mSubscription = apiService!!.getListExams(category_id, page, 50)
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(object : Subscriber<ListExamsResult>() {
+                    override fun onCompleted() {
+                        if (mExamsResult!!.success && mExamsResult!!.data != null
+                                && mExamsResult?.data?.list != null
+                                && mExamsResult?.data?.list!!.isNotEmpty()) {
+                            mExamsResult?.data?.list!!
+                                    .map { ContentByCategory(
+                                            exam = it, document = null, contentType = contentType) }
+                                    .forEach { list.add(it) }
+
+                            adapter.addAll(list)
+                        }
+                    }
+
+                    override fun onError(e: Throwable) {
+
+                    }
+
+                    override fun onNext(examsResult: ListExamsResult?) {
                         if (examsResult != null) {
                             mExamsResult = examsResult
                         }
@@ -87,18 +134,14 @@ class CategoryFragment : Fragment() {
     }
 
     companion object {
-
-        val TYPE_BAI_GIANG = 1
-        val TYPE_DE_THI = 2
-        val TYPE_LUYEN_TAP = 3
-        private val TYPE_CATEGORY = "TYPE_CATEGORY"
         private val CATEGORY_ID = "CATEGORY_ID"
+        private val CONTENT_TYPE = "CONTENT_TYPE"
 
-        fun newInstance(type_category: Int, category_id: Int): CategoryFragment {
+        fun newInstance(category_id: Int, contentType: Int): CategoryFragment {
             val fragment = CategoryFragment()
             val args = Bundle()
-            args.putInt(TYPE_CATEGORY, type_category)
             args.putInt(CATEGORY_ID, category_id)
+            args.putInt(CONTENT_TYPE, contentType)
             fragment.arguments = args
             return fragment
         }

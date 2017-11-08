@@ -14,7 +14,7 @@ import com.vn.ezlearn.adapter.HomeAdapter
 import com.vn.ezlearn.config.EzlearnService
 import com.vn.ezlearn.databinding.FragmentHomeBinding
 import com.vn.ezlearn.modelresult.BannerResult
-import com.vn.ezlearn.modelresult.ExamsResult
+import com.vn.ezlearn.modelresult.ListExamsResult
 import com.vn.ezlearn.models.Banner
 import com.vn.ezlearn.models.HomeObject
 import com.vn.ezlearn.viewmodel.HomeViewModel
@@ -41,7 +41,7 @@ class HomeFragment : Fragment(), BaseSliderView.OnSliderClickListener {
     private var mSubscription: Subscription? = null
 
     private var mBannerResult: BannerResult? = null
-    private var mExamsResult: ExamsResult? = null
+    private var mExamsResult: ListExamsResult? = null
 
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
@@ -72,11 +72,11 @@ class HomeFragment : Fragment(), BaseSliderView.OnSliderClickListener {
         mSubscription = apiService!!.getListFreeExams(page, 5)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(object : Subscriber<ExamsResult>() {
+                .subscribe(object : Subscriber<ListExamsResult>() {
                     override fun onCompleted() {
                         if (mExamsResult!!.success && mExamsResult!!.data != null
                                 && mExamsResult!!.data!!.list != null
-                                && mExamsResult!!.data!!.list!!.size > 0) {
+                                && mExamsResult!!.data!!.list!!.isNotEmpty()) {
                             homeAdapter!!.add(HomeObject(getString(R.string.tryExam)))
                             for (i in 0 until mExamsResult!!.data!!.list!!.size) {
                                 homeAdapter!!.add(HomeObject(
@@ -90,7 +90,7 @@ class HomeFragment : Fragment(), BaseSliderView.OnSliderClickListener {
 
                     }
 
-                    override fun onNext(examsResult: ExamsResult?) {
+                    override fun onNext(examsResult: ListExamsResult?) {
                         if (examsResult != null) {
                             mExamsResult = examsResult
                         }

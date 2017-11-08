@@ -1,6 +1,6 @@
 package com.vn.ezlearn.models
 
-import java.util.ArrayList
+import java.util.*
 
 /**
  * Created by FRAMGIA\nguyen.duc.manh on 07/07/2017.
@@ -14,9 +14,10 @@ class Category {
     var parent_id: String = ""
     var weight: String? = null
     var img_icon: String? = null
-    var children: List<Category> ?= null
+    var children: List<Category>? = null
     var typeMenu: Int? = null
     var levelChild: Int? = null
+    var content_type: String = "0"
 
     constructor(id: String, name: String, type: Int?) {
         this.category_id = id
