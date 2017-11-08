@@ -3,20 +3,23 @@ package com.vn.ezlearn.adapter
 import android.content.Context
 import android.content.Intent
 import android.databinding.DataBindingUtil
-import android.databinding.ViewDataBinding
 import android.support.v7.app.AlertDialog
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import com.vn.ezlearn.BR
 import com.vn.ezlearn.R
+import com.vn.ezlearn.activity.MyApplication
 import com.vn.ezlearn.activity.TestActivity
 import com.vn.ezlearn.config.AppConfig
+import com.vn.ezlearn.config.EzlearnService
 import com.vn.ezlearn.databinding.ItemDocumentBinding
 import com.vn.ezlearn.databinding.ItemHomeExamsBinding
 import com.vn.ezlearn.models.ContentByCategory
 import com.vn.ezlearn.viewmodel.ItemDocumentViewModel
 import com.vn.ezlearn.viewmodel.ItemExamViewModel
+import rx.Subscription
 
 /**
  * Created by FRAMGIA\nguyen.duc.manh on 05/10/2017.
@@ -24,11 +27,12 @@ import com.vn.ezlearn.viewmodel.ItemExamViewModel
 
 class ExamsAdapter(context: Context, list: MutableList<ContentByCategory>) :
         BaseRecyclerAdapter<ContentByCategory, ExamsAdapter.ViewHolder>(context, list) {
-
+    private var mSubscription: Subscription? = null
+    private var apiService: EzlearnService? = null
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val viewDataBinding = holder.viewDataBinding
         when (getItemViewType(position)) {
             ContentByCategory.CONTENT_TYPE_EXAM -> {
+                val viewDataBinding = holder.itemExamBinding
                 viewDataBinding.setVariable(BR.itemExamViewModel,
                         ItemExamViewModel(mContext, list[position].exam))
                 viewDataBinding.root.setOnClickListener {
@@ -43,21 +47,37 @@ class ExamsAdapter(context: Context, list: MutableList<ContentByCategory>) :
                 }
             }
             ContentByCategory.CONTENT_TYPE_DOCUMENT -> {
-                viewDataBinding.setVariable(BR.itemDocumentViewModel,
-                        ItemDocumentViewModel(mContext, list[position].document))
-                viewDataBinding.root.setOnClickListener {
-                    if (!AppConfig.getInstance(mContext).token.isEmpty()) {
+                val viewDataBinding = holder.itemDocumentBinding
+                val itemExamViewModel = ItemDocumentViewModel(mContext, list[position].document, list[position].document?.isDownloaded)
+                viewDataBinding.itemDocumentViewModel = itemExamViewModel
+                if (list[position].document!!.isDownloaded) {
+                    viewDataBinding.root.setOnClickListener {
+                        if (!AppConfig.getInstance(mContext).token.isEmpty()) {
 
-                    } else {
-                        showDialogLogin()
+                        } else {
+                            showDialogLogin()
+                        }
+                    }
+                } else {
+                    viewDataBinding.download.setOnClickListener {
+                        itemExamViewModel.visiableProgress.set(View.VISIBLE)
+                        dowloadFile(list[position].document!!.file_url)
                     }
                 }
+
             }
         }
 
     }
 
-    private fun showDialogLogin(){
+    private fun dowloadFile(file_url: String?) {
+        apiService = MyApplication.with(mContext).getEzlearnService()
+        if (mSubscription != null && !mSubscription!!.isUnsubscribed)
+            mSubscription!!.unsubscribe()
+
+    }
+
+    private fun showDialogLogin() {
         val builder = AlertDialog.Builder(mContext)
         builder.setMessage(mContext.getString(R.string.needLogin))
         builder.setPositiveButton(R.string.ok)
@@ -92,11 +112,18 @@ class ExamsAdapter(context: Context, list: MutableList<ContentByCategory>) :
         return list[position].contentType!!
     }
 
-    inner class ViewHolder(val viewDataBinding: ViewDataBinding) :
-            RecyclerView.ViewHolder(viewDataBinding.root) {
+    inner class ViewHolder : RecyclerView.ViewHolder {
+        lateinit var itemExamBinding: ItemHomeExamsBinding
+        lateinit var itemDocumentBinding: ItemDocumentBinding
 
-        init {
-            this.viewDataBinding.executePendingBindings()
+        constructor(itemExamBinding: ItemHomeExamsBinding) : super(itemExamBinding.root) {
+            this.itemExamBinding = itemExamBinding
+            this.itemExamBinding.executePendingBindings()
+        }
+
+        constructor(itemDocumentBinding: ItemDocumentBinding) : super(itemDocumentBinding.root) {
+            this.itemDocumentBinding = itemDocumentBinding
+            this.itemDocumentBinding.executePendingBindings()
         }
     }
 }

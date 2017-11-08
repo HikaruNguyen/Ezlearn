@@ -14,4 +14,5 @@ class Document {
     var price: Int? = null
     var is_free: Int? = null
     var name_en: String? = null
+    var isDownloaded = false
 }

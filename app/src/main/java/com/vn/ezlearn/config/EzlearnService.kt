@@ -7,11 +7,13 @@ import com.vn.ezlearn.modelresult.*
 import com.vn.ezlearn.network.RxErrorHandlingCallAdapterFactory
 import okhttp3.Cache
 import okhttp3.OkHttpClient
+import okhttp3.ResponseBody
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
 import retrofit2.http.Query
+import retrofit2.http.Url
 import rx.Observable
 import java.util.concurrent.TimeUnit
 
@@ -49,6 +51,10 @@ interface EzlearnService {
 
     @GET("index.php?r=subjects/begin-test")
     fun getContentExam(@Query("id") id: Int): Observable<QuestionResult>
+
+
+    @GET
+    fun downloadFile(@Url url:String): Observable<ResponseBody>
 
     object Factory {
 

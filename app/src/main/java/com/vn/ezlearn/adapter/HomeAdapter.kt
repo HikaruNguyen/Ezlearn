@@ -39,18 +39,22 @@ class HomeAdapter(context: Context, list: MutableList<HomeObject>) :
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         this.context = parent.context
-        if (viewType == HomeObject.TYPE_HEADER) {
-            val binding = DataBindingUtil.inflate<ItemHomeHeaderBinding>(
-                    LayoutInflater.from(parent.context), R.layout.item_home_header, parent, false)
-            return ViewHolder(binding)
-        } else if (viewType == HomeObject.TYPE_EXAM) {
-            val binding = DataBindingUtil.inflate<ItemHomeExamsBinding>(
-                    LayoutInflater.from(parent.context), R.layout.item_home_exams, parent, false)
-            return ViewHolder(binding)
-        } else {
-            val binding = DataBindingUtil.inflate<ItemHomeSlideBinding>(
-                    LayoutInflater.from(parent.context), R.layout.item_home_slide, parent, false)
-            return ViewHolder(binding)
+        when (viewType) {
+            HomeObject.TYPE_HEADER -> {
+                val binding = DataBindingUtil.inflate<ItemHomeHeaderBinding>(
+                        LayoutInflater.from(parent.context), R.layout.item_home_header, parent, false)
+                return ViewHolder(binding)
+            }
+            HomeObject.TYPE_EXAM -> {
+                val binding = DataBindingUtil.inflate<ItemHomeExamsBinding>(
+                        LayoutInflater.from(parent.context), R.layout.item_home_exams, parent, false)
+                return ViewHolder(binding)
+            }
+            else -> {
+                val binding = DataBindingUtil.inflate<ItemHomeSlideBinding>(
+                        LayoutInflater.from(parent.context), R.layout.item_home_slide, parent, false)
+                return ViewHolder(binding)
+            }
         }
 
     }
@@ -63,9 +67,9 @@ class HomeAdapter(context: Context, list: MutableList<HomeObject>) :
                 val displayMetrics = context!!.resources.displayMetrics
                 val width = displayMetrics.widthPixels
                 val height = (width * 485 / 1366).toFloat()
-                itemHomeSlideBinding?.rlSlide?.layoutParams = LinearLayout.LayoutParams(width, height.toInt())
+                itemHomeSlideBinding.rlSlide?.layoutParams = LinearLayout.LayoutParams(width, height.toInt())
 
-                itemHomeSlideBinding!!.slider.setPresetTransformer(SliderLayout.Transformer.Accordion)
+                itemHomeSlideBinding.slider.setPresetTransformer(SliderLayout.Transformer.Accordion)
                 itemHomeSlideBinding.slider.setCustomIndicator(itemHomeSlideBinding.customIndicator2)
                 itemHomeSlideBinding.slider.setCustomAnimation(DescriptionAnimation())
                 itemHomeSlideBinding.slider.setDuration(SLIDE_DELAY)
@@ -91,7 +95,7 @@ class HomeAdapter(context: Context, list: MutableList<HomeObject>) :
         } else if (getItemViewType(position) == HomeObject.TYPE_EXAM) {
             val itemHomeExamsBinding = holder.itemHomeExamsBinding
             val itemExamViewModel = ItemExamViewModel(mContext, list[position].exam)
-            itemHomeExamsBinding!!.itemExamViewModel = itemExamViewModel
+            itemHomeExamsBinding.itemExamViewModel = itemExamViewModel
             itemHomeExamsBinding.lnExam.setOnClickListener {
                 if (!AppConfig.getInstance(mContext).token.isEmpty()) {
                     val intent = Intent(mContext, TestActivity::class.java)
@@ -111,7 +115,7 @@ class HomeAdapter(context: Context, list: MutableList<HomeObject>) :
             }
         } else if (getItemViewType(position) == HomeObject.TYPE_HEADER) {
             val itemHomeHeaderBinding = holder.itemHomeHeaderBinding
-            itemHomeHeaderBinding!!.tvName.text = list[position].header
+            itemHomeHeaderBinding.tvName.text = list[position].header
         }
 
     }
@@ -125,26 +129,25 @@ class HomeAdapter(context: Context, list: MutableList<HomeObject>) :
     }
 
     inner class ViewHolder : RecyclerView.ViewHolder {
-        var itemHomeSlideBinding: ItemHomeSlideBinding? = null
-        var itemHomeHeaderBinding: ItemHomeHeaderBinding? = null
-        var itemHomeExamsBinding: ItemHomeExamsBinding? = null
-
+        lateinit var itemHomeSlideBinding: ItemHomeSlideBinding
+        lateinit var itemHomeHeaderBinding: ItemHomeHeaderBinding
+        lateinit var itemHomeExamsBinding: ItemHomeExamsBinding
 
         constructor(itemHomeSlideBinding: ItemHomeSlideBinding) : super(itemHomeSlideBinding.root) {
             this.itemHomeSlideBinding = itemHomeSlideBinding
-            this.itemHomeSlideBinding!!.executePendingBindings()
+            this.itemHomeSlideBinding.executePendingBindings()
             itemView.setOnClickListener { }
         }
 
         constructor(itemHomeHeaderBinding: ItemHomeHeaderBinding) : super(itemHomeHeaderBinding.root) {
             this.itemHomeHeaderBinding = itemHomeHeaderBinding
-            this.itemHomeHeaderBinding!!.executePendingBindings()
+            this.itemHomeHeaderBinding.executePendingBindings()
             itemView.setOnClickListener { }
         }
 
         constructor(itemHomeExamsBinding: ItemHomeExamsBinding) : super(itemHomeExamsBinding.root) {
             this.itemHomeExamsBinding = itemHomeExamsBinding
-            this.itemHomeExamsBinding!!.executePendingBindings()
+            this.itemHomeExamsBinding.executePendingBindings()
         }
     }
 

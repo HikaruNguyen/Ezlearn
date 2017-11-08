@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
 
@@ -8,30 +9,33 @@
             type="com.vn.ezlearn.viewmodel.ItemDocumentViewModel" />
     </data>
 
-    <RelativeLayout
+    <LinearLayout
+        backgroundResource="@{itemDocumentViewModel.background}"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/bg_exam"
-            android:paddingBottom="@dimen/margin_10dp"
+            android:paddingBottom="@dimen/margin_5dp"
             android:paddingLeft="@dimen/margin_10dp"
             android:paddingRight="@dimen/margin_10dp"
             android:paddingTop="@dimen/margin_5dp">
 
             <ImageView
                 android:id="@+id/icon"
+                imageResource="@{itemDocumentViewModel.image}"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:src="@mipmap/ic_doc" />
+                android:layout_centerVertical="true" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/margin_10dp"
+                android:layout_marginRight="@dimen/margin_8dp"
+                android:layout_toLeftOf="@+id/download"
                 android:layout_toRightOf="@+id/icon"
                 android:orientation="vertical">
 
@@ -49,14 +53,32 @@
 
             </LinearLayout>
 
+            <ImageView
+                android:id="@+id/download"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:src="@mipmap/ic_download" />
         </RelativeLayout>
 
+        <com.daimajia.numberprogressbar.NumberProgressBar
+            android:id="@+id/number_progress_bar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/margin_10dp"
+            android:paddingLeft="@dimen/margin_10dp"
+            android:visibility="@{itemDocumentViewModel.visiableProgress}"
+            android:paddingRight="@dimen/margin_10dp"
+            app:progress_current="0"
+            app:progress_max="100" />
+
         <View
+            android:id="@+id/line"
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:layout_alignParentBottom="true"
             android:background="@color/bg_main" />
-    </RelativeLayout>
+    </LinearLayout>
 
 
 </layout>
