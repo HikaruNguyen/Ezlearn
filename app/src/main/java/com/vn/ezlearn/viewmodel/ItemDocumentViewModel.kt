@@ -20,7 +20,7 @@ class ItemDocumentViewModel(context: Context, document: Document?, isDownloaded:
     var price: ObservableField<Spanned> = ObservableField()
     var image: ObservableInt = ObservableInt()
     var background: ObservableInt = ObservableInt()
-    var visiableProgress: ObservableInt = ObservableInt(View.GONE)
+    var visiableDownload: ObservableInt = ObservableInt(View.VISIBLE)
 
     init {
         if (document != null) {
@@ -47,7 +47,11 @@ class ItemDocumentViewModel(context: Context, document: Document?, isDownloaded:
             } else {
                 background.set(R.color.white)
             }
-
+            if (document.isDownloaded) {
+                visiableDownload.set(View.GONE)
+            } else {
+                visiableDownload.set(View.VISIBLE)
+            }
         }
     }
 }

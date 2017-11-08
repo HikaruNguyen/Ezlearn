@@ -54,8 +54,8 @@ class LoginActivity : BaseActivity() {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(object : Subscriber<LoginResult>() {
                     override fun onCompleted() {
-                        if (mLoginResult!!.success && mLoginResult!!.data != null) {
-                            if (!mLoginResult!!.data!!.message.isEmpty()) {
+                        if (mLoginResult!!.success && mLoginResult?.data != null) {
+                            if (!mLoginResult!!.data!!.message?.isEmpty()!!) {
                                 Toast.makeText(this@LoginActivity, mLoginResult!!.data!!.message,
                                         Toast.LENGTH_SHORT).show()
                             } else {
@@ -66,8 +66,16 @@ class LoginActivity : BaseActivity() {
                             AppConfig.getInstance(this@LoginActivity).name = mLoginResult!!.data!!.display_name!!
                             setResult(Activity.RESULT_OK)
                             finish()
+                        } else if (mLoginResult?.data != null) {
+                            if (!mLoginResult!!.data!!.message?.isEmpty()!!) {
+                                Toast.makeText(this@LoginActivity, mLoginResult!!.data!!.message,
+                                        Toast.LENGTH_SHORT).show()
+                            } else {
+                                Toast.makeText(this@LoginActivity, getString(R.string.error_progress),
+                                        Toast.LENGTH_SHORT).show()
+                            }
                         } else {
-                            Toast.makeText(this@LoginActivity, getString(R.string.error_connect),
+                            Toast.makeText(this@LoginActivity, getString(R.string.error_progress),
                                     Toast.LENGTH_SHORT).show()
                         }
                     }

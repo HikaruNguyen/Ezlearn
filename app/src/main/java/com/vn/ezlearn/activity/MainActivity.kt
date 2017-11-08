@@ -244,7 +244,7 @@ class MainActivity : AppCompatActivity(), NavigationItemSelected {
         currentId = id
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent) {
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == Activity.RESULT_OK) {
             if (requestCode == LoginActivity.LOGIN_REQUEST) {

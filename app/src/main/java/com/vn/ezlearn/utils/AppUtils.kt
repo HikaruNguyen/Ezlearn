@@ -1,7 +1,7 @@
 package com.vn.ezlearn.utils
 
 import android.content.Context
-import android.util.DisplayMetrics
+import android.net.ConnectivityManager
 
 /**
  * Created by FRAMGIA\nguyen.duc.manh on 12/10/2017.
@@ -9,20 +9,13 @@ import android.util.DisplayMetrics
 
 object AppUtils {
 
-    fun convertDpToPixel(dp: Float, context: Context): Float {
-        val resources = context.resources
-        val metrics = resources.displayMetrics
-        val px = dp * (metrics.densityDpi.toFloat() / DisplayMetrics.DENSITY_DEFAULT)
-        return px
+    fun isNetworkAvailable(context: Context): Boolean {
+        val cm = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        val netInfo = cm.activeNetworkInfo
+        return netInfo != null && netInfo.isConnectedOrConnecting
     }
 
-
-    fun convertPixelsToDp(px: Float, context: Context): Float {
-        val resources = context.resources
-        val metrics = resources.displayMetrics
-        val dp = px / (metrics.densityDpi.toFloat() / DisplayMetrics.DENSITY_DEFAULT)
-        return dp
+    fun getTAG(cls: Class<*>): String {
+        return cls.simpleName
     }
-
-
 }

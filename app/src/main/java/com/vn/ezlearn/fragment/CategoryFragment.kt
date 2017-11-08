@@ -3,6 +3,7 @@ package com.vn.ezlearn.fragment
 
 import android.databinding.DataBindingUtil
 import android.os.Bundle
+import android.os.Environment
 import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -12,16 +13,22 @@ import com.vn.ezlearn.activity.MyApplication
 import com.vn.ezlearn.adapter.ExamsAdapter
 import com.vn.ezlearn.config.EzlearnService
 import com.vn.ezlearn.databinding.FragmentCategoryBinding
+import com.vn.ezlearn.interfaces.DownloadFileCallBack
+import com.vn.ezlearn.interfaces.OnClickDownloadListener
 import com.vn.ezlearn.modelresult.ListDocumentResult
 import com.vn.ezlearn.modelresult.ListExamsResult
 import com.vn.ezlearn.models.ContentByCategory
+import com.vn.ezlearn.models.Document
+import com.vn.ezlearn.utils.AppUtils
+import com.vn.ezlearn.utils.CLog
+import com.vn.ezlearn.utils.DownloadFileFromURL
 import rx.Subscriber
 import rx.Subscription
 import rx.android.schedulers.AndroidSchedulers
 import rx.schedulers.Schedulers
+import java.io.File
 
-class CategoryFragment : Fragment() {
-
+class CategoryFragment : Fragment(), OnClickDownloadListener, DownloadFileCallBack {
     private var categoryBinding: FragmentCategoryBinding? = null
     private var apiService: EzlearnService? = null
     private var mSubscription: Subscription? = null
@@ -32,6 +39,7 @@ class CategoryFragment : Fragment() {
     private var mDocumentsResult: ListDocumentResult? = null
     private lateinit var adapter: ExamsAdapter
     private lateinit var list: MutableList<ContentByCategory>
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         if (arguments != null) {
@@ -51,7 +59,7 @@ class CategoryFragment : Fragment() {
     private fun bindData() {
         list = ArrayList()
         adapter = ExamsAdapter(activity, ArrayList())
-
+        adapter.onClickDownloadListener = this
         categoryBinding!!.rvListExam.adapter = adapter
         getDataApi(1, contentType)
     }
@@ -76,11 +84,20 @@ class CategoryFragment : Fragment() {
                         if (mDocumentsResult!!.success && mDocumentsResult!!.data != null
                                 && mDocumentsResult!!.data != null
                                 && mDocumentsResult!!.data!!.isNotEmpty()) {
-                            mDocumentsResult?.data!!
-                                    .map { ContentByCategory(
-                                            exam = null, document = it, contentType = contentType) }
-                                    .forEach { list.add(it) }
-
+                            for (document: Document in mDocumentsResult!!.data!!) {
+                                var filePath = Environment.getExternalStorageDirectory().toString() + "/ezlearn"
+                                filePath += "/" + document.name_en.replace(" ", "") + ".doc"
+                                val file = File(filePath)
+                                if (file.exists()) {
+                                    CLog.d(AppUtils.getTAG(CategoryFragment::class.java), filePath + " Download exist")
+                                    document.isDownloaded = true
+                                } else {
+                                    CLog.d(AppUtils.getTAG(CategoryFragment::class.java), filePath + " Download not exist")
+                                    document.isDownloaded = false
+                                }
+                                list.add(ContentByCategory(
+                                        exam = null, document = document, contentType = contentType))
+                            }
                             adapter.addAll(list)
                         }
                     }
@@ -107,8 +124,10 @@ class CategoryFragment : Fragment() {
                                 && mExamsResult?.data?.list != null
                                 && mExamsResult?.data?.list!!.isNotEmpty()) {
                             mExamsResult?.data?.list!!
-                                    .map { ContentByCategory(
-                                            exam = it, document = null, contentType = contentType) }
+                                    .map {
+                                        ContentByCategory(
+                                                exam = it, document = null, contentType = contentType)
+                                    }
                                     .forEach { list.add(it) }
 
                             adapter.addAll(list)
@@ -136,7 +155,7 @@ class CategoryFragment : Fragment() {
     companion object {
         private val CATEGORY_ID = "CATEGORY_ID"
         private val CONTENT_TYPE = "CONTENT_TYPE"
-
+        private val BUFFER_SIZE = (4 * 1024 * 1024).toLong()
         fun newInstance(category_id: Int, contentType: Int): CategoryFragment {
             val fragment = CategoryFragment()
             val args = Bundle()
@@ -145,5 +164,18 @@ class CategoryFragment : Fragment() {
             fragment.arguments = args
             return fragment
         }
+    }
+
+    override fun onClick(name: String, url: String, position: Int) {
+        val downloadFileFromURL = DownloadFileFromURL(activity, name, position, this)
+        downloadFileFromURL.execute(url)
+    }
+
+    override fun onDownloadSuccess(position: Int) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun onDownloadFail() {
+
     }
 }

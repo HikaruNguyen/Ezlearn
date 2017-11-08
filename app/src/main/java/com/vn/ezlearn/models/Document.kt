@@ -13,6 +13,6 @@ class Document {
     var status: Int? = null
     var price: Int? = null
     var is_free: Int? = null
-    var name_en: String? = null
+    var name_en: String = ""
     var isDownloaded = false
 }

@@ -9,7 +9,7 @@ class LoginResult {
     var data: LoginData? = null
 
     class LoginData {
-        var message: String = ""
+        var message: String? = ""
         var id: Int? = null
         var access_token: String? = null
         var avatar: String? = null
