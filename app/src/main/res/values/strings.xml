@@ -6,7 +6,6 @@
 
     <string name="action_settings">Settings</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_user_profile">Hikaru Nguyen</string>
     <string name="title_home">TRANG CHỦ</string>
@@ -84,6 +83,8 @@
     <string name="error_progress">Có lỗi, vui lòng thử lại sau!</string>
     <string name="login_success">Đăng nhập thành công!</string>
     <string name="loading">Vui lòng chờ trong giây lát…</string>
+    <string name="download_fail">Download thất bại, thử lại sau</string>
+    <string name="download_success">Download thành công</string>
     <string name="logout">ĐĂNG XUẤT</string>
     <string name="logout_success">Đăng xuất thành công!</string>
     <string name="needLogin">Xin vui lòng đăng nhập để làm bài thi</string>
@@ -102,4 +103,6 @@
     <string name="review_answer">Xem đáp án</string>
     <string name="hint">Gợi ý</string>
     <string name="price"><![CDATA[<b>Giá: </b>%1$d]]></string>
+    <string name="setting">Cài đặt</string>
+    <string name="messsage_permission_write">Hãy cung cấp quyền Bộ nhớ để bắt đầu download</string>
 </resources>

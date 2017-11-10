@@ -1,13 +1,18 @@
 package com.vn.ezlearn.fragment
 
 
+import android.Manifest
+import android.content.pm.PackageManager
 import android.databinding.DataBindingUtil
 import android.os.Bundle
 import android.os.Environment
+import android.support.v4.app.ActivityCompat
 import android.support.v4.app.Fragment
+import android.support.v7.app.AlertDialog
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import com.vn.ezlearn.R
 import com.vn.ezlearn.activity.MyApplication
 import com.vn.ezlearn.adapter.ExamsAdapter
@@ -155,7 +160,7 @@ class CategoryFragment : Fragment(), OnClickDownloadListener, DownloadFileCallBa
     companion object {
         private val CATEGORY_ID = "CATEGORY_ID"
         private val CONTENT_TYPE = "CONTENT_TYPE"
-        private val BUFFER_SIZE = (4 * 1024 * 1024).toLong()
+        private val REQUEST_PERMISSION_CODE = 12
         fun newInstance(category_id: Int, contentType: Int): CategoryFragment {
             val fragment = CategoryFragment()
             val args = Bundle()
@@ -166,16 +171,67 @@ class CategoryFragment : Fragment(), OnClickDownloadListener, DownloadFileCallBa
         }
     }
 
+    lateinit var name: String
+    lateinit var url: String
+    var position: Int = 0
     override fun onClick(name: String, url: String, position: Int) {
-        val downloadFileFromURL = DownloadFileFromURL(activity, name, position, this)
+        this.name = name
+        this.url = url
+        this.position = position
+        val permissions = arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+
+        val rc = ActivityCompat.checkSelfPermission(activity,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE)
+        if (rc == PackageManager.PERMISSION_GRANTED) {
+            download(name, url, position)
+        } else {
+            if (!ActivityCompat.shouldShowRequestPermissionRationale(activity,
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+                ActivityCompat.requestPermissions(activity, permissions, REQUEST_PERMISSION_CODE)
+            } else {
+                showPopupPermission()
+            }
+        }
+
+    }
+
+    private fun showPopupPermission() {
+        val builder = AlertDialog.Builder(activity)
+        builder.setTitle(getString(R.string.setting))
+        builder.setMessage(getString(R.string.messsage_permission_write))
+        builder.show()
+    }
+
+    private fun download(name: String, url: String, position: Int?) {
+        val downloadFileFromURL = DownloadFileFromURL(activity, name, position!!, this)
         downloadFileFromURL.execute(url)
     }
 
+
     override fun onDownloadSuccess(position: Int) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        Toast.makeText(activity, getString(R.string.download_success), Toast.LENGTH_SHORT).show()
+        val item = adapter.getItemByPosition(position)
+        item.document?.isDownloaded = true
+        adapter.setData(position, item)
     }
 
     override fun onDownloadFail() {
-
+        Toast.makeText(activity, getString(R.string.download_fail), Toast.LENGTH_SHORT).show()
     }
+
+
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if (requestCode != REQUEST_PERMISSION_CODE) {
+            super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+            return
+        }
+
+        if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+            download(name, url, position)
+        } else {
+            showPopupPermission()
+        }
+    }
+
 }
