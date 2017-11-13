@@ -5,34 +5,43 @@ import android.os.Bundle
 import android.support.design.widget.BottomNavigationView
 import android.support.v4.app.Fragment
 import android.support.v4.view.ViewPager
+import android.view.View
 import com.vn.ezlearn.R
 import com.vn.ezlearn.adapter.ViewPagerAdapter
 import com.vn.ezlearn.databinding.ActivityUserProfileBinding
+import com.vn.ezlearn.fragment.HistoryExamFragment
 import com.vn.ezlearn.fragment.UserProfileFragment
+import com.vn.ezlearn.viewmodel.UserMainViewModel
 import java.util.*
 
 class UserProfile : BaseActivity() {
+
     private var userProfileBinding: ActivityUserProfileBinding? = null
     private var fragmentList: MutableList<Fragment>? = null
     private var viewPagerAdapter: ViewPagerAdapter? = null
+    private lateinit var userMainViewModel: UserMainViewModel
 
     private val mOnNavigationItemSelectedListener
             = BottomNavigationView.OnNavigationItemSelectedListener { item ->
         when (item.itemId) {
             R.id.navigation_profile -> {
                 userProfileBinding!!.viewPager.currentItem = 0
+                userMainViewModel.visiableAvatar.set(View.VISIBLE)
                 return@OnNavigationItemSelectedListener true
             }
             R.id.navigation_history_exam -> {
                 userProfileBinding!!.viewPager.currentItem = 1
+                userMainViewModel.visiableAvatar.set(View.GONE)
                 return@OnNavigationItemSelectedListener true
             }
             R.id.navigation_history_topup -> {
                 userProfileBinding!!.viewPager.currentItem = 2
+                userMainViewModel.visiableAvatar.set(View.GONE)
                 return@OnNavigationItemSelectedListener true
             }
             R.id.navigation_history_buy_package -> {
                 userProfileBinding!!.viewPager.currentItem = 3
+                userMainViewModel.visiableAvatar.set(View.GONE)
                 return@OnNavigationItemSelectedListener true
             }
         }
@@ -42,6 +51,8 @@ class UserProfile : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         userProfileBinding = DataBindingUtil.setContentView(this, R.layout.activity_user_profile)
+        userMainViewModel = UserMainViewModel()
+        userProfileBinding!!.userMainViewModel = userMainViewModel
         userProfileBinding!!.navigation.setOnNavigationItemSelectedListener(
                 mOnNavigationItemSelectedListener)
         setSupportActionBar(userProfileBinding!!.toolbar)
@@ -90,13 +101,13 @@ class UserProfile : BaseActivity() {
 
     private fun bindData() {
         fragmentList = ArrayList()
-        fragmentList!!.add(UserProfileFragment())
-        fragmentList!!.add(UserProfileFragment())
+        val userProfileFragment = UserProfileFragment()
+        fragmentList!!.add(userProfileFragment)
+        fragmentList!!.add(HistoryExamFragment())
         fragmentList!!.add(UserProfileFragment())
         fragmentList!!.add(UserProfileFragment())
         viewPagerAdapter = ViewPagerAdapter(supportFragmentManager, fragmentList!!)
         userProfileBinding!!.viewPager.adapter = viewPagerAdapter
 
     }
-
 }

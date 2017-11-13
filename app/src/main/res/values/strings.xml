@@ -54,6 +54,8 @@
     <string name="updating">Đang cập nhật</string>
     <string name="need_complete_profile">Bạn cần hoàn thiện thông tin cá nhân để xem được thứ hạng của mình.</string>
     <string name="update_profile">Cập nhật thông tin cá nhân</string>
+    <string name="user_profile">Thông tin cá nhân</string>
+    <string name="user_package">Gói người dùng</string>
     <string name="nick_name">Nickname</string>
     <string name="last_name">Họ</string>
     <string name="first_name">Tên</string>
@@ -104,5 +106,6 @@
     <string name="hint">Gợi ý</string>
     <string name="price"><![CDATA[<b>Giá: </b>%1$d]]></string>
     <string name="setting">Cài đặt</string>
-    <string name="messsage_permission_write">Hãy cung cấp quyền Bộ nhớ để bắt đầu download</string>
+    <string name="message_permission_write">Hãy cung cấp quyền Bộ nhớ để bắt đầu download</string>
+    <string name="level">Cấp độ: %1$s</string>
 </resources>

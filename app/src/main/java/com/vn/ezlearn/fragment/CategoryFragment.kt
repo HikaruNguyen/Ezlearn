@@ -198,7 +198,7 @@ class CategoryFragment : Fragment(), OnClickDownloadListener, DownloadFileCallBa
     private fun showPopupPermission() {
         val builder = AlertDialog.Builder(activity)
         builder.setTitle(getString(R.string.setting))
-        builder.setMessage(getString(R.string.messsage_permission_write))
+        builder.setMessage(getString(R.string.message_permission_write))
         builder.show()
     }
 
