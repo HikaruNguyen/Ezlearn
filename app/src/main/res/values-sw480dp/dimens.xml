@@ -26,6 +26,9 @@
   <dimen name="margin__28dp">
     -37.33dp
   </dimen>
+  <dimen name="margin__32dp">
+    -42.67dp
+  </dimen>
   <dimen name="margin_5dp">
     6.67dp
   </dimen>
@@ -97,6 +100,9 @@
   </dimen>
   <dimen name="image_size_120dp">
     160.0dp
+  </dimen>
+  <dimen name="image_size_150dp">
+    200.0dp
   </dimen>
   <dimen name="image_size_200dp">
     266.67dp

@@ -11,10 +11,14 @@ import com.vn.ezlearn.adapter.ViewPagerAdapter
 import com.vn.ezlearn.databinding.ActivityUserProfileBinding
 import com.vn.ezlearn.fragment.HistoryExamFragment
 import com.vn.ezlearn.fragment.UserProfileFragment
+import com.vn.ezlearn.interfaces.UserInfoCallBack
+import com.vn.ezlearn.models.User
+import com.vn.ezlearn.utils.BottomNavigationViewHelper
 import com.vn.ezlearn.viewmodel.UserMainViewModel
 import java.util.*
 
-class UserProfile : BaseActivity() {
+
+class UserProfile : BaseActivity(), UserInfoCallBack {
 
     private var userProfileBinding: ActivityUserProfileBinding? = null
     private var fragmentList: MutableList<Fragment>? = null
@@ -51,10 +55,11 @@ class UserProfile : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         userProfileBinding = DataBindingUtil.setContentView(this, R.layout.activity_user_profile)
-        userMainViewModel = UserMainViewModel()
+        userMainViewModel = UserMainViewModel(this@UserProfile)
         userProfileBinding!!.userMainViewModel = userMainViewModel
         userProfileBinding!!.navigation.setOnNavigationItemSelectedListener(
                 mOnNavigationItemSelectedListener)
+        BottomNavigationViewHelper.disableShiftMode(userProfileBinding!!.navigation)
         setSupportActionBar(userProfileBinding!!.toolbar)
         setBackButtonToolbar()
         userProfileBinding!!.toolbar.title = ""
@@ -64,14 +69,14 @@ class UserProfile : BaseActivity() {
     }
 
     private fun event() {
-        userProfileBinding!!.appBarLayout.addOnOffsetChangedListener { appBarLayout, verticalOffset ->
-            val percentage = Math.abs(verticalOffset).toFloat() / appBarLayout.totalScrollRange
-            when {
-                percentage > 0.75 -> userProfileBinding!!.icAvatar.alpha = 0f
-                percentage > 0.5 -> userProfileBinding!!.icAvatar.alpha = 1 - percentage
-                else -> userProfileBinding!!.icAvatar.alpha = 1f
-            }
-        }
+//        userProfileBinding!!.appBarLayout.addOnOffsetChangedListener { appBarLayout, verticalOffset ->
+//            val percentage = Math.abs(verticalOffset).toFloat() / appBarLayout.totalScrollRange
+//            when {
+//                percentage > 0.75 -> userProfileBinding!!.icAvatar.alpha = 0f
+//                percentage > 0.5 -> userProfileBinding!!.icAvatar.alpha = 1 - percentage
+//                else -> userProfileBinding!!.icAvatar.alpha = 1f
+//            }
+//        }
 
         userProfileBinding!!.viewPager.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
             override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
@@ -102,6 +107,7 @@ class UserProfile : BaseActivity() {
     private fun bindData() {
         fragmentList = ArrayList()
         val userProfileFragment = UserProfileFragment()
+        userProfileFragment.setUserInfoCallBack(this@UserProfile)
         fragmentList!!.add(userProfileFragment)
         fragmentList!!.add(HistoryExamFragment())
         fragmentList!!.add(UserProfileFragment())
@@ -109,5 +115,11 @@ class UserProfile : BaseActivity() {
         viewPagerAdapter = ViewPagerAdapter(supportFragmentManager, fragmentList!!)
         userProfileBinding!!.viewPager.adapter = viewPagerAdapter
 
+    }
+
+    override fun onLoadUserInfoSuccess(user: User?) {
+        if (user != null) {
+            userMainViewModel.setUserInfo(user)
+        }
     }
 }

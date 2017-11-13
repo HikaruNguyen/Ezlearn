@@ -12,6 +12,7 @@ import com.vn.ezlearn.activity.MyApplication
 import com.vn.ezlearn.adapter.UserPackageAdapter
 import com.vn.ezlearn.config.EzlearnService
 import com.vn.ezlearn.databinding.FragmentUserProfileBinding
+import com.vn.ezlearn.interfaces.UserInfoCallBack
 import com.vn.ezlearn.modelresult.UserInfoResult
 import com.vn.ezlearn.viewmodel.UserInfoViewModel
 import rx.Subscriber
@@ -29,6 +30,11 @@ class UserProfileFragment : Fragment() {
     private var mSubscription: Subscription? = null
     private lateinit var mUserInfoResult: UserInfoResult
     private lateinit var userInfoViewModel: UserInfoViewModel
+    private var userInfoCallBack: UserInfoCallBack? = null
+
+    fun setUserInfoCallBack(userInfoCallBack: UserInfoCallBack) {
+        this.userInfoCallBack = userInfoCallBack
+    }
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -55,7 +61,9 @@ class UserProfileFragment : Fragment() {
                                 userProfileBinding!!.rvUserPackage.adapter = userPackageAdapter
                                 userPackageAdapter.addAll(mUserInfoResult.data!!.user_packages!!)
                             }
-
+                            if (mUserInfoResult.data?.user != null) {
+                                userInfoCallBack?.onLoadUserInfoSuccess(mUserInfoResult.data?.user)
+                            }
                         }
                     }
 

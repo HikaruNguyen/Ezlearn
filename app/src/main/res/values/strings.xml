@@ -46,11 +46,17 @@
     <string name="unNeedReview"><u>Hủy xem lại</u></string>
     <string name="title_activity_test_scroll">TestScroll</string>
     <string name="service_package">Gói dịch vụ: </string>
-    <string name="balance">Số dư tài khoản:</string>
-    <string name="count_practice">Số lần luyện thi:</string>
+    <string name="balance_">Số dư tài khoản:</string>
+    <string name="balance_vnd">%1$d</string>
+    <string name="balance">Số dư tài khoản</string>
+    <string name="count_practice_">Số lần luyện thi:</string>
+    <string name="count_practice">Số lần luyện thi</string>
     <string name="expiry_date">Hạn sử dụng:</string>
-    <string name="achievements">Thành tích:</string>
-    <string name="rank">Xếp hạng:</string>
+    <string name="achievements_">Thành tích:</string>
+    <string name="achievements_point">%1$d</string>
+    <string name="achievements">Thành tích</string>
+    <string name="rank_">Xếp hạng:</string>
+    <string name="rank">Xếp hạng</string>
     <string name="updating">Đang cập nhật</string>
     <string name="need_complete_profile">Bạn cần hoàn thiện thông tin cá nhân để xem được thứ hạng của mình.</string>
     <string name="update_profile">Cập nhật thông tin cá nhân</string>
@@ -108,4 +114,5 @@
     <string name="setting">Cài đặt</string>
     <string name="message_permission_write">Hãy cung cấp quyền Bộ nhớ để bắt đầu download</string>
     <string name="level">Cấp độ: %1$s</string>
+    <string name="vnd">VNĐ</string>
 </resources>
