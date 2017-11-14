@@ -10,6 +10,7 @@ import com.vn.ezlearn.config.AppConfig
 import com.vn.ezlearn.config.EzlearnService
 import com.vn.ezlearn.databinding.ActivityLoginBinding
 import com.vn.ezlearn.modelresult.LoginResult
+import com.vn.ezlearn.modelresult.UserInfoResult
 import rx.Subscriber
 import rx.Subscription
 import rx.android.schedulers.AndroidSchedulers
@@ -22,6 +23,7 @@ class LoginActivity : BaseActivity() {
     private var mLoginResult: LoginResult? = null
     private var progressDialog: ProgressDialog? = null
     private var isAttach = true
+    private lateinit var mUserInfoResult: UserInfoResult
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -62,10 +64,11 @@ class LoginActivity : BaseActivity() {
                                 Toast.makeText(this@LoginActivity, getString(R.string.login_success),
                                         Toast.LENGTH_SHORT).show()
                             }
-                            AppConfig.getInstance(this@LoginActivity).token = mLoginResult!!.data!!.access_token!!
-                            AppConfig.getInstance(this@LoginActivity).name = mLoginResult!!.data!!.display_name!!
-                            setResult(Activity.RESULT_OK)
-                            finish()
+                            AppConfig.getInstance(this@LoginActivity).token =
+                                    mLoginResult!!.data!!.access_token!!
+                            AppConfig.getInstance(this@LoginActivity).name =
+                                    mLoginResult!!.data!!.display_name!!
+                            getUserProfile()
                         } else if (mLoginResult?.data != null) {
                             if (!mLoginResult!!.data!!.message?.isEmpty()!!) {
                                 Toast.makeText(this@LoginActivity, mLoginResult!!.data!!.message,
@@ -92,6 +95,48 @@ class LoginActivity : BaseActivity() {
                         }
                         if (loginResult != null) {
                             mLoginResult = loginResult
+                        }
+                    }
+                })
+    }
+
+    private fun getUserProfile() {
+        apiService = MyApplication.with(this@LoginActivity).getEzlearnService()
+        if (mSubscription != null && !mSubscription!!.isUnsubscribed)
+            mSubscription!!.unsubscribe()
+        mSubscription = apiService!!.getUserInfo()
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(object : Subscriber<UserInfoResult>() {
+                    override fun onCompleted() {
+                        if (mUserInfoResult.success!! && mUserInfoResult.data != null) {
+                            if (mUserInfoResult.data?.user_packages != null &&
+                                    mUserInfoResult.data?.user_packages?.size!! > 0) {
+                                if (mUserInfoResult.data?.user_packages?.get(0)?.code_name != null) {
+                                    AppConfig.getInstance(this@LoginActivity).user_package =
+                                            mUserInfoResult.data?.user_packages?.get(0)?.code_name!!
+                                }
+                            }
+                            if (mUserInfoResult.data?.user != null) {
+                                if (mUserInfoResult.data?.user?.wallet != null) {
+                                    AppConfig.getInstance(this@LoginActivity).wallet =
+                                            mUserInfoResult.data?.user!!.wallet!!
+                                }
+
+                            }
+                            setResult(Activity.RESULT_OK)
+                            finish()
+                        }
+                    }
+
+                    override fun onError(e: Throwable) {
+                        setResult(Activity.RESULT_OK)
+                        finish()
+                    }
+
+                    override fun onNext(userInfoResult: UserInfoResult?) {
+                        if (userInfoResult != null) {
+                            mUserInfoResult = userInfoResult
                         }
                     }
                 })

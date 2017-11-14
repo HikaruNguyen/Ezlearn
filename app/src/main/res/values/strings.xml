@@ -32,6 +32,7 @@
     <string name="nav_contact">LIÊN HỆ</string>
     <string name="nav_logout">ĐĂNG XUẤT</string>
     <string name="search">Tìm kiếm</string>
+    <string name="wallet">Số dư: %1$d vnđ</string>
 
     <string name="click_back_again">Nhấn \'back\' lần nữa để thoát</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
@@ -45,6 +46,7 @@
     <string name="tab_history_buy_package">Lịch sử mua gói</string>
 
     <string name="service_package_">Gói dịch vụ: </string>
+    <string name="service_package">Gói dịch vụ: %1$s</string>
     <string name="balance_">Số dư tài khoản:</string>
     <string name="balance_vnd">%1$d VNĐ</string>
     <string name="balance">Số dư tài khoản</string>
@@ -72,7 +74,7 @@
     <!--UserPackage-->
     <string name="history_exam_time_start">Làm bài lúc: %1$s</string>
     <string name="history_exam_code">Mã đề: %1$s</string>
-    
+
     <!--Category-->
     <string name="tab_lesson">Bài giảng</string>
     <string name="tab_exam">Đề thi</string>

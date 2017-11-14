@@ -18,6 +18,8 @@ class MainViewModel(var context: Context) : BaseObservable() {
     var email: ObservableField<String> = ObservableField()
     var name: ObservableField<String> = ObservableField()
     var visiableProfile: ObservableInt = ObservableInt()
+    var wallet: ObservableField<String> = ObservableField()
+    var user_package: ObservableField<String> = ObservableField()
 
     init {
         updateProfile()
@@ -28,6 +30,9 @@ class MainViewModel(var context: Context) : BaseObservable() {
             name.set(AppConfig.getInstance(context).name)
             email.set(AppConfig.getInstance(context).email)
             visiableProfile.set(View.VISIBLE)
+            wallet.set(context.getString(R.string.wallet, AppConfig.getInstance(context).wallet))
+            user_package.set(context.getString(R.string.service_package,
+                    AppConfig.getInstance(context).user_package))
         } else {
             name.set(context.getString(R.string.login))
             visiableProfile.set(View.GONE)

@@ -104,7 +104,7 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
                         android:layout_below="@+id/tv_package"
-                        android:text="Số dư: 100.000 VNĐ"
+                        android:text="@{mainViewModel.wallet}"
                         android:textColor="@color/white"
                         android:textSize="16sp"
                         android:textStyle="bold"
@@ -116,7 +116,7 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
                         android:layout_marginTop="@dimen/margin_16dp"
-                        android:text="Gói dịch vụ: Thường"
+                        android:text="@{mainViewModel.user_package}"
                         android:textColor="@color/white"
                         android:visibility="@{mainViewModel.visiableProfile}" />
 
