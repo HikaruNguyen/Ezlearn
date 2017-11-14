@@ -23,6 +23,7 @@ class HistoryExam {
     var answers: String? = null
     var amount_wait: Int? = null
     var answers_wait: String? = null
+    var subject_code: String? = null
 
     class AnswerHistory {
         var qId: Int? = null

@@ -115,4 +115,6 @@
     <string name="message_permission_write">Hãy cung cấp quyền Bộ nhớ để bắt đầu download</string>
     <string name="level">Cấp độ: %1$s</string>
     <string name="vnd">VNĐ</string>
+    <string name="history_exam_time_start">Làm bài lúc: %1$s</string>
+    <string name="history_exam_code">Mã đề: %1$s</string>
 </resources>
