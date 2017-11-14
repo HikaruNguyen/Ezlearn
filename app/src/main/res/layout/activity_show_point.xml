@@ -78,7 +78,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/line_point"
-                    android:text="@string/yeu"
+                    android:text="@string/weak"
                     android:textColor="@color/text_color_content" />
 
                 <TextView
@@ -86,7 +86,7 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/line_point"
                     android:layout_centerHorizontal="true"
-                    android:text="@string/trungbinh"
+                    android:text="@string/average"
                     android:textColor="@color/text_color_content" />
 
                 <TextView
@@ -94,7 +94,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:layout_below="@+id/line_point"
-                    android:text="@string/xuatsac"
+                    android:text="@string/excellent"
                     android:textColor="@color/text_color_content" />
             </RelativeLayout>
 

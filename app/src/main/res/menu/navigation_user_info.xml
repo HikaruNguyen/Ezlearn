@@ -5,19 +5,19 @@
         android:id="@+id/navigation_profile"
         android:checked="true"
         android:icon="@mipmap/ic_profile"
-        android:title="@string/profile" />
+        android:title="@string/tab_profile" />
 
     <item
         android:id="@+id/navigation_history_exam"
         android:icon="@mipmap/ic_exam"
-        android:title="@string/lichSuThi" />
+        android:title="@string/tab_history_exam" />
 
     <item
         android:id="@+id/navigation_history_topup"
         android:icon="@mipmap/ic_buy"
-        android:title="@string/lichSuNapTien" />
+        android:title="@string/tab_history_recharge" />
     <item
         android:id="@+id/navigation_history_buy_package"
         android:icon="@mipmap/ic_package"
-        android:title="@string/lichSuMuaGoi" />
+        android:title="@string/tab_history_buy_package" />
 </menu>

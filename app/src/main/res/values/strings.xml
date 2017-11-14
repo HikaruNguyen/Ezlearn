@@ -1,63 +1,62 @@
 <resources>
     <string name="app_name">Ezlearn</string>
 
+    <!--Common-->
+    <string name="cancel">Thoát</string>
+    <string name="updating">Đang cập nhật</string>
+    <string name="ok">OK</string>
+    <string name="download_fail">Download thất bại, thử lại sau</string>
+    <string name="download_success">Download thành công</string>
+    <string name="loading">Vui lòng chờ trong giây lát…</string>
+    <string name="error_connect">Kiểm tra kết nối mạng!</string>
+    <string name="error_progress">Có lỗi, vui lòng thử lại sau!</string>
+    <string name="setting">Cài đặt</string>
+    <string name="message_permission_write">Hãy cung cấp quyền Bộ nhớ để bắt đầu download</string>
+    <string name="vnd">VNĐ</string>
+
+    <!--Intro-->
+    <string name="bank_exams_title">Ngân hàng đề thi</string>
+    <string name="bank_exams_description">Giúp bạn nắm vững cấu trúc đề thi THPT Quốc Gia 2017 môn tiếng Anh, luyện tập khả năng hoàn thành bài thi dưới áp lực thời gian hiệu quả nhất bằng ngân hàng câu hỏi trắc nghiệm không giới hạn với chi phí thấp nhất. </string>
+    <string name="route_title">Lộ trình phù hợp</string>
+    <string name="route_description">Giải đáp tư vấn rõ ràng 24/7 giúp bạn đánh giá được trình độ, khó khăn của bản thân, lộ trình luyện thi phù hợp năng lực để chuẩn bị tốt nhất cho các kì thi quan trọng, đạt được mục tiêu đặt ra trong thời gian ngắn nhất. </string>
+    <string name="exams_title">Đề thi chất lượng</string>
+    <string name="exams_description">Ngân hàng câu hỏi trắc nghiệm được phân loại theo chuyên đề rõ ràng, đảm bảo theo từng cấp độ, giúp bạn củng cố ngay lập tức kiến thức trọng điểm và nâng cao trình độ nhanh chóng. Giải thích, chiến lược, kĩ thuật làm bài chi tiết giúp hiểu sâu vấn đề, tiết kiệm 100% thời gian tra cứu. </string>
+    <string name="next">NEXT</string>
+    <string name="done">DONE</string>
+    <string name="skip">SKIP</string>
+
+    <!--Main-->
+    <string name="nav_home">TRANG CHỦ</string>
+    <string name="nav_sample_exam">ĐỀ THI THỬ</string>
+    <string name="nav_offline_exam">ĐỀ THI OFFLINE</string>
+    <string name="nav_contact">LIÊN HỆ</string>
+    <string name="nav_logout">ĐĂNG XUẤT</string>
+    <string name="search">Tìm kiếm</string>
+
+    <string name="click_back_again">Nhấn \'back\' lần nữa để thoát</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
-    <string name="action_settings">Settings</string>
 
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="title_activity_user_profile">Hikaru Nguyen</string>
-    <string name="title_home">TRANG CHỦ</string>
-    <string name="title_dashboard">Dashboard</string>
-    <string name="title_notifications">Notifications</string>
-    <string name="profile">Hồ sơ</string>
-    <string name="lichSuThi">Lịch sử thi</string>
-    <string name="lichSuNapTien">Lịch sử nạp tiền</string>
-    <string name="lichSuMuaGoi">Lịch sử mua gói</string>
+    <!--Profile-->
+    <string name="tab_profile">Hồ sơ</string>
+    <string name="tab_history_exam">Lịch sử thi</string>
+    <string name="tab_history_recharge">Lịch sử nạp tiền</string>
+    <string name="tab_history_buy_package">Lịch sử mua gói</string>
 
-    <string name="check_to_pass">I accept terms and conditions.</string>
-    <string name="error_message">Please accept terms and conditions first.</string>
-    <string name="launch_intro_activity">Launch intro activity</string>
-    <string name="lorem_ipsum">Lorem ipsum \n\ndolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur? But I must explain to you how all this mistaken idea of denouncing pleasure and praising pain was born and I will give you a complete account of the system, and expound the actual teachings of the great explorer of the truth, the master-builder of human happiness. No one rejects, dislikes, or avoids pleasure itself, because it is pleasure, but because those who do not know how to pursue pleasure rationally encounter consequences that are extremely painful. Nor again is there anyone who loves or pursues or desires to obtain pain of itself, because it is pain, but because occasionally circumstances occur in which toil and pain can procure him some great pleasure. To take a trivial example, which of us ever undertakes laborious physical exercise, except to obtain some advantage from it? But who has any right to find fault with a man who chooses to enjoy a pleasure that has no annoying consequences, or one who avoids a pain that produces no resultant pleasure</string>
-
-    <string name="bank_exams_title">Ngân hàng đề thi</string>
-    <string name="bank_exams_description">Giúp bạn nắm vững cấu trúc đề thi THPT Quốc Gia 2017 môn tiếng Anh, luyện tập khả năng hoàn thành bài thi dưới áp lực thời gian hiệu quả nhất bằng ngân hàng câu hỏi trắc nghiệm không giới hạn với chi phí thấp nhất. </string>
-
-    <string name="route_title">Lộ trình phù hợp</string>
-    <string name="route_description">Giải đáp tư vấn rõ ràng 24/7 giúp bạn đánh giá được trình độ, khó khăn của bản thân, lộ trình luyện thi phù hợp năng lực để chuẩn bị tốt nhất cho các kì thi quan trọng, đạt được mục tiêu đặt ra trong thời gian ngắn nhất. </string>
-
-    <string name="exams_title">Đề thi chất lượng</string>
-    <string name="exams_description">Ngân hàng câu hỏi trắc nghiệm được phân loại theo chuyên đề rõ ràng, đảm bảo theo từng cấp độ, giúp bạn củng cố ngay lập tức kiến thức trọng điểm và nâng cao trình độ nhanh chóng. Giải thích, chiến lược, kĩ thuật làm bài chi tiết giúp hiểu sâu vấn đề, tiết kiệm 100% thời gian tra cứu. </string>
-    <string name="search">Tìm kiếm</string>
-    <string name="title_activity_question">QuestionActivity</string>
-    <string name="section_format">Hello World from section: %1$d</string>
-    <string name="title_activity_category">CategoryActivity</string>
-    <string name="baiGiang">Bài giảng</string>
-    <string name="deThi">Đề thi</string>
-    <string name="luyenTap">Luyện tập</string>
-    <string name="list_question">Danh sách câu hỏi</string>
-    <string name="nopBai">Nộp bài</string>
-    <string name="clickback">Nhấn \'back\' lần nữa để thoát</string>
-    <string name="cancel">Thoát</string>
-    <string name="question">Question</string>
-    <string name="hetGio">Hết giờ</string>
-    <string name="needReview"><u>Cần xem lại</u></string>
-    <string name="unNeedReview"><u>Hủy xem lại</u></string>
-    <string name="title_activity_test_scroll">TestScroll</string>
-    <string name="service_package">Gói dịch vụ: </string>
+    <string name="service_package_">Gói dịch vụ: </string>
     <string name="balance_">Số dư tài khoản:</string>
-    <string name="balance_vnd">%1$d</string>
+    <string name="balance_vnd">%1$d VNĐ</string>
     <string name="balance">Số dư tài khoản</string>
-    <string name="count_practice_">Số lần luyện thi:</string>
-    <string name="count_practice">Số lần luyện thi</string>
+    <string name="number_practice_">Số lần luyện thi:</string>
+    <string name="number_practice">Số lần luyện thi</string>
     <string name="expiry_date">Hạn sử dụng:</string>
     <string name="achievements_">Thành tích:</string>
-    <string name="achievements_point">%1$d</string>
+    <string name="achievements_point">%1$d điểm</string>
     <string name="achievements">Thành tích</string>
-    <string name="rank_">Xếp hạng:</string>
-    <string name="rank">Xếp hạng</string>
-    <string name="updating">Đang cập nhật</string>
+    <string name="rating_">Xếp hạng:</string>
+    <string name="rating">Xếp hạng</string>
+
     <string name="need_complete_profile">Bạn cần hoàn thiện thông tin cá nhân để xem được thứ hạng của mình.</string>
     <string name="update_profile">Cập nhật thông tin cá nhân</string>
     <string name="user_profile">Thông tin cá nhân</string>
@@ -68,38 +67,50 @@
     <string name="level_study">Cấp học</string>
     <string name="update">Cập nhật</string>
     <string name="change_password">Đổi mật khẩu</string>
-    <string name="next">NEXT</string>
-    <string name="done">DONE</string>
-    <string name="skip">SKIP</string>
+    <string name="level">Cấp độ: %1$s</string>
+
+    <!--UserPackage-->
+    <string name="history_exam_time_start">Làm bài lúc: %1$s</string>
+    <string name="history_exam_code">Mã đề: %1$s</string>
+    
+    <!--Category-->
+    <string name="tab_lesson">Bài giảng</string>
+    <string name="tab_exam">Đề thi</string>
+    <string name="tab_practice">Luyện tập</string>
+    <string name="taiLieu">Tài liệu</string>
+
+    <!--Question-->
+    <string name="question_list">Danh sách câu hỏi</string>
+    <string name="submit">Nộp bài</string>
+    <string name="question">Question</string>
+    <string name="time_out">Hết giờ</string>
+    <string name="need_to_review"><u>Cần xem lại</u></string>
+    <string name="cancel_review"><u>Hủy xem lại</u></string>
+
+    <!--Exam-->
     <string name="minute">phút</string>
     <string name="deadline">Thời hạn:</string>
     <string name="free">Free</string>
     <string name="view">Lượt xem</string>
-    <string name="title_activity_login">Sign in</string>
+    <string name="price"><![CDATA[<b>Giá: </b>%1$d]]></string>
 
-    <string name="tryExam">ĐỀ THI THỬ</string>
-    <string name="offlineExam">ĐỀ THI OFFLINE</string>
-    <string name="contact">LIÊN HỆ</string>
-    <string name="taiLieu">Tài liệu</string>
+
+    <!--Login-->
     <string name="login">ĐĂNG NHẬP</string>
     <string name="user_name">Tên đăng nhập</string>
     <string name="password">Mật khẩu</string>
     <string name="register">Đăng ký</string>
     <string name="please_input_username">Tên đăng nhập không được để trống!</string>
     <string name="please_input_password">Mật khẩu không được để trống</string>
-    <string name="error_connect">Kiểm tra kết nối mạng!</string>
-    <string name="error_progress">Có lỗi, vui lòng thử lại sau!</string>
     <string name="login_success">Đăng nhập thành công!</string>
-    <string name="loading">Vui lòng chờ trong giây lát…</string>
-    <string name="download_fail">Download thất bại, thử lại sau</string>
-    <string name="download_success">Download thành công</string>
-    <string name="logout">ĐĂNG XUẤT</string>
+
     <string name="logout_success">Đăng xuất thành công!</string>
     <string name="needLogin">Xin vui lòng đăng nhập để làm bài thi</string>
-    <string name="ok">OK</string>
-    <string name="yeu">Yếu</string>
-    <string name="xuatsac">Xuất sắc</string>
-    <string name="trungbinh">Trung bình</string>
+
+    <!--Mark Point-->
+    <string name="weak">Yếu</string>
+    <string name="excellent">Xuất sắc</string>
+    <string name="average">Trung bình</string>
     <string name="point">Điểm</string>
     <string name="your_point">ĐIỂM CỦA BẠN</string>
     <string name="you_need_try">Bạn cần cố gắng thêm!</string>
@@ -110,11 +121,6 @@
     <string name="time_answer"><![CDATA[Thời gian làm bài: <b>%1$d Giờ: %2$d Phút: %3$d Giây</b>]]></string>
     <string name="review_answer">Xem đáp án</string>
     <string name="hint">Gợi ý</string>
-    <string name="price"><![CDATA[<b>Giá: </b>%1$d]]></string>
-    <string name="setting">Cài đặt</string>
-    <string name="message_permission_write">Hãy cung cấp quyền Bộ nhớ để bắt đầu download</string>
-    <string name="level">Cấp độ: %1$s</string>
-    <string name="vnd">VNĐ</string>
-    <string name="history_exam_time_start">Làm bài lúc: %1$s</string>
-    <string name="history_exam_code">Mã đề: %1$s</string>
+
+
 </resources>

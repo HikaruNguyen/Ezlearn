@@ -77,7 +77,7 @@ class HomeFragment : Fragment(), BaseSliderView.OnSliderClickListener {
                         if (mExamsResult!!.success && mExamsResult!!.data != null
                                 && mExamsResult!!.data!!.list != null
                                 && mExamsResult!!.data!!.list!!.isNotEmpty()) {
-                            homeAdapter!!.add(HomeObject(getString(R.string.tryExam)))
+                            homeAdapter!!.add(HomeObject(getString(R.string.nav_sample_exam)))
                             for (i in 0 until mExamsResult!!.data!!.list!!.size) {
                                 homeAdapter!!.add(HomeObject(
                                         mExamsResult!!.data!!.list!![i]))

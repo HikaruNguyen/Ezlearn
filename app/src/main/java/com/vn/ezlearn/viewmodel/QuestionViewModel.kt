@@ -48,7 +48,7 @@ class QuestionViewModel(context: Activity, private val content: MyContent?, posi
         visiableQuestion = ObservableInt(View.GONE)
         isNeedReview = ObservableBoolean(false)
         textNeedReview = ObservableField(
-                Html.fromHtml(context.getString(R.string.needReview)))
+                Html.fromHtml(context.getString(R.string.need_to_review)))
         drawableFlag = ObservableInt(R.mipmap.ic_flag)
 
         answerA = ObservableField()
@@ -103,10 +103,10 @@ class QuestionViewModel(context: Activity, private val content: MyContent?, posi
     fun setNeedReview() {
         isNeedReview.set(!isNeedReview.get())
         if (isNeedReview.get()) {
-            textNeedReview.set(Html.fromHtml(context.getString(R.string.unNeedReview)))
+            textNeedReview.set(Html.fromHtml(context.getString(R.string.cancel_review)))
             drawableFlag.set(R.mipmap.ic_flag_red)
         } else {
-            textNeedReview.set(Html.fromHtml(context.getString(R.string.needReview)))
+            textNeedReview.set(Html.fromHtml(context.getString(R.string.need_to_review)))
             drawableFlag.set(R.mipmap.ic_flag)
 
         }

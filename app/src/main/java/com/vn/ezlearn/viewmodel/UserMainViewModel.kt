@@ -28,15 +28,14 @@ class UserMainViewModel(private var context: Context) {
             tvLevelName.set(context.getString(R.string.level, user.level_name))
         }
         if (user.mark_accumulation != null) {
-            tvMarkAccumulation.set(context.getString(R.string.achievements_point,
-                    user.mark_accumulation))
+            tvMarkAccumulation.set(user.mark_accumulation.toString())
         } else {
-            tvMarkAccumulation.set(context.getString(R.string.achievements_point, 0))
+            tvMarkAccumulation.set("0")
         }
         if (user.wallet != null) {
-            tvWallet.set(context.getString(R.string.balance_vnd, user.wallet))
+            tvWallet.set(user.wallet.toString())
         } else {
-            tvWallet.set(context.getString(R.string.balance_vnd, 0))
+            tvWallet.set("0")
         }
         if (user.free_times_working != null) {
             tvFreeTimesWorking.set(user.free_times_working!!.toString() + "")

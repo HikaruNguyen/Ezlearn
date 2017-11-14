@@ -1,6 +1,7 @@
 package com.vn.ezlearn.adapter
 
 import android.content.Context
+import android.content.Intent
 import android.databinding.DataBindingUtil
 import android.databinding.ViewDataBinding
 import android.support.v7.widget.RecyclerView
@@ -8,6 +9,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.vn.ezlearn.BR
 import com.vn.ezlearn.R
+import com.vn.ezlearn.activity.TestActivity
 import com.vn.ezlearn.models.HistoryExam
 import com.vn.ezlearn.viewmodel.ItemHistoryExamViewModel
 
@@ -37,6 +39,10 @@ class HistoryExamAdapter(context: Context, list: MutableList<HistoryExam>) :
         init {
             this.viewDataBinding.executePendingBindings()
             itemView.setOnClickListener {
+                val intent = Intent(mContext, TestActivity::class.java)
+                intent.putExtra(TestActivity.KEY_ID, list[adapterPosition].subject_id)
+                intent.putExtra(TestActivity.KEY_NAME, list[adapterPosition].subject_code)
+                mContext.startActivity(intent)
             }
         }
     }

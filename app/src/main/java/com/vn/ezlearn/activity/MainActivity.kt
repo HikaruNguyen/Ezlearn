@@ -122,7 +122,7 @@ class MainActivity : AppCompatActivity(), NavigationItemSelected {
 
     private fun bindData() {
         changeFragment(HomeFragment())
-        toolbar!!.title = getString(R.string.title_home)
+        toolbar!!.title = getString(R.string.nav_home)
     }
 
     private fun initUI() {
@@ -141,11 +141,11 @@ class MainActivity : AppCompatActivity(), NavigationItemSelected {
 
         //        fakeData();
         menuList = ArrayList()
-        menuList!!.add(Category(AppConstant.HOME_ID, getString(R.string.title_home),
+        menuList!!.add(Category(AppConstant.HOME_ID, getString(R.string.nav_home),
                 Category.TYPE_NORMAL))
-        menuList!!.add(Category(AppConstant.FREE_ID, getString(R.string.tryExam),
+        menuList!!.add(Category(AppConstant.FREE_ID, getString(R.string.nav_sample_exam),
                 Category.TYPE_NORMAL))
-        menuList!!.add(Category(AppConstant.OFFLINE_ID, getString(R.string.offlineExam),
+        menuList!!.add(Category(AppConstant.OFFLINE_ID, getString(R.string.nav_offline_exam),
                 Category.TYPE_NORMAL))
 
         menuList!!.add(Category(Category.TYPE_LINE))
@@ -155,7 +155,7 @@ class MainActivity : AppCompatActivity(), NavigationItemSelected {
             menuList!!.addAll(MyApplication.with(this).categoryResult!!.data!!)
         }
         menuList!!.add(Category(Category.TYPE_LINE))
-        menuList!!.add(Category(AppConstant.OFFLINE_ID, getString(R.string.contact),
+        menuList!!.add(Category(AppConstant.OFFLINE_ID, getString(R.string.nav_contact),
                 Category.TYPE_NORMAL))
         navigationAdapter = NavigationAdapter(this, menuList!!, this)
         mainBinding!!.rvNavigation.adapter = navigationAdapter
@@ -170,7 +170,7 @@ class MainActivity : AppCompatActivity(), NavigationItemSelected {
                 changeFragment(HomeFragment())
                 currentId = AppConstant.HOME_ID
                 mainViewModel!!.setVisiableTabBar(AppConstant.HOME_ID)
-                toolbar!!.title = getString(R.string.title_home)
+                toolbar!!.title = getString(R.string.nav_home)
             } else {
                 if (doubleBackToExitPressedOnce) {
                     super.onBackPressed()
@@ -178,7 +178,7 @@ class MainActivity : AppCompatActivity(), NavigationItemSelected {
                 }
 
                 this.doubleBackToExitPressedOnce = true
-                Toast.makeText(this, getString(R.string.clickback), Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, getString(R.string.click_back_again), Toast.LENGTH_SHORT).show()
 
                 Handler().postDelayed({ doubleBackToExitPressedOnce = false }, 2000)
             }

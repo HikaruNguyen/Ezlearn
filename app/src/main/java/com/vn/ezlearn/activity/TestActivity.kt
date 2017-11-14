@@ -296,7 +296,7 @@ class TestActivity : BaseActivity(), ChangeQuestionListener, OnCheckAnswerListen
             }
 
             override fun onFinish() {
-                testViewModel!!.title = getString(R.string.hetGio)
+                testViewModel!!.title = getString(R.string.time_out)
                 calculateScore()
             }
         }

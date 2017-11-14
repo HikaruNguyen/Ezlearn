@@ -151,7 +151,7 @@
                         android:drawablePadding="@dimen/margin_10dp"
                         android:gravity="center_vertical"
                         android:paddingLeft="@dimen/image_size_16dp"
-                        android:text="@string/logout"
+                        android:text="@string/nav_logout"
                         android:textColor="@color/title_color"
                         android:textSize="15sp"
                         android:textStyle="bold" />
