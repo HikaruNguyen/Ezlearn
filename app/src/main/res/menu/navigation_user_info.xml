@@ -15,9 +15,9 @@
     <item
         android:id="@+id/navigation_history_topup"
         android:icon="@mipmap/ic_buy"
-        android:title="@string/tab_history_recharge" />
-    <item
-        android:id="@+id/navigation_history_buy_package"
-        android:icon="@mipmap/ic_package"
-        android:title="@string/tab_history_buy_package" />
+        android:title="@string/tab_history_transaction" />
+    <!--<item-->
+        <!--android:id="@+id/navigation_history_buy_package"-->
+        <!--android:icon="@mipmap/ic_package"-->
+        <!--android:title="@string/tab_history_buy_package" />-->
 </menu>

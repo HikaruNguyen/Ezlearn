@@ -10,6 +10,7 @@ import com.vn.ezlearn.R
 import com.vn.ezlearn.adapter.ViewPagerAdapter
 import com.vn.ezlearn.databinding.ActivityUserProfileBinding
 import com.vn.ezlearn.fragment.HistoryExamFragment
+import com.vn.ezlearn.fragment.HistoryTransactionFragment
 import com.vn.ezlearn.fragment.UserProfileFragment
 import com.vn.ezlearn.interfaces.UserInfoCallBack
 import com.vn.ezlearn.models.User
@@ -43,11 +44,11 @@ class UserProfile : BaseActivity(), UserInfoCallBack {
                 userMainViewModel.visiableAvatar.set(View.GONE)
                 return@OnNavigationItemSelectedListener true
             }
-            R.id.navigation_history_buy_package -> {
-                userProfileBinding!!.viewPager.currentItem = 3
-                userMainViewModel.visiableAvatar.set(View.GONE)
-                return@OnNavigationItemSelectedListener true
-            }
+//            R.id.navigation_history_buy_package -> {
+//                userProfileBinding!!.viewPager.currentItem = 3
+//                userMainViewModel.visiableAvatar.set(View.GONE)
+//                return@OnNavigationItemSelectedListener true
+//            }
         }
         false
     }
@@ -91,8 +92,8 @@ class UserProfile : BaseActivity(), UserInfoCallBack {
                             R.id.navigation_history_exam
                     2 -> userProfileBinding!!.navigation.selectedItemId =
                             R.id.navigation_history_topup
-                    3 -> userProfileBinding!!.navigation.selectedItemId =
-                            R.id.navigation_history_buy_package
+//                    3 -> userProfileBinding!!.navigation.selectedItemId =
+//                            R.id.navigation_history_buy_package
                     else -> userProfileBinding!!.navigation.selectedItemId =
                             R.id.navigation_profile
                 }
@@ -110,8 +111,8 @@ class UserProfile : BaseActivity(), UserInfoCallBack {
         userProfileFragment.setUserInfoCallBack(this@UserProfile)
         fragmentList!!.add(userProfileFragment)
         fragmentList!!.add(HistoryExamFragment())
-        fragmentList!!.add(UserProfileFragment())
-        fragmentList!!.add(UserProfileFragment())
+        fragmentList!!.add(HistoryTransactionFragment())
+//        fragmentList!!.add(UserProfileFragment())
         viewPagerAdapter = ViewPagerAdapter(supportFragmentManager, fragmentList!!)
         userProfileBinding!!.viewPager.adapter = viewPagerAdapter
 

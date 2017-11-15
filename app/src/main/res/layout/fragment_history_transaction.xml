@@ -1,0 +1,55 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.vn.ezlearn.fragment.HistoryTransactionFragment">
+
+    <RadioGroup
+        android:id="@+id/rgTask"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:background="@drawable/round_border"
+        android:orientation="horizontal">
+
+        <RadioButton
+            android:id="@+id/rbBlue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/bg_blue"
+            android:button="@android:color/transparent"
+            android:gravity="center"
+            android:paddingBottom="@dimen/margin_10dp"
+            android:paddingLeft="@dimen/margin_20dp"
+            android:paddingRight="@dimen/margin_20dp"
+            android:paddingTop="@dimen/margin_10dp"
+            android:singleLine="true"
+            android:text="@string/tab_history_recharge"
+            android:textColor="@color/colorPrimaryDark" />
+
+        <View
+            android:id="@+id/vSep2"
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="@color/colorPrimaryDark"
+            android:visibility="visible" />
+
+        <RadioButton
+            android:id="@+id/rbRed"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/bg_red"
+            android:button="@android:color/transparent"
+            android:gravity="center"
+            android:paddingBottom="@dimen/margin_10dp"
+            android:paddingLeft="@dimen/margin_20dp"
+            android:paddingRight="@dimen/margin_20dp"
+            android:paddingTop="@dimen/margin_10dp"
+            android:singleLine="true"
+            android:text="@string/tab_history_buy_package"
+            android:textColor="@color/colorPrimaryDark" />
+    </RadioGroup>
+</LinearLayout>
