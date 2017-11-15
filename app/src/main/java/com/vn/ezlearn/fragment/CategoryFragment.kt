@@ -27,6 +27,7 @@ import com.vn.ezlearn.models.Document
 import com.vn.ezlearn.utils.AppUtils
 import com.vn.ezlearn.utils.CLog
 import com.vn.ezlearn.utils.DownloadFileFromURL
+import com.vn.ezlearn.viewmodel.BaseViewModel
 import rx.Subscriber
 import rx.Subscription
 import rx.android.schedulers.AndroidSchedulers
@@ -35,6 +36,7 @@ import java.io.File
 
 class CategoryFragment : Fragment(), OnClickDownloadListener, DownloadFileCallBack {
     private var categoryBinding: FragmentCategoryBinding? = null
+    private lateinit var categoryViewModel: BaseViewModel
     private var apiService: EzlearnService? = null
     private var mSubscription: Subscription? = null
 
@@ -57,6 +59,8 @@ class CategoryFragment : Fragment(), OnClickDownloadListener, DownloadFileCallBa
                               savedInstanceState: Bundle?): View? {
         categoryBinding = DataBindingUtil.inflate(
                 inflater!!, R.layout.fragment_category, container, false)
+        categoryViewModel = BaseViewModel(activity = activity)
+        categoryBinding!!.baseViewModel = categoryViewModel
         bindData()
         return categoryBinding!!.root
     }
@@ -89,6 +93,7 @@ class CategoryFragment : Fragment(), OnClickDownloadListener, DownloadFileCallBa
                         if (mDocumentsResult!!.success && mDocumentsResult!!.data != null
                                 && mDocumentsResult!!.data != null
                                 && mDocumentsResult!!.data!!.isNotEmpty()) {
+                            categoryViewModel.hideErrorView()
                             for (document: Document in mDocumentsResult!!.data!!) {
                                 var filePath = Environment.getExternalStorageDirectory().toString() + "/ezlearn"
                                 filePath += "/" + document.name_en.replace(" ", "") + ".doc"
@@ -104,11 +109,13 @@ class CategoryFragment : Fragment(), OnClickDownloadListener, DownloadFileCallBa
                                         exam = null, document = document, contentType = contentType))
                             }
                             adapter.addAll(list)
+                        } else {
+                            categoryViewModel.setErrorNodata()
                         }
                     }
 
                     override fun onError(e: Throwable) {
-
+                        categoryViewModel.setErrorNetwork()
                     }
 
                     override fun onNext(documentResult: ListDocumentResult?) {
@@ -128,6 +135,7 @@ class CategoryFragment : Fragment(), OnClickDownloadListener, DownloadFileCallBa
                         if (mExamsResult!!.success && mExamsResult!!.data != null
                                 && mExamsResult?.data?.list != null
                                 && mExamsResult?.data?.list!!.isNotEmpty()) {
+                            categoryViewModel.hideErrorView()
                             mExamsResult?.data?.list!!
                                     .map {
                                         ContentByCategory(
@@ -136,11 +144,13 @@ class CategoryFragment : Fragment(), OnClickDownloadListener, DownloadFileCallBa
                                     .forEach { list.add(it) }
 
                             adapter.addAll(list)
+                        } else {
+                            categoryViewModel.setErrorNodata()
                         }
                     }
 
                     override fun onError(e: Throwable) {
-
+                        categoryViewModel.setErrorNetwork()
                     }
 
                     override fun onNext(examsResult: ListExamsResult?) {

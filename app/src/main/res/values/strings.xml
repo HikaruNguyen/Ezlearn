@@ -13,6 +13,7 @@
     <string name="setting">Cài đặt</string>
     <string name="message_permission_write">Hãy cung cấp quyền Bộ nhớ để bắt đầu download</string>
     <string name="vnd">VNĐ</string>
+    <string name="no_data">Chưa có dữ liệu</string>
 
     <!--Intro-->
     <string name="bank_exams_title">Ngân hàng đề thi</string>

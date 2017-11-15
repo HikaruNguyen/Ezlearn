@@ -7,11 +7,37 @@
             type="com.vn.ezlearn.viewmodel.HomeViewModel" />
     </data>
 
-    <com.vn.ezlearn.widgets.CRecyclerView
-        android:id="@+id/rvHome"
-        android:background="@color/bg_main"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent">
+
+        <com.vn.ezlearn.widgets.CRecyclerView
+            android:id="@+id/rvHome"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/bg_main" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:visibility="@{homeViewModel.visiableError}">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/oops" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_30dp"
+                android:text="@{homeViewModel.messageError}"
+                android:textSize="@dimen/text_size_16sp" />
+        </LinearLayout>
+    </RelativeLayout>
 
 
 </layout>

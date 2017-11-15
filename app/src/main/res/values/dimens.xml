@@ -36,11 +36,12 @@
     <dimen name="image_size_44dp">44dp</dimen>
     <dimen name="image_size_48dp">48dp</dimen>
     <dimen name="image_size_50dp">50dp</dimen>
+    <dimen name="image_size_64dp">64dp</dimen>
     <dimen name="image_size_90dp">90dp</dimen>
     <dimen name="image_size_100dp">100dp</dimen>
     <dimen name="image_size_120dp">120dp</dimen>
     <dimen name="image_size_150dp">150dp</dimen>
-    <dimen name="image_size_200dp">200dp</dimen>
-    <dimen name="image_size_64dp">64dp</dimen>
     <dimen name="image_size_175dp">175dp</dimen>
+    <dimen name="image_size_200dp">200dp</dimen>
+
 </resources>

@@ -98,6 +98,9 @@
   <dimen name="image_size_50dp">
     44.44dp
   </dimen>
+  <dimen name="image_size_64dp">
+    56.89dp
+  </dimen>
   <dimen name="image_size_90dp">
     80.0dp
   </dimen>
@@ -110,13 +113,10 @@
   <dimen name="image_size_150dp">
     133.33dp
   </dimen>
-  <dimen name="image_size_200dp">
-    177.78dp
-  </dimen>
-  <dimen name="image_size_64dp">
-    56.89dp
-  </dimen>
   <dimen name="image_size_175dp">
     155.56dp
+  </dimen>
+  <dimen name="image_size_200dp">
+    177.78dp
   </dimen>
 </resources>

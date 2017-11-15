@@ -17,6 +17,7 @@ import com.vn.ezlearn.modelresult.BannerResult
 import com.vn.ezlearn.modelresult.ListExamsResult
 import com.vn.ezlearn.models.Banner
 import com.vn.ezlearn.models.HomeObject
+import com.vn.ezlearn.utils.AppUtils
 import com.vn.ezlearn.viewmodel.HomeViewModel
 import rx.Subscriber
 import rx.Subscription
@@ -47,10 +48,9 @@ class HomeFragment : Fragment(), BaseSliderView.OnSliderClickListener {
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         homeBinding = DataBindingUtil.inflate(inflater!!, R.layout.fragment_home, container, false)
-        homeViewModel = HomeViewModel()
+        homeViewModel = HomeViewModel(activity)
         homeBinding!!.homeViewModel = homeViewModel
         initList()
-        initBanner()
         bindData()
         return homeBinding!!.root
     }
@@ -63,8 +63,13 @@ class HomeFragment : Fragment(), BaseSliderView.OnSliderClickListener {
 
 
     private fun bindData() {
-
-        getListExamFree(1)
+        if (AppUtils.isNetworkAvailable(activity)) {
+            homeViewModel!!.hideErrorView()
+            initBanner()
+            getListExamFree(1)
+        } else {
+            homeViewModel!!.setErrorNetwork()
+        }
     }
 
     private fun getListExamFree(page: Int) {
