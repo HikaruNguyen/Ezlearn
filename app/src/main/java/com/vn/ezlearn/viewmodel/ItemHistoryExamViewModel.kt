@@ -19,7 +19,7 @@ class ItemHistoryExamViewModel(context: Context, historyExam: HistoryExam?) : Ba
     init {
         if (historyExam != null) {
             if (!TextUtils.isEmpty(historyExam.subject_code)) {
-                examCode.set(context.getString(R.string.history_exam_code, historyExam.subject_code))
+                examCode.set(historyExam.subject_code)
             }
             if (!TextUtils.isEmpty(historyExam.time_start)) {
                 timeStart.set(context.getString(R.string.history_exam_time_start, historyExam.time_start))

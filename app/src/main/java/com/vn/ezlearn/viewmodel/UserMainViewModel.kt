@@ -7,6 +7,7 @@ import android.text.TextUtils
 import android.view.View
 import com.vn.ezlearn.R
 import com.vn.ezlearn.models.User
+import com.vn.ezlearn.utils.AppUtils
 
 /**
  * Created by FRAMGIA\nguyen.duc.manh on 13/11/2017.
@@ -33,7 +34,7 @@ class UserMainViewModel(private var context: Context) {
             tvMarkAccumulation.set("0")
         }
         if (user.wallet != null) {
-            tvWallet.set(user.wallet.toString())
+            tvWallet.set(AppUtils.formatMoney(user.wallet!!))
         } else {
             tvWallet.set("0")
         }

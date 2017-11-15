@@ -5,7 +5,7 @@ package com.vn.ezlearn.models
  */
 
 class MyContent {
-
+    var question_id: Int?
     var typeQuestion: Int = 0
 
     var region: Region
@@ -14,18 +14,28 @@ class MyContent {
     var passage: String = ""
 
     var point: Float? = null
+
+    var myAnswer: Int = -1
     var isCorrect: Boolean = false
 
-    constructor(region: Region, type: Int?, content: Content, point: Float?) {
+    var isReview: Boolean = false
+
+    constructor(question_id: Int, region: Region, type: Int?, content: Content, point: Float?,
+                isReview: Boolean) {
+        this.question_id = question_id
         this.region = region
         this.type = type
         this.content = content
         this.point = point
         this.isCorrect = false
         this.typeQuestion = TYPE_NO_ANSWER
+        myAnswer = -1
+        this.isReview = isReview
     }
 
-    constructor(region: Region, type: Int?, content: Content, passage: String, point: Float?) {
+    constructor(question_id: Int, region: Region, type: Int?, content: Content, passage: String,
+                point: Float?, isReview: Boolean) {
+        this.question_id = question_id
         this.region = region
         this.type = type
         this.content = content
@@ -33,6 +43,8 @@ class MyContent {
         this.point = point
         this.isCorrect = false
         this.typeQuestion = TYPE_NO_ANSWER
+        myAnswer = -1
+        this.isReview = isReview
     }
 
     companion object {

@@ -19,13 +19,20 @@ import com.vn.ezlearn.viewmodel.ItemQuestionDialogViewModel
  */
 
 class DialogListQuestionAdapter : BaseRecyclerAdapter<MyContent, DialogListQuestionAdapter.ViewHolder> {
-    private var onClickQuestionPopupListener: OnClickQuestionPopupListener ?= null
+    private var onClickQuestionPopupListener: OnClickQuestionPopupListener? = null
     private var isShowPoint: Boolean = false
 
     constructor(context: Context, list: MutableList<MyContent>,
                 onClickQuestionPopupListener: OnClickQuestionPopupListener) : super(context, list) {
         this.onClickQuestionPopupListener = onClickQuestionPopupListener
         isShowPoint = false
+    }
+
+    constructor(context: Context, list: MutableList<MyContent>,
+                onClickQuestionPopupListener: OnClickQuestionPopupListener, isShowPoint: Boolean) :
+            super(context, list) {
+        this.onClickQuestionPopupListener = onClickQuestionPopupListener
+        this.isShowPoint = isShowPoint
     }
 
     constructor(context: Context, list: MutableList<MyContent>) : super(context, list) {

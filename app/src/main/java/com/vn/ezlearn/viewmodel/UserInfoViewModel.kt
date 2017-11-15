@@ -6,6 +6,7 @@ import android.databinding.ObservableField
 import android.text.TextUtils
 import com.vn.ezlearn.R
 import com.vn.ezlearn.modelresult.UserInfoResult
+import com.vn.ezlearn.utils.AppUtils
 
 /**
  * Created by FRAMGIA\nguyen.duc.manh on 13/11/2017.
@@ -42,7 +43,8 @@ class UserInfoViewModel(context: Context, userInfoData: UserInfoResult.UserInfoD
                     tvMarkAccumulation.set(context.getString(R.string.achievements_point, 0))
                 }
                 if (userInfoData.user!!.wallet != null) {
-                    tvWallet.set(context.getString(R.string.balance_vnd, userInfoData.user!!.wallet))
+                    tvWallet.set(context.getString(R.string.balance_vnd,
+                            AppUtils.formatMoney(userInfoData.user!!.wallet!!)))
                 } else {
                     tvWallet.set(context.getString(R.string.balance_vnd, 0))
                 }

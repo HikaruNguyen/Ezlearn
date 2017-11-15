@@ -29,6 +29,9 @@
   <dimen name="margin__32dp">
     -28.44dp
   </dimen>
+  <dimen name="margin__30dp">
+    -26.67dp
+  </dimen>
   <dimen name="margin_5dp">
     4.44dp
   </dimen>
@@ -86,6 +89,9 @@
   <dimen name="image_size_40dp">
     35.56dp
   </dimen>
+  <dimen name="image_size_44dp">
+    39.11dp
+  </dimen>
   <dimen name="image_size_48dp">
     42.67dp
   </dimen>
@@ -109,9 +115,6 @@
   </dimen>
   <dimen name="image_size_64dp">
     56.89dp
-  </dimen>
-  <dimen name="image_size_44dp">
-    39.11dp
   </dimen>
   <dimen name="image_size_175dp">
     155.56dp

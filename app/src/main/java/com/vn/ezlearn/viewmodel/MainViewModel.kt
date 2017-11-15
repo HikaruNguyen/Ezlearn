@@ -8,6 +8,7 @@ import android.view.View
 
 import com.vn.ezlearn.R
 import com.vn.ezlearn.config.AppConfig
+import com.vn.ezlearn.utils.AppUtils
 
 /**
  * Created by FRAMGIA\nguyen.duc.manh on 09/10/2017.
@@ -30,7 +31,8 @@ class MainViewModel(var context: Context) : BaseObservable() {
             name.set(AppConfig.getInstance(context).name)
             email.set(AppConfig.getInstance(context).email)
             visiableProfile.set(View.VISIBLE)
-            wallet.set(context.getString(R.string.wallet, AppConfig.getInstance(context).wallet))
+            wallet.set(context.getString(R.string.wallet,
+                    AppUtils.formatMoney(AppConfig.getInstance(context).wallet)))
             user_package.set(context.getString(R.string.service_package,
                     AppConfig.getInstance(context).user_package))
         } else {

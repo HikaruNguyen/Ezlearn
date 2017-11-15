@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tvReview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_exam"
+            android:padding="@dimen/margin_10dp"
+            android:text="@string/review"
+            android:textColor="@color/text_black"
+            android:textSize="@dimen/text_size_15sp" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/grey_line" />
+
+        <TextView
+            android:id="@+id/tvRetesting"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_exam"
+            android:padding="@dimen/margin_10dp"
+            android:text="@string/retesting"
+            android:textColor="@color/text_black"
+            android:textSize="@dimen/text_size_15sp" />
+    </LinearLayout>
+</layout>

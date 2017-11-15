@@ -13,6 +13,8 @@ import android.support.v7.widget.GridLayoutManager
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuItem
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import com.vn.ezlearn.R
 import com.vn.ezlearn.adapter.DialogListQuestionAdapter
 import com.vn.ezlearn.adapter.QuestionObjectAdapter
@@ -23,10 +25,7 @@ import com.vn.ezlearn.interfaces.ChangeQuestionListener
 import com.vn.ezlearn.interfaces.OnCheckAnswerListener
 import com.vn.ezlearn.interfaces.OnClickQuestionPopupListener
 import com.vn.ezlearn.modelresult.QuestionResult
-import com.vn.ezlearn.models.Answer
-import com.vn.ezlearn.models.MyContent
-import com.vn.ezlearn.models.Question
-import com.vn.ezlearn.models.QuestionObject
+import com.vn.ezlearn.models.*
 import com.vn.ezlearn.utils.QuestionUtils
 import com.vn.ezlearn.viewmodel.TestViewModel
 import rx.Subscriber
@@ -58,6 +57,10 @@ class TestActivity : BaseActivity(), ChangeQuestionListener, OnCheckAnswerListen
 
     private var seconds: Int = 0
 
+    private lateinit var mAnswer: String
+    private lateinit var mListAnswer: MutableList<HistoryExam.AnswerHistory>
+    private var isReview: Boolean? = false
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         testBinding = DataBindingUtil.setContentView(this, R.layout.activity_test)
@@ -77,6 +80,15 @@ class TestActivity : BaseActivity(), ChangeQuestionListener, OnCheckAnswerListen
     private fun getIntentData() {
         id = intent.getIntExtra(KEY_ID, 0)
         name = intent.getStringExtra(KEY_NAME)
+        name = intent.getStringExtra(KEY_NAME)
+        isReview = intent.getBooleanExtra(KEY_IS_REVIEW, false)
+        if (isReview as Boolean) {
+            mAnswer = intent.getStringExtra(KEY_ANSWER)
+            val gson = Gson()
+            mListAnswer = gson.fromJson(mAnswer, object :
+                    TypeToken<List<HistoryExam.AnswerHistory>>() {}.type)
+        }
+
     }
 
     private fun initUI() {
@@ -105,7 +117,7 @@ class TestActivity : BaseActivity(), ChangeQuestionListener, OnCheckAnswerListen
                     override fun onCompleted() {
                         if (mQuestionResult!!.success && mQuestionResult!!.data != null
                                 && mQuestionResult!!.data!!.data != null
-                                && mQuestionResult!!.data!!.data!!.size > 0) {
+                                && mQuestionResult!!.data!!.data!!.isNotEmpty()) {
                             for (question in mQuestionResult!!.data!!.data!!) {
                                 if (question.region != null) {
                                     val point: Float? = if (question.region!!.number_question == 0) {
@@ -121,9 +133,10 @@ class TestActivity : BaseActivity(), ChangeQuestionListener, OnCheckAnswerListen
                                                 question.question!!
                                                         .map {
                                                             MyContent(
+                                                                    it.id!!,
                                                                     question.region!!,
                                                                     question.type, it,
-                                                                    point)
+                                                                    point, isReview!!)
                                                         }
                                                         .forEach { contentList!!.add(it) }
                                             }
@@ -139,10 +152,11 @@ class TestActivity : BaseActivity(), ChangeQuestionListener, OnCheckAnswerListen
                                                             reading.questions!!
                                                                     .map {
                                                                         MyContent(
+                                                                                it.id!!,
                                                                                 question.region!!,
                                                                                 question.type, it,
                                                                                 reading.content,
-                                                                                point)
+                                                                                point, isReview!!)
                                                                     }
                                                                     .forEach { contentList!!.add(it) }
                                                         }
@@ -156,6 +170,7 @@ class TestActivity : BaseActivity(), ChangeQuestionListener, OnCheckAnswerListen
                                     contentList!![0].region.region_code
                                             + " " + contentList!![0].region.description))
                             testViewModel!!.updatePosition(0, contentList!!.size)
+                            checkReview()
                             adapter!!.addAll(list!!)
                             countDown()
                         } else {
@@ -180,6 +195,26 @@ class TestActivity : BaseActivity(), ChangeQuestionListener, OnCheckAnswerListen
                 })
     }
 
+    private fun checkReview() {
+        if (isReview!!) {
+            for (position in 0 until contentList?.size!!) {
+                for (myAnswer: HistoryExam.AnswerHistory in mListAnswer) {
+                    if (myAnswer.qId == contentList!![position].question_id) {
+                        for (answerPosition in 0 until contentList!![position].content.answer_list!!.size) {
+                            if (contentList!![position].content.answer_list!![answerPosition].id.toString().contentEquals(myAnswer.answer!!)) {
+                                contentList!![position].myAnswer = answerPosition
+                            }
+                        }
+
+                    }
+
+                }
+
+            }
+//            adapter!!.showSuggest()
+        }
+    }
+
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         // Inflate the menu; this adds items to the action bar if it is present.
         menuInflater.inflate(R.menu.menu_question, menu)
@@ -189,14 +224,14 @@ class TestActivity : BaseActivity(), ChangeQuestionListener, OnCheckAnswerListen
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         val id = item.itemId
         if (id == R.id.action_review) {
-            showPopupListQuestion()
+            showPopupListQuestion(isReview!!)
             return true
         }
 
         return super.onOptionsItemSelected(item)
     }
 
-    private fun showPopupListQuestion() {
+    private fun showPopupListQuestion(isReview: Boolean) {
         val builder = AlertDialog.Builder(this)
         val dialogListAnswerBinding = DataBindingUtil.inflate<DialogListAnswerBinding>(
                 LayoutInflater.from(this), R.layout.dialog_list_answer, null, false)
@@ -208,7 +243,7 @@ class TestActivity : BaseActivity(), ChangeQuestionListener, OnCheckAnswerListen
         dialogListAnswerBinding.rvlist.itemAnimator = DefaultItemAnimator()
 
         val listQuestionAdapter = DialogListQuestionAdapter(
-                this, ArrayList(), this)
+                this, ArrayList(), this, isReview)
         dialogListAnswerBinding.rvlist.adapter = listQuestionAdapter
         listQuestionAdapter.addAll(contentList!!)
         dialogListAnswerBinding.btnNopBai.setOnClickListener {
@@ -225,7 +260,7 @@ class TestActivity : BaseActivity(), ChangeQuestionListener, OnCheckAnswerListen
         countDownTimer!!.cancel()
         val hours = seconds / 3600
         val minutes = seconds % 3600 / 60
-        seconds = seconds % 60
+        seconds %= 60
         QuestionUtils.instance.myContentList = contentList
 
         val intent = Intent(this, ShowPointActivity::class.java)
@@ -327,6 +362,8 @@ class TestActivity : BaseActivity(), ChangeQuestionListener, OnCheckAnswerListen
     companion object {
         val KEY_ID = "KEY_ID"
         val KEY_NAME = "KEY_NAME"
+        val KEY_IS_REVIEW = "IS_REVIEW"
+        val KEY_ANSWER = "KEY_ANSWER"
         private val FORMAT = "%02d:%02d:%02d"
     }
 }

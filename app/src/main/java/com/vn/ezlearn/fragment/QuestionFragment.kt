@@ -49,9 +49,37 @@ class QuestionFragment : Fragment() {
                 inflater!!, R.layout.fragment_question, container, false)
         questionViewModel = QuestionViewModel(activity, content, position, size)
         fragmentQuestionBinding!!.questionViewModel = questionViewModel
-        //        bindData();
+        bindData()
         event()
         return fragmentQuestionBinding!!.root
+    }
+
+    private fun bindData() {
+        if (content != null) {
+            when (content?.myAnswer!!) {
+                0 -> {
+                    fragmentQuestionBinding!!.rdAnswerA.isChecked = true
+                    answer(0)
+                }
+                1 -> {
+                    fragmentQuestionBinding!!.rdAnswerB.isChecked = true
+                    answer(1)
+                }
+                2 -> {
+                    fragmentQuestionBinding!!.rdAnswerC.isChecked = true
+                    answer(2)
+                }
+                3 -> {
+                    fragmentQuestionBinding!!.rdAnswerD.isChecked = true
+                    answer(3)
+                }
+                else -> {
+                }
+            }
+            if (content!!.isReview) {
+                showSuggest()
+            }
+        }
     }
 
     private fun event() {
@@ -72,7 +100,7 @@ class QuestionFragment : Fragment() {
         }
     }
 
-     private fun answer(answer: Int) {
+    private fun answer(answer: Int) {
         onCheckAnswerListener!!.onCheckAnswer(position, answer)
         this.answer = answer
     }

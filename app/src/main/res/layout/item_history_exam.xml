@@ -26,7 +26,10 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@{itemHistoryExamViewModel.examCode}" />
+                android:text="@{itemHistoryExamViewModel.examCode}"
+                android:textAllCaps="true"
+                android:textColor="@color/colorPrimaryDark"
+                android:textStyle="bold" />
 
             <TextView
                 android:layout_width="match_parent"
