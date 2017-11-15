@@ -8,6 +8,7 @@ import android.text.Spanned
 import android.view.View
 import android.widget.ImageView
 import com.vn.ezlearn.R
+import com.vn.ezlearn.models.Content
 import com.vn.ezlearn.models.MyContent
 
 /**
@@ -40,6 +41,9 @@ class QuestionViewModel(context: Activity, private val content: MyContent?, posi
     var suggest: ObservableField<Spanned>
     var visiableSuggest: ObservableInt
 
+    var visiableRadio: ObservableInt = ObservableInt(View.GONE)
+    var visiableInput: ObservableInt = ObservableInt(View.GONE)
+
     init {
         this.context = context
         textPassage = ObservableField()
@@ -65,7 +69,7 @@ class QuestionViewModel(context: Activity, private val content: MyContent?, posi
         if (content != null) {
             setQuestionData()
         }
-
+        checkShowAnswerType()
     }
 
     private fun setQuestionData() {
@@ -114,6 +118,16 @@ class QuestionViewModel(context: Activity, private val content: MyContent?, posi
 
     fun showSuggest() {
         visiableSuggest.set(View.VISIBLE)
+    }
+
+    private fun checkShowAnswerType() {
+        if (content?.content?.answer_show!!.contentEquals(Content.ANSWER_SHOW_DEFAULT)) {
+            visiableRadio.set(View.VISIBLE)
+            visiableInput.set(View.GONE)
+        }else if(content.content.answer_show!!.contentEquals(Content.ANSWER_SHOW_INPUT)){
+            visiableRadio.set(View.GONE)
+            visiableInput.set(View.VISIBLE)
+        }
     }
 
     companion object {

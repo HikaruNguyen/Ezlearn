@@ -19,6 +19,13 @@ class Content {
     var weight: String? = null
     var sub_question: String? = null
     var suggest: String? = null
-    var answer_show: String? = null
+    var answer_show: String? = ANSWER_SHOW_DEFAULT
     var answer_list: List<Answer>? = null
+
+    companion object {
+        val ANSWER_SHOW_DEFAULT = "0"
+        val ANSWER_SHOW_INPUT = "1"
+        val ANSWER_SHOW_SELECT = "2"
+        val ANSWER_SHOW_CHECKBOX = "3"
+    }
 }

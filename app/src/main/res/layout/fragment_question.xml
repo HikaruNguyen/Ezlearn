@@ -81,61 +81,88 @@
             android:textSize="@dimen/text_size_15sp"
             android:visibility="@{questionViewModel.visiableQuestion}" />
 
-        <RadioGroup
-            android:id="@+id/rgAnswer"
+        <LinearLayout
+            android:id="@+id/lnAnswer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/tvQuestion"
-            android:gravity="center_vertical"
-            android:paddingLeft="@dimen/margin_10dp"
-            android:paddingRight="@dimen/margin_10dp"
-            android:paddingTop="@dimen/margin_10dp">
+            android:orientation="vertical">
 
-            <RadioButton
-                android:id="@+id/rdAnswerA"
+            <RadioGroup
+                android:id="@+id/rgAnswer"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
                 android:gravity="center_vertical"
-                android:text="@{questionViewModel.answerA}"
-                android:textColor="@color/text_color_content"
-                android:textSize="@dimen/text_size_15sp" />
+                android:paddingLeft="@dimen/margin_10dp"
+                android:paddingRight="@dimen/margin_10dp"
+                android:paddingTop="@dimen/margin_10dp"
+                android:visibility="@{questionViewModel.visiableRadio}">
 
-            <RadioButton
-                android:id="@+id/rdAnswerB"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:gravity="center_vertical"
-                android:text="@{questionViewModel.answerB}"
-                android:textColor="@color/text_color_content"
-                android:textSize="@dimen/text_size_15sp" />
+                <RadioButton
+                    android:id="@+id/rdAnswerA"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:gravity="center_vertical"
+                    android:text="@{questionViewModel.answerA}"
+                    android:textColor="@color/text_color_content"
+                    android:textSize="@dimen/text_size_15sp" />
 
-            <RadioButton
-                android:id="@+id/rdAnswerC"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:gravity="center_vertical"
-                android:text="@{questionViewModel.answerC}"
-                android:textColor="@color/text_color_content"
-                android:textSize="@dimen/text_size_15sp" />
+                <RadioButton
+                    android:id="@+id/rdAnswerB"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:gravity="center_vertical"
+                    android:text="@{questionViewModel.answerB}"
+                    android:textColor="@color/text_color_content"
+                    android:textSize="@dimen/text_size_15sp" />
 
-            <RadioButton
-                android:id="@+id/rdAnswerD"
+                <RadioButton
+                    android:id="@+id/rdAnswerC"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:gravity="center_vertical"
+                    android:text="@{questionViewModel.answerC}"
+                    android:textColor="@color/text_color_content"
+                    android:textSize="@dimen/text_size_15sp" />
+
+                <RadioButton
+                    android:id="@+id/rdAnswerD"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:gravity="center_vertical"
+                    android:text="@{questionViewModel.answerD}"
+                    android:textColor="@color/text_color_content"
+                    android:textSize="@dimen/text_size_15sp" />
+            </RadioGroup>
+
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:gravity="center_vertical"
-                android:text="@{questionViewModel.answerD}"
-                android:textColor="@color/text_color_content"
-                android:textSize="@dimen/text_size_15sp" />
-        </RadioGroup>
+                android:layout_height="@dimen/image_size_50dp"
+                android:layout_margin="@dimen/margin_10dp"
+                android:visibility="@{questionViewModel.visiableInput}"
+                android:background="@drawable/bg_button_white"
+                android:paddingLeft="@dimen/margin_10dp"
+                android:paddingRight="@dimen/margin_10dp"
+                android:paddingTop="@dimen/margin_10dp">
+
+                <EditText
+                    android:id="@+id/edInput"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/input_answer"
+                    android:textStyle="italic" />
+            </RelativeLayout>
+
+        </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/rgAnswer"
+            android:layout_below="@+id/lnAnswer"
             android:layout_marginTop="@dimen/margin_20dp"
             android:orientation="vertical"
             android:paddingLeft="@dimen/margin_10dp"

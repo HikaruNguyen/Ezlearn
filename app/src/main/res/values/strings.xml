@@ -92,6 +92,7 @@
     <string name="time_out">Hết giờ</string>
     <string name="need_to_review"><u>Cần xem lại</u></string>
     <string name="cancel_review"><u>Hủy xem lại</u></string>
+    <string name="input_answer">Nhập câu trả lời</string>
 
     <!--Exam-->
     <string name="minute">phút</string>
