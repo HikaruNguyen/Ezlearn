@@ -13,7 +13,7 @@
             android:padding="@dimen/margin_10dp"
             android:text="@string/review"
             android:textColor="@color/text_black"
-            android:textSize="@dimen/text_size_15sp" />
+            android:textSize="@dimen/text_size_20sp" />
 
         <View
             android:layout_width="match_parent"
@@ -28,6 +28,6 @@
             android:padding="@dimen/margin_10dp"
             android:text="@string/retesting"
             android:textColor="@color/text_black"
-            android:textSize="@dimen/text_size_15sp" />
+            android:textSize="@dimen/text_size_20sp" />
     </LinearLayout>
 </layout>
