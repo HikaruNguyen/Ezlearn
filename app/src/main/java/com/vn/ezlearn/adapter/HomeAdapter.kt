@@ -102,6 +102,7 @@ class HomeAdapter(context: Context, list: MutableList<HomeObject>) :
                     if (list[position].exam != null) {
                         intent.putExtra(TestActivity.KEY_ID, list[position].exam!!.id)
                         intent.putExtra(TestActivity.KEY_NAME, list[position].exam!!.subject_code)
+                        intent.putExtra(TestActivity.KEY_TIME, list[position].exam?.time)
                     }
 
                     mContext.startActivity(intent)
@@ -120,13 +121,9 @@ class HomeAdapter(context: Context, list: MutableList<HomeObject>) :
 
     }
 
-    override fun getItemViewType(position: Int): Int {
-        return data[position].type
-    }
+    override fun getItemViewType(position: Int): Int = data[position].type
 
-    override fun getItemCount(): Int {
-        return data.size
-    }
+    override fun getItemCount(): Int = data.size
 
     inner class ViewHolder : RecyclerView.ViewHolder {
         lateinit var itemHomeSlideBinding: ItemHomeSlideBinding

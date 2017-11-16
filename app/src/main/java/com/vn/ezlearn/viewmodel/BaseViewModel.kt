@@ -12,7 +12,7 @@ import com.vn.ezlearn.R
 
 open class BaseViewModel : BaseObservable {
     @Bindable
-    var title: String = ""
+    var titleToolbar: String = ""
     var activity: Activity? = null
     @Bindable
     var visiableError: Int = 0
@@ -26,7 +26,7 @@ open class BaseViewModel : BaseObservable {
 
     internal constructor(activity: Activity, title: String) {
         this.activity = activity
-        this.title = title
+        this.titleToolbar = title
         visiableError = View.GONE
     }
 
@@ -56,5 +56,9 @@ open class BaseViewModel : BaseObservable {
         visiableError = View.VISIBLE
         messageError = message
         notifyChange()
+    }
+
+    fun updateTitleToolbar(title: String) {
+        titleToolbar = title
     }
 }

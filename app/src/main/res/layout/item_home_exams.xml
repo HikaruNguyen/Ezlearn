@@ -51,7 +51,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="5dp"
-                    android:text="@{itemExamViewModel.date_start_end}"
+                    android:text="@{itemExamViewModel.dateStartEnd}"
                     android:textColor="@color/black"
                     android:textStyle="italic" />
 
@@ -84,7 +84,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="@dimen/margin_5dp"
-                            android:text="@{itemExamViewModel.total_question}" />
+                            android:text="@{itemExamViewModel.totalQuestion}" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -129,7 +129,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="@dimen/margin_5dp"
-                            android:text="@{itemExamViewModel.total_view}" />
+                            android:text="@{itemExamViewModel.viewCount}" />
                     </LinearLayout>
                 </LinearLayout>
             </LinearLayout>

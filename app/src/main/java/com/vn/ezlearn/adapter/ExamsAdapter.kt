@@ -44,6 +44,7 @@ class ExamsAdapter(context: Context, list: MutableList<ContentByCategory>) :
                         val intent = Intent(mContext, TestActivity::class.java)
                         intent.putExtra(TestActivity.KEY_ID, list[position].exam?.id)
                         intent.putExtra(TestActivity.KEY_NAME, list[position].exam?.subject_code)
+                        intent.putExtra(TestActivity.KEY_TIME, list[position].exam?.time)
                         mContext.startActivity(intent)
                     } else {
                         showDialogLogin()

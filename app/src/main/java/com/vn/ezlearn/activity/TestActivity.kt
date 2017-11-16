@@ -44,7 +44,7 @@ class TestActivity : BaseActivity(), ChangeQuestionListener, OnCheckAnswerListen
     private var contentList: MutableList<MyContent>? = null
     private var dialogListAnswer: AlertDialog? = null
     private var countDownTimer: CountDownTimer? = null
-    private val time = (15 * 60 * 1000).toLong()
+    private var time = -1L
 
     private var apiService: EzlearnService? = null
     private var mSubscription: Subscription? = null
@@ -81,6 +81,10 @@ class TestActivity : BaseActivity(), ChangeQuestionListener, OnCheckAnswerListen
         id = intent.getIntExtra(KEY_ID, 0)
         name = intent.getStringExtra(KEY_NAME)
         name = intent.getStringExtra(KEY_NAME)
+        time = intent.getIntExtra(KEY_TIME, -1).toLong()
+        if (time >= 0) {
+            time *= 60 * 1000
+        }
         isReview = intent.getBooleanExtra(KEY_IS_REVIEW, false)
         if (isReview as Boolean) {
             mAnswer = intent.getStringExtra(KEY_ANSWER)
@@ -344,8 +348,7 @@ class TestActivity : BaseActivity(), ChangeQuestionListener, OnCheckAnswerListen
             @SuppressLint("DefaultLocale")
             override fun onTick(millisUntilFinished: Long) {
                 seconds++
-                testViewModel!!.title = "" + String.format(
-                        FORMAT,
+                testBinding!!.toolbar.title = String.format(FORMAT,
                         TimeUnit.MILLISECONDS.toHours(millisUntilFinished),
                         TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished) - TimeUnit.HOURS.toMinutes(
                                 TimeUnit.MILLISECONDS.toHours(millisUntilFinished)),
@@ -355,11 +358,15 @@ class TestActivity : BaseActivity(), ChangeQuestionListener, OnCheckAnswerListen
             }
 
             override fun onFinish() {
-                testViewModel!!.title = getString(R.string.time_out)
+//                testViewModel!!.updateTitleToolbar(getString(R.string.time_out))
+                testBinding!!.toolbar.title = getString(R.string.time_out)
                 calculateScore()
             }
         }
-        countDownTimer!!.start()
+        if (time >= 0) {
+            countDownTimer!!.start()
+        }
+
 
     }
 
@@ -388,6 +395,7 @@ class TestActivity : BaseActivity(), ChangeQuestionListener, OnCheckAnswerListen
         val KEY_NAME = "KEY_NAME"
         val KEY_IS_REVIEW = "IS_REVIEW"
         val KEY_ANSWER = "KEY_ANSWER"
+        val KEY_TIME = "TIME_QUESTION"
         private val FORMAT = "%02d:%02d:%02d"
     }
 }

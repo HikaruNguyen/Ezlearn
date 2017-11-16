@@ -1,8 +1,11 @@
 package com.vn.ezlearn.utils
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.net.ConnectivityManager
 import java.text.DecimalFormat
+import java.text.ParseException
+import java.text.SimpleDateFormat
 
 
 /**
@@ -17,9 +20,7 @@ object AppUtils {
         return netInfo != null && netInfo.isConnectedOrConnecting
     }
 
-    fun getTAG(cls: Class<*>): String {
-        return cls.simpleName
-    }
+    fun getTAG(cls: Class<*>): String = cls.simpleName
 
     fun formatMoney(number: Long): String {
         if (number < 1000) {
@@ -33,6 +34,23 @@ object AppUtils {
         } catch (e: Exception) {
             ""
         }
+    }
+
+    @SuppressLint("SimpleDateFormat")
+    fun formatDateTime(time: String): String {
+        val originalStringFormat = "yyyy-MM-dd HH:mm:ss"
+        val desiredStringFormat = "dd/MM/yyyy"
+
+        val readingFormat = SimpleDateFormat(originalStringFormat)
+        val outputFormat = SimpleDateFormat(desiredStringFormat)
+
+        try {
+            val date = readingFormat.parse(time)
+            return outputFormat.format(date)
+        } catch (e: ParseException) {
+            e.printStackTrace()
+        }
+        return ""
 
     }
 }

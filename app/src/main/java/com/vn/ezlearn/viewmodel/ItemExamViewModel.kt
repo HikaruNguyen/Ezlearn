@@ -8,6 +8,7 @@ import android.view.View
 
 import com.vn.ezlearn.R
 import com.vn.ezlearn.models.Exam
+import com.vn.ezlearn.utils.AppUtils
 
 /**
  * Created by FRAMGIA\nguyen.duc.manh on 05/10/2017.
@@ -16,9 +17,9 @@ import com.vn.ezlearn.models.Exam
 class ItemExamViewModel(private val context: Context, private val exam: Exam?) : BaseObservable() {
     var name: ObservableField<String> = ObservableField()
     var time: ObservableField<String> = ObservableField()
-    var date_start_end: ObservableField<String> = ObservableField()
-    var total_question: ObservableField<String> = ObservableField()
-    var total_view: ObservableField<String> = ObservableField()
+    var dateStartEnd: ObservableField<String> = ObservableField()
+    var totalQuestion: ObservableField<String> = ObservableField()
+    var viewCount: ObservableField<String> = ObservableField()
 
     var visiableFree: ObservableInt = ObservableInt(View.GONE)
 
@@ -35,18 +36,20 @@ class ItemExamViewModel(private val context: Context, private val exam: Exam?) :
                 time.set(exam.time.toString() + " " + context.getString(R.string.minute))
             }
             if (exam.start_date != null && exam.end_date != null) {
-                date_start_end.set(exam.start_date + " " + exam.end_date)
+                dateStartEnd.set(AppUtils.formatDateTime(exam.start_date!!) + " - "
+                        + AppUtils.formatDateTime(exam.end_date!!))
             }
             if (exam.is_free == 1) {
                 visiableFree.set(View.VISIBLE)
             } else {
                 visiableFree.set(View.GONE)
             }
-            if (exam.total_view != null) {
-                total_view.set(exam.total_view.toString() + " " + context.getString(R.string.view))
+            if (exam.view_count != null) {
+                viewCount.set(exam.view_count.toString() + " " + context.getString(R.string.view))
             } else {
-                total_view.set("N/A")
+                viewCount.set(context.getString(R.string.updating))
             }
+            totalQuestion.set(context.getString(R.string.updating))
         }
     }
 }

@@ -22,7 +22,7 @@ class Exam {
     var template_id: Int? = null
     var price: Int? = null
     var is_free: Int = 0
-    var total_view: Int? = null
+    var view_count: Int? = null
 
 
 }
