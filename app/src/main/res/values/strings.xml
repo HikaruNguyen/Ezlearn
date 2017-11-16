@@ -99,6 +99,7 @@
     <string name="deadline">Thời hạn:</string>
     <string name="free">Free</string>
     <string name="view">Lượt xem</string>
+    <string name="doing">Lượt làm bài</string>
     <string name="price"><![CDATA[<b>Giá: </b>%1$d]]></string>
 
 

@@ -20,6 +20,7 @@ class ItemExamViewModel(private val context: Context, private val exam: Exam?) :
     var dateStartEnd: ObservableField<String> = ObservableField()
     var totalQuestion: ObservableField<String> = ObservableField()
     var viewCount: ObservableField<String> = ObservableField()
+    var doingCount: ObservableField<String> = ObservableField()
 
     var visiableFree: ObservableInt = ObservableInt(View.GONE)
 
@@ -46,6 +47,11 @@ class ItemExamViewModel(private val context: Context, private val exam: Exam?) :
             }
             if (exam.view_count != null) {
                 viewCount.set(exam.view_count.toString() + " " + context.getString(R.string.view))
+            } else {
+                viewCount.set(context.getString(R.string.updating))
+            }
+            if (exam.doing_count != null) {
+                doingCount.set(exam.doing_count.toString() + " " + context.getString(R.string.doing))
             } else {
                 viewCount.set(context.getString(R.string.updating))
             }

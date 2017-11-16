@@ -23,6 +23,7 @@ class Exam {
     var price: Int? = null
     var is_free: Int = 0
     var view_count: Int? = null
+    var doing_count: Int? = null
 
 
 }
