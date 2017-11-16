@@ -35,14 +35,12 @@ class QuestionViewModel(context: Activity, private val content: MyContent?, posi
 
     var tvQuestion: ObservableField<String>
 
-    var visiableNext: ObservableInt? = null
-    var visiablePre: ObservableInt? = null
-
     var suggest: ObservableField<Spanned>
     var visiableSuggest: ObservableInt
 
     var visiableRadio: ObservableInt = ObservableInt(View.GONE)
     var visiableInput: ObservableInt = ObservableInt(View.GONE)
+    var enableInput: ObservableBoolean = ObservableBoolean(false)
 
     init {
         this.context = context
@@ -124,9 +122,11 @@ class QuestionViewModel(context: Activity, private val content: MyContent?, posi
         if (content?.content?.answer_show!!.contentEquals(Content.ANSWER_SHOW_DEFAULT)) {
             visiableRadio.set(View.VISIBLE)
             visiableInput.set(View.GONE)
-        }else if(content.content.answer_show!!.contentEquals(Content.ANSWER_SHOW_INPUT)){
+            enableInput.set(false)
+        } else if (content.content.answer_show!!.contentEquals(Content.ANSWER_SHOW_INPUT)) {
             visiableRadio.set(View.GONE)
             visiableInput.set(View.VISIBLE)
+            enableInput.set(true)
         }
     }
 

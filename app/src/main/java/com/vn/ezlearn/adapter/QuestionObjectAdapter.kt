@@ -14,6 +14,7 @@ import com.vn.ezlearn.databinding.ItemQuestionViewpagerBinding
 import com.vn.ezlearn.fragment.QuestionFragment
 import com.vn.ezlearn.interfaces.ChangeQuestionListener
 import com.vn.ezlearn.interfaces.OnCheckAnswerListener
+import com.vn.ezlearn.models.Content
 import com.vn.ezlearn.models.QuestionObject
 import java.util.*
 
@@ -122,12 +123,20 @@ class QuestionObjectAdapter(private val activity: Activity, list: MutableList<Qu
                 (questionFragments!![i] as QuestionFragment).showSuggest()
             }
         }
+    }
 
+    fun isAnswered(position: Int, answerType: String): Boolean {
+        if (answerType.contentEquals(Content.ANSWER_SHOW_DEFAULT)) {
+            return (questionFragments!![position] as QuestionFragment).answer >= 0
+        } else if (answerType.contentEquals(Content.ANSWER_SHOW_INPUT)) {
+            return !(questionFragments!![position] as QuestionFragment).inputAnswer.isEmpty()
+        }
+        return false
     }
 
     class ViewHolder : RecyclerView.ViewHolder {
-        internal var itemQuestionPartBinding: ItemQuestionPartBinding ?= null
-        internal var itemQuestionViewpagerBinding: ItemQuestionViewpagerBinding ?= null
+        internal var itemQuestionPartBinding: ItemQuestionPartBinding? = null
+        internal var itemQuestionViewpagerBinding: ItemQuestionViewpagerBinding? = null
 
         constructor(itemQuestionPartBinding: ItemQuestionPartBinding) :
                 super(itemQuestionPartBinding.root) {

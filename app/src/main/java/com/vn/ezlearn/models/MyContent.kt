@@ -16,6 +16,7 @@ class MyContent {
     var point: Float? = null
 
     var myAnswer: Int = -1
+    var myInput: String = ""
     var isCorrect: Boolean = false
 
     var isReview: Boolean = false
@@ -30,6 +31,7 @@ class MyContent {
         this.isCorrect = false
         this.typeQuestion = TYPE_NO_ANSWER
         myAnswer = -1
+        myInput = ""
         this.isReview = isReview
     }
 
@@ -44,6 +46,7 @@ class MyContent {
         this.isCorrect = false
         this.typeQuestion = TYPE_NO_ANSWER
         myAnswer = -1
+        myInput = ""
         this.isReview = isReview
     }
 

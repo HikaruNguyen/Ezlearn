@@ -216,7 +216,6 @@ class TestActivity : BaseActivity(), ChangeQuestionListener, OnCheckAnswerListen
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        // Inflate the menu; this adds items to the action bar if it is present.
         menuInflater.inflate(R.menu.menu_question, menu)
         return true
     }
@@ -290,7 +289,8 @@ class TestActivity : BaseActivity(), ChangeQuestionListener, OnCheckAnswerListen
         if (contentList != null && contentList!!.size > position) {
             val content = contentList!![position]
             if (content.content.answer_list != null && content.content.answer_list!!.size > answer) {
-                content.typeQuestion = MyContent.TYPE_ANSWERED
+                if (content.typeQuestion != MyContent.TYPE_LATE)
+                    content.typeQuestion = MyContent.TYPE_ANSWERED
                 content.isCorrect = content.content.answer_list!![answer].is_true == Answer.TRUE
                 contentList!![position] = content
             }
@@ -299,10 +299,34 @@ class TestActivity : BaseActivity(), ChangeQuestionListener, OnCheckAnswerListen
 
     }
 
+    override fun onInputAnswer(position: Int, answer: String) {
+        if (contentList != null && contentList!!.size > position) {
+            val content = contentList!![position]
+            if (answer.isNotEmpty() && answer.isNotBlank()) {
+                if (content.content.answer_list != null && content.content.answer_list!!.isNotEmpty()) {
+                    if (content.typeQuestion != MyContent.TYPE_LATE)
+                        content.typeQuestion = MyContent.TYPE_ANSWERED
+                    content.isCorrect = content.content.answer_list!![0].answer!!.trim().contentEquals(answer.trim())
+                    contentList!![position] = content
+                }
+            }
+
+        }
+    }
+
+
     override fun onNeedReview(position: Int) {
         if (contentList != null && contentList!!.size > position) {
             val content = contentList!![position]
-            content.typeQuestion = MyContent.TYPE_LATE
+            if (content.typeQuestion != MyContent.TYPE_LATE) {
+                content.typeQuestion = MyContent.TYPE_LATE
+            } else {
+                if (adapter!!.isAnswered(position, content.content.answer_show!!)) {
+                    content.typeQuestion = MyContent.TYPE_ANSWERED
+                } else {
+                    content.typeQuestion = MyContent.TYPE_NO_ANSWER
+                }
+            }
             contentList!![position] = content
         }
     }

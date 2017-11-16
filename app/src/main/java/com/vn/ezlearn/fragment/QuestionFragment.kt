@@ -6,6 +6,8 @@ import android.graphics.Typeface
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v4.content.ContextCompat
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -28,7 +30,8 @@ class QuestionFragment : Fragment() {
     private var size: Int = 0
     private var content: MyContent? = null
     private var onCheckAnswerListener: OnCheckAnswerListener? = null
-    private var answer = -1
+    var answer = -1
+    var inputAnswer = ""
 
     fun setQuestion(content: MyContent, onCheckAnswerListener: OnCheckAnswerListener) {
         this.content = content
@@ -98,11 +101,33 @@ class QuestionFragment : Fragment() {
             questionViewModel!!.setNeedReview()
             onCheckAnswerListener!!.onNeedReview(position)
         }
+
+        fragmentQuestionBinding!!.edInput.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(charSequence: CharSequence, i: Int, i1: Int, i2: Int) {
+
+            }
+
+            override fun onTextChanged(charSequence: CharSequence, i: Int, i1: Int, i2: Int) {
+
+            }
+
+            override fun afterTextChanged(editable: Editable) {
+                if(editable.isNotEmpty()){
+                    answer(editable.toString())
+                }
+
+            }
+        })
     }
 
     private fun answer(answer: Int) {
         onCheckAnswerListener!!.onCheckAnswer(position, answer)
         this.answer = answer
+    }
+
+    private fun answer(answer: String) {
+        onCheckAnswerListener!!.onInputAnswer(position, answer)
+        this.inputAnswer = answer
     }
 
     fun showSuggest() {
