@@ -17,23 +17,23 @@ import rx.android.schedulers.AndroidSchedulers
 import rx.schedulers.Schedulers
 
 class LoginActivity : BaseActivity() {
-    private var loginBinding: ActivityLoginBinding? = null
-    private var apiService: EzlearnService? = null
+    private lateinit var loginBinding: ActivityLoginBinding
+    private lateinit var apiService: EzlearnService
     private var mSubscription: Subscription? = null
-    private var mLoginResult: LoginResult? = null
-    private var progressDialog: ProgressDialog? = null
+    private lateinit var mLoginResult: LoginResult
+    private lateinit var progressDialog: ProgressDialog
     private var isAttach = true
     private lateinit var mUserInfoResult: UserInfoResult
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         loginBinding = DataBindingUtil.setContentView(this, R.layout.activity_login)
-        setSupportActionBar(loginBinding!!.toolbar)
+        setSupportActionBar(loginBinding.toolbar)
         setBackButtonToolbar()
-        loginBinding!!.toolbar.title = ""
-        loginBinding!!.btnLogin.setOnClickListener {
-            val username = loginBinding!!.edUserName.text.toString()
-            val password = loginBinding!!.edPassword.text.toString()
+        loginBinding.toolbar.title = ""
+        loginBinding.btnLogin.setOnClickListener {
+            val username = loginBinding.edUserName.text.toString()
+            val password = loginBinding.edPassword.text.toString()
             when {
                 username.isEmpty() -> Toast.makeText(this@LoginActivity,
                         getString(R.string.please_input_username),
@@ -51,27 +51,27 @@ class LoginActivity : BaseActivity() {
         apiService = MyApplication.with(this).getEzlearnService()
         if (mSubscription != null && !mSubscription!!.isUnsubscribed)
             mSubscription!!.unsubscribe()
-        mSubscription = apiService!!.getLogin(username, password)
+        mSubscription = apiService.getLogin(username, password)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(object : Subscriber<LoginResult>() {
                     override fun onCompleted() {
-                        if (mLoginResult!!.success && mLoginResult?.data != null) {
-                            if (!mLoginResult!!.data!!.message?.isEmpty()!!) {
-                                Toast.makeText(this@LoginActivity, mLoginResult!!.data!!.message,
+                        if (mLoginResult.success && mLoginResult.data != null) {
+                            if (!mLoginResult.data!!.message?.isEmpty()!!) {
+                                Toast.makeText(this@LoginActivity, mLoginResult.data!!.message,
                                         Toast.LENGTH_SHORT).show()
                             } else {
                                 Toast.makeText(this@LoginActivity, getString(R.string.login_success),
                                         Toast.LENGTH_SHORT).show()
                             }
                             AppConfig.getInstance(this@LoginActivity).token =
-                                    mLoginResult!!.data!!.access_token!!
+                                    mLoginResult.data!!.access_token!!
                             AppConfig.getInstance(this@LoginActivity).name =
-                                    mLoginResult!!.data!!.display_name!!
+                                    mLoginResult.data!!.display_name!!
                             getUserProfile()
-                        } else if (mLoginResult?.data != null) {
-                            if (!mLoginResult!!.data!!.message?.isEmpty()!!) {
-                                Toast.makeText(this@LoginActivity, mLoginResult!!.data!!.message,
+                        } else if (mLoginResult.data != null) {
+                            if (!mLoginResult.data!!.message?.isEmpty()!!) {
+                                Toast.makeText(this@LoginActivity, mLoginResult.data!!.message,
                                         Toast.LENGTH_SHORT).show()
                             } else {
                                 Toast.makeText(this@LoginActivity, getString(R.string.error_progress),
@@ -84,14 +84,14 @@ class LoginActivity : BaseActivity() {
                     }
 
                     override fun onError(e: Throwable) {
-                        if (isAttach && progressDialog!!.isShowing) {
-                            progressDialog!!.dismiss()
+                        if (isAttach && progressDialog.isShowing) {
+                            progressDialog.dismiss()
                         }
                     }
 
                     override fun onNext(loginResult: LoginResult?) {
-                        if (isAttach && progressDialog!!.isShowing) {
-                            progressDialog!!.dismiss()
+                        if (isAttach && progressDialog.isShowing) {
+                            progressDialog.dismiss()
                         }
                         if (loginResult != null) {
                             mLoginResult = loginResult
@@ -104,7 +104,7 @@ class LoginActivity : BaseActivity() {
         apiService = MyApplication.with(this@LoginActivity).getEzlearnService()
         if (mSubscription != null && !mSubscription!!.isUnsubscribed)
             mSubscription!!.unsubscribe()
-        mSubscription = apiService!!.getUserInfo()
+        mSubscription = apiService.getUserInfo()
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(object : Subscriber<UserInfoResult>() {

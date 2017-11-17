@@ -17,10 +17,10 @@ import rx.android.schedulers.AndroidSchedulers
 import rx.schedulers.Schedulers
 
 class SplashActivity : AppCompatActivity() {
-    private var splashBinding: ActivitySplashBinding? = null
+    private lateinit var splashBinding: ActivitySplashBinding
     private var apiService: EzlearnService? = null
     private var mSubscription: Subscription? = null
-    private var mCategoryResult: CategoryResult? = null
+    private lateinit var mCategoryResult: CategoryResult
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,10 +37,10 @@ class SplashActivity : AppCompatActivity() {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(object : Subscriber<CategoryResult>() {
                     override fun onCompleted() {
-                        if (mCategoryResult!!.success) {
-                            if (mCategoryResult!!.data != null
-                                    && mCategoryResult!!.data!!.isNotEmpty()) {
-                                for (category in mCategoryResult!!.data!!) {
+                        if (mCategoryResult.success) {
+                            if (mCategoryResult.data != null
+                                    && mCategoryResult.data!!.isNotEmpty()) {
+                                for (category in mCategoryResult.data!!) {
                                     if (category.children != null
                                             && category.children!!.isNotEmpty()) {
                                         for (categoryChild in category.children!!) {

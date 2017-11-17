@@ -12,7 +12,6 @@ import android.support.v4.app.FragmentTransaction
 import android.support.v4.view.GravityCompat
 import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.app.AppCompatActivity
-import android.support.v7.widget.Toolbar
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
@@ -30,17 +29,14 @@ import com.vn.ezlearn.modelresult.BaseResult
 import com.vn.ezlearn.models.Category
 import com.vn.ezlearn.models.ContentByCategory
 import com.vn.ezlearn.viewmodel.MainViewModel
-import com.vn.ezlearn.widgets.CRecyclerView
 import rx.Subscriber
 import rx.Subscription
 import rx.android.schedulers.AndroidSchedulers
 import rx.schedulers.Schedulers
 
 class MainActivity : AppCompatActivity(), NavigationItemSelected {
-    private var toolbar: Toolbar? = null
-    private var rvNavigation: CRecyclerView? = null
-    private var mainBinding: ActivityMainBinding? = null
-    private var mainViewModel: MainViewModel? = null
+    private lateinit var mainBinding: ActivityMainBinding
+    private lateinit var mainViewModel: MainViewModel
     private var menuList: ArrayList<Category>? = null
     private var navigationAdapter: NavigationAdapter? = null
     private var currentId = AppConstant.HOME_ID
@@ -51,7 +47,7 @@ class MainActivity : AppCompatActivity(), NavigationItemSelected {
     private var baseResultLogout: BaseResult? = null
 
     val tabLayout: TabLayout
-        get() = mainBinding!!.tabs
+        get() = mainBinding.tabs
 
 
     private var doubleBackToExitPressedOnce = false
@@ -60,16 +56,16 @@ class MainActivity : AppCompatActivity(), NavigationItemSelected {
         super.onCreate(savedInstanceState)
         mainBinding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         mainViewModel = MainViewModel(this)
-        mainBinding!!.mainViewModel = mainViewModel
+        mainBinding.mainViewModel = mainViewModel
         initUI()
         bindData()
         event()
     }
 
     private fun event() {
-        mainBinding!!.rlHeader.setOnClickListener {
-            if (mainBinding!!.drawerLayout.isDrawerOpen(GravityCompat.START)) {
-                mainBinding!!.drawerLayout.closeDrawer(GravityCompat.START)
+        mainBinding.rlHeader.setOnClickListener {
+            if (mainBinding.drawerLayout.isDrawerOpen(GravityCompat.START)) {
+                mainBinding.drawerLayout.closeDrawer(GravityCompat.START)
             }
             val intent: Intent
             if (!AppConfig.getInstance(this@MainActivity).token.isEmpty()) {
@@ -80,7 +76,7 @@ class MainActivity : AppCompatActivity(), NavigationItemSelected {
                 startActivityForResult(intent, LoginActivity.LOGIN_REQUEST)
             }
         }
-        mainBinding!!.lnBottom.setOnClickListener { logout() }
+        mainBinding.lnBottom.setOnClickListener { logout() }
     }
 
     private fun logout() {
@@ -103,7 +99,7 @@ class MainActivity : AppCompatActivity(), NavigationItemSelected {
                                         Toast.LENGTH_SHORT).show()
                             }
                             AppConfig.getInstance(this@MainActivity).clearData()
-                            mainViewModel!!.updateProfile()
+                            mainViewModel.updateProfile()
                         } else {
                             Toast.makeText(this@MainActivity, getString(R.string.error_connect),
                                     Toast.LENGTH_SHORT).show()
@@ -124,21 +120,19 @@ class MainActivity : AppCompatActivity(), NavigationItemSelected {
 
     private fun bindData() {
         changeFragment(HomeFragment())
-        toolbar!!.title = getString(R.string.nav_home)
+        mainBinding.toolbar!!.title = getString(R.string.nav_home)
     }
 
     private fun initUI() {
-        toolbar = findViewById(R.id.toolbar) as Toolbar
-        rvNavigation = mainBinding!!.rvNavigation
-        setSupportActionBar(toolbar)
+        setSupportActionBar(mainBinding.toolbar!!)
         setupNavigation()
     }
 
     private fun setupNavigation() {
         val toggle = ActionBarDrawerToggle(
-                this, mainBinding!!.drawerLayout, toolbar, R.string.navigation_drawer_open,
+                this, mainBinding.drawerLayout, mainBinding.toolbar!!, R.string.navigation_drawer_open,
                 R.string.navigation_drawer_close)
-        mainBinding!!.drawerLayout.setDrawerListener(toggle)
+        mainBinding.drawerLayout.setDrawerListener(toggle)
         toggle.syncState()
 
         //        fakeData();
@@ -160,19 +154,19 @@ class MainActivity : AppCompatActivity(), NavigationItemSelected {
         menuList!!.add(Category(AppConstant.OFFLINE_ID.toString(), getString(R.string.nav_contact),
                 Category.TYPE_NORMAL))
         navigationAdapter = NavigationAdapter(this, menuList!!, this)
-        mainBinding!!.rvNavigation.adapter = navigationAdapter
+        mainBinding.rvNavigation.adapter = navigationAdapter
         //        mainBinding.rvNavigation.setDivider();
     }
 
     override fun onBackPressed() {
-        if (mainBinding!!.drawerLayout.isDrawerOpen(GravityCompat.START)) {
-            mainBinding!!.drawerLayout.closeDrawer(GravityCompat.START)
+        if (mainBinding.drawerLayout.isDrawerOpen(GravityCompat.START)) {
+            mainBinding.drawerLayout.closeDrawer(GravityCompat.START)
         } else {
             if (currentId != AppConstant.HOME_ID) {
                 changeFragment(HomeFragment())
                 currentId = AppConstant.HOME_ID
-                mainViewModel!!.setVisiableTabBar(AppConstant.HOME_ID.toString())
-                toolbar!!.title = getString(R.string.nav_home)
+                mainViewModel.setVisiableTabBar(AppConstant.HOME_ID.toString())
+                mainBinding.toolbar!!.title = getString(R.string.nav_home)
             } else {
                 if (doubleBackToExitPressedOnce) {
                     super.onBackPressed()
@@ -221,12 +215,12 @@ class MainActivity : AppCompatActivity(), NavigationItemSelected {
     }
 
     override fun onSelected(name: String, id: String, categoryList: List<Category>?) {
-        mainViewModel!!.setVisiableTabBar(id)
+        mainViewModel.setVisiableTabBar(id)
         if (id.toInt() != currentId) {
             if (id.toInt() != AppConstant.HOME_ID) {
-                if (mainBinding!!.drawerLayout.isDrawerOpen(GravityCompat.START)) {
-                    mainBinding!!.drawerLayout.closeDrawer(GravityCompat.START)
-                    toolbar!!.title = name
+                if (mainBinding.drawerLayout.isDrawerOpen(GravityCompat.START)) {
+                    mainBinding.drawerLayout.closeDrawer(GravityCompat.START)
+                    mainBinding.toolbar!!.title = name
                 }
                 if (id.toInt() > 0) {
                     val categoryMainFragment = CategoryMainFragment()
@@ -241,9 +235,9 @@ class MainActivity : AppCompatActivity(), NavigationItemSelected {
 
             } else {
 
-                if (mainBinding!!.drawerLayout.isDrawerOpen(GravityCompat.START)) {
-                    mainBinding!!.drawerLayout.closeDrawer(GravityCompat.START)
-                    toolbar!!.title = name
+                if (mainBinding.drawerLayout.isDrawerOpen(GravityCompat.START)) {
+                    mainBinding.drawerLayout.closeDrawer(GravityCompat.START)
+                    mainBinding.toolbar!!.title = name
                 }
                 changeFragment(HomeFragment())
             }
@@ -256,7 +250,7 @@ class MainActivity : AppCompatActivity(), NavigationItemSelected {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == Activity.RESULT_OK) {
             if (requestCode == LoginActivity.LOGIN_REQUEST) {
-                mainViewModel!!.updateProfile()
+                mainViewModel.updateProfile()
             }
         }
     }

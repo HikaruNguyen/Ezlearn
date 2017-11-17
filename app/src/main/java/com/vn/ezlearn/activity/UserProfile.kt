@@ -21,7 +21,7 @@ import java.util.*
 
 class UserProfile : BaseActivity(), UserInfoCallBack {
 
-    private var userProfileBinding: ActivityUserProfileBinding? = null
+    private lateinit var userProfileBinding: ActivityUserProfileBinding
     private var fragmentList: MutableList<Fragment>? = null
     private var viewPagerAdapter: ViewPagerAdapter? = null
     private lateinit var userMainViewModel: UserMainViewModel
@@ -30,17 +30,17 @@ class UserProfile : BaseActivity(), UserInfoCallBack {
             = BottomNavigationView.OnNavigationItemSelectedListener { item ->
         when (item.itemId) {
             R.id.navigation_profile -> {
-                userProfileBinding!!.viewPager.currentItem = 0
+                userProfileBinding.viewPager.currentItem = 0
                 userMainViewModel.visiableAvatar.set(View.VISIBLE)
                 return@OnNavigationItemSelectedListener true
             }
             R.id.navigation_history_exam -> {
-                userProfileBinding!!.viewPager.currentItem = 1
+                userProfileBinding.viewPager.currentItem = 1
                 userMainViewModel.visiableAvatar.set(View.GONE)
                 return@OnNavigationItemSelectedListener true
             }
             R.id.navigation_history_topup -> {
-                userProfileBinding!!.viewPager.currentItem = 2
+                userProfileBinding.viewPager.currentItem = 2
                 userMainViewModel.visiableAvatar.set(View.GONE)
                 return@OnNavigationItemSelectedListener true
             }
@@ -57,13 +57,13 @@ class UserProfile : BaseActivity(), UserInfoCallBack {
         super.onCreate(savedInstanceState)
         userProfileBinding = DataBindingUtil.setContentView(this, R.layout.activity_user_profile)
         userMainViewModel = UserMainViewModel(this@UserProfile)
-        userProfileBinding!!.userMainViewModel = userMainViewModel
-        userProfileBinding!!.navigation.setOnNavigationItemSelectedListener(
+        userProfileBinding.userMainViewModel = userMainViewModel
+        userProfileBinding.navigation.setOnNavigationItemSelectedListener(
                 mOnNavigationItemSelectedListener)
-        BottomNavigationViewHelper.disableShiftMode(userProfileBinding!!.navigation)
-        setSupportActionBar(userProfileBinding!!.toolbar)
+        BottomNavigationViewHelper.disableShiftMode(userProfileBinding.navigation)
+        setSupportActionBar(userProfileBinding.toolbar)
         setBackButtonToolbar()
-        userProfileBinding!!.toolbar.title = ""
+        userProfileBinding.toolbar.title = ""
         bindData()
         event()
 
@@ -79,22 +79,22 @@ class UserProfile : BaseActivity(), UserInfoCallBack {
 //            }
 //        }
 
-        userProfileBinding!!.viewPager.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
+        userProfileBinding.viewPager.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
             override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
 
             }
 
             override fun onPageSelected(position: Int) {
                 when (position) {
-                    0 -> userProfileBinding!!.navigation.selectedItemId =
+                    0 -> userProfileBinding.navigation.selectedItemId =
                             R.id.navigation_profile
-                    1 -> userProfileBinding!!.navigation.selectedItemId =
+                    1 -> userProfileBinding.navigation.selectedItemId =
                             R.id.navigation_history_exam
-                    2 -> userProfileBinding!!.navigation.selectedItemId =
+                    2 -> userProfileBinding.navigation.selectedItemId =
                             R.id.navigation_history_topup
 //                    3 -> userProfileBinding!!.navigation.selectedItemId =
 //                            R.id.navigation_history_buy_package
-                    else -> userProfileBinding!!.navigation.selectedItemId =
+                    else -> userProfileBinding.navigation.selectedItemId =
                             R.id.navigation_profile
                 }
             }
@@ -114,7 +114,7 @@ class UserProfile : BaseActivity(), UserInfoCallBack {
         fragmentList!!.add(HistoryTransactionFragment())
 //        fragmentList!!.add(UserProfileFragment())
         viewPagerAdapter = ViewPagerAdapter(supportFragmentManager, fragmentList!!)
-        userProfileBinding!!.viewPager.adapter = viewPagerAdapter
+        userProfileBinding.viewPager.adapter = viewPagerAdapter
 
     }
 

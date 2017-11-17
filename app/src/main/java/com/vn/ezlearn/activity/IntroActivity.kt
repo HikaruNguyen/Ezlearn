@@ -24,17 +24,17 @@ import java.util.*
  */
 
 class IntroActivity : AppCompatActivity() {
-    private var introBinding: ActivityIntroBinding? = null
-    private var introViewModel: IntroViewModel? = null
-    private var pagerAdapter: ViewPagerAdapter? = null
-    private var fragmentList: MutableList<Fragment>? = null
+    private lateinit var introBinding: ActivityIntroBinding
+    private lateinit var introViewModel: IntroViewModel
+    private lateinit var pagerAdapter: ViewPagerAdapter
+    private lateinit var fragmentList: MutableList<Fragment>
     private var positionViewPager = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        introBinding = DataBindingUtil.setContentView(this, R.layout.activity_intro)
-        introViewModel = IntroViewModel(this)
-        introBinding!!.introViewModel = introViewModel
+        introBinding = DataBindingUtil.setContentView(this@IntroActivity, R.layout.activity_intro)
+        introViewModel = IntroViewModel(this@IntroActivity)
+        introBinding.introViewModel = introViewModel
         if (!AppConfig.getInstance(this).isShowIntro) {
             initViewPager()
             event()
@@ -47,7 +47,7 @@ class IntroActivity : AppCompatActivity() {
     }
 
     private fun event() {
-        introBinding!!.viewPager.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
+        introBinding.viewPager.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
             override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
 
             }
@@ -55,10 +55,10 @@ class IntroActivity : AppCompatActivity() {
             override fun onPageSelected(position: Int) {
                 positionViewPager = position
                 //                colorStatusBar(((CustomSlide) fragmentList.get(position)).backgroundColor);
-                if (position < fragmentList!!.size - 1) {
-                    introViewModel!!.textNext.set(getString(R.string.next))
+                if (position < fragmentList.size - 1) {
+                    introViewModel.textNext.set(getString(R.string.next))
                 } else {
-                    introViewModel!!.textNext.set(getString(R.string.done))
+                    introViewModel.textNext.set(getString(R.string.done))
                 }
             }
 
@@ -66,9 +66,9 @@ class IntroActivity : AppCompatActivity() {
 
             }
         })
-        introBinding!!.tvNext.setOnClickListener {
-            if (positionViewPager < fragmentList!!.size - 1) {
-                introBinding!!.viewPager.currentItem = positionViewPager + 1
+        introBinding.tvNext.setOnClickListener {
+            if (positionViewPager < fragmentList.size - 1) {
+                introBinding.viewPager.currentItem = positionViewPager + 1
             } else {
                 AppConfig.getInstance(this@IntroActivity).isShowIntro = true
                 val intent = Intent(this@IntroActivity, SplashActivity::class.java)
@@ -76,7 +76,7 @@ class IntroActivity : AppCompatActivity() {
                 finish()
             }
         }
-        introBinding!!.tvPrev.setOnClickListener {
+        introBinding.tvPrev.setOnClickListener {
             AppConfig.getInstance(this@IntroActivity).isShowIntro = true
             val intent = Intent(this@IntroActivity, SplashActivity::class.java)
             startActivity(intent)
@@ -108,14 +108,14 @@ class IntroActivity : AppCompatActivity() {
                 R.drawable.bg_intro1,
                 Color.TRANSPARENT,
                 R.mipmap.quality))
-        pagerAdapter = ViewPagerAdapter(supportFragmentManager, fragmentList!!)
-        introBinding!!.viewPager.adapter = pagerAdapter
-        introBinding!!.indicator.setViewPager(introBinding!!.viewPager)
+        pagerAdapter = ViewPagerAdapter(supportFragmentManager, fragmentList)
+        introBinding.viewPager.adapter = pagerAdapter
+        introBinding.indicator.setViewPager(introBinding.viewPager)
         colorStatusBar(R.color.first_slide_background)
     }
 
     private fun addSlide(fragment: Fragment) {
-        fragmentList!!.add(fragment)
+        fragmentList.add(fragment)
     }
 
     @SuppressLint("NewApi")

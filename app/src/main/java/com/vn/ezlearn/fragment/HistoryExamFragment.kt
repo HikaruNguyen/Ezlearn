@@ -9,10 +9,13 @@ import android.view.View
 import android.view.ViewGroup
 import com.vn.ezlearn.R
 import com.vn.ezlearn.activity.MyApplication
+import com.vn.ezlearn.adapter.HistoryBuyPackageAdapter
 import com.vn.ezlearn.adapter.HistoryExamAdapter
 import com.vn.ezlearn.config.EzlearnService
 import com.vn.ezlearn.databinding.FragmentHistoryExamBinding
-import com.vn.ezlearn.modelresult.HistoryExamResult
+import com.vn.ezlearn.modelresult.HistoryResult
+import com.vn.ezlearn.models.HistoryBuyPackage
+import com.vn.ezlearn.models.HistoryExam
 import rx.Subscriber
 import rx.Subscription
 import rx.android.schedulers.AndroidSchedulers
@@ -26,8 +29,18 @@ class HistoryExamFragment : Fragment() {
     private lateinit var historyExamBinding: FragmentHistoryExamBinding
     private var apiService: EzlearnService? = null
     private var mSubscription: Subscription? = null
-    private lateinit var mHistoryExamResult: HistoryExamResult
-    private lateinit var adapter: HistoryExamAdapter
+    private lateinit var adapterHistoryExam: HistoryExamAdapter
+    private lateinit var adapterHistoryBuyPackage: HistoryBuyPackageAdapter
+    private var historyType: Int? = TYPE_EXAM
+    private var current_page = 1
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        if (arguments != null) {
+            historyType = arguments.getInt(HistoryExamFragment.TYPE_HISTORY)
+        }
+    }
+
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         historyExamBinding = DataBindingUtil.inflate(inflater!!,
@@ -37,23 +50,42 @@ class HistoryExamFragment : Fragment() {
     }
 
     private fun bindData() {
-        adapter = HistoryExamAdapter(activity, ArrayList())
-        historyExamBinding.rvHistoryHome.adapter = adapter
         historyExamBinding.rvHistoryHome.setDivider()
-        getListHistoryExam(1)
+        when (historyType) {
+            TYPE_EXAM -> {
+                adapterHistoryExam = HistoryExamAdapter(activity, ArrayList())
+                historyExamBinding.rvHistoryHome.adapter = adapterHistoryExam
+                getListHistoryExam(current_page)
+            }
+            TYPE_PAYMENT -> {
+                adapterHistoryExam = HistoryExamAdapter(activity, ArrayList())
+                historyExamBinding.rvHistoryHome.adapter = adapterHistoryExam
+                getListHistoryExam(current_page)
+            }
+            TYPE_BUY_PACKAGE -> {
+                adapterHistoryBuyPackage = HistoryBuyPackageAdapter(activity, ArrayList())
+                historyExamBinding.rvHistoryHome.adapter = adapterHistoryBuyPackage
+                getListHistoryBuyPackage(current_page)
+            }
+            else -> {
+                getListHistoryExam(current_page)
+            }
+        }
+        historyExamBinding.rvHistoryHome.setDivider()
     }
 
     private fun getListHistoryExam(page: Int) {
+        var mHistoryResult: HistoryResult<HistoryExam>? = null
         apiService = MyApplication.with(activity).getEzlearnService()
         mSubscription = apiService!!.getHistoryExam(page, 5)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(object : Subscriber<HistoryExamResult>() {
+                .subscribe(object : Subscriber<HistoryResult<HistoryExam>>() {
                     override fun onCompleted() {
-                        if (mHistoryExamResult.success && mHistoryExamResult.data != null
-                                && mHistoryExamResult.data!!.list != null
-                                && mHistoryExamResult.data!!.list!!.isNotEmpty()) {
-                            adapter.addAll(mHistoryExamResult.data!!.list!!)
+                        if (mHistoryResult!!.success && mHistoryResult!!.data != null
+                                && mHistoryResult?.data!!.list != null
+                                && mHistoryResult?.data!!.list!!.isNotEmpty()) {
+                            adapterHistoryExam.addAll(mHistoryResult?.data!!.list!!)
                         }
                     }
 
@@ -61,12 +93,54 @@ class HistoryExamFragment : Fragment() {
 
                     }
 
-                    override fun onNext(historyExamResult: HistoryExamResult?) {
-                        if (historyExamResult != null) {
-                            mHistoryExamResult = historyExamResult
+                    override fun onNext(historyResult: HistoryResult<HistoryExam>?) {
+                        if (historyResult != null) {
+                            mHistoryResult = historyResult
                         }
                     }
                 })
     }
+
+    private fun getListHistoryBuyPackage(page: Int) {
+        var mHistoryResult: HistoryResult<HistoryBuyPackage>? = null
+        apiService = MyApplication.with(activity).getEzlearnService()
+        mSubscription = apiService!!.getHistoryBuyPackage(page, 5)
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(object : Subscriber<HistoryResult<HistoryBuyPackage>>() {
+                    override fun onCompleted() {
+                        if (mHistoryResult!!.success && mHistoryResult!!.data != null
+                                && mHistoryResult?.data!!.list != null
+                                && mHistoryResult?.data!!.list!!.isNotEmpty()) {
+                            adapterHistoryBuyPackage.addAll(mHistoryResult?.data!!.list!!)
+                        }
+                    }
+
+                    override fun onError(e: Throwable) {
+
+                    }
+
+                    override fun onNext(historyResult: HistoryResult<HistoryBuyPackage>?) {
+                        if (historyResult != null) {
+                            mHistoryResult = historyResult
+                        }
+                    }
+                })
+    }
+
+    companion object {
+        private val TYPE_HISTORY = "TYPE_HISTORY"
+        val TYPE_EXAM = 1
+        val TYPE_PAYMENT = 2
+        val TYPE_BUY_PACKAGE = 3
+        fun newInstance(typeHistory: Int): HistoryExamFragment {
+            val fragment = HistoryExamFragment()
+            val args = Bundle()
+            args.putInt(TYPE_HISTORY, typeHistory)
+            fragment.arguments = args
+            return fragment
+        }
+    }
+
 
 }

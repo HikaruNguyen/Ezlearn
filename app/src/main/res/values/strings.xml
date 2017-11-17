@@ -44,7 +44,7 @@
     <!--Profile-->
     <string name="tab_profile">Hồ sơ</string>
     <string name="tab_history_exam">Lịch sử thi</string>
-    <string name="tab_history_recharge">Lịch sử nạp tiền</string>
+    <string name="tab_history_payment">Lịch sử nạp tiền</string>
     <string name="tab_history_buy_package">Lịch sử mua gói</string>
     <string name="tab_history_transaction">Lịch sử giao dịch</string>
 
