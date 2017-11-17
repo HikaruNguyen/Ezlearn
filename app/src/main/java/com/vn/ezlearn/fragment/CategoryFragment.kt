@@ -16,6 +16,7 @@ import android.widget.Toast
 import com.vn.ezlearn.R
 import com.vn.ezlearn.activity.MyApplication
 import com.vn.ezlearn.adapter.ExamsAdapter
+import com.vn.ezlearn.config.AppConstant
 import com.vn.ezlearn.config.EzlearnService
 import com.vn.ezlearn.databinding.FragmentCategoryBinding
 import com.vn.ezlearn.interfaces.DownloadFileCallBack
@@ -28,6 +29,7 @@ import com.vn.ezlearn.utils.AppUtils
 import com.vn.ezlearn.utils.CLog
 import com.vn.ezlearn.utils.DownloadFileFromURL
 import com.vn.ezlearn.viewmodel.BaseViewModel
+import com.vn.ezlearn.widgets.CRecyclerView
 import rx.Subscriber
 import rx.Subscription
 import rx.android.schedulers.AndroidSchedulers
@@ -46,6 +48,9 @@ class CategoryFragment : Fragment(), OnClickDownloadListener, DownloadFileCallBa
     private var mDocumentsResult: ListDocumentResult? = null
     private lateinit var adapter: ExamsAdapter
     private lateinit var list: MutableList<ContentByCategory>
+    private var isLoadingMore: Boolean = false
+    private var totalPost: Int = 0
+    private var currentPage: Int = 1
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -62,15 +67,28 @@ class CategoryFragment : Fragment(), OnClickDownloadListener, DownloadFileCallBa
         categoryViewModel = BaseViewModel(activity = activity)
         categoryBinding!!.baseViewModel = categoryViewModel
         bindData()
+        event()
         return categoryBinding!!.root
     }
+
+    private fun event() {
+        categoryBinding!!.rvListExam.loadMore(object : CRecyclerView.LoadMoreListener {
+            override fun onScrolled() {
+                if (!isLoadingMore && adapter.itemCount < totalPost) {
+                    isLoadingMore = true
+                    getDataApi(currentPage, contentType)
+                }
+            }
+        })
+    }
+
 
     private fun bindData() {
         list = ArrayList()
         adapter = ExamsAdapter(activity, ArrayList())
         adapter.onClickDownloadListener = this
         categoryBinding!!.rvListExam.adapter = adapter
-        getDataApi(1, contentType)
+        getDataApi(currentPage, contentType)
     }
 
     private fun getDataApi(page: Int, contentType: Int) {
@@ -78,7 +96,14 @@ class CategoryFragment : Fragment(), OnClickDownloadListener, DownloadFileCallBa
         if (mSubscription != null && !mSubscription!!.isUnsubscribed)
             mSubscription!!.unsubscribe()
         when (contentType) {
-            ContentByCategory.CONTENT_TYPE_EXAM -> getDataExam(page)
+            ContentByCategory.CONTENT_TYPE_EXAM -> {
+                when (category_id) {
+                    AppConstant.FREE_ID -> getDataFree(page)
+                    else -> getDataExam(page)
+
+                }
+
+            }
             ContentByCategory.CONTENT_TYPE_DOCUMENT -> getDataDocument(page)
         }
 
@@ -128,6 +153,53 @@ class CategoryFragment : Fragment(), OnClickDownloadListener, DownloadFileCallBa
 
     private fun getDataExam(page: Int) {
         mSubscription = apiService!!.getListExams(category_id, page, 50)
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(object : Subscriber<ListExamsResult>() {
+                    override fun onCompleted() =
+                            if (mExamsResult!!.success && mExamsResult!!.data != null) {
+                                totalPost = mExamsResult?.data!!.totalCount
+                                if (mExamsResult?.data?.list != null
+                                        && mExamsResult?.data?.list!!.isNotEmpty()) {
+                                    categoryViewModel.hideErrorView()
+                                    mExamsResult?.data?.list!!
+                                            .map {
+                                                ContentByCategory(
+                                                        exam = it, document = null, contentType = contentType)
+                                            }
+                                            .forEach { list.add(it) }
+                                    currentPage++
+                                    adapter.addAll(list)
+                                } else {
+                                    if (adapter.itemCount <= 0) {
+                                        categoryViewModel.setErrorNodata()
+                                    } else {
+
+                                    }
+
+                                }
+                            } else {
+                                if (adapter.itemCount <= 0) {
+                                    categoryViewModel.setErrorNodata()
+                                } else {
+
+                                }
+                            }
+
+                    override fun onError(e: Throwable) {
+                        categoryViewModel.setErrorNetwork()
+                    }
+
+                    override fun onNext(examsResult: ListExamsResult?) {
+                        if (examsResult != null) {
+                            mExamsResult = examsResult
+                        }
+                    }
+                })
+    }
+
+    private fun getDataFree(page: Int) {
+        mSubscription = apiService!!.getListFreeExams(page, 50)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(object : Subscriber<ListExamsResult>() {

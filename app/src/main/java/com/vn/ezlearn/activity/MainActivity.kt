@@ -22,11 +22,13 @@ import com.vn.ezlearn.config.AppConfig
 import com.vn.ezlearn.config.AppConstant
 import com.vn.ezlearn.config.EzlearnService
 import com.vn.ezlearn.databinding.ActivityMainBinding
+import com.vn.ezlearn.fragment.CategoryFragment
 import com.vn.ezlearn.fragment.CategoryMainFragment
 import com.vn.ezlearn.fragment.HomeFragment
 import com.vn.ezlearn.interfaces.NavigationItemSelected
 import com.vn.ezlearn.modelresult.BaseResult
 import com.vn.ezlearn.models.Category
+import com.vn.ezlearn.models.ContentByCategory
 import com.vn.ezlearn.viewmodel.MainViewModel
 import com.vn.ezlearn.widgets.CRecyclerView
 import rx.Subscriber
@@ -141,11 +143,11 @@ class MainActivity : AppCompatActivity(), NavigationItemSelected {
 
         //        fakeData();
         menuList = ArrayList()
-        menuList!!.add(Category(AppConstant.HOME_ID, getString(R.string.nav_home),
+        menuList!!.add(Category(AppConstant.HOME_ID.toString(), getString(R.string.nav_home),
                 Category.TYPE_NORMAL))
-        menuList!!.add(Category(AppConstant.FREE_ID, getString(R.string.nav_sample_exam),
+        menuList!!.add(Category(AppConstant.FREE_ID.toString(), getString(R.string.nav_sample_exam),
                 Category.TYPE_NORMAL))
-        menuList!!.add(Category(AppConstant.OFFLINE_ID, getString(R.string.nav_offline_exam),
+        menuList!!.add(Category(AppConstant.OFFLINE_ID.toString(), getString(R.string.nav_offline_exam),
                 Category.TYPE_NORMAL))
 
         menuList!!.add(Category(Category.TYPE_LINE))
@@ -155,7 +157,7 @@ class MainActivity : AppCompatActivity(), NavigationItemSelected {
             menuList!!.addAll(MyApplication.with(this).categoryResult!!.data!!)
         }
         menuList!!.add(Category(Category.TYPE_LINE))
-        menuList!!.add(Category(AppConstant.OFFLINE_ID, getString(R.string.nav_contact),
+        menuList!!.add(Category(AppConstant.OFFLINE_ID.toString(), getString(R.string.nav_contact),
                 Category.TYPE_NORMAL))
         navigationAdapter = NavigationAdapter(this, menuList!!, this)
         mainBinding!!.rvNavigation.adapter = navigationAdapter
@@ -169,7 +171,7 @@ class MainActivity : AppCompatActivity(), NavigationItemSelected {
             if (currentId != AppConstant.HOME_ID) {
                 changeFragment(HomeFragment())
                 currentId = AppConstant.HOME_ID
-                mainViewModel!!.setVisiableTabBar(AppConstant.HOME_ID)
+                mainViewModel!!.setVisiableTabBar(AppConstant.HOME_ID.toString())
                 toolbar!!.title = getString(R.string.nav_home)
             } else {
                 if (doubleBackToExitPressedOnce) {
@@ -220,17 +222,23 @@ class MainActivity : AppCompatActivity(), NavigationItemSelected {
 
     override fun onSelected(name: String, id: String, categoryList: List<Category>?) {
         mainViewModel!!.setVisiableTabBar(id)
-        if (id != currentId) {
-            if (id != AppConstant.HOME_ID) {
+        if (id.toInt() != currentId) {
+            if (id.toInt() != AppConstant.HOME_ID) {
                 if (mainBinding!!.drawerLayout.isDrawerOpen(GravityCompat.START)) {
                     mainBinding!!.drawerLayout.closeDrawer(GravityCompat.START)
                     toolbar!!.title = name
                 }
-                val categoryMainFragment = CategoryMainFragment()
-                if (categoryList != null) {
-                    categoryMainFragment.setCategoryList(categoryList)
+                if (id.toInt() > 0) {
+                    val categoryMainFragment = CategoryMainFragment()
+                    if (categoryList != null) {
+                        categoryMainFragment.setCategoryList(categoryList)
+                    }
+                    changeFragment(categoryMainFragment)
+                } else {
+                    changeFragment(CategoryFragment.newInstance(id.toInt(),
+                            ContentByCategory.CONTENT_TYPE_EXAM))
                 }
-                changeFragment(categoryMainFragment)
+
             } else {
 
                 if (mainBinding!!.drawerLayout.isDrawerOpen(GravityCompat.START)) {
@@ -241,7 +249,7 @@ class MainActivity : AppCompatActivity(), NavigationItemSelected {
             }
 
         }
-        currentId = id
+        currentId = id.toInt()
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

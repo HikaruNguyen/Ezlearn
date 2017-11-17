@@ -25,14 +25,39 @@ open class CRecyclerView : RecyclerView {
 
     fun init() {
         val layoutManager = LinearLayoutManager(context)
-        this.layoutManager = layoutManager
-        this.setHasFixedSize(true)
-        this.itemAnimator = DefaultItemAnimator()
+        this@CRecyclerView.layoutManager = layoutManager
+        this@CRecyclerView.setHasFixedSize(true)
+        this@CRecyclerView.itemAnimator = DefaultItemAnimator()
 
     }
 
     fun setDivider() {
-        this.addItemDecoration(
+        this@CRecyclerView.addItemDecoration(
                 DividerItemDecoration(context, DividerItemDecoration.VERTICAL_LIST))
+    }
+
+    private fun isReadyForPullEnd(): Boolean {
+        val lastView = this@CRecyclerView.getChildAt(this@CRecyclerView.childCount - 1)
+        val lastPosition = this@CRecyclerView.getChildAdapterPosition(lastView)
+        return if (lastPosition >= this@CRecyclerView.adapter.itemCount - 1) {
+            this@CRecyclerView.getChildAt(this@CRecyclerView.childCount - 1).bottom <=
+                    this@CRecyclerView.bottom
+        } else false
+    }
+
+    fun loadMore(loadMoreListener: LoadMoreListener) {
+        this@CRecyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView?, dx: Int, dy: Int) {
+                super.onScrolled(recyclerView, dx, dy)
+                if (this@CRecyclerView.isReadyForPullEnd()) {
+                    loadMoreListener.onScrolled()
+                }
+
+            }
+        })
+    }
+
+    interface LoadMoreListener {
+        fun onScrolled()
     }
 }

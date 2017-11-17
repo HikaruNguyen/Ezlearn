@@ -51,6 +51,5 @@ object AppUtils {
             e.printStackTrace()
         }
         return ""
-
     }
 }
