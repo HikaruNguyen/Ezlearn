@@ -22,7 +22,7 @@ class ItemHistoryBuyPackageViewModel(context: Context, historyBuyPackage: Histor
                 description.set(historyBuyPackage.description)
             }
             if (historyBuyPackage.price != null) {
-                price.set(AppUtils.formatMoney(historyBuyPackage.price)
+                price.set(AppUtils.formatMoney(historyBuyPackage.price!!)
                         + context.getString(R.string.vnd))
             } else {
                 price.set(context.getString(R.string.updating))
