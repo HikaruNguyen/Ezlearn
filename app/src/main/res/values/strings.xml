@@ -1,5 +1,6 @@
 <resources>
     <string name="app_name">Ezlearn</string>
+    <string name="app_description">Cổng luyện thi Tiếng anh online</string>
 
     <!--Common-->
     <string name="cancel">Thoát</string>
@@ -99,8 +100,8 @@
     <string name="deadline">Thời hạn:</string>
     <string name="free">Free</string>
     <string name="view">Lượt xem</string>
-    <string name="doing">Lượt làm bài</string>
-    <string name="price"><![CDATA[<b>Giá: </b>%1$d]]></string>
+    <string name="doing">Lượt thi</string>
+    <string name="price"><![CDATA[<b>Giá: </b>%1$s]]></string>
 
 
     <!--Login-->

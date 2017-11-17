@@ -28,7 +28,9 @@ class ItemDocumentViewModel(context: Context, document: Document?, isDownloaded:
                 name.set(document.name)
             }
             if (document.price != null) {
-                price.set(Html.fromHtml(context.getString(R.string.price, document.price)))
+
+                price.set(Html.fromHtml(context.getString(
+                        R.string.price, document.price.toString()) +context.getString(R.string.vnd)))
             }
             if (document.file_url != null) {
                 if (document.file_url!!.endsWith("doc") || document.file_url!!.endsWith("docx")) {

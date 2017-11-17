@@ -4,8 +4,9 @@ import android.content.Context
 import android.databinding.BaseObservable
 import android.databinding.ObservableField
 import android.databinding.ObservableInt
+import android.text.Html
+import android.text.Spanned
 import android.view.View
-
 import com.vn.ezlearn.R
 import com.vn.ezlearn.models.Exam
 import com.vn.ezlearn.utils.AppUtils
@@ -18,9 +19,9 @@ class ItemExamViewModel(private val context: Context, private val exam: Exam?) :
     var name: ObservableField<String> = ObservableField()
     var time: ObservableField<String> = ObservableField()
     var dateStartEnd: ObservableField<String> = ObservableField()
-    var totalQuestion: ObservableField<String> = ObservableField()
     var viewCount: ObservableField<String> = ObservableField()
     var doingCount: ObservableField<String> = ObservableField()
+    var price: ObservableField<Spanned> = ObservableField()
 
     var visiableFree: ObservableInt = ObservableInt(View.GONE)
 
@@ -55,7 +56,17 @@ class ItemExamViewModel(private val context: Context, private val exam: Exam?) :
             } else {
                 viewCount.set(context.getString(R.string.updating))
             }
-            totalQuestion.set(context.getString(R.string.updating))
+            if (exam.is_free == 1) {
+                price.set(Html.fromHtml(context.getString(R.string.price, context.getString(R.string.free))))
+            } else {
+                if (exam.price != null) {
+                    price.set(Html.fromHtml(context.getString(
+                            R.string.price, exam.price.toString()) +context.getString(R.string.vnd)))
+                } else {
+                    viewCount.set(context.getString(R.string.updating))
+                }
+            }
+
         }
     }
 }
