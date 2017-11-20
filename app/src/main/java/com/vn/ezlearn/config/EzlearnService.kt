@@ -6,6 +6,7 @@ import com.vn.ezlearn.BuildConfig
 import com.vn.ezlearn.modelresult.*
 import com.vn.ezlearn.models.HistoryBuyPackage
 import com.vn.ezlearn.models.HistoryExam
+import com.vn.ezlearn.models.HistoryPayment
 import com.vn.ezlearn.network.RxErrorHandlingCallAdapterFactory
 import okhttp3.Cache
 import okhttp3.OkHttpClient
@@ -62,6 +63,10 @@ interface EzlearnService {
     @GET("index.php?r=user/history-charging")
     fun getHistoryBuyPackage(@Query("page") page: Int, @Query("per-page") per_page: Int):
             Observable<HistoryResult<HistoryBuyPackage>>
+
+    @GET("index.php?r=user/history-buy-card")
+    fun getHistoryPayment(@Query("page") page: Int, @Query("per-page") per_page: Int):
+            Observable<HistoryResult<HistoryPayment>>
 
     object Factory {
 

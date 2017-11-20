@@ -11,11 +11,13 @@ import com.vn.ezlearn.R
 import com.vn.ezlearn.activity.MyApplication
 import com.vn.ezlearn.adapter.HistoryBuyPackageAdapter
 import com.vn.ezlearn.adapter.HistoryExamAdapter
+import com.vn.ezlearn.adapter.HistoryPaymentAdapter
 import com.vn.ezlearn.config.EzlearnService
 import com.vn.ezlearn.databinding.FragmentHistoryExamBinding
 import com.vn.ezlearn.modelresult.HistoryResult
 import com.vn.ezlearn.models.HistoryBuyPackage
 import com.vn.ezlearn.models.HistoryExam
+import com.vn.ezlearn.models.HistoryPayment
 import rx.Subscriber
 import rx.Subscription
 import rx.android.schedulers.AndroidSchedulers
@@ -31,6 +33,7 @@ class HistoryExamFragment : Fragment() {
     private var mSubscription: Subscription? = null
     private lateinit var adapterHistoryExam: HistoryExamAdapter
     private lateinit var adapterHistoryBuyPackage: HistoryBuyPackageAdapter
+    private lateinit var adapterHistoryPayment: HistoryPaymentAdapter
     private var historyType: Int? = TYPE_EXAM
     private var current_page = 1
 
@@ -58,9 +61,9 @@ class HistoryExamFragment : Fragment() {
                 getListHistoryExam(current_page)
             }
             TYPE_PAYMENT -> {
-                adapterHistoryExam = HistoryExamAdapter(activity, ArrayList())
-                historyExamBinding.rvHistoryHome.adapter = adapterHistoryExam
-                getListHistoryExam(current_page)
+                adapterHistoryPayment = HistoryPaymentAdapter(activity, ArrayList())
+                historyExamBinding.rvHistoryHome.adapter = adapterHistoryPayment
+                getListHistoryPayment(current_page)
             }
             TYPE_BUY_PACKAGE -> {
                 adapterHistoryBuyPackage = HistoryBuyPackageAdapter(activity, ArrayList())
@@ -121,6 +124,33 @@ class HistoryExamFragment : Fragment() {
                     }
 
                     override fun onNext(historyResult: HistoryResult<HistoryBuyPackage>?) {
+                        if (historyResult != null) {
+                            mHistoryResult = historyResult
+                        }
+                    }
+                })
+    }
+
+    private fun getListHistoryPayment(page: Int) {
+        var mHistoryResult: HistoryResult<HistoryPayment>? = null
+        apiService = MyApplication.with(activity).getEzlearnService()
+        mSubscription = apiService!!.getHistoryPayment(page, 5)
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(object : Subscriber<HistoryResult<HistoryPayment>>() {
+                    override fun onCompleted() {
+                        if (mHistoryResult!!.success && mHistoryResult!!.data != null
+                                && mHistoryResult?.data!!.list != null
+                                && mHistoryResult?.data!!.list!!.isNotEmpty()) {
+                            adapterHistoryPayment.addAll(mHistoryResult?.data!!.list!!)
+                        }
+                    }
+
+                    override fun onError(e: Throwable) {
+
+                    }
+
+                    override fun onNext(historyResult: HistoryResult<HistoryPayment>?) {
                         if (historyResult != null) {
                             mHistoryResult = historyResult
                         }

@@ -34,7 +34,7 @@ class HistoryTransactionFragment : Fragment() {
 
     private fun bindData() {
         fragmentList = ArrayList()
-        fragmentList.add(HistoryExamFragment())
+        fragmentList.add(HistoryExamFragment.newInstance(HistoryExamFragment.TYPE_PAYMENT))
         fragmentList.add(HistoryExamFragment.newInstance(HistoryExamFragment.TYPE_BUY_PACKAGE))
         viewPagerAdapter = ViewPagerAdapter(childFragmentManager, fragmentList)
         historyTransactionBinding.viewPager.adapter = viewPagerAdapter

@@ -80,6 +80,11 @@
     <string name="review">Xem lại</string>
     <string name="retesting">Thi lại ngay</string>
 
+    <!--HistoryPayment-->
+    <string name="channel_payment"><![CDATA[<b>Loại giao dịch: </b>%1$s]]></string>
+    <string name="description_payment"><![CDATA[<b>Mô tả: </b>Nạp thẻ %1$s]]></string>
+    <string name="amount_payment"><![CDATA[<b>Số tiền nạp: </b>%1$s]]></string>
+
     <!--Category-->
     <string name="tab_lesson">Bài giảng</string>
     <string name="tab_exam">Đề thi</string>
@@ -130,9 +135,6 @@
     <string name="time_answer"><![CDATA[Thời gian làm bài: <b>%1$d Giờ: %2$d Phút: %3$d Giây</b>]]></string>
     <string name="review_answer">Xem đáp án</string>
     <string name="hint">Gợi ý</string>
-
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 
 </resources>
