@@ -14,7 +14,7 @@ import com.daimajia.slider.library.SliderTypes.BaseSliderView
 import com.daimajia.slider.library.SliderTypes.DefaultSliderView
 import com.vn.ezlearn.R
 import com.vn.ezlearn.activity.TestActivity
-import com.vn.ezlearn.config.AppConfig
+import com.vn.ezlearn.config.UserConfig
 import com.vn.ezlearn.databinding.ItemHomeExamsBinding
 import com.vn.ezlearn.databinding.ItemHomeHeaderBinding
 import com.vn.ezlearn.databinding.ItemHomeSlideBinding
@@ -97,7 +97,7 @@ class HomeAdapter(context: Context, list: MutableList<HomeObject>) :
             val itemExamViewModel = ItemExamViewModel(mContext, list[position].exam)
             itemHomeExamsBinding.itemExamViewModel = itemExamViewModel
             itemHomeExamsBinding.lnExam.setOnClickListener {
-                if (!AppConfig.getInstance(mContext).token.isEmpty()) {
+                if (!UserConfig.getInstance(mContext).token.isEmpty()) {
                     val intent = Intent(mContext, TestActivity::class.java)
                     if (list[position].exam != null) {
                         intent.putExtra(TestActivity.KEY_ID, list[position].exam!!.id)

@@ -20,6 +20,7 @@ import com.vn.ezlearn.adapter.NavigationAdapter
 import com.vn.ezlearn.config.AppConfig
 import com.vn.ezlearn.config.AppConstant
 import com.vn.ezlearn.config.EzlearnService
+import com.vn.ezlearn.config.UserConfig
 import com.vn.ezlearn.databinding.ActivityMainBinding
 import com.vn.ezlearn.fragment.CategoryFragment
 import com.vn.ezlearn.fragment.CategoryMainFragment
@@ -68,7 +69,7 @@ class MainActivity : AppCompatActivity(), NavigationItemSelected {
                 mainBinding.drawerLayout.closeDrawer(GravityCompat.START)
             }
             val intent: Intent
-            if (!AppConfig.getInstance(this@MainActivity).token.isEmpty()) {
+            if (!UserConfig.getInstance(this@MainActivity).token.isEmpty()) {
                 intent = Intent(this@MainActivity, UserProfile::class.java)
                 startActivity(intent)
             } else {

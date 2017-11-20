@@ -5,9 +5,8 @@ import android.databinding.BaseObservable
 import android.databinding.ObservableField
 import android.databinding.ObservableInt
 import android.view.View
-
 import com.vn.ezlearn.R
-import com.vn.ezlearn.config.AppConfig
+import com.vn.ezlearn.config.UserConfig
 import com.vn.ezlearn.utils.AppUtils
 
 /**
@@ -27,14 +26,14 @@ class MainViewModel(var context: Context) : BaseObservable() {
     }
 
     fun updateProfile() {
-        if (!AppConfig.getInstance(context).token.isEmpty()) {
-            name.set(AppConfig.getInstance(context).name)
-            email.set(AppConfig.getInstance(context).email)
+        if (!UserConfig.getInstance(context).token.isEmpty()) {
+            name.set(UserConfig.getInstance(context).name)
+            email.set(UserConfig.getInstance(context).email)
             visiableProfile.set(View.VISIBLE)
             wallet.set(context.getString(R.string.wallet,
-                    AppUtils.formatMoney(AppConfig.getInstance(context).wallet)))
+                    AppUtils.formatMoney(UserConfig.getInstance(context).wallet)))
             user_package.set(context.getString(R.string.service_package,
-                    AppConfig.getInstance(context).user_package))
+                    UserConfig.getInstance(context).user_package))
         } else {
             name.set(context.getString(R.string.login))
             visiableProfile.set(View.GONE)

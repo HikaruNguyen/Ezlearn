@@ -91,9 +91,9 @@ interface EzlearnService {
             val httpClient = OkHttpClient.Builder()
             httpClient.addInterceptor { chain ->
                 val builder = chain.request().newBuilder()
-                if (!AppConfig.getInstance(context).token.isEmpty()) {
+                if (!UserConfig.getInstance(context).token.isEmpty()) {
                     builder.addHeader("Authorization", "Bearer "
-                            + AppConfig.getInstance(context).token)
+                            + UserConfig.getInstance(context).token)
                 }
                 chain.proceed(builder.build())
                         .newBuilder()

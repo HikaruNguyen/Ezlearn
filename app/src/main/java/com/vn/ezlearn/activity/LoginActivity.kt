@@ -6,8 +6,8 @@ import android.databinding.DataBindingUtil
 import android.os.Bundle
 import android.widget.Toast
 import com.vn.ezlearn.R
-import com.vn.ezlearn.config.AppConfig
 import com.vn.ezlearn.config.EzlearnService
+import com.vn.ezlearn.config.UserConfig
 import com.vn.ezlearn.databinding.ActivityLoginBinding
 import com.vn.ezlearn.modelresult.LoginResult
 import com.vn.ezlearn.modelresult.UserInfoResult
@@ -64,9 +64,9 @@ class LoginActivity : BaseActivity() {
                                 Toast.makeText(this@LoginActivity, getString(R.string.login_success),
                                         Toast.LENGTH_SHORT).show()
                             }
-                            AppConfig.getInstance(this@LoginActivity).token =
+                            UserConfig.getInstance(this@LoginActivity).token =
                                     mLoginResult.data!!.access_token!!
-                            AppConfig.getInstance(this@LoginActivity).name =
+                            UserConfig.getInstance(this@LoginActivity).name =
                                     mLoginResult.data!!.display_name!!
                             getUserProfile()
                         } else if (mLoginResult.data != null) {
@@ -113,13 +113,13 @@ class LoginActivity : BaseActivity() {
                             if (mUserInfoResult.data?.user_packages != null &&
                                     mUserInfoResult.data?.user_packages?.size!! > 0) {
                                 if (mUserInfoResult.data?.user_packages?.get(0)?.code_name != null) {
-                                    AppConfig.getInstance(this@LoginActivity).user_package =
+                                    UserConfig.getInstance(this@LoginActivity).user_package =
                                             mUserInfoResult.data?.user_packages?.get(0)?.code_name!!
                                 }
                             }
                             if (mUserInfoResult.data?.user != null) {
                                 if (mUserInfoResult.data?.user?.wallet != null) {
-                                    AppConfig.getInstance(this@LoginActivity).wallet =
+                                    UserConfig.getInstance(this@LoginActivity).wallet =
                                             mUserInfoResult.data?.user!!.wallet!!
                                 }
 
