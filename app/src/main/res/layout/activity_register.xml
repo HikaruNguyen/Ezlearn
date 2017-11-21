@@ -3,36 +3,54 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
 
-        <RelativeLayout
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/bg_intro1"
+        tools:context="com.vn.ezlearn.activity.LoginActivity">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@android:color/transparent"
+            app:layout_collapseMode="pin"
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+
+        <com.vn.ezlearn.widgets.ResizableImageViewByWidth
+            android:id="@+id/imageEngland"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:alpha="0.7"
+            android:src="@mipmap/england"
+            android:tint="@color/bg_main" />
+
+        <ScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/white"
-            tools:context="com.vn.ezlearn.activity.LoginActivity">
+            android:layout_below="@+id/toolbar"
+            android:clickable="false">
 
             <LinearLayout
                 android:id="@+id/lnHeader"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
+                android:clickable="false"
                 android:orientation="vertical">
 
                 <LinearLayout
                     android:id="@+id/lnForm"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/bg_intro1"
                     android:gravity="center"
                     android:orientation="vertical"
                     android:padding="@dimen/margin_10dp">
 
                     <TextView
-                        android:id="@+id/imgLogo"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-
                         android:gravity="center"
                         android:text="@string/app_name"
                         android:textColor="@color/white"
@@ -48,76 +66,115 @@
                         android:textSize="@dimen/text_size_15sp" />
                 </LinearLayout>
 
-                <LinearLayout
+                <android.support.v7.widget.CardView
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:gravity="center"
-                    android:orientation="vertical"
-                    android:padding="@dimen/margin_16dp">
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/margin_16dp"
+                    app:cardCornerRadius="@dimen/margin_5dp">
 
-                    <EditText
-                        android:id="@+id/edLastName"
+                    <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="@string/last_name"
-                        android:imeOptions="actionNext"
-                        android:maxLines="1"
-                        android:singleLine="true" />
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        android:padding="@dimen/margin_10dp">
 
-                    <EditText
-                        android:id="@+id/edFirstName"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="@string/first_name"
-                        android:imeOptions="actionNext"
-                        android:maxLines="1"
-                        android:singleLine="true" />
+                        <android.support.design.widget.TextInputLayout
+                            android:id="@+id/tilLastName"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
 
-                    <EditText
-                        android:id="@+id/edUserName"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="@string/user_name"
-                        android:imeOptions="actionNext"
-                        android:maxLines="1"
-                        android:singleLine="true" />
+                            <android.support.design.widget.TextInputEditText
+                                android:id="@+id/edLastName"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:hint="@string/last_name"
+                                android:imeOptions="actionNext"
+                                android:maxLines="1"
+                                android:singleLine="true" />
+                        </android.support.design.widget.TextInputLayout>
 
-                    <EditText
-                        android:id="@+id/edPassword"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="@string/password"
-                        android:imeOptions="actionDone"
-                        android:inputType="textPassword"
-                        android:maxLines="1"
-                        android:singleLine="true" />
-                </LinearLayout>
+                        <android.support.design.widget.TextInputLayout
+                            android:id="@+id/tilFirstName"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <android.support.design.widget.TextInputEditText
+                                android:id="@+id/edFirstName"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:hint="@string/first_name"
+                                android:imeOptions="actionNext"
+                                android:maxLines="1"
+                                android:singleLine="true" />
+
+                        </android.support.design.widget.TextInputLayout>
+
+                        <android.support.design.widget.TextInputLayout
+                            android:id="@+id/tilUserName"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <android.support.design.widget.TextInputEditText
+                                android:id="@+id/edUserName"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:hint="@string/user_name"
+                                android:imeOptions="actionNext"
+                                android:maxLines="1"
+                                android:singleLine="true" />
+                        </android.support.design.widget.TextInputLayout>
+
+                        <android.support.design.widget.TextInputLayout
+                            android:id="@+id/tilPassword"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <android.support.design.widget.TextInputEditText
+                                android:id="@+id/edPassword"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:hint="@string/password"
+                                android:imeOptions="actionDone"
+                                android:inputType="textPassword"
+                                android:maxLines="1"
+                                android:singleLine="true" />
+                        </android.support.design.widget.TextInputLayout>
+                        <android.support.design.widget.TextInputLayout
+                            android:id="@+id/tilRePassword"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <android.support.design.widget.TextInputEditText
+                                android:id="@+id/edRePassword"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:hint="@string/password"
+                                android:imeOptions="actionDone"
+                                android:inputType="textPassword"
+                                android:maxLines="1"
+                                android:singleLine="true" />
+                        </android.support.design.widget.TextInputLayout>
+
+                        <Button
+                            android:id="@+id/btnRegister"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/margin_30dp"
+                            android:background="@drawable/bg_button"
+                            android:text="@string/register"
+                            android:textColor="@color/white" />
+                    </LinearLayout>
+
+                </android.support.v7.widget.CardView>
+
+
             </LinearLayout>
 
 
-            <Button
-                android:id="@+id/btnRegister"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_above="@+id/imageEngland"
-                android:layout_below="@+id/lnHeader"
-                android:layout_marginBottom="@dimen/margin_16dp"
-                android:layout_marginLeft="@dimen/margin_16dp"
-                android:layout_marginRight="@dimen/margin_16dp"
-                android:background="@drawable/bg_button"
-                android:text="@string/register"
-                android:textColor="@color/white" />
+        </ScrollView>
 
-
-            <android.support.v7.widget.Toolbar
-                android:id="@+id/toolbar"
-                android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
-                android:background="@android:color/transparent"
-                app:layout_collapseMode="pin"
-                app:popupTheme="@style/ThemeOverlay.AppCompat.Dark" />
-        </RelativeLayout>
-    </ScrollView>
+    </RelativeLayout>
 
 
 </layout>

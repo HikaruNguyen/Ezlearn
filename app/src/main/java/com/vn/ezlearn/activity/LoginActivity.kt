@@ -2,6 +2,7 @@ package com.vn.ezlearn.activity
 
 import android.app.Activity
 import android.app.ProgressDialog
+import android.content.Intent
 import android.databinding.DataBindingUtil
 import android.os.Bundle
 import android.widget.Toast
@@ -39,6 +40,10 @@ class LoginActivity : BaseActivity() {
                 login(username, password)
             }
         }
+        loginBinding.tvRegisterNew.setOnClickListener {
+            val intent = Intent(this@LoginActivity, RegisterActivity::class.java)
+            startActivityForResult(intent, REGISTER_REQUEST)
+        }
     }
 
     private fun validateEmpty(username: String, password: String) {
@@ -62,11 +67,12 @@ class LoginActivity : BaseActivity() {
 
 
     private fun login(username: String, password: String) {
-        progressDialog = ProgressDialog.show(this, "", getString(R.string.loading), true, false)
-        apiService = MyApplication.with(this).getEzlearnService()
+        progressDialog = ProgressDialog.show(this@LoginActivity, "",
+                getString(R.string.loading), true, false)
+        apiService = MyApplication.with(this@LoginActivity).getEzlearnService()
         if (mSubscription != null && !mSubscription!!.isUnsubscribed)
             mSubscription!!.unsubscribe()
-        mSubscription = apiService.getLogin(username, password)
+        mSubscription = apiService.getLogin(username = username, password = password)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(object : Subscriber<LoginResult>() {
@@ -166,5 +172,6 @@ class LoginActivity : BaseActivity() {
 
     companion object {
         val LOGIN_REQUEST = 11
+        val REGISTER_REQUEST = 12
     }
 }

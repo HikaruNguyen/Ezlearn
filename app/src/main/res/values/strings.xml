@@ -110,7 +110,7 @@
     <string name="price"><![CDATA[<b>Giá: </b>%1$s]]></string>
 
 
-    <!--Login-->
+    <!--Login Register-->
     <string name="login">ĐĂNG NHẬP</string>
     <string name="loginFacebook">Đăng nhập với Facebook</string>
     <string name="loginGoogle">Đăng nhập với G+</string>
@@ -118,9 +118,14 @@
     <string name="password">Mật khẩu</string>
     <string name="register">Đăng ký</string>
     <string name="register_new">Đăng ký mới</string>
+    <string name="please_input_first_name">Tên không được để trống!</string>
+    <string name="please_input_last_name">Họ không được để trống!</string>
     <string name="please_input_username">Tên đăng nhập không được để trống!</string>
     <string name="please_input_password">Mật khẩu không được để trống</string>
+    <string name="please_input_re_password">Mật khẩu xác nhận không được để trống</string>
+    <string name="re_password_not_correct">Mật khẩu xác nhận không chính xác</string>
     <string name="login_success">Đăng nhập thành công!</string>
+    <string name="register_success">Đăng ký thành công!</string>
 
     <string name="logout_success">Đăng xuất thành công!</string>
     <string name="needLogin">Xin vui lòng đăng nhập để làm bài thi</string>

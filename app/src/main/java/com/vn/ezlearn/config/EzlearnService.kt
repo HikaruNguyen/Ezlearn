@@ -13,8 +13,7 @@ import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import retrofit2.http.GET
-import retrofit2.http.Query
+import retrofit2.http.*
 import rx.Observable
 import java.util.concurrent.TimeUnit
 
@@ -49,6 +48,12 @@ interface EzlearnService {
     @GET("index.php?r=user/login")
     fun getLogin(@Query("username") username: String,
                  @Query("password") password: String): Observable<LoginResult>
+
+    @FormUrlEncoded
+    @POST("index.php?r=user/register")
+    fun postRegister(@Field("username") username: String, @Field("password") password: String,
+                     @Field("first_name") firstName: String, @Field("last_name") lastName: String):
+            Observable<LoginResult>
 
     @GET("index.php?r=subjects/begin-test")
     fun getContentExam(@Query("id") id: Int): Observable<QuestionResult>
