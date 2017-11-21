@@ -24,7 +24,7 @@ class LoginActivity : BaseActivity() {
     private lateinit var progressDialog: ProgressDialog
     private var isAttach = true
     private lateinit var mUserInfoResult: UserInfoResult
-
+    private var isErrorValidate = false
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         loginBinding = DataBindingUtil.setContentView(this, R.layout.activity_login)
@@ -34,17 +34,32 @@ class LoginActivity : BaseActivity() {
         loginBinding.btnLogin.setOnClickListener {
             val username = loginBinding.edUserName.text.toString()
             val password = loginBinding.edPassword.text.toString()
-            when {
-                username.isEmpty() -> Toast.makeText(this@LoginActivity,
-                        getString(R.string.please_input_username),
-                        Toast.LENGTH_SHORT).show()
-                password.isEmpty() -> Toast.makeText(this@LoginActivity,
-                        getString(R.string.please_input_password),
-                        Toast.LENGTH_SHORT).show()
-                else -> login(username, password)
+            validateEmpty(username, password)
+            if (!isErrorValidate) {
+                login(username, password)
             }
         }
     }
+
+    private fun validateEmpty(username: String, password: String) {
+        isErrorValidate = true
+        if (username.isEmpty() && password.isEmpty()) {
+            loginBinding.tplUserName.error = getString(R.string.please_input_username)
+            loginBinding.tplPassword.error = getString(R.string.please_input_password)
+        } else if (username.isEmpty()) {
+            loginBinding.tplUserName.error = getString(R.string.please_input_username)
+            loginBinding.tplPassword.error = null
+        } else if (password.isEmpty()) {
+            loginBinding.tplPassword.error = getString(R.string.please_input_password)
+            loginBinding.tplUserName.error = null
+        } else {
+            loginBinding.tplUserName.error = null
+            loginBinding.tplPassword.error = null
+            isErrorValidate = false
+        }
+
+    }
+
 
     private fun login(username: String, password: String) {
         progressDialog = ProgressDialog.show(this, "", getString(R.string.loading), true, false)
