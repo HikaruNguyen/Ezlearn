@@ -17,7 +17,6 @@ import android.view.MenuItem
 import android.widget.Toast
 import com.vn.ezlearn.R
 import com.vn.ezlearn.adapter.NavigationAdapter
-import com.vn.ezlearn.config.AppConfig
 import com.vn.ezlearn.config.AppConstant
 import com.vn.ezlearn.config.EzlearnService
 import com.vn.ezlearn.config.UserConfig
@@ -99,7 +98,7 @@ class MainActivity : AppCompatActivity(), NavigationItemSelected {
                                 Toast.makeText(this@MainActivity, getString(R.string.logout_success),
                                         Toast.LENGTH_SHORT).show()
                             }
-                            AppConfig.getInstance(this@MainActivity).clearData()
+                            UserConfig.getInstance(this@MainActivity).clearData()
                             mainViewModel.updateProfile()
                         } else {
                             Toast.makeText(this@MainActivity, getString(R.string.error_connect),

@@ -43,4 +43,7 @@
     <color name="point_7">#3498db</color>
     <color name="point_9">#27ae60</color>
     <color name="point_10">#2ecc71</color>
+
+    <color name="blue_facebook">#4267B2</color>
+    <color name="red_google">#DD4B39</color>
 </resources>

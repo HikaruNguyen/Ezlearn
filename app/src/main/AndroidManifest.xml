@@ -42,7 +42,7 @@
         <activity
             android:name=".activity.ShowPointActivity"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".activity.RegisterActivity"></activity>
+        <activity android:name=".activity.RegisterActivity"/>
     </application>
 
 </manifest>
