@@ -260,7 +260,8 @@ class TestActivity : BaseActivity(), ChangeQuestionListener, OnCheckAnswerListen
     }
 
     private fun calculateScore() {
-        countDownTimer!!.cancel()
+        if (time > 0)
+            countDownTimer!!.cancel()
         val hours = seconds / 3600
         val minutes = seconds % 3600 / 60
         seconds %= 60
@@ -343,27 +344,27 @@ class TestActivity : BaseActivity(), ChangeQuestionListener, OnCheckAnswerListen
     }
 
     private fun countDown() {
-        countDownTimer = object : CountDownTimer(time, 1000) { // adjust the milli seconds here
-
-            @SuppressLint("DefaultLocale")
-            override fun onTick(millisUntilFinished: Long) {
-                seconds++
-                testBinding!!.toolbar.title = String.format(FORMAT,
-                        TimeUnit.MILLISECONDS.toHours(millisUntilFinished),
-                        TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished) - TimeUnit.HOURS.toMinutes(
-                                TimeUnit.MILLISECONDS.toHours(millisUntilFinished)),
-                        TimeUnit.MILLISECONDS.toSeconds(millisUntilFinished) - TimeUnit.MINUTES.toSeconds(
-                                TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished)))
-
-            }
-
-            override fun onFinish() {
-//                testViewModel!!.updateTitleToolbar(getString(R.string.time_out))
-                testBinding!!.toolbar.title = getString(R.string.time_out)
-                calculateScore()
-            }
-        }
         if (time >= 0) {
+            countDownTimer = object : CountDownTimer(time, 1000) { // adjust the milli seconds here
+
+                @SuppressLint("DefaultLocale")
+                override fun onTick(millisUntilFinished: Long) {
+                    seconds++
+                    testBinding!!.toolbar.title = String.format(FORMAT,
+                            TimeUnit.MILLISECONDS.toHours(millisUntilFinished),
+                            TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished) - TimeUnit.HOURS.toMinutes(
+                                    TimeUnit.MILLISECONDS.toHours(millisUntilFinished)),
+                            TimeUnit.MILLISECONDS.toSeconds(millisUntilFinished) - TimeUnit.MINUTES.toSeconds(
+                                    TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished)))
+
+                }
+
+                override fun onFinish() {
+//                testViewModel!!.updateTitleToolbar(getString(R.string.time_out))
+                    testBinding!!.toolbar.title = getString(R.string.time_out)
+                    calculateScore()
+                }
+            }
             countDownTimer!!.start()
         }
 

@@ -23,6 +23,7 @@ import com.vn.ezlearn.config.UserConfig
 import com.vn.ezlearn.databinding.ActivityMainBinding
 import com.vn.ezlearn.fragment.CategoryFragment
 import com.vn.ezlearn.fragment.CategoryMainFragment
+import com.vn.ezlearn.fragment.ContactFragment
 import com.vn.ezlearn.fragment.HomeFragment
 import com.vn.ezlearn.interfaces.NavigationItemSelected
 import com.vn.ezlearn.modelresult.BaseResult
@@ -151,7 +152,7 @@ class MainActivity : AppCompatActivity(), NavigationItemSelected {
             menuList!!.addAll(MyApplication.with(this).categoryResult!!.data!!)
         }
         menuList!!.add(Category(Category.TYPE_LINE))
-        menuList!!.add(Category(AppConstant.OFFLINE_ID.toString(), getString(R.string.nav_contact),
+        menuList!!.add(Category(AppConstant.CONTACT_ID.toString(), getString(R.string.nav_contact),
                 Category.TYPE_NORMAL))
         navigationAdapter = NavigationAdapter(this, menuList!!, this)
         mainBinding.rvNavigation.adapter = navigationAdapter
@@ -222,14 +223,16 @@ class MainActivity : AppCompatActivity(), NavigationItemSelected {
                     mainBinding.drawerLayout.closeDrawer(GravityCompat.START)
                     mainBinding.toolbar!!.title = name
                 }
-                if (id.toInt() > 0) {
-                    val categoryMainFragment = CategoryMainFragment()
-                    if (categoryList != null) {
-                        categoryMainFragment.setCategoryList(categoryList)
+                when {
+                    id.toInt() == AppConstant.CONTACT_ID -> changeFragment(ContactFragment())
+                    id.toInt() > 0 -> {
+                        val categoryMainFragment = CategoryMainFragment()
+                        if (categoryList != null) {
+                            categoryMainFragment.setCategoryList(categoryList)
+                        }
+                        changeFragment(categoryMainFragment)
                     }
-                    changeFragment(categoryMainFragment)
-                } else {
-                    changeFragment(CategoryFragment.newInstance(id.toInt(),
+                    else -> changeFragment(CategoryFragment.newInstance(id.toInt(),
                             ContentByCategory.CONTENT_TYPE_EXAM))
                 }
 

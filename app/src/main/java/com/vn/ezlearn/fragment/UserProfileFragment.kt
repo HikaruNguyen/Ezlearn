@@ -31,7 +31,7 @@ class UserProfileFragment : Fragment() {
     private lateinit var mUserInfoResult: UserInfoResult
     private lateinit var userInfoViewModel: UserInfoViewModel
     private var userInfoCallBack: UserInfoCallBack? = null
-
+    private var isAttach = true
     fun setUserInfoCallBack(userInfoCallBack: UserInfoCallBack) {
         this.userInfoCallBack = userInfoCallBack
     }
@@ -53,18 +53,21 @@ class UserProfileFragment : Fragment() {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(object : Subscriber<UserInfoResult>() {
                     override fun onCompleted() {
-                        if (mUserInfoResult.success!! && mUserInfoResult.data != null) {
-                            userInfoViewModel = UserInfoViewModel(activity, mUserInfoResult.data)
-                            userProfileBinding!!.userInfoViewModel = userInfoViewModel
-                            if (mUserInfoResult.data?.user_packages != null) {
-                                val userPackageAdapter = UserPackageAdapter(activity, ArrayList())
-                                userProfileBinding!!.rvUserPackage.adapter = userPackageAdapter
-                                userPackageAdapter.addAll(mUserInfoResult.data!!.user_packages!!)
-                            }
-                            if (mUserInfoResult.data?.user != null) {
-                                userInfoCallBack?.onLoadUserInfoSuccess(mUserInfoResult.data?.user)
+                        if (isAttach) {
+                            if (mUserInfoResult.success!! && mUserInfoResult.data != null) {
+                                userInfoViewModel = UserInfoViewModel(activity, mUserInfoResult.data)
+                                userProfileBinding!!.userInfoViewModel = userInfoViewModel
+                                if (mUserInfoResult.data?.user_packages != null) {
+                                    val userPackageAdapter = UserPackageAdapter(activity, ArrayList())
+                                    userProfileBinding!!.rvUserPackage.adapter = userPackageAdapter
+                                    userPackageAdapter.addAll(mUserInfoResult.data!!.user_packages!!)
+                                }
+                                if (mUserInfoResult.data?.user != null) {
+                                    userInfoCallBack?.onLoadUserInfoSuccess(mUserInfoResult.data?.user)
+                                }
                             }
                         }
+
                     }
 
                     override fun onError(e: Throwable) {
@@ -79,4 +82,13 @@ class UserProfileFragment : Fragment() {
                 })
     }
 
+    override fun onDetach() {
+        super.onDetach()
+        isAttach = false
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        isAttach = false
+    }
 }

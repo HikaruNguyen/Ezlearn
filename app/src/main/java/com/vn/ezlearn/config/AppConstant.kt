@@ -9,6 +9,6 @@ interface AppConstant {
         val HOME_ID = -1
         val FREE_ID = -2
         val OFFLINE_ID = -3
-        val SETTING_ID = -4
+        val CONTACT_ID = -4
     }
 }

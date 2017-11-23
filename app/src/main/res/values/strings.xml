@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">Ezlearn</string>
-    <string name="app_description">Cổng luyện thi Tiếng anh online</string>
+    <string name="app_description">Cổng luyện thi Tiếng anh trực tuyến</string>
 
     <!--Common-->
     <string name="cancel">Thoát</string>
@@ -145,6 +145,12 @@
     <string name="time_answer"><![CDATA[Thời gian làm bài: <b>%1$d Giờ: %2$d Phút: %3$d Giây</b>]]></string>
     <string name="review_answer">Xem đáp án</string>
     <string name="hint">Gợi ý</string>
+
+    <!--Contact-->
+    <string name="address_contact">Địa chỉ số 1: 35 Vũ Trọng Phụng, Thanh Xuân, Hà Nội</string>
+    <string name="tel_contact">Tel: 08.882.00.161</string>
+    <string name="email_contact">Email: luyenthi.ezlearn@gmail.com</string>
+    <string name="skype_contact">Skype: luyenthi.ezlearn@gmail.com</string>
 
 
 </resources>
