@@ -152,5 +152,11 @@
     <string name="email_contact">Email: luyenthi.ezlearn@gmail.com</string>
     <string name="skype_contact">Skype: luyenthi.ezlearn@gmail.com</string>
 
+    <!--Select Level-->
+    <string name="select_study_level">Chọn Cấp học</string>
+    <string name="select_degree">Chọn Trình độ</string>
+    <string name="you_can_change_later">Bạn có thể chỉnh sửa lại sau này</string>
+    <string name="you_cant_change_late">Bạn có thể chỉnh sửa lại sau này</string>
+
 
 </resources>

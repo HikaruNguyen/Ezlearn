@@ -4,13 +4,12 @@ import android.content.Intent
 import android.databinding.DataBindingUtil
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
-
 import com.vn.ezlearn.R
+import com.vn.ezlearn.config.AppConfig
 import com.vn.ezlearn.config.EzlearnService
 import com.vn.ezlearn.databinding.ActivitySplashBinding
 import com.vn.ezlearn.modelresult.CategoryResult
 import com.vn.ezlearn.models.Category
-
 import rx.Subscriber
 import rx.Subscription
 import rx.android.schedulers.AndroidSchedulers
@@ -21,7 +20,7 @@ class SplashActivity : AppCompatActivity() {
     private var apiService: EzlearnService? = null
     private var mSubscription: Subscription? = null
     private lateinit var mCategoryResult: CategoryResult
-
+    private var isAttach = true
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         splashBinding = DataBindingUtil.setContentView(this, R.layout.activity_splash)
@@ -37,7 +36,7 @@ class SplashActivity : AppCompatActivity() {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(object : Subscriber<CategoryResult>() {
                     override fun onCompleted() {
-                        if (mCategoryResult.success) {
+                        if (isAttach && mCategoryResult.success) {
                             if (mCategoryResult.data != null
                                     && mCategoryResult.data!!.isNotEmpty()) {
                                 for (category in mCategoryResult.data!!) {
@@ -59,17 +58,23 @@ class SplashActivity : AppCompatActivity() {
                                     }
                                 }
                             }
-
-                            val intent = Intent(this@SplashActivity, MainActivity::class.java)
-                            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK
                             MyApplication.with(this@SplashActivity).categoryResult = mCategoryResult
-                            startActivity(intent)
-                            finish()
+                            if (!AppConfig.getInstance(this@SplashActivity).isSelectLevel) {
+                                val intent = Intent(this@SplashActivity, SelectLevelActivity::class.java)
+                                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK
+                                startActivity(intent)
+                                finish()
+                            } else {
+                                goToMain()
+                            }
                         }
                     }
 
                     override fun onError(e: Throwable) {
-                        goToMain()
+                        if (isAttach) {
+                            goToMain()
+                        }
+
                     }
 
                     override fun onNext(categoryResult: CategoryResult?) {
@@ -103,11 +108,8 @@ class SplashActivity : AppCompatActivity() {
 
     override fun onDestroy() {
         super.onDestroy()
+        isAttach = false
         if (mSubscription != null && !mSubscription!!.isUnsubscribed) mSubscription!!.unsubscribe()
         mSubscription = null
-    }
-
-    companion object {
-        private val TAG = SplashActivity::class.java.simpleName
     }
 }

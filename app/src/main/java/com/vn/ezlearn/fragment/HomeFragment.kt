@@ -11,11 +11,13 @@ import com.daimajia.slider.library.SliderTypes.BaseSliderView
 import com.vn.ezlearn.R
 import com.vn.ezlearn.activity.MyApplication
 import com.vn.ezlearn.adapter.HomeAdapter
+import com.vn.ezlearn.config.AppConfig
 import com.vn.ezlearn.config.EzlearnService
 import com.vn.ezlearn.databinding.FragmentHomeBinding
 import com.vn.ezlearn.modelresult.BannerResult
 import com.vn.ezlearn.modelresult.ListExamsResult
 import com.vn.ezlearn.models.Banner
+import com.vn.ezlearn.models.Category
 import com.vn.ezlearn.models.HomeObject
 import com.vn.ezlearn.utils.AppUtils
 import com.vn.ezlearn.viewmodel.HomeViewModel
@@ -42,7 +44,6 @@ class HomeFragment : Fragment(), BaseSliderView.OnSliderClickListener {
     private var mSubscription: Subscription? = null
 
     private var mBannerResult: BannerResult? = null
-    private var mExamsResult: ListExamsResult? = null
 
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
@@ -63,18 +64,58 @@ class HomeFragment : Fragment(), BaseSliderView.OnSliderClickListener {
 
 
     private fun bindData() {
+        apiService = MyApplication.with(activity).getEzlearnService()
         if (AppUtils.isNetworkAvailable(activity)) {
             homeViewModel!!.hideErrorView()
             initBanner()
             getListExamFree(1)
+            getListBySelectLevel(1)
         } else {
             homeViewModel!!.setErrorNetwork()
         }
     }
 
+    private fun getListBySelectLevel(page: Int) {
+        var mExamsResult: ListExamsResult? = null
+        mSubscription = apiService!!.getListExams(AppConfig.getInstance(activity).degreeID, page, 3)
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(object : Subscriber<ListExamsResult>() {
+                    override fun onCompleted() {
+                        if (mExamsResult!!.success && mExamsResult!!.data != null
+                                && mExamsResult!!.data!!.list != null
+                                && mExamsResult!!.data!!.list!!.isNotEmpty()) {
+                            for (category: Category in MyApplication.with(activity).categoryResult?.data!!) {
+                                if (category.category_id.toInt() == AppConfig.getInstance(activity).studyLevelID) {
+                                    homeAdapter!!.add(HomeObject(category.category_name))
+                                    for (i in 0 until mExamsResult!!.data!!.list!!.size) {
+                                        homeAdapter!!.add(HomeObject(
+                                                mExamsResult!!.data!!.list!![i]))
+                                    }
+                                    break
+                                }
+                            }
+
+
+                        }
+                    }
+
+                    override fun onError(e: Throwable) {
+
+                    }
+
+                    override fun onNext(examsResult: ListExamsResult?) {
+                        if (examsResult != null) {
+                            mExamsResult = examsResult
+                        }
+                    }
+                })
+
+    }
+
     private fun getListExamFree(page: Int) {
-        apiService = MyApplication.with(activity).getEzlearnService()
-        mSubscription = apiService!!.getListFreeExams(page, 5)
+        var mExamsResult: ListExamsResult? = null
+        mSubscription = apiService!!.getListFreeExams(page, 3)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(object : Subscriber<ListExamsResult>() {
@@ -105,7 +146,6 @@ class HomeFragment : Fragment(), BaseSliderView.OnSliderClickListener {
 
     private fun initBanner() {
         bannerList = ArrayList()
-        apiService = MyApplication.with(activity).getEzlearnService()
         if (mSubscription != null && !mSubscription!!.isUnsubscribed)
             mSubscription!!.unsubscribe()
         mSubscription = apiService!!.banners

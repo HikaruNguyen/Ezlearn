@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:orientation="vertical"
+        android:padding="@dimen/margin_16dp"
+        tools:context="com.vn.ezlearn.activity.SelectLevelActivity">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/select_study_level"
+            android:textColor="@color/colorPrimaryDark"
+            android:textStyle="bold" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/image_size_50dp"
+            android:layout_marginTop="@dimen/margin_10dp"
+            android:background="@drawable/bg_button_white">
+
+            <Spinner
+                android:id="@+id/spnStudyLevel"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+        </RelativeLayout>
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_10dp"
+            android:text="@string/select_degree"
+            android:textColor="@color/colorPrimaryDark"
+            android:textStyle="bold" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/image_size_50dp"
+            android:layout_marginTop="@dimen/margin_10dp"
+            android:background="@drawable/bg_button_white">
+
+            <Spinner
+                android:id="@+id/spnDegree"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/image_size_44dp" />
+        </RelativeLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_10dp"
+            android:text="@string/you_cant_change_late" />
+
+        <Button
+            android:id="@+id/btnOk"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_20dp"
+            android:background="@drawable/bg_button"
+            android:text="@string/ok"
+            android:textColor="@color/white" />
+    </LinearLayout>
+
+</layout>
