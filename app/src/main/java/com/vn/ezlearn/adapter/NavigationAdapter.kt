@@ -14,6 +14,7 @@ import com.github.aakira.expandablelayout.ExpandableLayoutListenerAdapter
 import com.github.aakira.expandablelayout.ExpandableLinearLayout
 import com.github.aakira.expandablelayout.Utils
 import com.vn.ezlearn.R
+import com.vn.ezlearn.config.GlobalValue
 import com.vn.ezlearn.interfaces.NavigationItemSelected
 import com.vn.ezlearn.models.Category
 import com.vn.ezlearn.widgets.CRecyclerView
@@ -82,14 +83,21 @@ class NavigationAdapter(context: Context, list: MutableList<Category>,
                 holder.buttonLayout?.setOnClickListener { onClickButton(holder.expandableLayout!!) }
                 holder.item?.setOnClickListener { onClickButton(holder.expandableLayout!!) }
             } else {
+                if (item.isSelected) {
+                    holder.item!!.setBackgroundResource(R.drawable.bg_item_navigation_press)
+                } else {
+                    holder.item!!.setBackgroundResource(R.drawable.bg_item_navigation)
+                }
                 if (item.levelChild!! >= 2) {
                     holder.itemView.setOnClickListener {
+                        setBackgroundPress(position)
                         navigationItemSelected.onSelected(item.category_name, item.category_id,
                                 item.children!!)
                     }
 
                 } else {
                     holder.itemView.setOnClickListener {
+                        setBackgroundPress(position)
                         navigationItemSelected.onSelected(item.category_name, item.category_id, null)
                     }
                 }
@@ -99,6 +107,20 @@ class NavigationAdapter(context: Context, list: MutableList<Category>,
         }
 
     }
+
+    private fun setBackgroundPress(position: Int) {
+        if (position != GlobalValue.position_menu_old) {
+            var category = list[GlobalValue.position_menu_old]
+            category.isSelected = false
+            setData(GlobalValue.position_menu_old, category)
+            category = list[position]
+            category.isSelected = true
+            setData(position, category)
+            GlobalValue.position_menu_old = position
+            notifyDataSetChanged()
+        }
+    }
+
 
     private fun onClickButton(expandableLayout: ExpandableLayout) {
         expandableLayout.toggle()

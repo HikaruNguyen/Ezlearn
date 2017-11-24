@@ -18,16 +18,26 @@ class Category {
     var typeMenu: Int? = null
     var levelChild: Int? = null
     var content_type: String = "0"
+    var isSelected: Boolean = false
 
     constructor(id: String, name: String, type: Int?) {
         this.category_id = id
         this.category_name = name
         this.typeMenu = type
         this.parent_id = "-1"
-        children = ArrayList<Category>()
+        children = ArrayList()
         levelChild = LEVEL_1
+        isSelected = false
     }
-
+    constructor(id: String, name: String, type: Int?, isSelected: Boolean) {
+        this.category_id = id
+        this.category_name = name
+        this.typeMenu = type
+        this.parent_id = "-1"
+        children = ArrayList()
+        levelChild = LEVEL_1
+        this.isSelected = isSelected
+    }
     constructor(type: Int?) {
         this.typeMenu = type
         levelChild = LEVEL_0

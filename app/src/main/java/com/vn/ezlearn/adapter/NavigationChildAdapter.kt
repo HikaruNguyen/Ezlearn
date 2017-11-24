@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import com.vn.ezlearn.R
+import com.vn.ezlearn.config.GlobalValue
 import com.vn.ezlearn.interfaces.NavigationItemSelected
 import com.vn.ezlearn.models.Category
 
@@ -16,7 +17,8 @@ import com.vn.ezlearn.models.Category
  */
 
 class NavigationChildAdapter(context: Context, list: MutableList<Category>,
-                             var navigationItemSelected: NavigationItemSelected) :
+                             var navigationItemSelected: NavigationItemSelected,
+                             var positionParent: Int) :
         BaseRecyclerAdapter<Category, NavigationChildAdapter.ViewHolder>(context, list) {
 
     private val data: List<Category>
@@ -46,11 +48,25 @@ class NavigationChildAdapter(context: Context, list: MutableList<Category>,
 
     override fun getItemCount(): Int = data.size
 
+    private fun setBackgroundPress(position: Int) {
+        if (position != GlobalValue.position_menu_old) {
+            var category = list[GlobalValue.position_menu_old]
+            category.isSelected = false
+            setData(GlobalValue.position_menu_parent_old, category)
+            category = list[position]
+            category.isSelected = true
+            setData(position, category)
+            GlobalValue.position_menu_old = position
+            notifyDataSetChanged()
+        }
+    }
+
     inner class ViewHolder(v: View) : RecyclerView.ViewHolder(v) {
         var tvName: TextView = v.findViewById(R.id.tvName)
 
         init {
             itemView.setOnClickListener {
+                setBackgroundPress(adapterPosition)
                 navigationItemSelected.onSelected(list[adapterPosition].category_name,
                         list[adapterPosition].category_id,
                         list[adapterPosition].children)
