@@ -44,7 +44,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/deadline"
-                    android:textColor="@color/black"
+                    android:textColor="@color/text_black"
                     android:textStyle="bold" />
 
                 <TextView
@@ -52,10 +52,11 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="5dp"
                     android:text="@{itemExamViewModel.dateStartEnd}"
-                    android:textColor="@color/black"
+                    android:textColor="@color/text_color_content"
                     android:textStyle="italic" />
 
             </LinearLayout>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -66,10 +67,11 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@{itemExamViewModel.price}"
-                    android:textColor="@color/black"
+                    android:textColor="@color/text_black"
                     android:textStyle="italic" />
 
             </LinearLayout>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -93,7 +95,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/margin_5dp"
-                        android:text="@{itemExamViewModel.time}" />
+                        android:text="@{itemExamViewModel.time}"
+                        android:textColor="@color/text_color_content" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -112,7 +115,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/margin_5dp"
-                        android:text="@{itemExamViewModel.viewCount}" />
+                        android:text="@{itemExamViewModel.viewCount}"
+                        android:textColor="@color/text_color_content" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -131,7 +135,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/margin_5dp"
-                        android:text="@{itemExamViewModel.doingCount}" />
+                        android:text="@{itemExamViewModel.doingCount}"
+                        android:textColor="@color/text_color_content" />
                 </LinearLayout>
             </LinearLayout>
 

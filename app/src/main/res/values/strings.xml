@@ -30,7 +30,7 @@
 
     <!--Main-->
     <string name="nav_home">TRANG CHỦ</string>
-    <string name="nav_sample_exam">ĐỀ THI THỬ</string>
+    <string name="nav_free_exam">ĐỀ THI MIỄN PHÍ</string>
     <string name="nav_offline_exam">ĐỀ THI OFFLINE</string>
     <string name="nav_contact">LIÊN HỆ</string>
     <string name="nav_logout">ĐĂNG XUẤT</string>
@@ -91,6 +91,7 @@
     <string name="tab_exam">Đề thi</string>
     <string name="tab_practice">Luyện tập</string>
     <string name="taiLieu">Tài liệu</string>
+    <string name="view_all"><u>Xem tất cả</u></string>
 
     <!--Question-->
     <string name="question_list">Danh sách câu hỏi</string>

@@ -29,7 +29,6 @@ import com.vn.ezlearn.viewmodel.ItemExamViewModel
 class HomeAdapter(context: Context, list: MutableList<HomeObject>) :
         BaseRecyclerAdapter<HomeObject, HomeAdapter.ViewHolder>(context, list) {
     private val data: List<HomeObject>
-    private var context: Context? = null
     private var isAddedSlide: Boolean = false
 
     init {
@@ -38,7 +37,6 @@ class HomeAdapter(context: Context, list: MutableList<HomeObject>) :
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        this.context = parent.context
         when (viewType) {
             HomeObject.TYPE_HEADER -> {
                 val binding = DataBindingUtil.inflate<ItemHomeHeaderBinding>(
@@ -64,7 +62,7 @@ class HomeAdapter(context: Context, list: MutableList<HomeObject>) :
         if (getItemViewType(position) == HomeObject.TYPE_SLIDE) {
             val itemHomeSlideBinding = holder.itemHomeSlideBinding
             if (!isAddedSlide) {
-                val displayMetrics = context!!.resources.displayMetrics
+                val displayMetrics = mContext!!.resources.displayMetrics
                 val width = displayMetrics.widthPixels
                 val height = (width * 485 / 1366).toFloat()
                 itemHomeSlideBinding.rlSlide?.layoutParams = LinearLayout.LayoutParams(width, height.toInt())
@@ -74,8 +72,8 @@ class HomeAdapter(context: Context, list: MutableList<HomeObject>) :
                 itemHomeSlideBinding.slider.setCustomAnimation(DescriptionAnimation())
                 itemHomeSlideBinding.slider.setDuration(SLIDE_DELAY)
 
-                for (i in 0..item.bannerList!!.size - 1) {
-                    val textSliderView = DefaultSliderView(context)
+                for (i in 0 until item.bannerList!!.size) {
+                    val textSliderView = DefaultSliderView(mContext)
                     if (item.bannerList!![i].type == Banner.TYPE_DRAWABLE) {
                         textSliderView
                                 .image(item.bannerList!![i].imageDrawable)
@@ -117,6 +115,7 @@ class HomeAdapter(context: Context, list: MutableList<HomeObject>) :
         } else if (getItemViewType(position) == HomeObject.TYPE_HEADER) {
             val itemHomeHeaderBinding = holder.itemHomeHeaderBinding
             itemHomeHeaderBinding.tvName.text = list[position].header
+            itemHomeHeaderBinding.tvViewAll.text = mContext.getText(R.string.view_all)
         }
 
     }

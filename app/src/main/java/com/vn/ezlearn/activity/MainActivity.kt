@@ -140,7 +140,7 @@ class MainActivity : AppCompatActivity(), NavigationItemSelected {
         menuList = ArrayList()
         menuList!!.add(Category(AppConstant.HOME_ID.toString(), getString(R.string.nav_home),
                 Category.TYPE_NORMAL))
-        menuList!!.add(Category(AppConstant.FREE_ID.toString(), getString(R.string.nav_sample_exam),
+        menuList!!.add(Category(AppConstant.FREE_ID.toString(), getString(R.string.nav_free_exam),
                 Category.TYPE_NORMAL))
         menuList!!.add(Category(AppConstant.OFFLINE_ID.toString(), getString(R.string.nav_offline_exam),
                 Category.TYPE_NORMAL))
