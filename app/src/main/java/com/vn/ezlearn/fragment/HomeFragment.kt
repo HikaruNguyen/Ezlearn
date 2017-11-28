@@ -12,6 +12,7 @@ import com.vn.ezlearn.R
 import com.vn.ezlearn.activity.MyApplication
 import com.vn.ezlearn.adapter.HomeAdapter
 import com.vn.ezlearn.config.AppConfig
+import com.vn.ezlearn.config.AppConstant
 import com.vn.ezlearn.config.EzlearnService
 import com.vn.ezlearn.databinding.FragmentHomeBinding
 import com.vn.ezlearn.modelresult.BannerResult
@@ -69,6 +70,8 @@ class HomeFragment : Fragment(), BaseSliderView.OnSliderClickListener {
             homeViewModel!!.hideErrorView()
             initBanner()
             getListExamFree(1)
+            getListTryExam(1)
+            getListRealExam(1)
             getListBySelectLevel(1)
         } else {
             homeViewModel!!.setErrorNetwork()
@@ -143,6 +146,69 @@ class HomeFragment : Fragment(), BaseSliderView.OnSliderClickListener {
                     }
                 })
     }
+
+    private fun getListTryExam(page: Int) {
+        var mExamsResult: ListExamsResult? = null
+        mSubscription = apiService!!.getListTryExams(AppConstant.TRY_EXAM, page, 3)
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(object : Subscriber<ListExamsResult>() {
+                    override fun onCompleted() {
+                        if (mExamsResult!!.success && mExamsResult!!.data != null
+                                && mExamsResult!!.data!!.list != null
+                                && mExamsResult!!.data!!.list!!.isNotEmpty()) {
+                            homeAdapter!!.add(HomeObject(getString(R.string.try_exam)))
+                            for (i in 0 until mExamsResult!!.data!!.list!!.size) {
+                                homeAdapter!!.add(HomeObject(
+                                        mExamsResult!!.data!!.list!![i]))
+                            }
+
+                        }
+                    }
+
+                    override fun onError(e: Throwable) {
+
+                    }
+
+                    override fun onNext(examsResult: ListExamsResult?) {
+                        if (examsResult != null) {
+                            mExamsResult = examsResult
+                        }
+                    }
+                })
+    }
+
+    private fun getListRealExam(page: Int) {
+        var mExamsResult: ListExamsResult? = null
+        mSubscription = apiService!!.getListTryExams(AppConstant.REAL_EXAM, page, 3)
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(object : Subscriber<ListExamsResult>() {
+                    override fun onCompleted() {
+                        if (mExamsResult!!.success && mExamsResult!!.data != null
+                                && mExamsResult!!.data!!.list != null
+                                && mExamsResult!!.data!!.list!!.isNotEmpty()) {
+                            homeAdapter!!.add(HomeObject(getString(R.string.real_exam)))
+                            for (i in 0 until mExamsResult!!.data!!.list!!.size) {
+                                homeAdapter!!.add(HomeObject(
+                                        mExamsResult!!.data!!.list!![i]))
+                            }
+
+                        }
+                    }
+
+                    override fun onError(e: Throwable) {
+
+                    }
+
+                    override fun onNext(examsResult: ListExamsResult?) {
+                        if (examsResult != null) {
+                            mExamsResult = examsResult
+                        }
+                    }
+                })
+    }
+
 
     private fun initBanner() {
         bannerList = ArrayList()

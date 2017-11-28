@@ -1,5 +1,6 @@
 package com.vn.ezlearn.models
 
+import com.vn.ezlearn.adapter.NavigationChildAdapter
 import java.util.*
 
 /**
@@ -19,6 +20,7 @@ class Category {
     var levelChild: Int? = null
     var content_type: String = "0"
     var isSelected: Boolean = false
+    var childAdapter: NavigationChildAdapter? = null
 
     constructor(id: String, name: String, type: Int?) {
         this.category_id = id
@@ -28,7 +30,9 @@ class Category {
         children = ArrayList()
         levelChild = LEVEL_1
         isSelected = false
+        childAdapter = null
     }
+
     constructor(id: String, name: String, type: Int?, isSelected: Boolean) {
         this.category_id = id
         this.category_name = name
@@ -37,7 +41,9 @@ class Category {
         children = ArrayList()
         levelChild = LEVEL_1
         this.isSelected = isSelected
+        childAdapter = null
     }
+
     constructor(type: Int?) {
         this.typeMenu = type
         levelChild = LEVEL_0

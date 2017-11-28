@@ -10,5 +10,8 @@ interface AppConstant {
         val FREE_ID = -2
         val OFFLINE_ID = -3
         val CONTACT_ID = -4
+
+        val TRY_EXAM = 0
+        val REAL_EXAM = 1
     }
 }

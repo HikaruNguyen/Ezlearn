@@ -61,7 +61,8 @@ class ItemExamViewModel(private val context: Context, private val exam: Exam?) :
             } else {
                 if (exam.price != null) {
                     price.set(Html.fromHtml(context.getString(
-                            R.string.price, exam.price.toString()) +context.getString(R.string.vnd)))
+                            R.string.price, AppUtils.formatMoney(exam.price!!.toLong())) + " " +
+                            context.getString(R.string.vnd)))
                 } else {
                     viewCount.set(context.getString(R.string.updating))
                 }

@@ -45,6 +45,11 @@ interface EzlearnService {
     fun getListFreeExams(@Query("page") page: Int,
                          @Query("per-page") per_page: Int): Observable<ListExamsResult>
 
+    @GET("index.php?r=subjects/get-top")
+    fun getListTryExams(@Query("is_free") is_free: Int,
+                        @Query("page") page: Int,
+                        @Query("per-page") per_page: Int): Observable<ListExamsResult>
+
     @GET("index.php?r=user/login")
     fun getLogin(@Query("username") username: String,
                  @Query("password") password: String): Observable<LoginResult>

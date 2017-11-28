@@ -1,6 +1,7 @@
 package com.vn.ezlearn.adapter
 
 import android.animation.ObjectAnimator
+import android.annotation.SuppressLint
 import android.content.Context
 import android.support.v7.widget.RecyclerView
 import android.util.SparseBooleanArray
@@ -15,10 +16,12 @@ import com.github.aakira.expandablelayout.ExpandableLinearLayout
 import com.github.aakira.expandablelayout.Utils
 import com.vn.ezlearn.R
 import com.vn.ezlearn.config.GlobalValue
+import com.vn.ezlearn.interfaces.NavigationItemChildSelected
 import com.vn.ezlearn.interfaces.NavigationItemSelected
 import com.vn.ezlearn.models.Category
+import com.vn.ezlearn.utils.AppUtils
+import com.vn.ezlearn.utils.CLog
 import com.vn.ezlearn.widgets.CRecyclerView
-import java.util.*
 
 /**
  * Created by FRAMGIA\nguyen.duc.manh on 07/07/2017.
@@ -26,7 +29,22 @@ import java.util.*
 
 class NavigationAdapter(context: Context, list: MutableList<Category>,
                         private val navigationItemSelected: NavigationItemSelected) :
-        BaseRecyclerAdapter<Category, NavigationAdapter.ViewHolder>(context, list) {
+        BaseRecyclerAdapter<Category, NavigationAdapter.ViewHolder>(context, list),
+        NavigationItemChildSelected {
+
+    override fun onSelected(name: String, id: String, categoryList: List<Category>?,
+                            parentPosition: Int) {
+        CLog.d(AppUtils.getTAG(NavigationAdapter::class.java), "position_menu_parent_old: "
+                + GlobalValue.position_menu_parent_old + " " + parentPosition)
+        if (GlobalValue.position_menu_parent_old != parentPosition) {
+            if (GlobalValue.position_menu_parent_old > 0)
+                list[GlobalValue.position_menu_parent_old].childAdapter!!.clearBackground(true)
+            GlobalValue.position_menu_parent_old = parentPosition
+        }
+        GlobalValue.position_menu_old = parentPosition
+        clearBackground()
+        navigationItemSelected.onSelected(name, id, categoryList)
+    }
 
     private val data: List<Category>
     private var context: Context? = null
@@ -52,7 +70,7 @@ class NavigationAdapter(context: Context, list: MutableList<Category>,
 
     }
 
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: ViewHolder, @SuppressLint("RecyclerView") position: Int) {
         if (getItemViewType(position) != Category.TYPE_LINE) {
             val item = data[position]
             holder.setIsRecyclable(false)
@@ -60,7 +78,8 @@ class NavigationAdapter(context: Context, list: MutableList<Category>,
 
             if (getItemViewType(position) != Category.TYPE_NORMAL) {
                 val childAdapter = NavigationChildAdapter(
-                        mContext, ArrayList(), navigationItemSelected)
+                        mContext, ArrayList(), this, position)
+                item.childAdapter = childAdapter
                 holder.rvItemMenuChild?.adapter = childAdapter
                 childAdapter.addAll(item.children!!)
                 holder.expandableLayout?.setInRecyclerView(true)
@@ -117,6 +136,9 @@ class NavigationAdapter(context: Context, list: MutableList<Category>,
             category.isSelected = true
             setData(position, category)
             GlobalValue.position_menu_old = position
+            list.indices
+                    .filter { list[it].childAdapter != null && list[it].childAdapter!!.itemCount > 0 }
+                    .forEach { list[it].childAdapter!!.clearBackground(true) }
             notifyDataSetChanged()
         }
     }
@@ -144,5 +166,18 @@ class NavigationAdapter(context: Context, list: MutableList<Category>,
         animator.duration = 300
         animator.interpolator = Utils.createInterpolator(Utils.LINEAR_INTERPOLATOR)
         return animator
+    }
+
+    private fun clearBackground() {
+        var category: Category?
+        for (i in list.indices) {
+            if (list[i].isSelected) {
+                category = list[i]
+                category.isSelected = false
+                setData(i, category)
+            }
+        }
+        notifyDataSetChanged()
+
     }
 }

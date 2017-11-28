@@ -62,7 +62,7 @@ class HomeAdapter(context: Context, list: MutableList<HomeObject>) :
         if (getItemViewType(position) == HomeObject.TYPE_SLIDE) {
             val itemHomeSlideBinding = holder.itemHomeSlideBinding
             if (!isAddedSlide) {
-                val displayMetrics = mContext!!.resources.displayMetrics
+                val displayMetrics = mContext.resources.displayMetrics
                 val width = displayMetrics.widthPixels
                 val height = (width * 485 / 1366).toFloat()
                 itemHomeSlideBinding.rlSlide?.layoutParams = LinearLayout.LayoutParams(width, height.toInt())

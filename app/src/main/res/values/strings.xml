@@ -41,7 +41,9 @@
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
-
+    <!--Home-->
+    <string name="try_exam">ĐỀ THI THỬ</string>
+    <string name="real_exam">ĐỀ THI THẬT</string>
     <!--Profile-->
     <string name="tab_profile">Hồ sơ</string>
     <string name="tab_history_exam">Lịch sử thi</string>
