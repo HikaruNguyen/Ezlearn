@@ -40,7 +40,8 @@
                     android:layout_height="?attr/actionBarSize"
                     android:layout_gravity="bottom"
                     android:visibility="@{mainViewModel.visiableTabBar}"
-                    app:layout_collapseMode="pin" />
+                    app:layout_collapseMode="pin"
+                    app:tabMode="scrollable" />
 
             </android.support.design.widget.AppBarLayout>
 

@@ -3,7 +3,6 @@ package com.vn.ezlearn.fragment
 
 import android.databinding.DataBindingUtil
 import android.os.Bundle
-import android.support.design.widget.BottomNavigationView
 import android.support.v4.app.Fragment
 import android.support.v4.view.ViewPager
 import android.view.LayoutInflater
@@ -26,28 +25,6 @@ class CategoryMainFragment : Fragment() {
 
     private var categoryList: List<Category>? = null
 
-    private val mOnNavigationItemSelectedListener
-            = BottomNavigationView.OnNavigationItemSelectedListener { item ->
-        when (item.itemId) {
-            R.id.navigation_home -> {
-                categoryMainBinding!!.viewPager.currentItem = 0
-                return@OnNavigationItemSelectedListener true
-            }
-            R.id.navigation_dashboard -> {
-                categoryMainBinding!!.viewPager.currentItem = 1
-                return@OnNavigationItemSelectedListener true
-            }
-            R.id.navigation_notifications -> {
-                categoryMainBinding!!.viewPager.currentItem = 2
-                return@OnNavigationItemSelectedListener true
-            }
-            R.id.navigation_document -> {
-                categoryMainBinding!!.viewPager.currentItem = 3
-                return@OnNavigationItemSelectedListener true
-            }
-        }
-        false
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -60,8 +37,6 @@ class CategoryMainFragment : Fragment() {
                               savedInstanceState: Bundle?): View? {
         categoryMainBinding = DataBindingUtil.inflate(
                 inflater!!, R.layout.fragment_category_main, container, false)
-        categoryMainBinding!!.navigation.setOnNavigationItemSelectedListener(
-                mOnNavigationItemSelectedListener)
         bindData()
         event()
         return categoryMainBinding!!.root
@@ -78,17 +53,7 @@ class CategoryMainFragment : Fragment() {
             }
 
             override fun onPageSelected(position: Int) {
-                if (position == 0) {
-                    categoryMainBinding!!.navigation.selectedItemId = R.id.navigation_home
-                } else if (position == 1) {
-                    categoryMainBinding!!.navigation.selectedItemId = R.id.navigation_dashboard
-                } else if (position == 2) {
-                    categoryMainBinding!!.navigation.selectedItemId = R.id.navigation_notifications
-                } else if (position == 3) {
-                    categoryMainBinding!!.navigation.selectedItemId = R.id.navigation_document
-                } else {
-                    categoryMainBinding!!.navigation.selectedItemId = R.id.navigation_home
-                }
+
             }
 
             override fun onPageScrollStateChanged(state: Int) {
