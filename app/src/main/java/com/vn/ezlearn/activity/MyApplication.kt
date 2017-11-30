@@ -28,7 +28,7 @@ class MyApplication : Application() {
 
     override fun onCreate() {
         super.onCreate()
-        changeAppFont()
+//        changeAppFont()
     }
 
     private fun changeAppFont() {
