@@ -100,7 +100,7 @@ class SplashActivity : AppCompatActivity() {
     }
 
     private fun goToMain() {
-        val intent = Intent(this@SplashActivity, MainActivity::class.java)
+        val intent = Intent(this@SplashActivity, Main2Activity::class.java)
         intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK
         startActivity(intent)
         finish()

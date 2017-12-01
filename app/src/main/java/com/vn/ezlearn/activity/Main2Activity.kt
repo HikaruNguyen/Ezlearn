@@ -4,10 +4,12 @@ import android.databinding.DataBindingUtil
 import android.os.Bundle
 import android.support.design.widget.BottomNavigationView
 import android.support.v4.app.Fragment
+import android.support.v4.view.ViewPager
 import android.support.v7.app.AppCompatActivity
 import com.vn.ezlearn.R
 import com.vn.ezlearn.adapter.ViewPagerAdapter
 import com.vn.ezlearn.databinding.ActivityMain2Binding
+import com.vn.ezlearn.fragment.AccountFragment
 import com.vn.ezlearn.fragment.HomeFragment
 import com.vn.ezlearn.fragment.MenuFragment
 import java.util.*
@@ -18,15 +20,18 @@ class Main2Activity : AppCompatActivity() {
     private lateinit var viewPagerAdapter: ViewPagerAdapter
     private val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
         when (item.itemId) {
-            R.id.navigation_home ->
-
+            R.id.navigation_home -> {
+                main2Binding.viewPager.currentItem = 0
                 return@OnNavigationItemSelectedListener true
-            R.id.navigation_dashboard ->
-
+            }
+            R.id.navigation_dashboard -> {
+                main2Binding.viewPager.currentItem = 1
                 return@OnNavigationItemSelectedListener true
-            R.id.navigation_notifications ->
-
+            }
+            R.id.navigation_notifications -> {
+                main2Binding.viewPager.currentItem = 2
                 return@OnNavigationItemSelectedListener true
+            }
         }
         false
     }
@@ -40,9 +45,32 @@ class Main2Activity : AppCompatActivity() {
         fragmentList = ArrayList()
         fragmentList!!.add(HomeFragment())
         fragmentList!!.add(MenuFragment())
-        fragmentList!!.add(HomeFragment())
+        fragmentList!!.add(AccountFragment())
         viewPagerAdapter = ViewPagerAdapter(supportFragmentManager, fragmentList!!)
         main2Binding.viewPager.adapter = viewPagerAdapter
+        main2Binding.viewPager.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
+            override fun onPageScrollStateChanged(state: Int) {
+
+            }
+
+            override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
+
+            }
+
+            override fun onPageSelected(position: Int) {
+                when (position) {
+                    0 -> main2Binding.navigation.selectedItemId =
+                            R.id.navigation_home
+                    1 -> main2Binding.navigation.selectedItemId =
+                            R.id.navigation_dashboard
+                    2 -> main2Binding.navigation.selectedItemId =
+                            R.id.navigation_notifications
+                    else -> main2Binding.navigation.selectedItemId =
+                            R.id.navigation_home
+                }
+            }
+
+        })
 
     }
 

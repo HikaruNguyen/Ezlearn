@@ -66,6 +66,10 @@
     <string name="achievements">Thành tích</string>
     <string name="rating_">Xếp hạng:</string>
     <string name="rating">Xếp hạng</string>
+    <string name="payment">Thanh toán</string>
+    <string name="invite_friend">Mời bạn bè</string>
+    <string name="feedback">Góp ý</string>
+    <string name="support">Chính sách và điều khoản</string>
 
     <string name="need_complete_profile">Bạn cần hoàn thiện thông tin cá nhân để xem được thứ hạng của mình.</string>
     <string name="update_profile">Cập nhật thông tin cá nhân</string>

@@ -67,7 +67,7 @@ class SelectLevelActivity : AppCompatActivity() {
                     MyApplication.with(this).categoryResult?.data!![studyLevelPosition]
                             .children!![degreePosition].category_id.toInt()
 
-            val intent = Intent(this, MainActivity::class.java)
+            val intent = Intent(this, Main2Activity::class.java)
             intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK
             startActivity(intent)
             finish()
