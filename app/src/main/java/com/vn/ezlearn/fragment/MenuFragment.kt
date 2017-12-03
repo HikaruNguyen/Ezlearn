@@ -1,13 +1,16 @@
 package com.vn.ezlearn.fragment
 
 
+import android.content.Intent
 import android.databinding.DataBindingUtil
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.google.gson.Gson
 import com.vn.ezlearn.R
+import com.vn.ezlearn.activity.CategoryMainActivity
 import com.vn.ezlearn.activity.MyApplication
 import com.vn.ezlearn.adapter.NavigationAdapter
 import com.vn.ezlearn.databinding.FragmentMenuBinding
@@ -20,7 +23,12 @@ import com.vn.ezlearn.models.Category
  */
 class MenuFragment : Fragment(), NavigationItemSelected {
     override fun onSelected(name: String, id: String, categoryList: List<Category>?) {
-
+        val intent = Intent(activity, CategoryMainActivity::class.java)
+        val gson = Gson()
+        val jsonListCategory = gson.toJson(categoryList)
+        intent.putExtra(CategoryMainActivity.KEY_LIST, jsonListCategory)
+        intent.putExtra(CategoryMainActivity.KEY_NAME, name)
+        activity.startActivity(intent)
     }
 
     private lateinit var menuBinding: FragmentMenuBinding

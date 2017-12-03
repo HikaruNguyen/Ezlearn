@@ -92,9 +92,7 @@ class HistoryExamFragment : Fragment() {
                         }
                     }
 
-                    override fun onError(e: Throwable) {
-
-                    }
+                    override fun onError(e: Throwable) = Unit
 
                     override fun onNext(historyResult: HistoryResult<HistoryExam>?) {
                         if (historyResult != null) {
@@ -119,9 +117,7 @@ class HistoryExamFragment : Fragment() {
                         }
                     }
 
-                    override fun onError(e: Throwable) {
-
-                    }
+                    override fun onError(e: Throwable) = Unit
 
                     override fun onNext(historyResult: HistoryResult<HistoryBuyPackage>?) {
                         if (historyResult != null) {
@@ -146,9 +142,7 @@ class HistoryExamFragment : Fragment() {
                         }
                     }
 
-                    override fun onError(e: Throwable) {
-
-                    }
+                    override fun onError(e: Throwable) = Unit
 
                     override fun onNext(historyResult: HistoryResult<HistoryPayment>?) {
                         if (historyResult != null) {
@@ -163,6 +157,7 @@ class HistoryExamFragment : Fragment() {
         val TYPE_EXAM = 1
         val TYPE_PAYMENT = 2
         val TYPE_BUY_PACKAGE = 3
+        val TYPE_TRANSACTION = 4
         fun newInstance(typeHistory: Int): HistoryExamFragment {
             val fragment = HistoryExamFragment()
             val args = Bundle()

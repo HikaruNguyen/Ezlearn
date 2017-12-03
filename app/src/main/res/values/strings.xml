@@ -29,10 +29,10 @@
     <string name="skip">SKIP</string>
 
     <!--Main-->
-    <string name="nav_home">TRANG CHỦ</string>
-    <string name="nav_free_exam">ĐỀ THI MIỄN PHÍ</string>
+    <string name="nav_home">Trang chủ</string>
+    <string name="nav_free_exam">Đề thi miễn phí</string>
     <string name="nav_offline_exam">ĐỀ THI OFFLINE</string>
-    <string name="nav_contact">LIÊN HỆ</string>
+    <string name="nav_contact">Liên hệ</string>
     <string name="nav_account">Tài khoản</string>
     <string name="nav_category">Chuyên đề</string>
     <string name="nav_logout">ĐĂNG XUẤT</string>
@@ -45,7 +45,7 @@
 
     <!--Home-->
     <string name="try_exam">ĐỀ THI THỬ</string>
-    <string name="real_exam">ĐỀ THI THẬT</string>
+    <string name="real_exam">ĐỀ THI CHÍNH THỨC</string>
     <!--Profile-->
     <string name="tab_profile">Hồ sơ</string>
     <string name="tab_history_exam">Lịch sử thi</string>

@@ -13,6 +13,7 @@ import com.daimajia.slider.library.SliderLayout
 import com.daimajia.slider.library.SliderTypes.BaseSliderView
 import com.daimajia.slider.library.SliderTypes.DefaultSliderView
 import com.vn.ezlearn.R
+import com.vn.ezlearn.activity.ListExamActivity
 import com.vn.ezlearn.activity.TestActivity
 import com.vn.ezlearn.config.UserConfig
 import com.vn.ezlearn.databinding.ItemHomeExamsBinding
@@ -116,6 +117,11 @@ class HomeAdapter(context: Context, list: MutableList<HomeObject>) :
             val itemHomeHeaderBinding = holder.itemHomeHeaderBinding
             itemHomeHeaderBinding.tvName.text = list[position].header
             itemHomeHeaderBinding.tvViewAll.text = mContext.getText(R.string.view_all)
+            itemHomeHeaderBinding.tvViewAll.setOnClickListener {
+                val intent = Intent(mContext, ListExamActivity::class.java)
+                intent.putExtra(ListExamActivity.KEY_ID, item.idHeader)
+                mContext.startActivity(intent)
+            }
         }
 
     }

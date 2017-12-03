@@ -72,7 +72,7 @@ class HomeFragment : Fragment(), BaseSliderView.OnSliderClickListener {
             getListExamFree(1)
             getListTryExam(1)
             getListRealExam(1)
-            getListBySelectLevel(1)
+//            getListBySelectLevel(1)
         } else {
             homeViewModel!!.setErrorNetwork()
         }
@@ -90,7 +90,7 @@ class HomeFragment : Fragment(), BaseSliderView.OnSliderClickListener {
                                 && mExamsResult!!.data!!.list!!.isNotEmpty()) {
                             for (category: Category in MyApplication.with(activity).categoryResult?.data!!) {
                                 if (category.category_id.toInt() == AppConfig.getInstance(activity).studyLevelID) {
-                                    homeAdapter!!.add(HomeObject(category.category_name))
+//                                    homeAdapter!!.add(HomeObject(category.category_name, ))
                                     for (i in 0 until mExamsResult!!.data!!.list!!.size) {
                                         homeAdapter!!.add(HomeObject(
                                                 mExamsResult!!.data!!.list!![i]))
@@ -126,7 +126,8 @@ class HomeFragment : Fragment(), BaseSliderView.OnSliderClickListener {
                         if (mExamsResult!!.success && mExamsResult!!.data != null
                                 && mExamsResult!!.data!!.list != null
                                 && mExamsResult!!.data!!.list!!.isNotEmpty()) {
-                            homeAdapter!!.add(HomeObject(getString(R.string.nav_free_exam)))
+                            homeAdapter!!.add(
+                                    HomeObject(getString(R.string.nav_free_exam), AppConstant.FREE_ID))
                             for (i in 0 until mExamsResult!!.data!!.list!!.size) {
                                 homeAdapter!!.add(HomeObject(
                                         mExamsResult!!.data!!.list!![i]))
@@ -135,9 +136,7 @@ class HomeFragment : Fragment(), BaseSliderView.OnSliderClickListener {
                         }
                     }
 
-                    override fun onError(e: Throwable) {
-
-                    }
+                    override fun onError(e: Throwable) = Unit
 
                     override fun onNext(examsResult: ListExamsResult?) {
                         if (examsResult != null) {
@@ -157,7 +156,8 @@ class HomeFragment : Fragment(), BaseSliderView.OnSliderClickListener {
                         if (mExamsResult!!.success && mExamsResult!!.data != null
                                 && mExamsResult!!.data!!.list != null
                                 && mExamsResult!!.data!!.list!!.isNotEmpty()) {
-                            homeAdapter!!.add(HomeObject(getString(R.string.try_exam)))
+                            homeAdapter!!.add(
+                                    HomeObject(getString(R.string.try_exam), AppConstant.TRY_EXAM_ID))
                             for (i in 0 until mExamsResult!!.data!!.list!!.size) {
                                 homeAdapter!!.add(HomeObject(
                                         mExamsResult!!.data!!.list!![i]))
@@ -166,9 +166,7 @@ class HomeFragment : Fragment(), BaseSliderView.OnSliderClickListener {
                         }
                     }
 
-                    override fun onError(e: Throwable) {
-
-                    }
+                    override fun onError(e: Throwable) = Unit
 
                     override fun onNext(examsResult: ListExamsResult?) {
                         if (examsResult != null) {
@@ -188,7 +186,8 @@ class HomeFragment : Fragment(), BaseSliderView.OnSliderClickListener {
                         if (mExamsResult!!.success && mExamsResult!!.data != null
                                 && mExamsResult!!.data!!.list != null
                                 && mExamsResult!!.data!!.list!!.isNotEmpty()) {
-                            homeAdapter!!.add(HomeObject(getString(R.string.real_exam)))
+                            homeAdapter!!.add(
+                                    HomeObject(getString(R.string.real_exam), AppConstant.REAL_EXAM_ID))
                             for (i in 0 until mExamsResult!!.data!!.list!!.size) {
                                 homeAdapter!!.add(HomeObject(
                                         mExamsResult!!.data!!.list!![i]))

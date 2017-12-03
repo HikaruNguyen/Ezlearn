@@ -2,17 +2,20 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/navigation_home"
+        android:id="@+id/nav_home"
         android:icon="@drawable/ic_home_black_24dp"
         android:title="@string/nav_home" />
 
     <item
-        android:id="@+id/navigation_dashboard"
+        android:id="@+id/nav_category"
         android:icon="@drawable/ic_library_books_black_24dp"
         android:title="@string/nav_category" />
-
+    <!--<item-->
+        <!--android:id="@+id/nav_free"-->
+        <!--android:icon="@drawable/ic_library_books_black_24dp"-->
+        <!--android:title="@string/nav_free_exam" />-->
     <item
-        android:id="@+id/navigation_notifications"
+        android:id="@+id/nav_account"
         android:icon="@drawable/ic_account_circle_black_24dp"
         android:title="@string/nav_account" />
 

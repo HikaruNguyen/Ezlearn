@@ -48,17 +48,12 @@ class CategoryMainFragment : Fragment() {
 
     private fun event() {
         categoryMainBinding!!.viewPager.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
-            override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
+            override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) =
+                    Unit
 
-            }
+            override fun onPageSelected(position: Int) = Unit
 
-            override fun onPageSelected(position: Int) {
-
-            }
-
-            override fun onPageScrollStateChanged(state: Int) {
-
-            }
+            override fun onPageScrollStateChanged(state: Int) = Unit
         })
     }
 

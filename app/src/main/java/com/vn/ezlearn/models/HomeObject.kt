@@ -7,12 +7,14 @@ package com.vn.ezlearn.models
 class HomeObject {
 
     var header: String = ""
+    var idHeader: Int? = null
     var exam: Exam? = null
     var bannerList: List<Banner>? = null
     var type: Int = 0
 
-    constructor(header: String) {
+    constructor(header: String, idHeader: Int) {
         this.header = header
+        this.idHeader = idHeader
         type = TYPE_HEADER
     }
 

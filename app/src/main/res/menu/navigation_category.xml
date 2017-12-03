@@ -3,20 +3,20 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/navigation_home"
+        android:id="@+id/nav_home"
         android:checked="true"
         android:icon="@mipmap/ic_lesson"
         android:title="@string/tab_lesson"
         app:showAsAction="always" />
 
     <item
-        android:id="@+id/navigation_dashboard"
+        android:id="@+id/nav_category"
         android:icon="@mipmap/ic_exam"
         android:title="@string/tab_exam"
         app:showAsAction="always" />
 
     <item
-        android:id="@+id/navigation_notifications"
+        android:id="@+id/nav_account"
         android:icon="@mipmap/ic_practice"
         android:title="@string/tab_practice"
         app:showAsAction="always" />

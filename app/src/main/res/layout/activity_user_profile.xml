@@ -238,18 +238,6 @@
                 app:srcCompat="@mipmap/ic_avatar" />
 
         </LinearLayout>
-
-
-        <android.support.design.widget.BottomNavigationView
-            android:id="@+id/navigation"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_gravity="bottom"
-            android:background="?android:attr/windowBackground"
-            android:visibility="visible"
-            app:menu="@menu/navigation_user_info" />
-
     </RelativeLayout>
 
 </layout>

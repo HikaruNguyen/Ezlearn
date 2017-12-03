@@ -74,13 +74,12 @@ internal class DividerItemDecoration(context: Context, orientation: Int) : Recyc
         }
     }
 
-    override fun getItemOffsets(outRect: Rect, itemPosition: Int, parent: RecyclerView?) {
-        if (mOrientation == VERTICAL_LIST) {
-            outRect.set(0, 0, 0, mDivider.intrinsicHeight)
-        } else {
-            outRect.set(0, 0, mDivider.intrinsicWidth, 0)
-        }
-    }
+    override fun getItemOffsets(outRect: Rect, itemPosition: Int, parent: RecyclerView?) =
+            if (mOrientation == VERTICAL_LIST) {
+                outRect.set(0, 0, 0, mDivider.intrinsicHeight)
+            } else {
+                outRect.set(0, 0, mDivider.intrinsicWidth, 0)
+            }
 
     companion object {
 

@@ -96,13 +96,12 @@ class ExamsAdapter(context: Context, list: MutableList<ContentByCategory>) :
         mContext.startActivity(Intent.createChooser(intent, "Choose an Application:"))
     }
 
-    private fun downloadFile(name: String, file_url: String, position: Int) {
-        if (AppUtils.isNetworkAvailable(mContext)) {
-            onClickDownloadListener.onClick(name, BuildConfig.ENDPOINT_DOWNLOAD + file_url, position)
-        } else {
-            Toast.makeText(mContext, mContext.getString(R.string.error_connect), Toast.LENGTH_SHORT).show()
-        }
-    }
+    private fun downloadFile(name: String, file_url: String, position: Int) =
+            if (AppUtils.isNetworkAvailable(mContext)) {
+                onClickDownloadListener.onClick(name, BuildConfig.ENDPOINT_DOWNLOAD + file_url, position)
+            } else {
+                Toast.makeText(mContext, mContext.getString(R.string.error_connect), Toast.LENGTH_SHORT).show()
+            }
 
     private fun showDialogLogin() {
         val builder = AlertDialog.Builder(mContext)

@@ -1,7 +1,6 @@
 package com.vn.ezlearn.models
 
 import com.vn.ezlearn.adapter.NavigationChildAdapter
-import java.util.*
 
 /**
  * Created by FRAMGIA\nguyen.duc.manh on 07/07/2017.

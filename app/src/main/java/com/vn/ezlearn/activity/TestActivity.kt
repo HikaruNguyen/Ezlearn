@@ -135,6 +135,7 @@ class TestActivity : BaseActivity(), ChangeQuestionListener, OnCheckAnswerListen
                                             if (question.question != null
                                                     && question.question!!.isNotEmpty()) {
                                                 question.question!!
+                                                        .filter { it.id != null }
                                                         .map {
                                                             MyContent(
                                                                     it.id!!,

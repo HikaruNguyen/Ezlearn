@@ -203,23 +203,21 @@ class CategoryFragment : Fragment(), OnClickDownloadListener, DownloadFileCallBa
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(object : Subscriber<ListExamsResult>() {
-                    override fun onCompleted() {
-                        if (mExamsResult!!.success && mExamsResult!!.data != null
-                                && mExamsResult?.data?.list != null
-                                && mExamsResult?.data?.list!!.isNotEmpty()) {
-                            categoryViewModel.hideErrorView()
-                            mExamsResult?.data?.list!!
-                                    .map {
-                                        ContentByCategory(
-                                                exam = it, document = null, contentType = contentType)
-                                    }
-                                    .forEach { list.add(it) }
+                    override fun onCompleted() =
+                            if (mExamsResult!!.success && mExamsResult!!.data != null
+                                    && mExamsResult?.data?.list != null
+                                    && mExamsResult?.data?.list!!.isNotEmpty()) {
+                                categoryViewModel.hideErrorView()
+                                mExamsResult?.data?.list!!
+                                        .map {
+                                            ContentByCategory(it, null, contentType)
+                                        }
+                                        .forEach { list.add(it) }
 
-                            adapter.addAll(list)
-                        } else {
-                            categoryViewModel.setErrorNodata()
-                        }
-                    }
+                                adapter.addAll(list)
+                            } else {
+                                categoryViewModel.setErrorNodata()
+                            }
 
                     override fun onError(e: Throwable) {
                         categoryViewModel.setErrorNetwork()

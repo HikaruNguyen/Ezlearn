@@ -11,7 +11,9 @@ interface AppConstant {
         val OFFLINE_ID = -3
         val CONTACT_ID = -4
 
+        val TRY_EXAM_ID = -5
         val TRY_EXAM = 0
+        val REAL_EXAM_ID = -6
         val REAL_EXAM = 1
     }
 }

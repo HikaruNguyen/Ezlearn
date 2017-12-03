@@ -53,7 +53,7 @@ class NavigationAdapter(context: Context, list: MutableList<Category>,
     init {
         this.data = list
         for (i in data.indices) {
-            expandState.append(i, false)
+            expandState.append(i, true)
         }
     }
 
