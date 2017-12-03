@@ -19,5 +19,13 @@
         android:textColor="@color/text_black"
         android:textSize="15sp" />
 
+    <ImageView
+        android:layout_width="@dimen/image_size_12dp"
+        android:layout_height="@dimen/image_size_12dp"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="@dimen/margin_10dp"
+        android:src="@mipmap/ic_next"
+        android:tint="@color/text_black" />
 </RelativeLayout>
 

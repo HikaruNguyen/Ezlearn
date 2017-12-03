@@ -26,26 +26,29 @@ class AccountActivity : BaseActivity() {
 
     private fun bindData() {
         typeContact = intent.getStringExtra(TYPE_FRAGMENT)
-        if (typeContact!!.contentEquals(TYPE_CONTACT)) {
-            changeFragment(ContactFragment())
-            supportActionBar!!.title = getString(R.string.nav_contact)
-        }else if(typeContact!!.contentEquals(TYPE_EXAM))
+        if (typeContact != null) {
+            if (typeContact!!.contentEquals(TYPE_CONTACT)) {
+                changeFragment(ContactFragment())
+                supportActionBar!!.title = getString(R.string.nav_contact)
+            } else if (typeContact!!.contentEquals(TYPE_EXAM)) {
 
-        else {
+            }
+        } else {
             typeHistory = intent.getIntExtra(TYPE_HISTORY, HistoryExamFragment.TYPE_EXAM)
-            if (typeHistory == HistoryExamFragment.TYPE_TRANSACTION) {
-                changeFragment(HistoryTransactionFragment())
-                supportActionBar!!.title = getString(R.string.tab_history_transaction)
-            } else {
-                changeFragment(HistoryExamFragment.newInstance(typeHistory!!))
-                when (typeHistory) {
-                    HistoryExamFragment.TYPE_EXAM ->
-                        supportActionBar!!.title = getString(R.string.tab_history_exam)
+            if (typeHistory != null) {
+                if (typeHistory == HistoryExamFragment.TYPE_TRANSACTION) {
+                    changeFragment(HistoryTransactionFragment())
+                    supportActionBar!!.title = getString(R.string.tab_history_transaction)
+                } else {
+                    changeFragment(HistoryExamFragment.newInstance(typeHistory!!))
+                    when (typeHistory) {
+                        HistoryExamFragment.TYPE_EXAM ->
+                            supportActionBar!!.title = getString(R.string.tab_history_exam)
+                    }
                 }
             }
+
         }
-
-
     }
 
     private fun changeFragment(targetFragment: Fragment) {

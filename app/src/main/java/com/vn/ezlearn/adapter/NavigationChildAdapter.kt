@@ -39,14 +39,14 @@ class NavigationChildAdapter(context: Context, list: MutableList<Category>,
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = list[position]
         holder.setIsRecyclable(false)
-        if (item.isSelected) {
-            holder.item!!.setBackgroundResource(R.drawable.bg_item_navigation_press)
-        } else {
-            holder.item!!.setBackgroundResource(R.drawable.bg_item_navigation)
-        }
+//        if (item.isSelected) {
+//            holder.item!!.setBackgroundResource(R.drawable.bg_item_navigation_press)
+//        } else {
+//            holder.item!!.setBackgroundResource(R.drawable.bg_item_navigation)
+//        }
         holder.tvName.text = item.category_name
         holder.item!!.setOnClickListener {
-            setBackgroundPress(position)
+//            setBackgroundPress(position)
             navigationItemSelected.onSelected(list[position].category_name,
                     list[position].category_id,
                     list[position].children, parentPosition)

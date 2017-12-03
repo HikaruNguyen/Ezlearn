@@ -11,7 +11,6 @@ import android.view.ViewGroup
 import android.widget.RelativeLayout
 import android.widget.TextView
 import com.github.aakira.expandablelayout.ExpandableLayout
-import com.github.aakira.expandablelayout.ExpandableLayoutListenerAdapter
 import com.github.aakira.expandablelayout.ExpandableLinearLayout
 import com.github.aakira.expandablelayout.Utils
 import com.vn.ezlearn.R
@@ -19,8 +18,6 @@ import com.vn.ezlearn.config.GlobalValue
 import com.vn.ezlearn.interfaces.NavigationItemChildSelected
 import com.vn.ezlearn.interfaces.NavigationItemSelected
 import com.vn.ezlearn.models.Category
-import com.vn.ezlearn.utils.AppUtils
-import com.vn.ezlearn.utils.CLog
 import com.vn.ezlearn.widgets.CRecyclerView
 
 /**
@@ -34,15 +31,15 @@ class NavigationAdapter(context: Context, list: MutableList<Category>,
 
     override fun onSelected(name: String, id: String, categoryList: List<Category>?,
                             parentPosition: Int) {
-        CLog.d(AppUtils.getTAG(NavigationAdapter::class.java), "position_menu_parent_old: "
-                + GlobalValue.position_menu_parent_old + " " + parentPosition)
-        if (GlobalValue.position_menu_parent_old != parentPosition) {
-            if (GlobalValue.position_menu_parent_old > 0)
-                list[GlobalValue.position_menu_parent_old].childAdapter!!.clearBackground(true)
-            GlobalValue.position_menu_parent_old = parentPosition
-        }
-        GlobalValue.position_menu_old = parentPosition
-        clearBackground()
+//        CLog.d(AppUtils.getTAG(NavigationAdapter::class.java), "position_menu_parent_old: "
+//                + GlobalValue.position_menu_parent_old + " " + parentPosition)
+//        if (GlobalValue.position_menu_parent_old != parentPosition) {
+//            if (GlobalValue.position_menu_parent_old > 0)
+//                list[GlobalValue.position_menu_parent_old].childAdapter!!.clearBackground(true)
+//            GlobalValue.position_menu_parent_old = parentPosition
+//        }
+//        GlobalValue.position_menu_old = parentPosition
+//        clearBackground()
         navigationItemSelected.onSelected(name, id, categoryList)
     }
 
@@ -86,37 +83,37 @@ class NavigationAdapter(context: Context, list: MutableList<Category>,
                 holder.expandableLayout?.setInterpolator(Utils.createInterpolator(
                         Utils.FAST_OUT_SLOW_IN_INTERPOLATOR))
                 holder.expandableLayout?.isExpanded = expandState.get(position)
-                holder.expandableLayout?.setListener(object : ExpandableLayoutListenerAdapter() {
-                    override fun onPreOpen() {
-                        createRotateAnimator(holder.buttonLayout!!, 0f, 180f).start()
-                        expandState.put(position, true)
-                    }
-
-                    override fun onPreClose() {
-                        createRotateAnimator(holder.buttonLayout!!, 180f, 0f).start()
-                        expandState.put(position, false)
-                    }
-                })
+//                holder.expandableLayout?.setListener(object : ExpandableLayoutListenerAdapter() {
+//                    override fun onPreOpen() {
+//                        createRotateAnimator(holder.buttonLayout!!, 0f, 180f).start()
+//                        expandState.put(position, true)
+//                    }
+//
+//                    override fun onPreClose() {
+//                        createRotateAnimator(holder.buttonLayout!!, 180f, 0f).start()
+//                        expandState.put(position, false)
+//                    }
+//                })
 
                 holder.buttonLayout?.rotation = if (expandState.get(position)) 180f else 0f
-                holder.buttonLayout?.setOnClickListener { onClickButton(holder.expandableLayout!!) }
-                holder.item?.setOnClickListener { onClickButton(holder.expandableLayout!!) }
+//                holder.buttonLayout?.setOnClickListener { onClickButton(holder.expandableLayout!!) }
+//                holder.item?.setOnClickListener { onClickButton(holder.expandableLayout!!) }
             } else {
-                if (item.isSelected) {
-                    holder.item!!.setBackgroundResource(R.drawable.bg_item_navigation_press)
-                } else {
-                    holder.item!!.setBackgroundResource(R.drawable.bg_item_navigation)
-                }
+//                if (item.isSelected) {
+//                    holder.item!!.setBackgroundResource(R.drawable.bg_item_navigation_press)
+//                } else {
+//                    holder.item!!.setBackgroundResource(R.drawable.bg_item_navigation)
+//                }
                 if (item.levelChild!! >= 2) {
                     holder.itemView.setOnClickListener {
-                        setBackgroundPress(position)
+//                        setBackgroundPress(position)
                         navigationItemSelected.onSelected(item.category_name, item.category_id,
                                 item.children!!)
                     }
 
                 } else {
                     holder.itemView.setOnClickListener {
-                        setBackgroundPress(position)
+//                        setBackgroundPress(position)
                         navigationItemSelected.onSelected(item.category_name, item.category_id, null)
                     }
                 }
