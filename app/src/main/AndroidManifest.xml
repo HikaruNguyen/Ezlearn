@@ -53,7 +53,10 @@
         <activity
             android:name=".activity.CategoryMainActivity"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".activity.ListExamActivity"></activity>
+        <activity android:name=".activity.ListExamActivity" />
+        <activity
+            android:name=".activity.PaymentActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
     </application>
 
 </manifest>

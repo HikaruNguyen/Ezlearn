@@ -96,6 +96,7 @@
                 android:background="@color/bg_main" />
 
             <LinearLayout
+                android:id="@+id/lnPayment"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/bg_exam"

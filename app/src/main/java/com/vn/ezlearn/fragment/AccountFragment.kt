@@ -2,6 +2,7 @@ package com.vn.ezlearn.fragment
 
 
 import android.app.Activity
+import android.app.AlertDialog
 import android.app.ProgressDialog
 import android.content.Intent
 import android.databinding.DataBindingUtil
@@ -12,10 +13,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import com.vn.ezlearn.R
-import com.vn.ezlearn.activity.AccountActivity
-import com.vn.ezlearn.activity.LoginActivity
-import com.vn.ezlearn.activity.MyApplication
-import com.vn.ezlearn.activity.UserProfile
+import com.vn.ezlearn.activity.*
 import com.vn.ezlearn.config.EzlearnService
 import com.vn.ezlearn.config.UserConfig
 import com.vn.ezlearn.databinding.FragmentAccountBinding
@@ -39,6 +37,7 @@ class AccountFragment : Fragment(), View.OnClickListener {
     private var mSubscription: Subscription? = null
     private var baseResultLogout: BaseResult? = null
     private lateinit var progressLoading: ProgressDialog
+    private var isAttach = true
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         accountBinding = DataBindingUtil.inflate(
@@ -55,6 +54,7 @@ class AccountFragment : Fragment(), View.OnClickListener {
         accountBinding.lnHistoryTransaction.setOnClickListener(this)
         accountBinding.lnLogout.setOnClickListener(this)
         accountBinding.lnContact.setOnClickListener(this)
+        accountBinding.lnPayment.setOnClickListener(this)
 
     }
 
@@ -84,7 +84,7 @@ class AccountFragment : Fragment(), View.OnClickListener {
                 if (!UserConfig.getInstance(activity).token.isEmpty()) {
                     intent = Intent(activity, AccountActivity::class.java)
                     intent.putExtra(AccountActivity.TYPE_HISTORY, HistoryExamFragment.TYPE_EXAM)
-                    startActivityForResult(intent, LoginActivity.LOGIN_REQUEST)
+                    startActivity(intent)
                 } else {
                     intent = Intent(activity, LoginActivity::class.java)
                     startActivityForResult(intent, LoginActivity.LOGIN_REQUEST)
@@ -95,7 +95,7 @@ class AccountFragment : Fragment(), View.OnClickListener {
                 if (!UserConfig.getInstance(activity).token.isEmpty()) {
                     intent = Intent(activity, AccountActivity::class.java)
                     intent.putExtra(AccountActivity.TYPE_HISTORY, HistoryExamFragment.TYPE_TRANSACTION)
-                    startActivityForResult(intent, LoginActivity.LOGIN_REQUEST)
+                    startActivity(intent)
                 } else {
                     intent = Intent(activity, LoginActivity::class.java)
                     startActivityForResult(intent, LoginActivity.LOGIN_REQUEST)
@@ -104,10 +104,30 @@ class AccountFragment : Fragment(), View.OnClickListener {
             R.id.lnContact -> {
                 intent = Intent(activity, AccountActivity::class.java)
                 intent.putExtra(AccountActivity.TYPE_FRAGMENT, AccountActivity.TYPE_CONTACT)
-                startActivityForResult(intent, LoginActivity.LOGIN_REQUEST)
+                startActivity(intent)
+            }
+            R.id.lnPayment -> {
+                if (!UserConfig.getInstance(activity).token.isEmpty()) {
+                    intent = Intent(activity, PaymentActivity::class.java)
+                    startActivity(intent)
+                } else {
+                    intent = Intent(activity, LoginActivity::class.java)
+                    startActivityForResult(intent, LoginActivity.LOGIN_REQUEST)
+                }
+
             }
             R.id.lnLogout -> {
-                logout()
+                val builder = AlertDialog.Builder(activity)
+                builder.setTitle(getString(R.string.nav_logout))
+                builder.setMessage(getString(R.string.confirm_logout))
+                builder.setPositiveButton(getString(R.string.ok)) { dialog, _ ->
+                    run {
+                        dialog!!.dismiss()
+                        logout()
+                    }
+                }
+                builder.setNegativeButton(getString(R.string.cancel)) { dialog, _ -> dialog!!.dismiss() }
+                builder.show()
             }
         }
     }
@@ -122,28 +142,35 @@ class AccountFragment : Fragment(), View.OnClickListener {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(object : Subscriber<BaseResult>() {
                     override fun onCompleted() {
-                        accountViewModel.visiableLogout.set(View.GONE)
-                        progressLoading.dismiss()
-                        if (baseResultLogout!!.success) {
-                            if (baseResultLogout!!.data != null
-                                    && !baseResultLogout!!.data!!.message.isEmpty()) {
-                                Toast.makeText(activity,
-                                        baseResultLogout!!.data!!.message,
-                                        Toast.LENGTH_SHORT).show()
+                        if (isAdded && isAttach) {
+                            accountViewModel.visiableLogout.set(View.GONE)
+                            progressLoading.dismiss()
+                            if (baseResultLogout!!.success) {
+                                if (baseResultLogout!!.data != null
+                                        && !baseResultLogout!!.data!!.message.isEmpty()) {
+                                    Toast.makeText(activity,
+                                            baseResultLogout!!.data!!.message,
+                                            Toast.LENGTH_SHORT).show()
+                                } else {
+                                    Toast.makeText(activity, getString(R.string.logout_success),
+                                            Toast.LENGTH_SHORT).show()
+                                }
+                                UserConfig.getInstance(activity).clearData()
+                                accountViewModel.updateProfile()
                             } else {
-                                Toast.makeText(activity, getString(R.string.logout_success),
+                                Toast.makeText(activity, getString(R.string.error_connect),
                                         Toast.LENGTH_SHORT).show()
                             }
-                            UserConfig.getInstance(activity).clearData()
-                            accountViewModel.updateProfile()
-                        } else {
-                            Toast.makeText(activity, getString(R.string.error_connect),
-                                    Toast.LENGTH_SHORT).show()
                         }
+
                     }
 
                     override fun onError(e: Throwable) {
-                        progressLoading.dismiss()
+                        if (isAdded && isAttach) {
+                            progressLoading.dismiss()
+                            Toast.makeText(activity, getString(R.string.error_connect), Toast.LENGTH_SHORT).show()
+                        }
+
                     }
 
                     override fun onNext(baseResult: BaseResult?) {
@@ -159,5 +186,16 @@ class AccountFragment : Fragment(), View.OnClickListener {
         super.onDestroy()
         if (mSubscription != null && !mSubscription!!.isUnsubscribed) mSubscription!!.unsubscribe()
         mSubscription = null
+        isAttach = false
+    }
+
+    override fun onResume() {
+        super.onResume()
+        isAttach = true
+    }
+
+    override fun onDetach() {
+        super.onDetach()
+        isAttach = false
     }
 }

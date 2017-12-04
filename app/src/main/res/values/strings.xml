@@ -43,6 +43,8 @@
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
+    <string name="confirm_logout">Bạn có muốn đăng xuất?</string>
+
     <!--Home-->
     <string name="try_exam">ĐỀ THI THỬ</string>
     <string name="real_exam">ĐỀ THI CHÍNH THỨC</string>
@@ -66,7 +68,7 @@
     <string name="achievements">Thành tích</string>
     <string name="rating_">Xếp hạng:</string>
     <string name="rating">Xếp hạng</string>
-    <string name="payment">Thanh toán</string>
+    <string name="payment">Thanh toán - Mua dịch vụ</string>
     <string name="invite_friend">Mời bạn bè</string>
     <string name="feedback">Góp ý</string>
     <string name="support">Chính sách và điều khoản</string>
@@ -171,8 +173,12 @@
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
 
+    <!--Payment-->
+    <string name="payment_by_scratch_cards">Nạp tiền qua thẻ cào</string>
+    <string name="payment_by_bank">Nạp tiền qua ngân hàng</string>
+    <string name="buy_service">Mua dịch vụ</string>
+
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
-
 
 </resources>
