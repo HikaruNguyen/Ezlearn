@@ -5,7 +5,6 @@ import android.databinding.DataBindingUtil
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import com.vn.ezlearn.R
-import com.vn.ezlearn.config.AppConfig
 import com.vn.ezlearn.config.EzlearnService
 import com.vn.ezlearn.databinding.ActivitySplashBinding
 import com.vn.ezlearn.modelresult.CategoryResult
@@ -59,14 +58,15 @@ class SplashActivity : AppCompatActivity() {
                                 }
                             }
                             MyApplication.with(this@SplashActivity).categoryResult = mCategoryResult
-                            if (!AppConfig.getInstance(this@SplashActivity).isSelectLevel) {
-                                val intent = Intent(this@SplashActivity, SelectLevelActivity::class.java)
-                                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK
-                                startActivity(intent)
-                                finish()
-                            } else {
-                                goToMain()
-                            }
+//                            if (!AppConfig.getInstance(this@SplashActivity).isSelectLevel) {
+//                                val intent = Intent(this@SplashActivity, SelectLevelActivity::class.java)
+//                                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK
+//                                startActivity(intent)
+//                                finish()
+//                            } else {
+//                                goToMain()
+//                            }
+                            goToMain()
                         }
                     }
 

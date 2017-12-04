@@ -97,7 +97,7 @@ class NavigationAdapter(context: Context, list: MutableList<Category>,
 
                 holder.buttonLayout?.rotation = if (expandState.get(position)) 180f else 0f
 //                holder.buttonLayout?.setOnClickListener { onClickButton(holder.expandableLayout!!) }
-//                holder.item?.setOnClickListener { onClickButton(holder.expandableLayout!!) }
+                holder.item?.setOnClickListener { onClickButton(holder.expandableLayout!!) }
             } else {
 //                if (item.isSelected) {
 //                    holder.item!!.setBackgroundResource(R.drawable.bg_item_navigation_press)
@@ -106,14 +106,14 @@ class NavigationAdapter(context: Context, list: MutableList<Category>,
 //                }
                 if (item.levelChild!! >= 2) {
                     holder.itemView.setOnClickListener {
-//                        setBackgroundPress(position)
+                        //                        setBackgroundPress(position)
                         navigationItemSelected.onSelected(item.category_name, item.category_id,
                                 item.children!!)
                     }
 
                 } else {
                     holder.itemView.setOnClickListener {
-//                        setBackgroundPress(position)
+                        //                        setBackgroundPress(position)
                         navigationItemSelected.onSelected(item.category_name, item.category_id, null)
                     }
                 }

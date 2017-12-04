@@ -74,7 +74,7 @@ class HistoryExamFragment : Fragment() {
                 getListHistoryExam(current_page)
             }
         }
-        historyExamBinding.rvHistoryHome.setDivider()
+//        historyExamBinding.rvHistoryHome.setDivider()
     }
 
     private fun getListHistoryExam(page: Int) {
