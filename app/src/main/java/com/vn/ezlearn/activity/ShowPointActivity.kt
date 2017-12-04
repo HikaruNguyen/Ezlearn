@@ -16,6 +16,7 @@ import com.vn.ezlearn.R
 import com.vn.ezlearn.adapter.DialogListQuestionAdapter
 import com.vn.ezlearn.databinding.ActivityShowPointBinding
 import com.vn.ezlearn.models.MyContent
+import com.vn.ezlearn.utils.CLog
 import com.vn.ezlearn.utils.QuestionUtils
 import com.vn.ezlearn.viewmodel.ShowPointViewModel
 import java.util.*
@@ -80,6 +81,7 @@ class ShowPointActivity : AppCompatActivity() {
                 }
             }
         }
+        CLog.d(TAG," MyPoint: "+point)
         numAnswerNoCorrect = myContentList.size - numNoAnswer - numAnswerCorrect
         showPointViewModel = ShowPointViewModel(this, point, numAnswerCorrect,
                 numAnswerNoCorrect, numNoAnswer, hours, minutes, seconds, name)

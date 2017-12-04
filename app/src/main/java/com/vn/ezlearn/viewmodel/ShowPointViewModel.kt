@@ -14,7 +14,7 @@ import com.vn.ezlearn.R
  */
 
 class ShowPointViewModel @SuppressLint("DefaultLocale")
-constructor(var context: Context, var point: Float, numAnswerCorrect: Int,
+constructor(var context: Context, point: Float, numAnswerCorrect: Int,
             numAnswerNoCorrect: Int, numNoAnswer: Int,
             hourAnswer: Int, minuteAnswer: Int, secondAnswer: Int,
             examName: String) : BaseObservable() {
@@ -22,9 +22,9 @@ constructor(var context: Context, var point: Float, numAnswerCorrect: Int,
     var tvPoint: ObservableField<String> = ObservableField(String.format("%.1f", point) + " "
             + context.getString(R.string.point))
     var tvNumAnswerCorrect: ObservableField<String> = ObservableField(context.getString(
-            R.string.answer_correct, numAnswerNoCorrect))
+            R.string.answer_correct, numAnswerCorrect))
     var tvNumAnswerNoCorrect: ObservableField<String> = ObservableField(context.getString(
-            R.string.answer_no_correct, numAnswerCorrect))
+            R.string.answer_no_correct, numAnswerNoCorrect))
     var tvNumNoAnswer: ObservableField<String> = ObservableField(context.getString(
             R.string.no_answer, numNoAnswer))
     var tvTimeAnswer: ObservableField<Spanned> = ObservableField(Html.fromHtml(context.getString(

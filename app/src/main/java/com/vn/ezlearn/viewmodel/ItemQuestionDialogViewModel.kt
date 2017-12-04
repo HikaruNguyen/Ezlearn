@@ -28,12 +28,10 @@ class ItemQuestionDialogViewModel(content: MyContent, position: Int,
                     backgroundItem.set(R.drawable.bg_question_no_correct)
                 }
             } else {
-                if (content.typeQuestion == MyContent.TYPE_ANSWERED) {
-                    backgroundItem.set(R.drawable.bg_question_answered)
-                } else if (content.typeQuestion == MyContent.TYPE_LATE) {
-                    backgroundItem.set(R.drawable.bg_question_review)
-                } else {
-                    backgroundItem.set(R.drawable.bg_question_unanswer)
+                when {
+                    content.typeQuestion == MyContent.TYPE_ANSWERED -> backgroundItem.set(R.drawable.bg_question_answered)
+                    content.typeQuestion == MyContent.TYPE_LATE -> backgroundItem.set(R.drawable.bg_question_review)
+                    else -> backgroundItem.set(R.drawable.bg_question_unanswer)
                 }
             }
 

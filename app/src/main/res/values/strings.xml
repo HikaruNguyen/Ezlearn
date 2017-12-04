@@ -112,6 +112,7 @@
     <string name="cancel_review"><u>Hủy xem lại</u></string>
     <string name="input_answer">Nhập câu trả lời</string>
     <string name="your_answer"><![CDATA[Câu trả lời của bạn: <b>%1$s</b>]]></string>
+    <string name="answer_">Đáp án: </string>
 
     <!--Exam-->
     <string name="minute">phút</string>
@@ -181,5 +182,6 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
 
 </resources>

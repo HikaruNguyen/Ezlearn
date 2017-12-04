@@ -167,7 +167,7 @@
                 android:textStyle="italic"
                 android:visibility="@{questionViewModel.visiableInput}" />
             <!--</RelativeLayout>-->
-            <LinearLayout
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
@@ -181,17 +181,31 @@
                     android:layout_height="wrap_content"
                     android:paddingTop="@dimen/margin_10dp"
                     android:text="@{questionViewModel.yourInput}"
-                    android:textColor="@color/text_black" />
+                    android:textColor="@color/text_black"
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/tvCorrectAnswer"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_below="@+id/tvYourAnswer"
+                    android:layout_toRightOf="@+id/txtAnswer"
+                    android:paddingLeft="@dimen/margin_5dp"
                     android:paddingTop="@dimen/margin_5dp"
                     android:text="@{questionViewModel.correctInput}"
                     android:textColor="@color/green"
                     android:textStyle="bold" />
-            </LinearLayout>
+
+                <TextView
+                    android:id="@+id/txtAnswer"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tvYourAnswer"
+                    android:paddingTop="@dimen/margin_5dp"
+                    android:text="@string/answer_"
+                    android:textColor="@color/text_black"
+                    android:textStyle="bold" />
+            </RelativeLayout>
 
         </LinearLayout>
 

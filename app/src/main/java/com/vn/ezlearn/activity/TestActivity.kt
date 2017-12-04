@@ -10,6 +10,7 @@ import android.os.CountDownTimer
 import android.support.v7.app.AlertDialog
 import android.support.v7.widget.DefaultItemAnimator
 import android.support.v7.widget.GridLayoutManager
+import android.text.Html
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuItem
@@ -124,8 +125,8 @@ class TestActivity : BaseActivity(), ChangeQuestionListener, OnCheckAnswerListen
                                 && mQuestionResult!!.data!!.data!!.isNotEmpty()) {
                             for (question in mQuestionResult!!.data!!.data!!) {
                                 if (question.region != null) {
-                                    val point: Float? = if (question.region!!.number_question == 0) {
-                                        question.region!!.total_mark /
+                                    val point: Float? = if (question.region!!.number_question != 0) {
+                                        question.region!!.total_mark * 0.1f /
                                                 question.region!!.number_question
                                     } else {
                                         0f
@@ -312,7 +313,8 @@ class TestActivity : BaseActivity(), ChangeQuestionListener, OnCheckAnswerListen
                 if (content.content.answer_list != null && content.content.answer_list!!.isNotEmpty()) {
                     if (content.typeQuestion != MyContent.TYPE_LATE)
                         content.typeQuestion = MyContent.TYPE_ANSWERED
-                    content.isCorrect = content.content.answer_list!![0].answer!!.trim().contentEquals(answer.trim())
+                    content.isCorrect = Html.fromHtml(content.content.answer_list!![0].answer!!).toString().trim()
+                            .contentEquals(answer.trim())
                     contentList!![position] = content
                 }
             }
@@ -378,7 +380,8 @@ class TestActivity : BaseActivity(), ChangeQuestionListener, OnCheckAnswerListen
         isAttach = false
         if (mSubscription != null && !mSubscription!!.isUnsubscribed) mSubscription!!.unsubscribe()
         mSubscription = null
-        countDownTimer!!.cancel()
+        if (countDownTimer != null)
+            countDownTimer!!.cancel()
     }
 
 
