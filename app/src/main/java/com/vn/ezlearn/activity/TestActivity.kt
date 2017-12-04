@@ -378,6 +378,7 @@ class TestActivity : BaseActivity(), ChangeQuestionListener, OnCheckAnswerListen
         isAttach = false
         if (mSubscription != null && !mSubscription!!.isUnsubscribed) mSubscription!!.unsubscribe()
         mSubscription = null
+        countDownTimer!!.cancel()
     }
 
 

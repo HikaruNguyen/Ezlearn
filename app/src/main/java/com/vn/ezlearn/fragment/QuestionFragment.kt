@@ -7,15 +7,18 @@ import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v4.content.ContextCompat
 import android.text.Editable
+import android.text.Html
 import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.RadioButton
+import android.widget.TextView
 import com.vn.ezlearn.R
 import com.vn.ezlearn.databinding.FragmentQuestionBinding
 import com.vn.ezlearn.interfaces.OnCheckAnswerListener
 import com.vn.ezlearn.models.Answer
+import com.vn.ezlearn.models.Content
 import com.vn.ezlearn.models.MyContent
 import com.vn.ezlearn.viewmodel.QuestionViewModel
 
@@ -24,8 +27,8 @@ import com.vn.ezlearn.viewmodel.QuestionViewModel
  */
 
 class QuestionFragment : Fragment() {
-    private var fragmentQuestionBinding: FragmentQuestionBinding? = null
-    private var questionViewModel: QuestionViewModel? = null
+    private lateinit var fragmentQuestionBinding: FragmentQuestionBinding
+    private lateinit var questionViewModel: QuestionViewModel
     private var position: Int = 0
     private var size: Int = 0
     private var content: MyContent? = null
@@ -51,42 +54,45 @@ class QuestionFragment : Fragment() {
         fragmentQuestionBinding = DataBindingUtil.inflate(
                 inflater!!, R.layout.fragment_question, container, false)
         questionViewModel = QuestionViewModel(activity, content, position, size)
-        fragmentQuestionBinding!!.questionViewModel = questionViewModel
+        fragmentQuestionBinding.questionViewModel = questionViewModel
         bindData()
         event()
-        return fragmentQuestionBinding!!.root
+        return fragmentQuestionBinding.root
     }
 
     private fun bindData() {
         if (content != null) {
             when (content?.myAnswer!!) {
                 0 -> {
-                    fragmentQuestionBinding!!.rdAnswerA.isChecked = true
+                    fragmentQuestionBinding.rdAnswerA.isChecked = true
                     answer(0)
                 }
                 1 -> {
-                    fragmentQuestionBinding!!.rdAnswerB.isChecked = true
+                    fragmentQuestionBinding.rdAnswerB.isChecked = true
                     answer(1)
                 }
                 2 -> {
-                    fragmentQuestionBinding!!.rdAnswerC.isChecked = true
+                    fragmentQuestionBinding.rdAnswerC.isChecked = true
                     answer(2)
                 }
                 3 -> {
-                    fragmentQuestionBinding!!.rdAnswerD.isChecked = true
+                    fragmentQuestionBinding.rdAnswerD.isChecked = true
                     answer(3)
                 }
                 else -> {
                 }
             }
             if (content!!.isReview) {
-                showSuggest()
+                if (content != null) {
+                    showSuggest()
+                }
+
             }
         }
     }
 
     private fun event() {
-        fragmentQuestionBinding!!.rgAnswer.setOnCheckedChangeListener { _, i ->
+        fragmentQuestionBinding.rgAnswer.setOnCheckedChangeListener { _, i ->
             when (i) {
                 R.id.rdAnswerA -> answer(0)
                 R.id.rdAnswerB -> answer(1)
@@ -97,12 +103,12 @@ class QuestionFragment : Fragment() {
             }
         }
 
-        fragmentQuestionBinding!!.tvNeedReview.setOnClickListener {
-            questionViewModel!!.setNeedReview()
+        fragmentQuestionBinding.tvNeedReview.setOnClickListener {
+            questionViewModel.setNeedReview()
             onCheckAnswerListener!!.onNeedReview(position)
         }
 
-        fragmentQuestionBinding!!.edInput.addTextChangedListener(object : TextWatcher {
+        fragmentQuestionBinding.edInput.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(charSequence: CharSequence, i: Int, i1: Int, i2: Int) {
 
             }
@@ -112,7 +118,7 @@ class QuestionFragment : Fragment() {
             }
 
             override fun afterTextChanged(editable: Editable) {
-                if(editable.isNotEmpty()){
+                if (editable.isNotEmpty()) {
                     answer(editable.toString())
                 }
 
@@ -128,44 +134,58 @@ class QuestionFragment : Fragment() {
     private fun answer(answer: String) {
         onCheckAnswerListener!!.onInputAnswer(position, answer)
         this.inputAnswer = answer
+        questionViewModel.yourInput.set(Html.fromHtml(context.getString(R.string.your_answer, answer)))
     }
 
     fun showSuggest() {
-        questionViewModel!!.showSuggest()
-        hideButtonRadioButton(fragmentQuestionBinding!!.rdAnswerA)
-        hideButtonRadioButton(fragmentQuestionBinding!!.rdAnswerB)
-        hideButtonRadioButton(fragmentQuestionBinding!!.rdAnswerC)
-        hideButtonRadioButton(fragmentQuestionBinding!!.rdAnswerD)
+        questionViewModel.showSuggest()
+        if (content?.content?.answer_show!!.contentEquals(Content.ANSWER_SHOW_DEFAULT)) {
+            hideButtonRadioButton(fragmentQuestionBinding.rdAnswerA)
+            hideButtonRadioButton(fragmentQuestionBinding.rdAnswerB)
+            hideButtonRadioButton(fragmentQuestionBinding.rdAnswerC)
+            hideButtonRadioButton(fragmentQuestionBinding.rdAnswerD)
 
-        if (content != null && content!!.content.answer_list != null) {
-            if (content!!.content.answer_list!!.isNotEmpty()
-                    && content!!.content.answer_list!![0].is_true == Answer.TRUE) {
-                setStyleCorrect(fragmentQuestionBinding!!.rdAnswerA)
-            } else if (content!!.content.answer_list!!.size > 1
-                    && content!!.content.answer_list!![1].is_true == Answer.TRUE) {
-                setStyleCorrect(fragmentQuestionBinding!!.rdAnswerB)
-            } else if (content!!.content.answer_list!!.size > 2
-                    && content!!.content.answer_list!![2].is_true == Answer.TRUE) {
-                setStyleCorrect(fragmentQuestionBinding!!.rdAnswerC)
-            } else if (content!!.content.answer_list!!.size > 3
-                    && content!!.content.answer_list!![3].is_true == Answer.TRUE) {
-                setStyleCorrect(fragmentQuestionBinding!!.rdAnswerD)
+            if (content != null && content!!.content.answer_list != null) {
+                if (content!!.content.answer_list!!.isNotEmpty()
+                        && content!!.content.answer_list!![0].is_true == Answer.TRUE) {
+                    setStyleCorrect(fragmentQuestionBinding.rdAnswerA)
+                } else if (content!!.content.answer_list!!.size > 1
+                        && content!!.content.answer_list!![1].is_true == Answer.TRUE) {
+                    setStyleCorrect(fragmentQuestionBinding.rdAnswerB)
+                } else if (content!!.content.answer_list!!.size > 2
+                        && content!!.content.answer_list!![2].is_true == Answer.TRUE) {
+                    setStyleCorrect(fragmentQuestionBinding.rdAnswerC)
+                } else if (content!!.content.answer_list!!.size > 3
+                        && content!!.content.answer_list!![3].is_true == Answer.TRUE) {
+                    setStyleCorrect(fragmentQuestionBinding.rdAnswerD)
+                }
+                if (answer >= 0) {
+                    if (content!!.content.answer_list!![answer].is_true != Answer.TRUE) {
+                        when (answer) {
+                            0 -> setStyleNoCorrect(fragmentQuestionBinding.rdAnswerA)
+                            1 -> setStyleNoCorrect(fragmentQuestionBinding.rdAnswerB)
+                            2 -> setStyleNoCorrect(fragmentQuestionBinding.rdAnswerC)
+                            3 -> setStyleNoCorrect(fragmentQuestionBinding.rdAnswerD)
+                        }
+                    } else {
+                        when (answer) {
+                            0 -> showTickCorrectAnswer(fragmentQuestionBinding.rdAnswerA)
+                            1 -> showTickCorrectAnswer(fragmentQuestionBinding.rdAnswerB)
+                            2 -> showTickCorrectAnswer(fragmentQuestionBinding.rdAnswerC)
+                            3 -> showTickCorrectAnswer(fragmentQuestionBinding.rdAnswerD)
+                        }
+                    }
+                }
             }
-            if (answer >= 0) {
-                if (content!!.content.answer_list!![answer].is_true != Answer.TRUE) {
-                    when (answer) {
-                        0 -> setStyleNoCorrect(fragmentQuestionBinding!!.rdAnswerA)
-                        1 -> setStyleNoCorrect(fragmentQuestionBinding!!.rdAnswerB)
-                        2 -> setStyleNoCorrect(fragmentQuestionBinding!!.rdAnswerC)
-                        3 -> setStyleNoCorrect(fragmentQuestionBinding!!.rdAnswerD)
-                    }
-                } else {
-                    when (answer) {
-                        0 -> showTickCorrectAnswer(fragmentQuestionBinding!!.rdAnswerA)
-                        1 -> showTickCorrectAnswer(fragmentQuestionBinding!!.rdAnswerB)
-                        2 -> showTickCorrectAnswer(fragmentQuestionBinding!!.rdAnswerC)
-                        3 -> showTickCorrectAnswer(fragmentQuestionBinding!!.rdAnswerD)
-                    }
+        } else if (content!!.content.answer_show!!.contentEquals(Content.ANSWER_SHOW_INPUT)) {
+            questionViewModel.visiableInput.set(View.GONE)
+            if (content!!.content.answer_list!!.isNotEmpty()) {
+                questionViewModel.correctInput.set(
+                        Html.fromHtml(content!!.content.answer_list!![0].answer!!
+                                .replace("<p>", "").replace("</p>", "")))
+                if (Html.fromHtml(content!!.content.answer_list!![0].answer!!).trim().toString()
+                        .contentEquals(inputAnswer.trim())) {
+                    showTickCorrectAnswer(fragmentQuestionBinding.tvCorrectAnswer)
                 }
             }
         }
@@ -191,6 +211,12 @@ class QuestionFragment : Fragment() {
         val img = ContextCompat.getDrawable(activity, R.drawable.tick)
         img.setBounds(0, 0, 32, 32)
         radioButton.setCompoundDrawables(img, null, null, null)
+    }
+
+    private fun showTickCorrectAnswer(textView: TextView) {
+        val img = ContextCompat.getDrawable(activity, R.drawable.tick)
+        img.setBounds(0, 0, 32, 32)
+        textView.setCompoundDrawables(img, null, null, null)
     }
 
     companion object {

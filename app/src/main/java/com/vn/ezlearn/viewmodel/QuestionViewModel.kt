@@ -42,6 +42,11 @@ class QuestionViewModel(context: Activity, private val content: MyContent?, posi
     var visiableInput: ObservableInt = ObservableInt(View.GONE)
     var enableInput: ObservableBoolean = ObservableBoolean(false)
 
+    var yourInput: ObservableField<Spanned>
+            = ObservableField(Html.fromHtml(context.getString(R.string.your_answer, "")))
+    var correctInput: ObservableField<Spanned>
+            = ObservableField(Html.fromHtml(""))
+
     init {
         this.context = context
         textPassage = ObservableField()
@@ -88,13 +93,13 @@ class QuestionViewModel(context: Activity, private val content: MyContent?, posi
         }
         if (content != null && content.content.answer_list != null
                 && content.content.answer_list!!.size >= 4) {
-            answerA.set(Html.fromHtml(content.content.answer_list!![0].answer!!
+            answerA.set(Html.fromHtml("A. " + content.content.answer_list!![0].answer!!
                     .replace("<p>", "").replace("</p>", "")))
-            answerB.set(Html.fromHtml(content.content.answer_list!![1].answer!!
+            answerB.set(Html.fromHtml("B. " + content.content.answer_list!![1].answer!!
                     .replace("<p>", "").replace("</p>", "")))
-            answerC.set(Html.fromHtml(content.content.answer_list!![2].answer!!
+            answerC.set(Html.fromHtml("C. " + content.content.answer_list!![2].answer!!
                     .replace("<p>", "").replace("</p>", "")))
-            answerD.set(Html.fromHtml(content.content.answer_list!![3].answer!!
+            answerD.set(Html.fromHtml("D. " + content.content.answer_list!![3].answer!!
                     .replace("<p>", "").replace("</p>", "")))
         }
         if (content != null && content.content.suggest != null) {

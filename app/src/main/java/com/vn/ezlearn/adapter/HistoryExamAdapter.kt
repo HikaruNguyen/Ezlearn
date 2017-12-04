@@ -51,6 +51,7 @@ class HistoryExamAdapter(context: Context, list: MutableList<HistoryExam>) :
                 dialogChoose!!.dismiss()
             }
             val builder = AlertDialog.Builder(mContext)
+            builder.setTitle(list[adapterPosition].subject_code)
             val dialogHistoryExam = DataBindingUtil.inflate<DialogHistoryExamChooseBinding>(
                     LayoutInflater.from(mContext), R.layout.dialog_history_exam_choose, null, false)
             builder.setView(dialogHistoryExam.root)

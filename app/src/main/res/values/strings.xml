@@ -111,6 +111,7 @@
     <string name="need_to_review"><u>Cần xem lại</u></string>
     <string name="cancel_review"><u>Hủy xem lại</u></string>
     <string name="input_answer">Nhập câu trả lời</string>
+    <string name="your_answer"><![CDATA[Câu trả lời của bạn: <b>%1$s</b>]]></string>
 
     <!--Exam-->
     <string name="minute">phút</string>
