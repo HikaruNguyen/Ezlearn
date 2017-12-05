@@ -173,7 +173,7 @@
                 android:orientation="vertical"
                 android:paddingLeft="@dimen/margin_10dp"
                 android:paddingRight="@dimen/margin_10dp"
-                android:visibility="@{questionViewModel.visiableSuggest}">
+                android:visibility="@{questionViewModel.visiableMyAnswer}">
 
                 <TextView
                     android:id="@+id/tvYourAnswer"

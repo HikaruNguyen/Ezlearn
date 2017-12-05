@@ -38,9 +38,9 @@ import java.util.concurrent.TimeUnit
 
 class TestActivity : BaseActivity(), ChangeQuestionListener, OnCheckAnswerListener,
         OnClickQuestionPopupListener {
-    private var testBinding: ActivityTestBinding? = null
-    private var testViewModel: TestViewModel? = null
-    private var adapter: QuestionObjectAdapter? = null
+    private lateinit var testBinding: ActivityTestBinding
+    private lateinit var testViewModel: TestViewModel
+    private lateinit var adapter: QuestionObjectAdapter
     private var list: MutableList<QuestionObject>? = null
     private var contentList: MutableList<MyContent>? = null
     private var dialogListAnswer: AlertDialog? = null
@@ -65,7 +65,7 @@ class TestActivity : BaseActivity(), ChangeQuestionListener, OnCheckAnswerListen
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         testBinding = DataBindingUtil.setContentView(this, R.layout.activity_test)
-        setSupportActionBar(testBinding!!.toolbar)
+        setSupportActionBar(testBinding.toolbar)
         getIntentData()
         initUI()
         bindData()
@@ -73,9 +73,9 @@ class TestActivity : BaseActivity(), ChangeQuestionListener, OnCheckAnswerListen
     }
 
     private fun event() {
-        testBinding!!.imgNext.setOnClickListener { adapter!!.onNextButton() }
+        testBinding.imgNext.setOnClickListener { adapter.onNextButton() }
 
-        testBinding!!.imgPre.setOnClickListener { adapter!!.onPrevButton() }
+        testBinding.imgPre.setOnClickListener { adapter.onPrevButton() }
     }
 
     private fun getIntentData() {
@@ -99,12 +99,12 @@ class TestActivity : BaseActivity(), ChangeQuestionListener, OnCheckAnswerListen
     private fun initUI() {
         setBackButtonToolbar()
         testViewModel = TestViewModel(this, getString(R.string.app_name))
-        testBinding!!.testViewModel = testViewModel
+        testBinding.testViewModel = testViewModel
     }
 
     private fun bindData() {
         adapter = QuestionObjectAdapter(this, ArrayList(), this, this)
-        testBinding!!.rvList.adapter = adapter
+        testBinding.rvList.adapter = adapter
         list = ArrayList()
         contentList = ArrayList()
         callDataApi()
@@ -175,9 +175,9 @@ class TestActivity : BaseActivity(), ChangeQuestionListener, OnCheckAnswerListen
                             list!!.add(0, QuestionObject(
                                     contentList!![0].region.region_code
                                             + " " + contentList!![0].region.description))
-                            testViewModel!!.updatePosition(0, contentList!!.size)
+                            testViewModel.updatePosition(0, contentList!!.size)
                             checkReview()
-                            adapter!!.addAll(list!!)
+                            adapter.addAll(list!!)
                             countDown()
                         } else {
 
@@ -217,7 +217,7 @@ class TestActivity : BaseActivity(), ChangeQuestionListener, OnCheckAnswerListen
                 }
 
             }
-//            adapter!!.showSuggest()
+//            adapter.showSuggest()
         }
     }
 
@@ -282,12 +282,12 @@ class TestActivity : BaseActivity(), ChangeQuestionListener, OnCheckAnswerListen
             if (list != null && list!!.size > 0) {
                 val part = (contentList!![position].region.region_code
                         + " " + contentList!![0].region.description)
-                if (adapter!!.getItemByPosition(0).part != part) {
-                    adapter!!.setData(0, QuestionObject(contentList!![position].region.region_code
+                if (adapter.getItemByPosition(0).part != part) {
+                    adapter.setData(0, QuestionObject(contentList!![position].region.region_code
                             + " " + contentList!![0].region.description))
                 }
             }
-            testViewModel!!.updatePosition(position, contentList!!.size)
+            testViewModel.updatePosition(position, contentList!!.size)
         }
 
     }
@@ -329,7 +329,7 @@ class TestActivity : BaseActivity(), ChangeQuestionListener, OnCheckAnswerListen
             if (content.typeQuestion != MyContent.TYPE_LATE) {
                 content.typeQuestion = MyContent.TYPE_LATE
             } else {
-                if (adapter!!.isAnswered(position, content.content.answer_show!!)) {
+                if (adapter.isAnswered(position, content.content.answer_show!!)) {
                     content.typeQuestion = MyContent.TYPE_ANSWERED
                 } else {
                     content.typeQuestion = MyContent.TYPE_NO_ANSWER
@@ -342,7 +342,7 @@ class TestActivity : BaseActivity(), ChangeQuestionListener, OnCheckAnswerListen
     override fun onClick(position: Int) {
         if (dialogListAnswer!!.isShowing) {
             dialogListAnswer!!.dismiss()
-            adapter!!.onMoveQuestion(position)
+            adapter.onMoveQuestion(position)
         }
     }
 
@@ -353,7 +353,7 @@ class TestActivity : BaseActivity(), ChangeQuestionListener, OnCheckAnswerListen
                 @SuppressLint("DefaultLocale")
                 override fun onTick(millisUntilFinished: Long) {
                     seconds++
-                    testBinding!!.toolbar.title = String.format(FORMAT,
+                    testBinding.toolbar.title = String.format(FORMAT,
                             TimeUnit.MILLISECONDS.toHours(millisUntilFinished),
                             TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished) - TimeUnit.HOURS.toMinutes(
                                     TimeUnit.MILLISECONDS.toHours(millisUntilFinished)),
@@ -363,8 +363,8 @@ class TestActivity : BaseActivity(), ChangeQuestionListener, OnCheckAnswerListen
                 }
 
                 override fun onFinish() {
-//                testViewModel!!.updateTitleToolbar(getString(R.string.time_out))
-                    testBinding!!.toolbar.title = getString(R.string.time_out)
+//                testViewModel.updateTitleToolbar(getString(R.string.time_out))
+                    testBinding.toolbar.title = getString(R.string.time_out)
                     calculateScore()
                 }
             }
@@ -389,7 +389,7 @@ class TestActivity : BaseActivity(), ChangeQuestionListener, OnCheckAnswerListen
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == Activity.RESULT_OK) {
             if (requestCode == ShowPointActivity.KEY_REQUEST) {
-                adapter!!.showSuggest()
+                adapter.showSuggest()
             }
         } else {
             finish()

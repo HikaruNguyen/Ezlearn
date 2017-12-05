@@ -6,6 +6,7 @@ import android.app.AlertDialog
 import android.app.ProgressDialog
 import android.content.Intent
 import android.databinding.DataBindingUtil
+import android.net.Uri
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.view.LayoutInflater
@@ -14,6 +15,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import com.vn.ezlearn.R
 import com.vn.ezlearn.activity.*
+import com.vn.ezlearn.config.AppConstant
 import com.vn.ezlearn.config.EzlearnService
 import com.vn.ezlearn.config.UserConfig
 import com.vn.ezlearn.databinding.FragmentAccountBinding
@@ -55,6 +57,7 @@ class AccountFragment : Fragment(), View.OnClickListener {
         accountBinding.lnLogout.setOnClickListener(this)
         accountBinding.lnContact.setOnClickListener(this)
         accountBinding.lnPayment.setOnClickListener(this)
+        accountBinding.lnFeedback.setOnClickListener(this)
 
     }
 
@@ -128,6 +131,11 @@ class AccountFragment : Fragment(), View.OnClickListener {
                 }
                 builder.setNegativeButton(getString(R.string.cancel)) { dialog, _ -> dialog!!.dismiss() }
                 builder.show()
+            }
+            R.id.lnFeedback -> {
+                val emailIntent = Intent(Intent.ACTION_SENDTO)
+                emailIntent.data = Uri.parse("mailto: " + AppConstant.EMAIL_EZLEARN)
+                startActivity(Intent.createChooser(emailIntent, "Send feedback"))
             }
         }
     }

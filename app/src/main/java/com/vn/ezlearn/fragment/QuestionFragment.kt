@@ -139,6 +139,7 @@ class QuestionFragment : Fragment() {
 
     fun showSuggest() {
         questionViewModel.showSuggest()
+        questionViewModel.enableInput.set(false)
         if (content?.content?.answer_show!!.contentEquals(Content.ANSWER_SHOW_DEFAULT)) {
             hideButtonRadioButton(fragmentQuestionBinding.rdAnswerA)
             hideButtonRadioButton(fragmentQuestionBinding.rdAnswerB)

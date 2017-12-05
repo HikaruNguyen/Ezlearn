@@ -37,6 +37,7 @@ class QuestionViewModel(context: Activity, private val content: MyContent?, posi
 
     var suggest: ObservableField<Spanned>
     var visiableSuggest: ObservableInt
+    var visiableMyAnswer: ObservableInt
 
     var visiableRadio: ObservableInt = ObservableInt(View.GONE)
     var visiableInput: ObservableInt = ObservableInt(View.GONE)
@@ -64,6 +65,7 @@ class QuestionViewModel(context: Activity, private val content: MyContent?, posi
         answerD = ObservableField()
 
         visiableSuggest = ObservableInt(View.GONE)
+        visiableMyAnswer = ObservableInt(View.GONE)
         suggest = ObservableField()
 
         tvQuestion = ObservableField(
@@ -121,6 +123,9 @@ class QuestionViewModel(context: Activity, private val content: MyContent?, posi
 
     fun showSuggest() {
         visiableSuggest.set(View.VISIBLE)
+        if (content?.content?.answer_show?.contentEquals(Content.ANSWER_SHOW_INPUT)!!) {
+            visiableMyAnswer.set(View.VISIBLE)
+        }
     }
 
     private fun checkShowAnswerType() {

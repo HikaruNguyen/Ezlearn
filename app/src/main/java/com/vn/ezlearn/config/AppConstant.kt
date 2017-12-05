@@ -6,6 +6,8 @@ package com.vn.ezlearn.config
 
 interface AppConstant {
     companion object {
+        val EMAIL_EZLEARN = "luyenthi.ezlearn@gmail.com"
+
         val HOME_ID = -1
         val FREE_ID = -2
         val OFFLINE_ID = -3
