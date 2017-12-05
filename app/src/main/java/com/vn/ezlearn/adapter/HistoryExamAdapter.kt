@@ -51,29 +51,30 @@ class HistoryExamAdapter(context: Context, list: MutableList<HistoryExam>) :
                 dialogChoose!!.dismiss()
             }
             val builder = AlertDialog.Builder(mContext)
-            builder.setTitle(list[adapterPosition].subject_code)
             val dialogHistoryExam = DataBindingUtil.inflate<DialogHistoryExamChooseBinding>(
                     LayoutInflater.from(mContext), R.layout.dialog_history_exam_choose, null, false)
-            builder.setView(dialogHistoryExam.root)
-
-            dialogHistoryExam.tvReview.setOnClickListener {
-                dialogChoose!!.dismiss()
-                val intent = Intent(mContext, TestActivity::class.java)
-                intent.putExtra(TestActivity.KEY_ID, list[adapterPosition].subject_id)
-                intent.putExtra(TestActivity.KEY_NAME, list[adapterPosition].subject_code)
-                intent.putExtra(TestActivity.KEY_IS_REVIEW, true)
-                intent.putExtra(TestActivity.KEY_ANSWER, list[adapterPosition].answers)
-                mContext.startActivity(intent)
+            with(builder) {
+                setTitle(list[adapterPosition].subject_code)
+                setView(dialogHistoryExam.root)
+                dialogHistoryExam.tvReview.setOnClickListener {
+                    dialogChoose!!.dismiss()
+                    val intent = Intent(mContext, TestActivity::class.java)
+                    intent.putExtra(TestActivity.KEY_ID, list[adapterPosition].subject_id)
+                    intent.putExtra(TestActivity.KEY_NAME, list[adapterPosition].subject_code)
+                    intent.putExtra(TestActivity.KEY_IS_REVIEW, true)
+                    intent.putExtra(TestActivity.KEY_ANSWER, list[adapterPosition].answers)
+                    mContext.startActivity(intent)
+                }
+                dialogHistoryExam.tvRetesting.setOnClickListener {
+                    dialogChoose!!.dismiss()
+                    val intent = Intent(mContext, TestActivity::class.java)
+                    intent.putExtra(TestActivity.KEY_ID, list[adapterPosition].subject_id)
+                    intent.putExtra(TestActivity.KEY_NAME, list[adapterPosition].subject_code)
+                    intent.putExtra(TestActivity.KEY_IS_REVIEW, false)
+                    mContext.startActivity(intent)
+                }
+                setCancelable(true)
             }
-            dialogHistoryExam.tvRetesting.setOnClickListener {
-                dialogChoose!!.dismiss()
-                val intent = Intent(mContext, TestActivity::class.java)
-                intent.putExtra(TestActivity.KEY_ID, list[adapterPosition].subject_id)
-                intent.putExtra(TestActivity.KEY_NAME, list[adapterPosition].subject_code)
-                intent.putExtra(TestActivity.KEY_IS_REVIEW, false)
-                mContext.startActivity(intent)
-            }
-            builder.setCancelable(true)
             dialogChoose = builder.create()
             dialogChoose!!.show()
         }

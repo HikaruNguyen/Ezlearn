@@ -29,13 +29,6 @@ abstract class BaseActivity : AppCompatActivity() {
 
     }
 
-    fun setTitle(title: String) {
-        mActionBarToolbar = findViewById(R.id.toolbar) as Toolbar
-        setSupportActionBar(mActionBarToolbar)
-        mActionBarToolbar!!.title = title
-
-    }
-
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         val id = item.itemId
         if (id == android.R.id.home) {

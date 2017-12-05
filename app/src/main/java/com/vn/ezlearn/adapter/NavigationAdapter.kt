@@ -70,19 +70,20 @@ class NavigationAdapter(context: Context, list: MutableList<Category>,
     override fun onBindViewHolder(holder: ViewHolder, @SuppressLint("RecyclerView") position: Int) {
         if (getItemViewType(position) != Category.TYPE_LINE) {
             val item = data[position]
-            holder.setIsRecyclable(false)
-            holder.tvName?.text = item.category_name
+            with(holder) {
+                setIsRecyclable(false)
+                tvName?.text = item.category_name
 
-            if (getItemViewType(position) != Category.TYPE_NORMAL) {
-                val childAdapter = NavigationChildAdapter(
-                        mContext, ArrayList(), this, position)
-                item.childAdapter = childAdapter
-                holder.rvItemMenuChild?.adapter = childAdapter
-                childAdapter.addAll(item.children!!)
-                holder.expandableLayout?.setInRecyclerView(true)
-                holder.expandableLayout?.setInterpolator(Utils.createInterpolator(
-                        Utils.FAST_OUT_SLOW_IN_INTERPOLATOR))
-                holder.expandableLayout?.isExpanded = expandState.get(position)
+                if (getItemViewType(position) != Category.TYPE_NORMAL) {
+                    val childAdapter = NavigationChildAdapter(
+                            mContext, ArrayList(), this@NavigationAdapter, position)
+                    item.childAdapter = childAdapter
+                    rvItemMenuChild?.adapter = childAdapter
+                    childAdapter.addAll(item.children!!)
+                    expandableLayout?.setInRecyclerView(true)
+                    expandableLayout?.setInterpolator(Utils.createInterpolator(
+                            Utils.FAST_OUT_SLOW_IN_INTERPOLATOR))
+                    expandableLayout?.isExpanded = expandState.get(position)
 //                holder.expandableLayout?.setListener(object : ExpandableLayoutListenerAdapter() {
 //                    override fun onPreOpen() {
 //                        createRotateAnimator(holder.buttonLayout!!, 0f, 180f).start()
@@ -95,27 +96,29 @@ class NavigationAdapter(context: Context, list: MutableList<Category>,
 //                    }
 //                })
 
-                holder.buttonLayout?.rotation = if (expandState.get(position)) 180f else 0f
+                    buttonLayout?.rotation = if (expandState.get(position)) 180f else 0f
 //                holder.buttonLayout?.setOnClickListener { onClickButton(holder.expandableLayout!!) }
-                holder.item?.setOnClickListener { onClickButton(holder.expandableLayout!!) }
-            } else {
+                    this@with.item?.setOnClickListener { onClickButton(expandableLayout!!) }
+                } else {
 //                if (item.isSelected) {
 //                    holder.item!!.setBackgroundResource(R.drawable.bg_item_navigation_press)
 //                } else {
 //                    holder.item!!.setBackgroundResource(R.drawable.bg_item_navigation)
 //                }
-                if (item.levelChild!! >= 2) {
-                    holder.itemView.setOnClickListener {
-                        //                        setBackgroundPress(position)
-                        navigationItemSelected.onSelected(item.category_name, item.category_id,
-                                item.children!!)
+                    if (item.levelChild!! >= 2) {
+                        itemView.setOnClickListener {
+                            //                        setBackgroundPress(position)
+                            navigationItemSelected.onSelected(item.category_name, item.category_id,
+                                    item.children!!)
+                        }
+
+                    } else {
+                        itemView.setOnClickListener {
+                            //                        setBackgroundPress(position)
+                            navigationItemSelected.onSelected(item.category_name, item.category_id, null)
+                        }
                     }
 
-                } else {
-                    holder.itemView.setOnClickListener {
-                        //                        setBackgroundPress(position)
-                        navigationItemSelected.onSelected(item.category_name, item.category_id, null)
-                    }
                 }
 
             }

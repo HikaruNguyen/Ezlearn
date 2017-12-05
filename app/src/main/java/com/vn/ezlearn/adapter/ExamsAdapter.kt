@@ -134,9 +134,7 @@ class ExamsAdapter(context: Context, list: MutableList<ContentByCategory>) :
         }
     }
 
-    override fun getItemViewType(position: Int): Int {
-        return list[position].contentType!!
-    }
+    override fun getItemViewType(position: Int): Int = list[position].contentType!!
 
     inner class ViewHolder : RecyclerView.ViewHolder {
         lateinit var itemExamBinding: ItemHomeExamsBinding

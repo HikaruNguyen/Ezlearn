@@ -51,13 +51,16 @@ class AccountFragment : Fragment(), View.OnClickListener {
     }
 
     private fun event() {
-        accountBinding.rlLogin.setOnClickListener(this)
-        accountBinding.lnHistoryExam.setOnClickListener(this)
-        accountBinding.lnHistoryTransaction.setOnClickListener(this)
-        accountBinding.lnLogout.setOnClickListener(this)
-        accountBinding.lnContact.setOnClickListener(this)
-        accountBinding.lnPayment.setOnClickListener(this)
-        accountBinding.lnFeedback.setOnClickListener(this)
+        with(accountBinding) {
+            rlLogin.setOnClickListener(this@AccountFragment)
+            lnHistoryExam.setOnClickListener(this@AccountFragment)
+            lnHistoryTransaction.setOnClickListener(this@AccountFragment)
+            lnLogout.setOnClickListener(this@AccountFragment)
+            lnContact.setOnClickListener(this@AccountFragment)
+            lnPayment.setOnClickListener(this@AccountFragment)
+            lnFeedback.setOnClickListener(this@AccountFragment)
+        }
+
 
     }
 
@@ -121,16 +124,19 @@ class AccountFragment : Fragment(), View.OnClickListener {
             }
             R.id.lnLogout -> {
                 val builder = AlertDialog.Builder(activity)
-                builder.setTitle(getString(R.string.nav_logout))
-                builder.setMessage(getString(R.string.confirm_logout))
-                builder.setPositiveButton(getString(R.string.ok)) { dialog, _ ->
-                    run {
-                        dialog!!.dismiss()
-                        logout()
+                with(builder){
+                    setTitle(getString(R.string.nav_logout))
+                    setMessage(getString(R.string.confirm_logout))
+                    setPositiveButton(getString(R.string.ok)) { dialog, _ ->
+                        run {
+                            dialog!!.dismiss()
+                            logout()
+                        }
                     }
+                    setNegativeButton(getString(R.string.cancel)) { dialog, _ -> dialog!!.dismiss() }
+                    show()
                 }
-                builder.setNegativeButton(getString(R.string.cancel)) { dialog, _ -> dialog!!.dismiss() }
-                builder.show()
+
             }
             R.id.lnFeedback -> {
                 val emailIntent = Intent(Intent.ACTION_SENDTO)

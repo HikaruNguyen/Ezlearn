@@ -41,8 +41,8 @@ class TestActivity : BaseActivity(), ChangeQuestionListener, OnCheckAnswerListen
     private lateinit var testBinding: ActivityTestBinding
     private lateinit var testViewModel: TestViewModel
     private lateinit var adapter: QuestionObjectAdapter
-    private var list: MutableList<QuestionObject>? = null
-    private var contentList: MutableList<MyContent>? = null
+    private lateinit var list: MutableList<QuestionObject>
+    private lateinit var contentList: MutableList<MyContent>
     private var dialogListAnswer: AlertDialog? = null
     private var countDownTimer: CountDownTimer? = null
     private var time = -1L
@@ -119,70 +119,78 @@ class TestActivity : BaseActivity(), ChangeQuestionListener, OnCheckAnswerListen
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(object : Subscriber<QuestionResult>() {
-                    override fun onCompleted() {
-                        if (mQuestionResult!!.success && mQuestionResult!!.data != null
-                                && mQuestionResult!!.data!!.data != null
-                                && mQuestionResult!!.data!!.data!!.isNotEmpty()) {
-                            for (question in mQuestionResult!!.data!!.data!!) {
-                                if (question.region != null) {
-                                    val point: Float? = if (question.region!!.number_question != 0) {
-                                        question.region!!.total_mark * 0.1f /
-                                                question.region!!.number_question
-                                    } else {
-                                        0f
-                                    }
-                                    if (question.type != null) {
-                                        if (question.type == Question.TYPE_QUESTION) {
-                                            if (question.question != null
-                                                    && question.question!!.isNotEmpty()) {
-                                                question.question!!
-                                                        .filter { it.id != null }
-                                                        .map {
-                                                            MyContent(
-                                                                    it.id!!,
-                                                                    question.region!!,
-                                                                    question.type, it,
-                                                                    point, isReview!!)
+                    override fun onCompleted() =
+                            if (mQuestionResult!!.success && mQuestionResult!!.data != null
+                                    && mQuestionResult!!.data!!.data != null
+                                    && mQuestionResult!!.data!!.data!!.isNotEmpty()) {
+                                for (question in mQuestionResult!!.data!!.data!!) {
+                                    if (question.region != null) {
+                                        val point: Float? = if (question.region!!.number_question != 0) {
+                                            question.region!!.total_mark * 0.1f /
+                                                    question.region!!.number_question
+                                        } else {
+                                            0f
+                                        }
+                                        question.type?.let {
+                                            when (it) {
+                                                Question.TYPE_QUESTION -> {
+                                                    question.question?.let {
+                                                        if (it.isNotEmpty()) {
+                                                            it.filter {
+                                                                it.id != null
+                                                            }.map {
+                                                                MyContent(
+                                                                        it.id!!,
+                                                                        question.region!!,
+                                                                        question.type, it,
+                                                                        point, isReview!!)
+                                                            }.forEach {
+                                                                contentList.add(it)
+                                                            }
                                                         }
-                                                        .forEach { contentList!!.add(it) }
-                                            }
-                                        } else if (question.type == Question.TYPE_READING) {
-                                            if (question.reading != null
-                                                    && question.reading!!.isNotEmpty()) {
-                                                question.reading!!
-                                                        .filter {
-                                                            it.questions != null
-                                                                    && it.questions!!.isNotEmpty()
+                                                    }
+                                                }
+                                                Question.TYPE_READING -> {
+                                                    question.reading?.let {
+                                                        if (it.isNotEmpty()) {
+                                                            it.filter {
+                                                                it.questions != null
+                                                                        && it.questions!!.isNotEmpty()
+                                                            }.forEach { reading ->
+                                                                reading.questions!!
+                                                                        .map {
+                                                                            MyContent(
+                                                                                    it.id!!,
+                                                                                    question.region!!,
+                                                                                    question.type, it,
+                                                                                    it.content,
+                                                                                    point, isReview!!)
+                                                                        }.forEach {
+                                                                    contentList.add(it)
+                                                                }
+                                                            }
                                                         }
-                                                        .forEach { reading ->
-                                                            reading.questions!!
-                                                                    .map {
-                                                                        MyContent(
-                                                                                it.id!!,
-                                                                                question.region!!,
-                                                                                question.type, it,
-                                                                                reading.content,
-                                                                                point, isReview!!)
-                                                                    }
-                                                                    .forEach { contentList!!.add(it) }
-                                                        }
+                                                    }
+
+                                                }
+                                                else -> {
+
+                                                }
                                             }
                                         }
                                     }
                                 }
-                            }
-                            list!!.add(QuestionObject(contentList!!))
-                            list!!.add(0, QuestionObject(
-                                    contentList!![0].region.region_code
-                                            + " " + contentList!![0].region.description))
-                            testViewModel.updatePosition(0, contentList!!.size)
-                            checkReview()
-                            adapter.addAll(list!!)
-                            countDown()
-                        } else {
+                                list.add(QuestionObject(contentList))
+                                list.add(0, QuestionObject(
+                                        contentList[0].region.region_code
+                                                + " " + contentList[0].region.description))
+                                testViewModel.updatePosition(0, contentList.size)
+                                checkReview()
+                                adapter.addAll(list)
+                                countDown()
+                            } else {
 
-                        }
-                    }
+                            }
 
                     override fun onError(e: Throwable) {
                         if (isAttach && progressDialog!!.isShowing) {
@@ -203,18 +211,19 @@ class TestActivity : BaseActivity(), ChangeQuestionListener, OnCheckAnswerListen
 
     private fun checkReview() {
         if (isReview!!) {
-            for (position in 0 until contentList?.size!!) {
-                for (myAnswer: HistoryExam.AnswerHistory in mListAnswer) {
-                    if (myAnswer.qId == contentList!![position].question_id) {
-                        for (answerPosition in 0 until contentList!![position].content.answer_list!!.size) {
-                            if (contentList!![position].content.answer_list!![answerPosition].id.toString().contentEquals(myAnswer.answer!!)) {
-                                contentList!![position].myAnswer = answerPosition
+            for (position in 0 until contentList.size) {
+                mListAnswer
+                        .filter { it.qId == contentList[position].question_id }
+                        .forEach { myAnswer ->
+                            contentList[position].content.answer_list?.let {
+                                (0 until contentList[position].content.answer_list!!.size)
+                                        .filter {
+                                            contentList[position].content.answer_list!![it].id.toString()
+                                                    .contentEquals(myAnswer.answer!!)
+                                        }
+                                        .forEach { contentList[position].myAnswer = it }
                             }
                         }
-
-                    }
-
-                }
 
             }
 //            adapter.showSuggest()
@@ -240,23 +249,25 @@ class TestActivity : BaseActivity(), ChangeQuestionListener, OnCheckAnswerListen
         val builder = AlertDialog.Builder(this)
         val dialogListAnswerBinding = DataBindingUtil.inflate<DialogListAnswerBinding>(
                 LayoutInflater.from(this), R.layout.dialog_list_answer, null, false)
-        builder.setView(dialogListAnswerBinding.root)
+        with(builder) {
+            setView(dialogListAnswerBinding.root)
+            val layoutManager = GridLayoutManager(this@TestActivity, 6)
+            dialogListAnswerBinding.rvlist.layoutManager = layoutManager
+            dialogListAnswerBinding.rvlist.setHasFixedSize(true)
+            dialogListAnswerBinding.rvlist.itemAnimator = DefaultItemAnimator()
 
-        val layoutManager = GridLayoutManager(this, 6)
-        dialogListAnswerBinding.rvlist.layoutManager = layoutManager
-        dialogListAnswerBinding.rvlist.setHasFixedSize(true)
-        dialogListAnswerBinding.rvlist.itemAnimator = DefaultItemAnimator()
-
-        val listQuestionAdapter = DialogListQuestionAdapter(
-                this, ArrayList(), this, isReview)
-        dialogListAnswerBinding.rvlist.adapter = listQuestionAdapter
-        listQuestionAdapter.addAll(contentList!!)
-        dialogListAnswerBinding.btnNopBai.setOnClickListener {
-            calculateScore()
-            dialogListAnswer!!.dismiss()
+            val listQuestionAdapter = DialogListQuestionAdapter(
+                    this@TestActivity, ArrayList(), this@TestActivity, isReview)
+            dialogListAnswerBinding.rvlist.adapter = listQuestionAdapter
+            listQuestionAdapter.addAll(contentList)
+            dialogListAnswerBinding.btnNopBai.setOnClickListener {
+                calculateScore()
+                dialogListAnswer!!.dismiss()
+            }
+            dialogListAnswerBinding.btnCancel.setOnClickListener { dialogListAnswer!!.dismiss() }
+            setCancelable(false)
         }
-        dialogListAnswerBinding.btnCancel.setOnClickListener { dialogListAnswer!!.dismiss() }
-        builder.setCancelable(false)
+
         dialogListAnswer = builder.create()
         dialogListAnswer!!.show()
     }
@@ -270,36 +281,39 @@ class TestActivity : BaseActivity(), ChangeQuestionListener, OnCheckAnswerListen
         QuestionUtils.instance.myContentList = contentList
 
         val intent = Intent(this, ShowPointActivity::class.java)
-        intent.putExtra(ShowPointActivity.KEY_NAME, name)
-        intent.putExtra(ShowPointActivity.KEY_HOURS, hours)
-        intent.putExtra(ShowPointActivity.KEY_MINUTES, minutes)
-        intent.putExtra(ShowPointActivity.KEY_SECONDS, seconds)
+        with(intent) {
+            putExtra(ShowPointActivity.KEY_NAME, name)
+            putExtra(ShowPointActivity.KEY_HOURS, hours)
+            putExtra(ShowPointActivity.KEY_MINUTES, minutes)
+            putExtra(ShowPointActivity.KEY_SECONDS, seconds)
+        }
+
         startActivityForResult(intent, ShowPointActivity.KEY_REQUEST)
     }
 
     override fun onChange(position: Int) {
-        if (contentList != null && contentList!!.size > 0) {
-            if (list != null && list!!.size > 0) {
-                val part = (contentList!![position].region.region_code
-                        + " " + contentList!![0].region.description)
+        if (contentList.size > 0) {
+            if (list.size > 0) {
+                val part = (contentList[position].region.region_code
+                        + " " + contentList[0].region.description)
                 if (adapter.getItemByPosition(0).part != part) {
-                    adapter.setData(0, QuestionObject(contentList!![position].region.region_code
-                            + " " + contentList!![0].region.description))
+                    adapter.setData(0, QuestionObject(contentList[position].region.region_code
+                            + " " + contentList[0].region.description))
                 }
             }
-            testViewModel.updatePosition(position, contentList!!.size)
+            testViewModel.updatePosition(position, contentList.size)
         }
 
     }
 
     override fun onCheckAnswer(position: Int, answer: Int) {
-        if (contentList != null && contentList!!.size > position) {
-            val content = contentList!![position]
+        if (contentList.size > position) {
+            val content = contentList[position]
             if (content.content.answer_list != null && content.content.answer_list!!.size > answer) {
                 if (content.typeQuestion != MyContent.TYPE_LATE)
                     content.typeQuestion = MyContent.TYPE_ANSWERED
                 content.isCorrect = content.content.answer_list!![answer].is_true == Answer.TRUE
-                contentList!![position] = content
+                contentList[position] = content
             }
 
         }
@@ -307,15 +321,15 @@ class TestActivity : BaseActivity(), ChangeQuestionListener, OnCheckAnswerListen
     }
 
     override fun onInputAnswer(position: Int, answer: String) {
-        if (contentList != null && contentList!!.size > position) {
-            val content = contentList!![position]
+        if (contentList.size > position) {
+            val content = contentList[position]
             if (answer.isNotEmpty() && answer.isNotBlank()) {
                 if (content.content.answer_list != null && content.content.answer_list!!.isNotEmpty()) {
                     if (content.typeQuestion != MyContent.TYPE_LATE)
                         content.typeQuestion = MyContent.TYPE_ANSWERED
                     content.isCorrect = Html.fromHtml(content.content.answer_list!![0].answer!!).toString().trim()
                             .contentEquals(answer.trim())
-                    contentList!![position] = content
+                    contentList[position] = content
                 }
             }
 
@@ -324,8 +338,8 @@ class TestActivity : BaseActivity(), ChangeQuestionListener, OnCheckAnswerListen
 
 
     override fun onNeedReview(position: Int) {
-        if (contentList != null && contentList!!.size > position) {
-            val content = contentList!![position]
+        if (contentList.size > position) {
+            val content = contentList[position]
             if (content.typeQuestion != MyContent.TYPE_LATE) {
                 content.typeQuestion = MyContent.TYPE_LATE
             } else {
@@ -335,7 +349,7 @@ class TestActivity : BaseActivity(), ChangeQuestionListener, OnCheckAnswerListen
                     content.typeQuestion = MyContent.TYPE_NO_ANSWER
                 }
             }
-            contentList!![position] = content
+            contentList[position] = content
         }
     }
 

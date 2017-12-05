@@ -73,24 +73,27 @@ class QuestionObjectAdapter(private val activity: Activity, list: MutableList<Qu
             }
             viewPagerAdapter = ViewPagerAdapter(
                     (activity as TestActivity).supportFragmentManager, questionFragments!!)
-            itemQuestionViewpagerBinding!!.container.adapter = viewPagerAdapter
-            itemQuestionViewpagerBinding!!.container.offscreenPageLimit = item.list!!.size
-            itemQuestionViewpagerBinding!!.container.addOnPageChangeListener(
-                    object : ViewPager.OnPageChangeListener {
-                        override fun onPageScrolled(
-                                position: Int, positionOffset: Float, positionOffsetPixels: Int) {
+            with(itemQuestionViewpagerBinding!!.container) {
+                adapter = viewPagerAdapter
+                offscreenPageLimit = item.list!!.size
+                addOnPageChangeListener(
+                        object : ViewPager.OnPageChangeListener {
+                            override fun onPageScrolled(
+                                    position: Int, positionOffset: Float, positionOffsetPixels: Int) {
 
-                        }
+                            }
 
-                        override fun onPageSelected(position: Int) {
-                            changeQuestionListener.onChange(position)
-                            positionViewPager = position
-                        }
+                            override fun onPageSelected(position: Int) {
+                                changeQuestionListener.onChange(position)
+                                positionViewPager = position
+                            }
 
-                        override fun onPageScrollStateChanged(state: Int) {
+                            override fun onPageScrollStateChanged(state: Int) {
 
-                        }
-                    })
+                            }
+                        })
+            }
+
         }
     }
 
@@ -140,15 +143,14 @@ class QuestionObjectAdapter(private val activity: Activity, list: MutableList<Qu
 
         constructor(itemQuestionPartBinding: ItemQuestionPartBinding) :
                 super(itemQuestionPartBinding.root) {
-            this.itemQuestionPartBinding = itemQuestionPartBinding
-            this.itemQuestionPartBinding!!.executePendingBindings()
+            this.itemQuestionPartBinding = itemQuestionPartBinding.apply { executePendingBindings() }
+//            this.itemQuestionPartBinding!!.executePendingBindings()
             itemView.setOnClickListener { }
         }
 
         constructor(itemQuestionViewpagerBinding: ItemQuestionViewpagerBinding) :
                 super(itemQuestionViewpagerBinding.root) {
-            this.itemQuestionViewpagerBinding = itemQuestionViewpagerBinding
-            this.itemQuestionViewpagerBinding!!.executePendingBindings()
+            this.itemQuestionViewpagerBinding = itemQuestionViewpagerBinding.apply { executePendingBindings() }
             itemView.setOnClickListener { }
         }
     }

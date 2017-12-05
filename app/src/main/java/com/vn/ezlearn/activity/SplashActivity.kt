@@ -36,9 +36,8 @@ class SplashActivity : AppCompatActivity() {
                 .subscribe(object : Subscriber<CategoryResult>() {
                     override fun onCompleted() {
                         if (isAttach && mCategoryResult.success) {
-                            if (mCategoryResult.data != null
-                                    && mCategoryResult.data!!.isNotEmpty()) {
-                                for (category in mCategoryResult.data!!) {
+                            mCategoryResult.data?.let {
+                                it.forEach { category ->
                                     if (category.children != null
                                             && category.children!!.isNotEmpty()) {
                                         for (categoryChild in category.children!!) {
@@ -57,6 +56,7 @@ class SplashActivity : AppCompatActivity() {
                                     }
                                 }
                             }
+
                             MyApplication.with(this@SplashActivity).categoryResult = mCategoryResult
 //                            if (!AppConfig.getInstance(this@SplashActivity).isSelectLevel) {
 //                                val intent = Intent(this@SplashActivity, SelectLevelActivity::class.java)

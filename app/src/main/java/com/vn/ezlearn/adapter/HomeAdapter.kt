@@ -66,62 +66,74 @@ class HomeAdapter(context: Context, list: MutableList<HomeObject>) :
                 val displayMetrics = mContext.resources.displayMetrics
                 val width = displayMetrics.widthPixels
                 val height = (width * 485 / 1366).toFloat()
-                itemHomeSlideBinding.rlSlide?.layoutParams = LinearLayout.LayoutParams(width, height.toInt())
+                with(itemHomeSlideBinding) {
+                    rlSlide?.layoutParams = LinearLayout.LayoutParams(width, height.toInt())
 
-                itemHomeSlideBinding.slider.setPresetTransformer(SliderLayout.Transformer.Accordion)
-                itemHomeSlideBinding.slider.setCustomIndicator(itemHomeSlideBinding.customIndicator2)
-                itemHomeSlideBinding.slider.setCustomAnimation(DescriptionAnimation())
-                itemHomeSlideBinding.slider.setDuration(SLIDE_DELAY)
+                    slider.setPresetTransformer(SliderLayout.Transformer.Accordion)
+                    slider.setCustomIndicator(customIndicator2)
+                    slider.setCustomAnimation(DescriptionAnimation())
+                    slider.setDuration(SLIDE_DELAY)
 
-                for (i in 0 until item.bannerList!!.size) {
-                    val textSliderView = DefaultSliderView(mContext)
-                    if (item.bannerList!![i].type == Banner.TYPE_DRAWABLE) {
-                        textSliderView
-                                .image(item.bannerList!![i].imageDrawable)
-                                .setScaleType(BaseSliderView.ScaleType.Fit)
-                                .setOnSliderClickListener { }
-                    } else {
-                        textSliderView
-                                .image(item.bannerList!![i].imageUrl)
-                                .setScaleType(BaseSliderView.ScaleType.Fit)
-                                .setOnSliderClickListener { }
+                    for (i in 0 until item.bannerList!!.size) {
+                        val textSliderView = DefaultSliderView(mContext)
+                        if (item.bannerList!![i].type == Banner.TYPE_DRAWABLE) {
+                            textSliderView
+                                    .image(item.bannerList!![i].imageDrawable)
+                                    .setScaleType(BaseSliderView.ScaleType.Fit)
+                                    .setOnSliderClickListener { }
+                        } else {
+                            textSliderView
+                                    .image(item.bannerList!![i].imageUrl)
+                                    .setScaleType(BaseSliderView.ScaleType.Fit)
+                                    .setOnSliderClickListener { }
+                        }
+
+                        slider.addSlider(textSliderView)
                     }
-
-                    itemHomeSlideBinding.slider.addSlider(textSliderView)
                 }
+
                 isAddedSlide = true
             }
         } else if (getItemViewType(position) == HomeObject.TYPE_EXAM) {
             val itemHomeExamsBinding = holder.itemHomeExamsBinding
             val itemExamViewModel = ItemExamViewModel(mContext, list[position].exam)
-            itemHomeExamsBinding.itemExamViewModel = itemExamViewModel
-            itemHomeExamsBinding.lnExam.setOnClickListener {
-                if (!UserConfig.getInstance(mContext).token.isEmpty()) {
-                    val intent = Intent(mContext, TestActivity::class.java)
-                    if (list[position].exam != null) {
-                        intent.putExtra(TestActivity.KEY_ID, list[position].exam!!.id)
-                        intent.putExtra(TestActivity.KEY_NAME, list[position].exam!!.subject_code)
-                        intent.putExtra(TestActivity.KEY_TIME, list[position].exam?.time)
-                    }
+            with(itemHomeExamsBinding) {
+                this@with.itemExamViewModel = itemExamViewModel
+                lnExam.setOnClickListener {
+                    if (!UserConfig.getInstance(mContext).token.isEmpty()) {
+                        val intent = Intent(mContext, TestActivity::class.java)
+                        if (list[position].exam != null) {
+                            with(intent){
+                                putExtra(TestActivity.KEY_ID, list[position].exam!!.id)
+                                putExtra(TestActivity.KEY_NAME, list[position].exam!!.subject_code)
+                                putExtra(TestActivity.KEY_TIME, list[position].exam?.time)
+                            }
 
-                    mContext.startActivity(intent)
-                } else {
-                    val builder = AlertDialog.Builder(mContext)
-                    builder.setMessage(mContext.getString(R.string.needLogin))
-                    builder.setPositiveButton(R.string.ok
-                    ) { dialogInterface, _ -> dialogInterface.dismiss() }
-                    builder.show()
+                        }
+
+                        mContext.startActivity(intent)
+                    } else {
+                        val builder = AlertDialog.Builder(mContext)
+                        builder.setMessage(mContext.getString(R.string.needLogin))
+                        builder.setPositiveButton(R.string.ok
+                        ) { dialogInterface, _ -> dialogInterface.dismiss() }
+                        builder.show()
+                    }
                 }
             }
+
         } else if (getItemViewType(position) == HomeObject.TYPE_HEADER) {
             val itemHomeHeaderBinding = holder.itemHomeHeaderBinding
-            itemHomeHeaderBinding.tvName.text = list[position].header
-            itemHomeHeaderBinding.tvViewAll.text = mContext.getText(R.string.view_all)
-            itemHomeHeaderBinding.tvViewAll.setOnClickListener {
-                val intent = Intent(mContext, ListExamActivity::class.java)
-                intent.putExtra(ListExamActivity.KEY_ID, item.idHeader)
-                mContext.startActivity(intent)
+            with(itemHomeHeaderBinding) {
+                tvName.text = list[position].header
+                tvViewAll.text = mContext.getText(R.string.view_all)
+                tvViewAll.setOnClickListener {
+                    val intent = Intent(mContext, ListExamActivity::class.java)
+                    intent.putExtra(ListExamActivity.KEY_ID, item.idHeader)
+                    mContext.startActivity(intent)
+                }
             }
+
         }
 
     }
@@ -136,20 +148,17 @@ class HomeAdapter(context: Context, list: MutableList<HomeObject>) :
         lateinit var itemHomeExamsBinding: ItemHomeExamsBinding
 
         constructor(itemHomeSlideBinding: ItemHomeSlideBinding) : super(itemHomeSlideBinding.root) {
-            this.itemHomeSlideBinding = itemHomeSlideBinding
-            this.itemHomeSlideBinding.executePendingBindings()
+            this.itemHomeSlideBinding = itemHomeSlideBinding.apply { executePendingBindings() }
             itemView.setOnClickListener { }
         }
 
         constructor(itemHomeHeaderBinding: ItemHomeHeaderBinding) : super(itemHomeHeaderBinding.root) {
-            this.itemHomeHeaderBinding = itemHomeHeaderBinding
-            this.itemHomeHeaderBinding.executePendingBindings()
+            this.itemHomeHeaderBinding = itemHomeHeaderBinding.apply { executePendingBindings() }
             itemView.setOnClickListener { }
         }
 
         constructor(itemHomeExamsBinding: ItemHomeExamsBinding) : super(itemHomeExamsBinding.root) {
-            this.itemHomeExamsBinding = itemHomeExamsBinding
-            this.itemHomeExamsBinding.executePendingBindings()
+            this.itemHomeExamsBinding = itemHomeExamsBinding.apply { executePendingBindings() }
         }
     }
 
