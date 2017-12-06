@@ -4,7 +4,7 @@ package com.vn.ezlearn.modelresult
  * Created by FRAMGIA\nguyen.duc.manh on 10/10/2017.
  */
 
-class BaseResult {
+class CommonResult {
     var success: Boolean = false
     var data: BaseDateResult? = null
 

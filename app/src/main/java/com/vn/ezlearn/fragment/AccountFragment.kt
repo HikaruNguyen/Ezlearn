@@ -19,7 +19,7 @@ import com.vn.ezlearn.config.AppConstant
 import com.vn.ezlearn.config.EzlearnService
 import com.vn.ezlearn.config.UserConfig
 import com.vn.ezlearn.databinding.FragmentAccountBinding
-import com.vn.ezlearn.modelresult.BaseResult
+import com.vn.ezlearn.modelresult.CommonResult
 import com.vn.ezlearn.viewmodel.AccountViewModel
 import rx.Subscriber
 import rx.Subscription
@@ -37,7 +37,7 @@ class AccountFragment : Fragment(), View.OnClickListener {
     private lateinit var accountViewModel: AccountViewModel
     private lateinit var apiService: EzlearnService
     private var mSubscription: Subscription? = null
-    private var baseResultLogout: BaseResult? = null
+    private var commonResultLogout: CommonResult? = null
     private lateinit var progressLoading: ProgressDialog
     private var isAttach = true
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
@@ -154,16 +154,16 @@ class AccountFragment : Fragment(), View.OnClickListener {
         mSubscription = apiService.logout
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(object : Subscriber<BaseResult>() {
+                .subscribe(object : Subscriber<CommonResult>() {
                     override fun onCompleted() {
                         if (isAdded && isAttach) {
                             accountViewModel.visiableLogout.set(View.GONE)
                             progressLoading.dismiss()
-                            if (baseResultLogout!!.success) {
-                                if (baseResultLogout!!.data != null
-                                        && !baseResultLogout!!.data!!.message.isEmpty()) {
+                            if (commonResultLogout!!.success) {
+                                if (commonResultLogout!!.data != null
+                                        && !commonResultLogout!!.data!!.message.isEmpty()) {
                                     Toast.makeText(activity,
-                                            baseResultLogout!!.data!!.message,
+                                            commonResultLogout!!.data!!.message,
                                             Toast.LENGTH_SHORT).show()
                                 } else {
                                     Toast.makeText(activity, getString(R.string.logout_success),
@@ -187,9 +187,9 @@ class AccountFragment : Fragment(), View.OnClickListener {
 
                     }
 
-                    override fun onNext(baseResult: BaseResult?) {
-                        if (baseResult != null) {
-                            baseResultLogout = baseResult
+                    override fun onNext(commonResult: CommonResult?) {
+                        if (commonResult != null) {
+                            commonResultLogout = commonResult
                         }
                     }
 

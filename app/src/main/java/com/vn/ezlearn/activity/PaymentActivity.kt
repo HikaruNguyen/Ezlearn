@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment
 import com.vn.ezlearn.R
 import com.vn.ezlearn.adapter.ViewPagerAdapter
 import com.vn.ezlearn.databinding.ActivityPaymentBinding
+import com.vn.ezlearn.fragment.PackageFragment
 import com.vn.ezlearn.fragment.PaymentByScratchCardsFragment
 
 class PaymentActivity : BaseActivity() {
@@ -27,7 +28,7 @@ class PaymentActivity : BaseActivity() {
         fragmentListTitle = ArrayList()
 
         fragmentListTitle.add(getString(R.string.buy_service))
-        fragmentList.add(PaymentByScratchCardsFragment())
+        fragmentList.add(PackageFragment())
 
         fragmentListTitle.add(getString(R.string.payment_by_scratch_cards))
         fragmentList.add(PaymentByScratchCardsFragment())

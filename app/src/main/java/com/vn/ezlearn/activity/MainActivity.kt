@@ -26,7 +26,7 @@ import com.vn.ezlearn.fragment.CategoryMainFragment
 import com.vn.ezlearn.fragment.ContactFragment
 import com.vn.ezlearn.fragment.HomeFragment
 import com.vn.ezlearn.interfaces.NavigationItemSelected
-import com.vn.ezlearn.modelresult.BaseResult
+import com.vn.ezlearn.modelresult.CommonResult
 import com.vn.ezlearn.models.Category
 import com.vn.ezlearn.models.ContentByCategory
 import com.vn.ezlearn.viewmodel.MainViewModel
@@ -45,7 +45,7 @@ class MainActivity : AppCompatActivity(), NavigationItemSelected {
     private var apiService: EzlearnService? = null
     private var mSubscription: Subscription? = null
 
-    private var baseResultLogout: BaseResult? = null
+    private var commonResultLogout: CommonResult? = null
 
     val tabLayout: TabLayout
         get() = mainBinding.tabs
@@ -87,13 +87,13 @@ class MainActivity : AppCompatActivity(), NavigationItemSelected {
         mSubscription = apiService!!.logout
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(object : Subscriber<BaseResult>() {
+                .subscribe(object : Subscriber<CommonResult>() {
                     override fun onCompleted() {
-                        if (baseResultLogout!!.success) {
-                            if (baseResultLogout!!.data != null
-                                    && !baseResultLogout!!.data!!.message.isEmpty()) {
+                        if (commonResultLogout!!.success) {
+                            if (commonResultLogout!!.data != null
+                                    && !commonResultLogout!!.data!!.message.isEmpty()) {
                                 Toast.makeText(this@MainActivity,
-                                        baseResultLogout!!.data!!.message,
+                                        commonResultLogout!!.data!!.message,
                                         Toast.LENGTH_SHORT).show()
                             } else {
                                 Toast.makeText(this@MainActivity, getString(R.string.logout_success),
@@ -111,9 +111,9 @@ class MainActivity : AppCompatActivity(), NavigationItemSelected {
 
                     }
 
-                    override fun onNext(baseResult: BaseResult?) {
-                        if (baseResult != null) {
-                            baseResultLogout = baseResult
+                    override fun onNext(commonResult: CommonResult?) {
+                        if (commonResult != null) {
+                            commonResultLogout = commonResult
                         }
                     }
                 })

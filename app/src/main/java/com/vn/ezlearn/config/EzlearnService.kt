@@ -30,7 +30,7 @@ interface EzlearnService {
     val banners: Observable<BannerResult>
 
     @get:GET("index.php?r=user/logout")
-    val logout: Observable<BaseResult>
+    val logout: Observable<CommonResult>
 
     @GET("index.php?r=subjects/get-list-by-cate")
     fun getListExams(@Query("category_id") category_id: Int,
@@ -80,7 +80,7 @@ interface EzlearnService {
             Observable<HistoryResult<HistoryPayment>>
 
     @GET("index.php?r=site/get-list-package")
-    fun getListPackage(): Observable<HistoryResult<Package>>
+    fun getListPackage(): Observable<BaseListResult<Package>>
 
     object Factory {
 

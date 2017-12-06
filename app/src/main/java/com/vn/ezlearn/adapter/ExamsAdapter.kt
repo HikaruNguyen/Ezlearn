@@ -42,9 +42,11 @@ class ExamsAdapter(context: Context, list: MutableList<ContentByCategory>) :
                 viewDataBinding.root.setOnClickListener {
                     if (!UserConfig.getInstance(mContext).token.isEmpty()) {
                         val intent = Intent(mContext, TestActivity::class.java)
-                        intent.putExtra(TestActivity.KEY_ID, list[position].exam?.id)
-                        intent.putExtra(TestActivity.KEY_NAME, list[position].exam?.subject_code)
-                        intent.putExtra(TestActivity.KEY_TIME, list[position].exam?.time)
+                        with(intent) {
+                            putExtra(TestActivity.KEY_ID, list[position].exam?.id)
+                            putExtra(TestActivity.KEY_NAME, list[position].exam?.subject_code)
+                            putExtra(TestActivity.KEY_TIME, list[position].exam?.time)
+                        }
                         mContext.startActivity(intent)
                     } else {
                         showDialogLogin()
@@ -141,13 +143,11 @@ class ExamsAdapter(context: Context, list: MutableList<ContentByCategory>) :
         lateinit var itemDocumentBinding: ItemDocumentBinding
 
         constructor(itemExamBinding: ItemHomeExamsBinding) : super(itemExamBinding.root) {
-            this.itemExamBinding = itemExamBinding
-            this.itemExamBinding.executePendingBindings()
+            this.itemExamBinding = itemExamBinding.apply { executePendingBindings() }
         }
 
         constructor(itemDocumentBinding: ItemDocumentBinding) : super(itemDocumentBinding.root) {
-            this.itemDocumentBinding = itemDocumentBinding
-            this.itemDocumentBinding.executePendingBindings()
+            this.itemDocumentBinding = itemDocumentBinding.apply { executePendingBindings() }
         }
     }
 

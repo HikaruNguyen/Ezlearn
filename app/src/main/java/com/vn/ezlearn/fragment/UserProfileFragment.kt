@@ -84,11 +84,20 @@ class UserProfileFragment : Fragment() {
 
     override fun onDetach() {
         super.onDetach()
+        if (mSubscription != null && !mSubscription!!.isUnsubscribed) mSubscription!!.unsubscribe()
+        mSubscription = null
         isAttach = false
+    }
+
+    override fun onResume() {
+        super.onResume()
+        isAttach = true
     }
 
     override fun onDestroy() {
         super.onDestroy()
+        if (mSubscription != null && !mSubscription!!.isUnsubscribed) mSubscription!!.unsubscribe()
+        mSubscription = null
         isAttach = false
     }
 }
