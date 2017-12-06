@@ -22,6 +22,7 @@ import com.vn.ezlearn.models.Category
 import com.vn.ezlearn.models.HomeObject
 import com.vn.ezlearn.utils.AppUtils
 import com.vn.ezlearn.viewmodel.HomeViewModel
+import com.vn.ezlearn.widgets.MyPullToRefresh
 import rx.Subscriber
 import rx.Subscription
 import rx.android.schedulers.AndroidSchedulers
@@ -33,11 +34,11 @@ import java.util.*
  * A simple [Fragment] subclass.
  */
 
-class HomeFragment : Fragment(), BaseSliderView.OnSliderClickListener {
+class HomeFragment : Fragment(), BaseSliderView.OnSliderClickListener, MyPullToRefresh.OnRefreshBegin {
 
-    private var homeBinding: FragmentHomeBinding? = null
-    private var homeViewModel: HomeViewModel? = null
-    private var homeAdapter: HomeAdapter? = null
+    private lateinit var homeBinding: FragmentHomeBinding
+    private lateinit var homeViewModel: HomeViewModel
+    private lateinit var homeAdapter: HomeAdapter
     private var list: List<HomeObject>? = null
     private var bannerList: MutableList<Banner>? = null
 
@@ -51,30 +52,43 @@ class HomeFragment : Fragment(), BaseSliderView.OnSliderClickListener {
                               savedInstanceState: Bundle?): View? {
         homeBinding = DataBindingUtil.inflate(inflater!!, R.layout.fragment_home, container, false)
         homeViewModel = HomeViewModel(activity)
-        homeBinding!!.homeViewModel = homeViewModel
+        homeBinding.homeViewModel = homeViewModel
         initList()
         bindData()
-        return homeBinding!!.root
+        event()
+        return homeBinding.root
+    }
+
+    private fun event() {
+        homeBinding.ptrLoading.setOnRefreshBegin(this)
+
     }
 
     private fun initList() {
         list = ArrayList()
         homeAdapter = HomeAdapter(activity, ArrayList())
-        homeBinding!!.rvHome.adapter = homeAdapter
+        homeBinding.rvHome.adapter = homeAdapter
     }
 
+    override fun refresh() {
+        bindData()
+    }
 
     private fun bindData() {
+        homeAdapter.clear()
         apiService = MyApplication.with(activity).getEzlearnService()
         if (AppUtils.isNetworkAvailable(activity)) {
-            homeViewModel!!.hideErrorView()
+            homeViewModel.hideErrorView()
             initBanner()
             getListExamFree(1)
             getListTryExam(1)
             getListRealExam(1)
 //            getListBySelectLevel(1)
         } else {
-            homeViewModel!!.setErrorNetwork()
+            if (homeBinding.ptrLoading.isRefreshing) {
+                homeBinding.ptrLoading.refreshComplete()
+            }
+            homeViewModel.setErrorNetwork()
         }
     }
 
@@ -85,14 +99,17 @@ class HomeFragment : Fragment(), BaseSliderView.OnSliderClickListener {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(object : Subscriber<ListExamsResult>() {
                     override fun onCompleted() {
+                        if (homeBinding.ptrLoading.isRefreshing) {
+                            homeBinding.ptrLoading.refreshComplete()
+                        }
                         if (mExamsResult!!.success && mExamsResult!!.data != null
                                 && mExamsResult!!.data!!.list != null
                                 && mExamsResult!!.data!!.list!!.isNotEmpty()) {
                             for (category: Category in MyApplication.with(activity).categoryResult?.data!!) {
                                 if (category.category_id.toInt() == AppConfig.getInstance(activity).studyLevelID) {
-//                                    homeAdapter!!.add(HomeObject(category.category_name, ))
+//                                    homeAdapter.add(HomeObject(category.category_name, ))
                                     for (i in 0 until mExamsResult!!.data!!.list!!.size) {
-                                        homeAdapter!!.add(HomeObject(
+                                        homeAdapter.add(HomeObject(
                                                 mExamsResult!!.data!!.list!![i]))
                                     }
                                     break
@@ -104,7 +121,9 @@ class HomeFragment : Fragment(), BaseSliderView.OnSliderClickListener {
                     }
 
                     override fun onError(e: Throwable) {
-
+                        if (homeBinding.ptrLoading.isRefreshing) {
+                            homeBinding.ptrLoading.refreshComplete()
+                        }
                     }
 
                     override fun onNext(examsResult: ListExamsResult?) {
@@ -123,20 +142,27 @@ class HomeFragment : Fragment(), BaseSliderView.OnSliderClickListener {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(object : Subscriber<ListExamsResult>() {
                     override fun onCompleted() {
+                        if (homeBinding.ptrLoading.isRefreshing) {
+                            homeBinding.ptrLoading.refreshComplete()
+                        }
                         if (mExamsResult!!.success && mExamsResult!!.data != null
                                 && mExamsResult!!.data!!.list != null
                                 && mExamsResult!!.data!!.list!!.isNotEmpty()) {
-                            homeAdapter!!.add(
+                            homeAdapter.add(
                                     HomeObject(getString(R.string.nav_free_exam), AppConstant.FREE_ID))
                             for (i in 0 until mExamsResult!!.data!!.list!!.size) {
-                                homeAdapter!!.add(HomeObject(
+                                homeAdapter.add(HomeObject(
                                         mExamsResult!!.data!!.list!![i]))
                             }
 
                         }
                     }
 
-                    override fun onError(e: Throwable) = Unit
+                    override fun onError(e: Throwable) {
+                        if (homeBinding.ptrLoading.isRefreshing) {
+                            homeBinding.ptrLoading.refreshComplete()
+                        }
+                    }
 
                     override fun onNext(examsResult: ListExamsResult?) {
                         if (examsResult != null) {
@@ -153,20 +179,27 @@ class HomeFragment : Fragment(), BaseSliderView.OnSliderClickListener {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(object : Subscriber<ListExamsResult>() {
                     override fun onCompleted() {
+                        if (homeBinding.ptrLoading.isRefreshing) {
+                            homeBinding.ptrLoading.refreshComplete()
+                        }
                         if (mExamsResult!!.success && mExamsResult!!.data != null
                                 && mExamsResult!!.data!!.list != null
                                 && mExamsResult!!.data!!.list!!.isNotEmpty()) {
-                            homeAdapter!!.add(
+                            homeAdapter.add(
                                     HomeObject(getString(R.string.try_exam), AppConstant.TRY_EXAM_ID))
                             for (i in 0 until mExamsResult!!.data!!.list!!.size) {
-                                homeAdapter!!.add(HomeObject(
+                                homeAdapter.add(HomeObject(
                                         mExamsResult!!.data!!.list!![i]))
                             }
 
                         }
                     }
 
-                    override fun onError(e: Throwable) = Unit
+                    override fun onError(e: Throwable) {
+                        if (homeBinding.ptrLoading.isRefreshing) {
+                            homeBinding.ptrLoading.refreshComplete()
+                        }
+                    }
 
                     override fun onNext(examsResult: ListExamsResult?) {
                         if (examsResult != null) {
@@ -183,13 +216,16 @@ class HomeFragment : Fragment(), BaseSliderView.OnSliderClickListener {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(object : Subscriber<ListExamsResult>() {
                     override fun onCompleted() {
+                        if (homeBinding.ptrLoading.isRefreshing) {
+                            homeBinding.ptrLoading.refreshComplete()
+                        }
                         if (mExamsResult!!.success && mExamsResult!!.data != null
                                 && mExamsResult!!.data!!.list != null
                                 && mExamsResult!!.data!!.list!!.isNotEmpty()) {
-                            homeAdapter!!.add(
+                            homeAdapter.add(
                                     HomeObject(getString(R.string.real_exam), AppConstant.REAL_EXAM_ID))
                             for (i in 0 until mExamsResult!!.data!!.list!!.size) {
-                                homeAdapter!!.add(HomeObject(
+                                homeAdapter.add(HomeObject(
                                         mExamsResult!!.data!!.list!![i]))
                             }
 
@@ -197,7 +233,9 @@ class HomeFragment : Fragment(), BaseSliderView.OnSliderClickListener {
                     }
 
                     override fun onError(e: Throwable) {
-
+                        if (homeBinding.ptrLoading.isRefreshing) {
+                            homeBinding.ptrLoading.refreshComplete()
+                        }
                     }
 
                     override fun onNext(examsResult: ListExamsResult?) {
@@ -218,19 +256,24 @@ class HomeFragment : Fragment(), BaseSliderView.OnSliderClickListener {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(object : Subscriber<BannerResult>() {
                     override fun onCompleted() {
+                        if (homeBinding.ptrLoading.isRefreshing) {
+                            homeBinding.ptrLoading.refreshComplete()
+                        }
                         if (mBannerResult!!.success && mBannerResult!!.data != null
-                                && mBannerResult!!.data!!.size > 0) {
+                                && mBannerResult!!.data!!.isNotEmpty()) {
                             for (i in 0 until mBannerResult!!.data!!.size) {
                                 bannerList!!.add(Banner(mBannerResult!!.data!![i]))
                             }
-                            homeAdapter!!.add(0, HomeObject(bannerList!!))
-                            homeBinding!!.rvHome.smoothScrollToPosition(0)
+                            homeAdapter.add(0, HomeObject(bannerList!!))
+                            homeBinding.rvHome.smoothScrollToPosition(0)
                         }
 
                     }
 
                     override fun onError(e: Throwable) {
-
+                        if (homeBinding.ptrLoading.isRefreshing) {
+                            homeBinding.ptrLoading.refreshComplete()
+                        }
                     }
 
                     override fun onNext(bannerResult: BannerResult?) {

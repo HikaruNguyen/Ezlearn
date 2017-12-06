@@ -14,6 +14,7 @@ import com.vn.ezlearn.config.EzlearnService
 import com.vn.ezlearn.databinding.FragmentPackageBinding
 import com.vn.ezlearn.modelresult.BaseListResult
 import com.vn.ezlearn.models.Package
+import com.vn.ezlearn.widgets.MyPullToRefresh
 import rx.Subscriber
 import rx.Subscription
 import rx.android.schedulers.AndroidSchedulers
@@ -23,7 +24,8 @@ import rx.schedulers.Schedulers
 /**
  * A simple [Fragment] subclass.
  */
-class PackageFragment : Fragment() {
+class PackageFragment : Fragment(), MyPullToRefresh.OnRefreshBegin {
+
     private lateinit var packageBinding: FragmentPackageBinding
     private lateinit var packageAdapter: PackageAdapter
     private var apiService: EzlearnService? = null
@@ -35,14 +37,19 @@ class PackageFragment : Fragment() {
         packageBinding = DataBindingUtil.inflate(
                 inflater!!, R.layout.fragment_package, container, false)
         apiService = MyApplication.with(activity).getEzlearnService()
+        packageAdapter = PackageAdapter(activity, ArrayList())
+        packageBinding.rvList.adapter = packageAdapter
         bindData()
-        return packageBinding.rvList
+        packageBinding.ptrLoading.setOnRefreshBegin(this)
+        return packageBinding.root
+    }
+
+    override fun refresh() {
+        bindData()
     }
 
     private fun bindData() {
-        packageAdapter = PackageAdapter(activity, ArrayList())
-        packageBinding.rvList.adapter = packageAdapter
-
+        packageAdapter.clear()
         if (mSubscription != null && !mSubscription!!.isUnsubscribed)
             mSubscription!!.unsubscribe()
         mSubscription = apiService!!.getListPackage()
@@ -50,7 +57,10 @@ class PackageFragment : Fragment() {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(object : Subscriber<BaseListResult<Package>>() {
                     override fun onCompleted() {
-                        if (isAttach) {
+                        if (isAdded && isAttach) {
+                            if (packageBinding.ptrLoading.isRefreshing) {
+                                packageBinding.ptrLoading.refreshComplete()
+                            }
                             if (mPackageResult.success && mPackageResult.data != null) {
                                 packageAdapter.addAll(mPackageResult.data!!.list!!)
                             }
@@ -59,7 +69,9 @@ class PackageFragment : Fragment() {
                     }
 
                     override fun onError(e: Throwable) {
-
+                        if (packageBinding.ptrLoading.isRefreshing) {
+                            packageBinding.ptrLoading.refreshComplete()
+                        }
                     }
 
                     override fun onNext(packageResult: BaseListResult<Package>?) {
