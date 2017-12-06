@@ -7,7 +7,7 @@ import android.support.v7.app.AppCompatActivity
 import com.vn.ezlearn.R
 import com.vn.ezlearn.config.EzlearnService
 import com.vn.ezlearn.databinding.ActivitySplashBinding
-import com.vn.ezlearn.modelresult.CategoryResult
+import com.vn.ezlearn.modelresult.BaseResult
 import com.vn.ezlearn.models.Category
 import rx.Subscriber
 import rx.Subscription
@@ -18,7 +18,7 @@ class SplashActivity : AppCompatActivity() {
     private lateinit var splashBinding: ActivitySplashBinding
     private var apiService: EzlearnService? = null
     private var mSubscription: Subscription? = null
-    private lateinit var mCategoryResult: CategoryResult
+    private lateinit var mCategoryResult: BaseResult<Category>
     private var isAttach = true
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,7 +33,7 @@ class SplashActivity : AppCompatActivity() {
         mSubscription = apiService!!.category
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(object : Subscriber<CategoryResult>() {
+                .subscribe(object : Subscriber<BaseResult<Category>>() {
                     override fun onCompleted() {
                         if (isAttach && mCategoryResult.success) {
                             mCategoryResult.data?.let {
@@ -77,7 +77,7 @@ class SplashActivity : AppCompatActivity() {
 
                     }
 
-                    override fun onNext(categoryResult: CategoryResult?) {
+                    override fun onNext(categoryResult: BaseResult<Category>?) {
                         if (categoryResult != null) {
                             mCategoryResult = categoryResult
                         }

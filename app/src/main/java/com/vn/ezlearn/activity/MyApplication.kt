@@ -5,12 +5,8 @@ import android.content.Context
 import android.graphics.Typeface
 import android.os.Build
 import com.vn.ezlearn.config.EzlearnService
-import com.vn.ezlearn.modelresult.CategoryResult
-
-
-
-
-
+import com.vn.ezlearn.modelresult.BaseResult
+import com.vn.ezlearn.models.Category
 
 
 /**
@@ -18,7 +14,7 @@ import com.vn.ezlearn.modelresult.CategoryResult
  */
 
 class MyApplication : Application() {
-    var categoryResult: CategoryResult? = null
+    var categoryResult: BaseResult<Category>? = null
 
     fun getEzlearnService(): EzlearnService = EzlearnService.Factory.create(this)
 

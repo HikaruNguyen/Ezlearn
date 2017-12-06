@@ -4,10 +4,7 @@ import android.content.Context
 import com.google.gson.GsonBuilder
 import com.vn.ezlearn.BuildConfig
 import com.vn.ezlearn.modelresult.*
-import com.vn.ezlearn.models.HistoryBuyPackage
-import com.vn.ezlearn.models.HistoryExam
-import com.vn.ezlearn.models.HistoryPayment
-import com.vn.ezlearn.models.Package
+import com.vn.ezlearn.models.*
 import com.vn.ezlearn.network.RxErrorHandlingCallAdapterFactory
 import okhttp3.Cache
 import okhttp3.OkHttpClient
@@ -24,7 +21,7 @@ import java.util.concurrent.TimeUnit
 
 interface EzlearnService {
     @get:GET("index.php?r=category")
-    val category: Observable<CategoryResult>
+    val category: Observable<BaseResult<Category>>
 
     @get:GET("index.php?r=site/get-banners")
     val banners: Observable<BannerResult>
@@ -69,15 +66,15 @@ interface EzlearnService {
 
     @GET("index.php?r=user/history-working")
     fun getHistoryExam(@Query("page") page: Int,
-                       @Query("per-page") per_page: Int): Observable<HistoryResult<HistoryExam>>
+                       @Query("per-page") per_page: Int): Observable<BaseListResult<HistoryExam>>
 
     @GET("index.php?r=user/history-charging")
     fun getHistoryBuyPackage(@Query("page") page: Int, @Query("per-page") per_page: Int):
-            Observable<HistoryResult<HistoryBuyPackage>>
+            Observable<BaseListResult<HistoryBuyPackage>>
 
     @GET("index.php?r=user/history-buy-card")
     fun getHistoryPayment(@Query("page") page: Int, @Query("per-page") per_page: Int):
-            Observable<HistoryResult<HistoryPayment>>
+            Observable<BaseListResult<HistoryPayment>>
 
     @GET("index.php?r=site/get-list-package")
     fun getListPackage(): Observable<BaseListResult<Package>>

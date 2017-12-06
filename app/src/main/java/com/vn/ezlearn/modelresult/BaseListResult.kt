@@ -5,7 +5,7 @@ package com.vn.ezlearn.modelresult
  */
 
 class BaseListResult<T> {
-    var success: Boolean? = null
+    var success: Boolean = false
     var data: BaseData<T>? = null
 
     class BaseData<T> {

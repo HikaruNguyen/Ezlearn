@@ -23,9 +23,11 @@ class ItemPackageViewModel(private val context: Context, aPackage: Package?) : B
     init {
         aPackage?.let {
             packageName = ObservableField(it.package_display_name!!)
-            packageMoney = ObservableField(AppUtils.formatMoney(it.price!!))
+            packageMoney = ObservableField(AppUtils.formatMoney(it.price!!) + " " + context.getString(R.string.vnd))
+//            it.description = it.description!!.replace("<p>&nbsp;</p>", "").trim()
             packageDescription = ObservableField(Html.fromHtml(
-                    it.description!! + " " + context.getString(R.string.vnd)))
+                    it.description!!.substring(3, it.description!!.length)
+                            .substring(0, it.description!!.length - 4)))
             packageImage = ObservableField(BuildConfig.ENDPOINT_DOWNLOAD + it.file_image)
 
         }

@@ -14,7 +14,7 @@ import com.vn.ezlearn.adapter.HistoryExamAdapter
 import com.vn.ezlearn.adapter.HistoryPaymentAdapter
 import com.vn.ezlearn.config.EzlearnService
 import com.vn.ezlearn.databinding.FragmentHistoryExamBinding
-import com.vn.ezlearn.modelresult.HistoryResult
+import com.vn.ezlearn.modelresult.BaseListResult
 import com.vn.ezlearn.models.HistoryBuyPackage
 import com.vn.ezlearn.models.HistoryExam
 import com.vn.ezlearn.models.HistoryPayment
@@ -78,75 +78,75 @@ class HistoryExamFragment : Fragment() {
     }
 
     private fun getListHistoryExam(page: Int) {
-        var mHistoryResult: HistoryResult<HistoryExam>? = null
+        var mBaseListResult: BaseListResult<HistoryExam>? = null
         apiService = MyApplication.with(activity).getEzlearnService()
         mSubscription = apiService!!.getHistoryExam(page, 5)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(object : Subscriber<HistoryResult<HistoryExam>>() {
+                .subscribe(object : Subscriber<BaseListResult<HistoryExam>>() {
                     override fun onCompleted() {
-                        if (mHistoryResult!!.success && mHistoryResult!!.data != null
-                                && mHistoryResult?.data!!.list != null
-                                && mHistoryResult?.data!!.list!!.isNotEmpty()) {
-                            adapterHistoryExam.addAll(mHistoryResult?.data!!.list!!)
+                        if (mBaseListResult!!.success && mBaseListResult!!.data != null
+                                && mBaseListResult?.data!!.list != null
+                                && mBaseListResult?.data!!.list!!.isNotEmpty()) {
+                            adapterHistoryExam.addAll(mBaseListResult?.data!!.list!!)
                         }
                     }
 
                     override fun onError(e: Throwable) = Unit
 
-                    override fun onNext(historyResult: HistoryResult<HistoryExam>?) {
+                    override fun onNext(historyResult: BaseListResult<HistoryExam>?) {
                         if (historyResult != null) {
-                            mHistoryResult = historyResult
+                            mBaseListResult = historyResult
                         }
                     }
                 })
     }
 
     private fun getListHistoryBuyPackage(page: Int) {
-        var mHistoryResult: HistoryResult<HistoryBuyPackage>? = null
+        var mBaseListResult: BaseListResult<HistoryBuyPackage>? = null
         apiService = MyApplication.with(activity).getEzlearnService()
         mSubscription = apiService!!.getHistoryBuyPackage(page, 5)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(object : Subscriber<HistoryResult<HistoryBuyPackage>>() {
+                .subscribe(object : Subscriber<BaseListResult<HistoryBuyPackage>>() {
                     override fun onCompleted() {
-                        if (mHistoryResult!!.success && mHistoryResult!!.data != null
-                                && mHistoryResult?.data!!.list != null
-                                && mHistoryResult?.data!!.list!!.isNotEmpty()) {
-                            adapterHistoryBuyPackage.addAll(mHistoryResult?.data!!.list!!)
+                        if (mBaseListResult!!.success && mBaseListResult!!.data != null
+                                && mBaseListResult?.data!!.list != null
+                                && mBaseListResult?.data!!.list!!.isNotEmpty()) {
+                            adapterHistoryBuyPackage.addAll(mBaseListResult?.data!!.list!!)
                         }
                     }
 
                     override fun onError(e: Throwable) = Unit
 
-                    override fun onNext(historyResult: HistoryResult<HistoryBuyPackage>?) {
+                    override fun onNext(historyResult: BaseListResult<HistoryBuyPackage>?) {
                         if (historyResult != null) {
-                            mHistoryResult = historyResult
+                            mBaseListResult = historyResult
                         }
                     }
                 })
     }
 
     private fun getListHistoryPayment(page: Int) {
-        var mHistoryResult: HistoryResult<HistoryPayment>? = null
+        var mBaseListResult: BaseListResult<HistoryPayment>? = null
         apiService = MyApplication.with(activity).getEzlearnService()
         mSubscription = apiService!!.getHistoryPayment(page, 5)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(object : Subscriber<HistoryResult<HistoryPayment>>() {
+                .subscribe(object : Subscriber<BaseListResult<HistoryPayment>>() {
                     override fun onCompleted() {
-                        if (mHistoryResult!!.success && mHistoryResult!!.data != null
-                                && mHistoryResult?.data!!.list != null
-                                && mHistoryResult?.data!!.list!!.isNotEmpty()) {
-                            adapterHistoryPayment.addAll(mHistoryResult?.data!!.list!!)
+                        if (mBaseListResult!!.success && mBaseListResult!!.data != null
+                                && mBaseListResult?.data!!.list != null
+                                && mBaseListResult?.data!!.list!!.isNotEmpty()) {
+                            adapterHistoryPayment.addAll(mBaseListResult?.data!!.list!!)
                         }
                     }
 
                     override fun onError(e: Throwable) = Unit
 
-                    override fun onNext(historyResult: HistoryResult<HistoryPayment>?) {
+                    override fun onNext(historyResult: BaseListResult<HistoryPayment>?) {
                         if (historyResult != null) {
-                            mHistoryResult = historyResult
+                            mBaseListResult = historyResult
                         }
                     }
                 })

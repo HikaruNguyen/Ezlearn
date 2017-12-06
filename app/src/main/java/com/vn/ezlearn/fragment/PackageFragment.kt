@@ -51,7 +51,7 @@ class PackageFragment : Fragment() {
                 .subscribe(object : Subscriber<BaseListResult<Package>>() {
                     override fun onCompleted() {
                         if (isAttach) {
-                            if (mPackageResult.success!! && mPackageResult.data != null) {
+                            if (mPackageResult.success && mPackageResult.data != null) {
                                 packageAdapter.addAll(mPackageResult.data!!.list!!)
                             }
                         }
