@@ -6,6 +6,7 @@
     <string name="cancel">Thoát</string>
     <string name="updating">Đang cập nhật</string>
     <string name="ok">OK</string>
+    <string name="downloading">Đang tải file, vui lòng chờ trong giây lát…</string>
     <string name="download_fail">Download thất bại, thử lại sau</string>
     <string name="download_success">Download thành công</string>
     <string name="loading">Vui lòng chờ trong giây lát…</string>
