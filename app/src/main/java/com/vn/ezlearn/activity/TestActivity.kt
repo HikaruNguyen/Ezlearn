@@ -159,6 +159,7 @@ class TestActivity : BaseActivity(), ChangeQuestionListener, OnCheckAnswerListen
                                                             }.forEach { reading ->
                                                                 reading.questions!!
                                                                         .map {
+                                                                            it.file_audio = reading.file_audio
                                                                             MyContent(
                                                                                     it.id!!,
                                                                                     question.region!!,
@@ -183,7 +184,12 @@ class TestActivity : BaseActivity(), ChangeQuestionListener, OnCheckAnswerListen
                                 list.add(QuestionObject(contentList))
                                 list.add(0, QuestionObject(
                                         contentList[0].region.region_code
-                                                + " " + contentList[0].region.description))
+                                                + " " + contentList[0].region.description,
+                                        if (contentList[0].content.file_audio.isNullOrEmpty()) {
+                                            ""
+                                        } else {
+                                            contentList[0].content.file_audio!!
+                                        }))
                                 testViewModel.updatePosition(0, contentList.size)
                                 checkReview()
                                 adapter.addAll(list)
@@ -296,9 +302,11 @@ class TestActivity : BaseActivity(), ChangeQuestionListener, OnCheckAnswerListen
             if (list.size > 0) {
                 val part = (contentList[position].region.region_code
                         + " " + contentList[0].region.description)
-                if (adapter.getItemByPosition(0).part != part) {
+                val audioFile = contentList[position].content.file_audio
+                if (!adapter.getItemByPosition(0).part.contentEquals(part)
+                        || !adapter.getItemByPosition(0).fileAudio!!.contentEquals(audioFile!!)) {
                     adapter.setData(0, QuestionObject(contentList[position].region.region_code
-                            + " " + contentList[0].region.description))
+                            + " " + contentList[0].region.description, audioFile!!))
                 }
             }
             testViewModel.updatePosition(position, contentList.size)

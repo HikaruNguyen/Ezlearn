@@ -3,6 +3,7 @@ package com.vn.ezlearn.fragment
 import android.databinding.DataBindingUtil
 import android.graphics.Paint
 import android.graphics.Typeface
+import android.media.MediaPlayer
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v4.content.ContextCompat
@@ -32,6 +33,7 @@ class QuestionFragment : Fragment() {
     private var position: Int = 0
     private var size: Int = 0
     private var content: MyContent? = null
+    private lateinit var mediaPlayer: MediaPlayer
     private var onCheckAnswerListener: OnCheckAnswerListener? = null
     var answer = -1
     var inputAnswer = ""
@@ -88,6 +90,14 @@ class QuestionFragment : Fragment() {
                 }
 
             }
+            content!!.content.file_audio?.let {
+                //                mediaPlayer = MediaPlayer.create(activity,Uri.parse())
+//                mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC)
+//                fragmentQuestionBinding.webviewAudio.loadDataWithBaseURL("file:///android_asset/",
+//                        AudioHtml.genHtmlAudio(BuildConfig.ENDPOINT_DOWNLOAD + content!!.content.file_audio),
+//                        "text/html", "UTF-8", null)
+            }
+
         }
     }
 

@@ -7,11 +7,13 @@ package com.vn.ezlearn.models
 class QuestionObject {
 
     var part: String = ""
+    var fileAudio: String? = null
     var list: List<MyContent>? = null
     var type: Int = 0
 
-    constructor(part: String) {
+    constructor(part: String, fileAudio: String) {
         this.part = part
+        this.fileAudio = fileAudio
         this.type = TYPE_PART
     }
 

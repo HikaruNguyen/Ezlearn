@@ -22,5 +22,16 @@
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:background="@color/bg_main" />
+
+        <com.vn.ezlearn.widgets.CustomeWebView
+            android:id="@+id/webview_audio"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/margin_5dp" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/bg_main" />
     </LinearLayout>
 </layout>

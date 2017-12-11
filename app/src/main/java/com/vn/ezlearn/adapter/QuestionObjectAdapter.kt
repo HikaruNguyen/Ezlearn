@@ -6,7 +6,9 @@ import android.support.v4.app.Fragment
 import android.support.v4.view.ViewPager
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
+import com.vn.ezlearn.BuildConfig
 import com.vn.ezlearn.R
 import com.vn.ezlearn.activity.TestActivity
 import com.vn.ezlearn.databinding.ItemQuestionPartBinding
@@ -16,6 +18,7 @@ import com.vn.ezlearn.interfaces.ChangeQuestionListener
 import com.vn.ezlearn.interfaces.OnCheckAnswerListener
 import com.vn.ezlearn.models.Content
 import com.vn.ezlearn.models.QuestionObject
+import com.vn.ezlearn.utils.AudioHtml
 import java.util.*
 
 /**
@@ -58,7 +61,21 @@ class QuestionObjectAdapter(private val activity: Activity, list: MutableList<Qu
 
         if (getItemViewType(position) == QuestionObject.TYPE_PART) {
             itemQuestionPartBinding = holder.itemQuestionPartBinding
-            itemQuestionPartBinding!!.tvPart.text = item.part
+            itemQuestionPartBinding?.let {
+                with(it) {
+                    tvPart.text = item.part
+                    if (item.fileAudio.isNullOrEmpty()) {
+                        webviewAudio.visibility = View.GONE
+                    } else {
+                        webviewAudio.loadDataWithBaseURL("file:///android_asset/",
+                                AudioHtml.genHtmlAudio(BuildConfig.ENDPOINT_DOWNLOAD + item.fileAudio),
+                                "text/html", "UTF-8", null)
+                    }
+
+                }
+            }
+
+
         } else if (getItemViewType(position) == QuestionObject.TYPE_VIEWPAGER) {
             itemQuestionViewpagerBinding = holder.itemQuestionViewpagerBinding
             val contentList = item.list
