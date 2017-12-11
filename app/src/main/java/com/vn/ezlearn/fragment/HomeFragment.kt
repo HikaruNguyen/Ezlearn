@@ -60,7 +60,7 @@ class HomeFragment : Fragment(), BaseSliderView.OnSliderClickListener, MyPullToR
     }
 
     private fun event() {
-        homeBinding.ptrLoading.setOnRefreshBegin(this)
+        homeBinding.ptrLoading.setOnRefreshBegin(homeBinding.rvHome, MyPullToRefresh.PullToRefreshHeader(context), this)
 
     }
 

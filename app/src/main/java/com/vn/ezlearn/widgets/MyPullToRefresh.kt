@@ -18,47 +18,35 @@ import com.vn.ezlearn.R
 class MyPullToRefresh : PtrClassicFrameLayout {
     private var onRefreshBegin: OnRefreshBegin? = null
 
-    constructor(context: Context) : super(context) {
-        initView()
-    }
+    constructor(context: Context) : super(context)
 
-    constructor(context: Context, attrs: AttributeSet) : super(context, attrs) {
-        initView()
-    }
+    constructor(context: Context, attrs: AttributeSet) : super(context, attrs)
 
-    constructor(context: Context, attrs: AttributeSet, defStyle: Int) : super(context, attrs, defStyle) {
-        initView()
-    }
+    constructor(context: Context, attrs: AttributeSet, defStyle: Int) : super(context, attrs, defStyle)
 
-    fun setOnRefreshBegin(onRefreshBegin: OnRefreshBegin) {
+    fun setOnRefreshBegin(view: View, headerView: PullToRefreshHeader, onRefreshBegin: OnRefreshBegin) {
         this.onRefreshBegin = onRefreshBegin
-    }
-
-    private fun initView() {
-        val headerView = PullToRefreshHeader(context)
         with(this) {
             setHeaderView(headerView)
             addPtrUIHandler(headerView)
             setPtrHandler(object : PtrHandler {
                 override fun checkCanDoRefresh(frame: PtrFrameLayout, content: View, header: View): Boolean {
                     return if (headerView.currentPosY < 1.5 * frame.headerHeight) {
-                        PtrDefaultHandler.checkContentCanBePulledDown(frame, this@with, header)
+                        PtrDefaultHandler.checkContentCanBePulledDown(frame, view, header)
                     } else false
                 }
 
                 override fun onRefreshBegin(frame: PtrFrameLayout) {
-                    if (onRefreshBegin != null)
-                        onRefreshBegin?.refresh()
-
+                    onRefreshBegin.refresh()
                 }
             })
         }
     }
 
+
     interface OnRefreshBegin {
         fun refresh()
     }
-
     class PullToRefreshHeader : RelativeLayout, PtrUIHandler {
 
         private var progressWheel: ProgressWheel? = null
@@ -123,5 +111,4 @@ class MyPullToRefresh : PtrClassicFrameLayout {
             invalidate()
         }
     }
-
 }

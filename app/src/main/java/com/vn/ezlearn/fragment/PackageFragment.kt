@@ -40,7 +40,7 @@ class PackageFragment : Fragment(), MyPullToRefresh.OnRefreshBegin {
         packageAdapter = PackageAdapter(activity, ArrayList())
         packageBinding.rvList.adapter = packageAdapter
         bindData()
-        packageBinding.ptrLoading.setOnRefreshBegin(this)
+        packageBinding.ptrLoading.setOnRefreshBegin(packageBinding.rvList, MyPullToRefresh.PullToRefreshHeader(context), this)
         return packageBinding.root
     }
 
