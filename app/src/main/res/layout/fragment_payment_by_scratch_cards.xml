@@ -1,13 +1,71 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="com.vn.ezlearn.fragment.PaymentByScratchCardsFragment">
+<layout>
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        tools:context="com.vn.ezlearn.fragment.PaymentByScratchCardsFragment">
 
-</FrameLayout>
+        <RadioGroup
+            android:id="@+id/group"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <RadioButton
+                android:id="@+id/ViettelButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="true"
+                android:onClick="onRadioButtonClicked"
+                android:text="@string/viettel" />
+
+            <RadioButton
+                android:id="@+id/VinaPhoneButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="onRadioButtonClicked"
+                android:text="@string/vinaPhone" />
+
+            <RadioButton
+                android:id="@+id/MobiFoneButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="onRadioButtonClicked"
+                android:text="@string/mobiFone" />
+        </RadioGroup>
+
+
+        <EditText
+            android:id="@+id/cardcode"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/group"
+            android:layout_marginTop="28dp"
+            android:ems="10"
+            android:hint="@string/cardcode">
+
+            <requestFocus />
+        </EditText>
+
+        <EditText
+            android:id="@+id/cardserial"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/cardcode"
+            android:layout_marginTop="28dp"
+            android:ems="10"
+            android:hint="@string/cardserial"
+            android:inputType=""></EditText>
+
+        <Button
+            android:id="@+id/button1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/cardserial"
+            android:layout_marginLeft="14dp"
+            android:layout_marginTop="26dp"
+            android:text="@string/paynow" />
+
+    </RelativeLayout>
+</layout>
