@@ -185,9 +185,12 @@
     <string name="payment_by_scratch_cards">Nạp tiền qua thẻ cào</string>
     <string name="payment_by_bank">Nạp tiền qua ngân hàng</string>
     <string name="buy_service">Mua dịch vụ</string>
-
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="viettel">Viettel</string>
+    <string name="vinaPhone">VinaPhone</string>
+    <string name="mobiFone">MobiFone</string>
+    <string name="cardcode">Nhập card code</string>
+    <string name="cardserial">Nhập card serial</string>
+    <string name="paynow">Pay Now</string>
 
 
 </resources>
