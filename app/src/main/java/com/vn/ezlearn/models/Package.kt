@@ -18,4 +18,5 @@ class Package {
     var time_value: Int? = null
     var free_time_value: Int? = null
     var file_image: String? = null
+    var is_myPackage: Boolean = false
 }

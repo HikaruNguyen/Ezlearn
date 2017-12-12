@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
 
@@ -18,9 +19,10 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <LinearLayout
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:clickable="false"
                 android:orientation="horizontal"
                 android:padding="@dimen/margin_10dp">
 
@@ -34,6 +36,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/margin_10dp"
+                    android:layout_marginRight="@dimen/margin_10dp"
+                    android:layout_toLeftOf="@+id/btnRegisterPackage"
+                    android:layout_toRightOf="@+id/imgIcon"
                     android:orientation="vertical">
 
                     <TextView
@@ -51,7 +56,19 @@
                         android:textStyle="bold" />
 
                 </LinearLayout>
-            </LinearLayout>
+
+                <Button
+                    android:id="@+id/btnRegisterPackage"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/image_size_36dp"
+                    android:layout_alignParentRight="true"
+                    android:text="@{itemPackageViewModel.textButton}"
+                    android:textAllCaps="false"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/text_size_12sp"
+                    app:backgroundResource="@{itemPackageViewModel.bgButton}"
+                    app:textColor="@{itemPackageViewModel.textColor}" />
+            </RelativeLayout>
 
             <View
                 android:layout_width="match_parent"

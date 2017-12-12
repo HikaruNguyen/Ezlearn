@@ -17,6 +17,7 @@
     <string name="vnd">VNĐ</string>
     <string name="no_data">Chưa có dữ liệu</string>
     <string name="or">Hoặc</string>
+    <string name="confirm">Xác nhận</string>
 
     <!--Intro-->
     <string name="bank_exams_title">Ngân hàng đề thi</string>
@@ -91,6 +92,10 @@
     <string name="history_exam_code">Mã đề: %1$s</string>
     <string name="review">Xem lại</string>
     <string name="retesting">Thi lại ngay</string>
+    <string name="cancel_package">Hủy</string>
+    <string name="confirm_cancel_package">Bạn có muốn hủy gói %1$s</string>
+    <string name="register_package">Đăng ký</string>
+    <string name="confirm_register_package">Bạn có muốn đăng ký gói %1$s với giá %2$s VNĐ</string>
 
     <!--HistoryPayment-->
     <string name="channel_payment"><![CDATA[<b>Loại giao dịch: </b>%1$s]]></string>
