@@ -418,6 +418,14 @@ class TestActivity : BaseActivity(), ChangeQuestionListener, OnCheckAnswerListen
         }
     }
 
+
+    override fun onBackPressed() {
+        adapter.destroyAudio()
+        super.onBackPressed()
+
+    }
+    
+
     companion object {
         val KEY_ID = "KEY_ID"
         val KEY_NAME = "KEY_NAME"

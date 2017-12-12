@@ -96,18 +96,15 @@ class QuestionObjectAdapter(private val activity: Activity, list: MutableList<Qu
                 addOnPageChangeListener(
                         object : ViewPager.OnPageChangeListener {
                             override fun onPageScrolled(
-                                    position: Int, positionOffset: Float, positionOffsetPixels: Int) {
-
-                            }
+                                    position: Int, positionOffset: Float, positionOffsetPixels: Int) =
+                                    Unit
 
                             override fun onPageSelected(position: Int) {
                                 changeQuestionListener.onChange(position)
                                 positionViewPager = position
                             }
 
-                            override fun onPageScrollStateChanged(state: Int) {
-
-                            }
+                            override fun onPageScrollStateChanged(state: Int) = Unit
                         })
             }
 
@@ -124,6 +121,11 @@ class QuestionObjectAdapter(private val activity: Activity, list: MutableList<Qu
             itemQuestionViewpagerBinding!!.container.currentItem = positionViewPager - 1
     }
 
+
+    fun destroyAudio() {
+        itemQuestionPartBinding!!.webviewAudio.destroy()
+
+    }
 
     override fun getItemViewType(position: Int): Int = data[position].type
 
