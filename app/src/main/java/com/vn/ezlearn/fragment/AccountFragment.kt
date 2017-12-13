@@ -78,7 +78,7 @@ class AccountFragment : Fragment(), View.OnClickListener {
         val intent: Intent
         when (v!!.id) {
             R.id.rlLogin -> {
-                if (!UserConfig.getInstance(activity).token.isEmpty()) {
+                if (UserConfig.getInstance(activity).isLogined()) {
                     intent = Intent(activity, UserProfile::class.java)
                     startActivity(intent)
                 } else {
@@ -87,7 +87,7 @@ class AccountFragment : Fragment(), View.OnClickListener {
                 }
             }
             R.id.lnHistoryExam -> {
-                if (!UserConfig.getInstance(activity).token.isEmpty()) {
+                if (UserConfig.getInstance(activity).isLogined()) {
                     intent = Intent(activity, AccountActivity::class.java)
                     intent.putExtra(AccountActivity.TYPE_HISTORY, HistoryExamFragment.TYPE_EXAM)
                     startActivity(intent)
@@ -98,7 +98,7 @@ class AccountFragment : Fragment(), View.OnClickListener {
 
             }
             R.id.lnHistoryTransaction -> {
-                if (!UserConfig.getInstance(activity).token.isEmpty()) {
+                if (UserConfig.getInstance(activity).isLogined()) {
                     intent = Intent(activity, AccountActivity::class.java)
                     intent.putExtra(AccountActivity.TYPE_HISTORY, HistoryExamFragment.TYPE_TRANSACTION)
                     startActivity(intent)
@@ -113,7 +113,7 @@ class AccountFragment : Fragment(), View.OnClickListener {
                 startActivity(intent)
             }
             R.id.lnPayment -> {
-                if (!UserConfig.getInstance(activity).token.isEmpty()) {
+                if (UserConfig.getInstance(activity).isLogined()) {
                     intent = Intent(activity, PaymentActivity::class.java)
                     startActivity(intent)
                 } else {

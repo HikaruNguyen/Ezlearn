@@ -13,25 +13,25 @@ import com.vn.ezlearn.config.UserConfig
  */
 
 class AccountViewModel(var context: Context) : BaseObservable() {
-    var tvUserName: ObservableField<String> = if (!UserConfig.getInstance(context).token.isEmpty()) {
+    var tvUserName: ObservableField<String> = if (UserConfig.getInstance(context).isLogined()) {
         ObservableField(UserConfig.getInstance(context).name)
     } else {
         ObservableField(context.getString(R.string.login))
     }
 
-    var visiableLogout: ObservableInt = if (!UserConfig.getInstance(context).token.isEmpty()) {
+    var visiableLogout: ObservableInt = if (UserConfig.getInstance(context).isLogined()) {
         ObservableInt(View.VISIBLE)
     } else {
         ObservableInt(View.GONE)
     }
 
     fun updateProfile() {
-        tvUserName.set(if (!UserConfig.getInstance(context = context).token.isEmpty()) {
+        tvUserName.set(if (UserConfig.getInstance(context).isLogined()) {
             UserConfig.getInstance(context).name
         } else {
             context.getString(R.string.login)
         })
-        visiableLogout.set(if (!UserConfig.getInstance(context = context).token.isEmpty()) {
+        visiableLogout.set(if (UserConfig.getInstance(context).isLogined()) {
             View.VISIBLE
         } else {
             View.GONE

@@ -15,6 +15,10 @@ class UserConfig private constructor(context: Context) {
         get() = sharedPreferences.getString(KEY_TOKEN, "")
         set(token) = sharedPreferences.edit().putString(KEY_TOKEN, token).apply()
 
+    var id: Int
+        get() = sharedPreferences.getInt(KEY_ID, -1)
+        set(id) = sharedPreferences.edit().putInt(KEY_ID, id).apply()
+
     var email: String
         get() = sharedPreferences.getString(KEY_EMAIL, "")
         set(email) = sharedPreferences.edit().putString(KEY_EMAIL, email).apply()
@@ -38,10 +42,13 @@ class UserConfig private constructor(context: Context) {
         sharedPreferences.edit().clear().apply()
     }
 
+    fun isLogined(): Boolean = !token.isEmpty()
+
     companion object {
         private val Pref = "Pref_User"
 
         private val KEY_TOKEN = "key_token"
+        private val KEY_ID = "key_id"
         private val KEY_NAME = "key_name"
         private val KEY_EMAIL = "key_email"
         private val KEY_WALLET = "key_wallet"

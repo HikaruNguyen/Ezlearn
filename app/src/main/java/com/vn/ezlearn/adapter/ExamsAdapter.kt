@@ -40,7 +40,7 @@ class ExamsAdapter(context: Context, list: MutableList<ContentByCategory>) :
                 viewDataBinding.setVariable(BR.itemExamViewModel,
                         ItemExamViewModel(mContext, list[position].exam))
                 viewDataBinding.root.setOnClickListener {
-                    if (!UserConfig.getInstance(mContext).token.isEmpty()) {
+                    if (UserConfig.getInstance(mContext).isLogined()) {
                         val intent = Intent(mContext, TestActivity::class.java)
                         with(intent) {
                             putExtra(TestActivity.KEY_ID, list[position].exam?.id)
@@ -59,7 +59,7 @@ class ExamsAdapter(context: Context, list: MutableList<ContentByCategory>) :
                 viewDataBinding.itemDocumentViewModel = itemExamViewModel
                 if (list[position].document!!.isDownloaded) {
                     viewDataBinding.root.setOnClickListener {
-                        if (!UserConfig.getInstance(mContext).token.isEmpty()) {
+                        if (UserConfig.getInstance(mContext).isLogined()) {
                             if (list[position].document!!.isDownloaded) {
                                 var filePath = Environment.getExternalStorageDirectory().toString() + "/ezlearn"
                                 filePath += "/" + list[position].document?.name_en?.replace(" ", "") + ".doc"

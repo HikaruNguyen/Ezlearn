@@ -69,7 +69,7 @@ class MainActivity : AppCompatActivity(), NavigationItemSelected {
                 mainBinding.drawerLayout.closeDrawer(GravityCompat.START)
             }
             val intent: Intent
-            if (!UserConfig.getInstance(this@MainActivity).token.isEmpty()) {
+            if (UserConfig.getInstance(this@MainActivity).isLogined()) {
                 intent = Intent(this@MainActivity, UserProfile::class.java)
                 startActivity(intent)
             } else {
@@ -88,28 +88,24 @@ class MainActivity : AppCompatActivity(), NavigationItemSelected {
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(object : Subscriber<CommonResult>() {
-                    override fun onCompleted() {
-                        if (commonResultLogout!!.success) {
-                            if (commonResultLogout!!.data != null
-                                    && !commonResultLogout!!.data!!.message.isEmpty()) {
-                                Toast.makeText(this@MainActivity,
-                                        commonResultLogout!!.data!!.message,
-                                        Toast.LENGTH_SHORT).show()
-                            } else {
-                                Toast.makeText(this@MainActivity, getString(R.string.logout_success),
-                                        Toast.LENGTH_SHORT).show()
-                            }
-                            UserConfig.getInstance(this@MainActivity).clearData()
-                            mainViewModel.updateProfile()
+                    override fun onCompleted() = if (commonResultLogout!!.success) {
+                        if (commonResultLogout!!.data != null
+                                && !commonResultLogout!!.data!!.message.isEmpty()) {
+                            Toast.makeText(this@MainActivity,
+                                    commonResultLogout!!.data!!.message,
+                                    Toast.LENGTH_SHORT).show()
                         } else {
-                            Toast.makeText(this@MainActivity, getString(R.string.error_connect),
+                            Toast.makeText(this@MainActivity, getString(R.string.logout_success),
                                     Toast.LENGTH_SHORT).show()
                         }
+                        UserConfig.getInstance(this@MainActivity).clearData()
+                        mainViewModel.updateProfile()
+                    } else {
+                        Toast.makeText(this@MainActivity, getString(R.string.error_connect),
+                                Toast.LENGTH_SHORT).show()
                     }
 
-                    override fun onError(e: Throwable) {
-
-                    }
+                    override fun onError(e: Throwable) = Unit
 
                     override fun onNext(commonResult: CommonResult?) {
                         if (commonResult != null) {

@@ -25,7 +25,6 @@ android {
 
             buildConfigField "String", "ENDPOINT", "\"http://api.ezlearn.com.vn/\""
             buildConfigField "String", "ENDPOINT_DOWNLOAD", "\"http://be.ezlearn.com.vn/\""
-            buildConfigField "String", "RECEIVER", "\"tranthuha280385@gmail.com\""
             buildConfigField "String", "MERCHANT_ID", "\"51059\""
             buildConfigField "String", "MERCHANT_PASS", "\"f933062dc1f7bccc23a2915f4fee640a\""
         }
@@ -33,7 +32,6 @@ android {
         debug {
             buildConfigField "String", "ENDPOINT", "\"http://api.ezlearn.com.vn/\""
             buildConfigField "String", "ENDPOINT_DOWNLOAD", "\"http://be.ezlearn.com.vn/\""
-            buildConfigField "String", "RECEIVER", "\"tranthuha280385@gmail.com\""
             buildConfigField "String", "MERCHANT_ID", "\"51059\""
             buildConfigField "String", "MERCHANT_PASS", "\"f933062dc1f7bccc23a2915f4fee640a\""
         }

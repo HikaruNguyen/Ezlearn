@@ -100,7 +100,7 @@ class HomeAdapter(context: Context, list: MutableList<HomeObject>) :
             with(itemHomeExamsBinding) {
                 this@with.itemExamViewModel = itemExamViewModel
                 lnExam.setOnClickListener {
-                    if (!UserConfig.getInstance(mContext).token.isEmpty()) {
+                    if (UserConfig.getInstance(mContext).isLogined()) {
                         val intent = Intent(mContext, TestActivity::class.java)
                         if (list[position].exam != null) {
                             with(intent){

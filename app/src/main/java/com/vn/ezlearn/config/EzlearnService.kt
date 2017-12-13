@@ -8,6 +8,7 @@ import com.vn.ezlearn.models.*
 import com.vn.ezlearn.network.RxErrorHandlingCallAdapterFactory
 import okhttp3.Cache
 import okhttp3.OkHttpClient
+import okhttp3.ResponseBody
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -79,6 +80,21 @@ interface EzlearnService {
     @GET("index.php?r=site/get-list-package")
     fun getListPackage(): Observable<BaseListResult<Package>>
 
+    @FormUrlEncoded
+    @POST("https://www.nganluong.vn/mobile_card.api.post.v2.php")
+    fun paymentByScartchCard(@Field("Func") Func: String,
+                             @Field("version") version: String,
+                             @Field("merchant_id") merchant_id: String,
+                             @Field("merchant_account") merchant_account: String,
+                             @Field("merchant_password") merchant_password: String,
+                             @Field("pin_card") pin_card: String,
+                             @Field("card_serial") card_serial: String,
+                             @Field("type_card") type_card: String,
+                             @Field("ref_code") ref_code: String,
+                             @Field("client_fullname") client_fullname: String,
+                             @Field("client_email") client_email: String,
+                             @Field("client_mobile") client_mobile: String): Observable<ResponseBody>
+
     object Factory {
 
         fun create(context: Context): EzlearnService {
@@ -105,7 +121,7 @@ interface EzlearnService {
             with(httpClient) {
                 addInterceptor { chain ->
                     val builder = chain.request().newBuilder()
-                    if (!UserConfig.getInstance(context).token.isEmpty()) {
+                    if (UserConfig.getInstance(context).isLogined()) {
                         builder.addHeader("Authorization", "Bearer "
                                 + UserConfig.getInstance(context).token)
                     }

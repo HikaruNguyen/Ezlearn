@@ -89,6 +89,8 @@ class LoginActivity : BaseActivity() {
                                         mLoginResult.data!!.access_token!!
                                 UserConfig.getInstance(this@LoginActivity).name =
                                         mLoginResult.data!!.display_name!!
+                                UserConfig.getInstance(this@LoginActivity).id =
+                                        mLoginResult.data!!.id!!
                                 getUserProfile()
                             } else if (mLoginResult.data != null) {
                                 if (!mLoginResult.data!!.message?.isEmpty()!!) {
