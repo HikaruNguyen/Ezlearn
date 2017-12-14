@@ -8,6 +8,7 @@ import com.vn.ezlearn.adapter.ViewPagerAdapter
 import com.vn.ezlearn.databinding.ActivityPaymentBinding
 import com.vn.ezlearn.fragment.PackageFragment
 import com.vn.ezlearn.fragment.PaymentByScratchCardsFragment
+import com.vn.ezlearn.fragment.PaymenyByBankFragment
 
 class PaymentActivity : BaseActivity() {
     private lateinit var paymentBinding: ActivityPaymentBinding
@@ -34,7 +35,7 @@ class PaymentActivity : BaseActivity() {
         fragmentList.add(PaymentByScratchCardsFragment())
 
         fragmentListTitle.add(getString(R.string.payment_by_bank))
-        fragmentList.add(PaymentByScratchCardsFragment())
+        fragmentList.add(PaymenyByBankFragment())
 
 
 
