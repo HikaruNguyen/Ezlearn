@@ -56,7 +56,7 @@ class CustomWebView : WebView {
             return true
         }
 
-        override fun onPageStarted(view: WebView, url: String, favicon: Bitmap) {
+        override fun onPageStarted(view: WebView?, url: String?, favicon: Bitmap?) {
             super.onPageStarted(view, url, favicon)
             //            prbLoading.setVisibility(View.VISIBLE);
             if (progressWheel != null) {

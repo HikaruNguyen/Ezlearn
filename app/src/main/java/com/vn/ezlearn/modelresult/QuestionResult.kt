@@ -12,5 +12,6 @@ class QuestionResult {
 
     class QuestionData {
         var data: List<Question>? = null
+        var message: String? = null
     }
 }

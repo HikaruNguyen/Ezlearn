@@ -14,6 +14,7 @@ import android.text.Html
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.vn.ezlearn.R
@@ -119,84 +120,100 @@ class TestActivity : BaseActivity(), ChangeQuestionListener, OnCheckAnswerListen
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(object : Subscriber<QuestionResult>() {
-                    override fun onCompleted() =
-                            if (mQuestionResult!!.success && mQuestionResult!!.data != null
-                                    && mQuestionResult!!.data!!.data != null
-                                    && mQuestionResult!!.data!!.data!!.isNotEmpty()) {
-                                for (question in mQuestionResult!!.data!!.data!!) {
-                                    if (question.region != null) {
-                                        val point: Float? = if (question.region!!.number_question != 0) {
-                                            question.region!!.total_mark * 0.1f /
-                                                    question.region!!.number_question
-                                        } else {
-                                            0f
-                                        }
-                                        question.type?.let {
-                                            when (it) {
-                                                Question.TYPE_QUESTION -> {
-                                                    question.question?.let {
-                                                        if (it.isNotEmpty()) {
-                                                            it.filter {
-                                                                it.id != null
-                                                            }.map {
-                                                                MyContent(
-                                                                        it.id!!,
-                                                                        question.region!!,
-                                                                        question.type, it,
-                                                                        point, isReview!!)
-                                                            }.forEach {
-                                                                contentList.add(it)
-                                                            }
-                                                        }
-                                                    }
-                                                }
-                                                Question.TYPE_READING -> {
-                                                    question.reading?.let {
-                                                        if (it.isNotEmpty()) {
-                                                            it.filter {
-                                                                it.questions != null
-                                                                        && it.questions!!.isNotEmpty()
-                                                            }.forEach { reading ->
-                                                                reading.questions!!
-                                                                        .map {
-                                                                            it.file_audio = reading.file_audio
-                                                                            MyContent(
-                                                                                    it.id!!,
-                                                                                    question.region!!,
-                                                                                    question.type, it,
-                                                                                    it.content,
-                                                                                    point, isReview!!)
-                                                                        }.forEach {
+                    override fun onCompleted() {
+                        mQuestionResult?.let {
+                            if (it.success) {
+                                if (it.data != null && it.data!!.data != null
+                                        && it.data!!.data!!.isNotEmpty()) {
+                                    testViewModel.hideErrorView()
+                                    for (question in it.data!!.data!!) {
+                                        if (question.region != null) {
+                                            val point: Float? = if (question.region!!.number_question != 0) {
+                                                question.region!!.total_mark * 0.1f /
+                                                        question.region!!.number_question
+                                            } else {
+                                                0f
+                                            }
+                                            question.type?.let {
+                                                when (it) {
+                                                    Question.TYPE_QUESTION -> {
+                                                        question.question?.let {
+                                                            if (it.isNotEmpty()) {
+                                                                it.filter {
+                                                                    it.id != null
+                                                                }.map {
+                                                                    MyContent(
+                                                                            it.id!!,
+                                                                            question.region!!,
+                                                                            question.type, it,
+                                                                            point, isReview!!)
+                                                                }.forEach {
                                                                     contentList.add(it)
                                                                 }
                                                             }
                                                         }
                                                     }
+                                                    Question.TYPE_READING -> {
+                                                        question.reading?.let {
+                                                            if (it.isNotEmpty()) {
+                                                                it.filter {
+                                                                    it.questions != null
+                                                                            && it.questions!!.isNotEmpty()
+                                                                }.forEach { reading ->
+                                                                    reading.questions!!
+                                                                            .map {
+                                                                                it.file_audio = reading.file_audio
+                                                                                MyContent(
+                                                                                        it.id!!,
+                                                                                        question.region!!,
+                                                                                        question.type, it,
+                                                                                        it.content,
+                                                                                        point, isReview!!)
+                                                                            }.forEach {
+                                                                        contentList.add(it)
+                                                                    }
+                                                                }
+                                                            }
+                                                        }
 
-                                                }
-                                                else -> {
+                                                    }
+                                                    else -> {
 
+                                                    }
                                                 }
                                             }
                                         }
                                     }
+                                    list.add(QuestionObject(contentList))
+                                    list.add(0, QuestionObject(
+                                            contentList[0].region.region_code
+                                                    + " " + contentList[0].region.description,
+                                            if (contentList[0].content.file_audio.isNullOrEmpty()) {
+                                                ""
+                                            } else {
+                                                contentList[0].content.file_audio!!
+                                            }))
+                                    testViewModel.updatePosition(0, contentList.size)
+                                    checkReview()
+                                    adapter.addAll(list)
+                                    countDown()
+                                } else {
+                                    testViewModel.visiableError = View.VISIBLE
+                                    testViewModel.setErrorNodata()
                                 }
-                                list.add(QuestionObject(contentList))
-                                list.add(0, QuestionObject(
-                                        contentList[0].region.region_code
-                                                + " " + contentList[0].region.description,
-                                        if (contentList[0].content.file_audio.isNullOrEmpty()) {
-                                            ""
-                                        } else {
-                                            contentList[0].content.file_audio!!
-                                        }))
-                                testViewModel.updatePosition(0, contentList.size)
-                                checkReview()
-                                adapter.addAll(list)
-                                countDown()
-                            } else {
 
+                            } else {
+                                testViewModel.visiableError = View.VISIBLE
+                                testViewModel.setErrorMesssage(if (it.data == null || it.data!!.message.isNullOrEmpty()) {
+                                    getString(R.string.error_progress)
+                                } else {
+                                    it.data?.message!!
+                                })
                             }
+                        }
+
+                    }
+
 
                     override fun onError(e: Throwable) {
                         if (isAttach && progressDialog!!.isShowing) {

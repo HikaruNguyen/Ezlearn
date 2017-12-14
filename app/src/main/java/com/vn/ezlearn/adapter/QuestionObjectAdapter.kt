@@ -123,7 +123,8 @@ class QuestionObjectAdapter(private val activity: Activity, list: MutableList<Qu
 
 
     fun destroyAudio() {
-        itemQuestionPartBinding!!.webviewAudio.destroy()
+        if (itemQuestionPartBinding != null && itemQuestionPartBinding!!.webviewAudio != null)
+            itemQuestionPartBinding!!.webviewAudio.destroy()
 
     }
 

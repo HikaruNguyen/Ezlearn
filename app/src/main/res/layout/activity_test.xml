@@ -40,68 +40,55 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:layout_behavior="@string/appbar_scrolling_view_behavior">
-
-            <!--<LinearLayout-->
-                <!--android:id="@+id/lnPart"-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:orientation="vertical"-->
-                <!--android:visibility="gone">-->
-
-                <!--<TextView-->
-                    <!--android:id="@+id/tvPart"-->
-                    <!--android:layout_width="match_parent"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:paddingBottom="@dimen/margin_10dp"-->
-                    <!--android:paddingLeft="@dimen/margin_10dp"-->
-                    <!--android:paddingRight="@dimen/margin_10dp"-->
-                    <!--android:paddingTop="@dimen/margin_10dp"-->
-                    <!--android:text="Part 10: Read the following passage and mark the letter A, B, C, or D on your answer sheet to indicate the correct word or phrase that best fits each of the numbered blanks"-->
-                    <!--android:textColor="@color/text_color_content"-->
-                    <!--android:textStyle="bold" />-->
-
-                <!--<View-->
-                    <!--android:layout_width="match_parent"-->
-                    <!--android:layout_height="1dp"-->
-                    <!--android:background="@color/bg_main" />-->
-
-                <com.vn.ezlearn.widgets.CustomWebViewiew-->
-                    <!--android:id="@+id/webview_audio"-->
-                    <!--android:layout_width="match_parent"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:layout_margin="@dimen/margin_5dp" />-->
-
-                <!--<View-->
-                    <!--android:layout_width="match_parent"-->
-                    <!--android:layout_height="1dp"-->
-                    <!--android:background="@color/bg_main" />-->
-            <!--</LinearLayout>-->
-
-            <com.vn.ezlearn.widgets.CRecyclerView
-                android:id="@+id/rvList"
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+                android:layout_height="match_parent">
+                <com.vn.ezlearn.widgets.CRecyclerView
+                    android:id="@+id/rvList"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
 
-            <ImageView
-                android:id="@+id/imgPre"
+                <ImageView
+                    android:id="@+id/imgPre"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_margin="@dimen/margin_5dp"
+                    android:src="@mipmap/ic_pre"
+                    android:tint="@color/first_slide_background2"
+                    android:visibility="@{testViewModel.visiablePre}" />
+
+                <ImageView
+                    android:id="@+id/imgNext"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_margin="@dimen/margin_5dp"
+                    android:src="@mipmap/ic_next"
+                    android:tint="@color/first_slide_background2"
+                    android:visibility="@{testViewModel.visiableNext}" />
+            </RelativeLayout>
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_margin="@dimen/margin_5dp"
-                android:src="@mipmap/ic_pre"
-                android:tint="@color/first_slide_background2"
-                android:visibility="@{testViewModel.visiablePre}" />
+                android:layout_centerInParent="true"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:visibility="@{testViewModel.visiableError}">
 
-            <ImageView
-                android:id="@+id/imgNext"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:layout_margin="@dimen/margin_5dp"
-                android:src="@mipmap/ic_next"
-                android:tint="@color/first_slide_background2"
-                android:visibility="@{testViewModel.visiableNext}" />
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/oops" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_30dp"
+                    android:text="@{testViewModel.messageError}"
+                    android:textSize="@dimen/text_size_16sp" />
+            </LinearLayout>
         </RelativeLayout>
 
     </android.support.design.widget.CoordinatorLayout>
