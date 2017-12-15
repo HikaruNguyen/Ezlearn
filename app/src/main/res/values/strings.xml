@@ -3,6 +3,9 @@
     <string name="app_description">Cổng luyện thi Tiếng anh trực tuyến</string>
 
     <!--Common-->
+    <string name="success">Thành công</string>
+    <string name="error">Lỗi</string>
+    <string name="error_code">Lỗi %1$s: </string>
     <string name="cancel">Thoát</string>
     <string name="updating">Đang cập nhật</string>
     <string name="ok">OK</string>

@@ -1,135 +1,143 @@
 <layout>
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
-        android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/bg_main"
-        android:orientation="vertical"
-        android:padding="@dimen/margin_10dp"
-        tools:context="com.vn.ezlearn.fragment.PaymentByScratchCardsFragment">
+        android:layout_width="match_parent"
+        android:background="@color/bg_main">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="@dimen/image_size_40dp">
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="@dimen/margin_10dp"
+            tools:context="com.vn.ezlearn.fragment.PaymentByScratchCardsFragment">
 
             <LinearLayout
-                android:layout_width="0dip"
-                android:layout_height="match_parent"
-                android:layout_weight="1">
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/image_size_40dp">
 
-                <ImageView
-                    android:layout_width="match_parent"
+                <LinearLayout
+                    android:layout_width="0dip"
                     android:layout_height="match_parent"
-                    android:scaleType="center"
-                    android:src="@mipmap/viettel" />
+                    android:layout_weight="1">
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:scaleType="center"
+                        android:src="@mipmap/viettel" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dip"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:scaleType="center"
+                        android:src="@mipmap/vinaphone" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dip"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:scaleType="center"
+                        android:src="@mipmap/mobifone" />
+                </LinearLayout>
             </LinearLayout>
 
-            <LinearLayout
-                android:layout_width="0dip"
-                android:layout_height="match_parent"
-                android:layout_weight="1">
+            <RadioGroup
+                android:id="@+id/rgCard"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
 
-                <ImageView
+                <RadioButton
+                    android:id="@+id/ViettelButton"
+                    android:layout_width="0dip"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:checked="true"
+                    android:text="@string/viettel"
+                    android:textColor="@color/text_black"
+                    android:textSize="@dimen/text_size_12sp" />
+
+                <RadioButton
+                    android:id="@+id/VinaPhoneButton"
+                    android:layout_width="0dip"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/vinaPhone"
+                    android:textColor="@color/text_black"
+                    android:textSize="@dimen/text_size_12sp" />
+
+                <RadioButton
+                    android:id="@+id/MobiFoneButton"
+                    android:layout_width="0dip"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/mobiFone"
+                    android:textColor="@color/text_black"
+                    android:textSize="@dimen/text_size_12sp" />
+            </RadioGroup>
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/tplCardCode"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_10dp">
+
+                <android.support.design.widget.TextInputEditText
+                    android:id="@+id/cardcode"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:scaleType="center"
-                    android:src="@mipmap/vinaphone" />
-            </LinearLayout>
+                    android:layout_height="wrap_content"
+                    android:hint="@string/cardcode"
+                    android:inputType="number"
+                    android:maxLines="1"
+                    android:singleLine="true"
+                    android:textColor="@color/text_black"
+                    android:textSize="@dimen/text_size_14sp" />
 
-            <LinearLayout
-                android:layout_width="0dip"
-                android:layout_height="match_parent"
-                android:layout_weight="1">
+                <requestFocus />
+            </android.support.design.widget.TextInputLayout>
 
-                <ImageView
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/tplCardserial"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_10dp">
+
+                <android.support.design.widget.TextInputEditText
+                    android:id="@+id/cardserial"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:scaleType="center"
-                    android:src="@mipmap/mobifone" />
-            </LinearLayout>
+                    android:layout_height="wrap_content"
+                    android:hint="@string/cardserial"
+                    android:maxLines="1"
+                    android:inputType="number"
+                    android:singleLine="true"
+                    android:textColor="@color/text_black"
+                    android:textSize="@dimen/text_size_14sp" />
+            </android.support.design.widget.TextInputLayout>
+
+            <Button
+                android:id="@+id/btnPayment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_20dp"
+                android:background="@drawable/bg_button"
+                android:text="@string/paynow"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_size_12sp" />
+
         </LinearLayout>
+    </ScrollView>
 
-        <RadioGroup
-            android:id="@+id/rgCard"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <RadioButton
-                android:id="@+id/ViettelButton"
-                android:layout_width="0dip"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:checked="true"
-                android:text="@string/viettel"
-                android:textColor="@color/text_black"
-                android:textSize="@dimen/text_size_12sp" />
-
-            <RadioButton
-                android:id="@+id/VinaPhoneButton"
-                android:layout_width="0dip"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/vinaPhone"
-                android:textColor="@color/text_black"
-                android:textSize="@dimen/text_size_12sp" />
-
-            <RadioButton
-                android:id="@+id/MobiFoneButton"
-                android:layout_width="0dip"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/mobiFone"
-                android:textColor="@color/text_black"
-                android:textSize="@dimen/text_size_12sp" />
-        </RadioGroup>
-
-        <android.support.design.widget.TextInputLayout
-            android:id="@+id/tplCardCode"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_10dp">
-
-            <android.support.design.widget.TextInputEditText
-                android:id="@+id/cardcode"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/cardcode"
-                android:maxLines="1"
-                android:singleLine="true"
-                android:textColor="@color/text_black"
-                android:textSize="@dimen/text_size_14sp" />
-
-            <requestFocus />
-        </android.support.design.widget.TextInputLayout>
-
-        <android.support.design.widget.TextInputLayout
-            android:id="@+id/tplCardserial"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_10dp">
-
-            <android.support.design.widget.TextInputEditText
-                android:id="@+id/cardserial"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/cardserial"
-                android:maxLines="1"
-                android:singleLine="true"
-                android:textColor="@color/text_black"
-                android:textSize="@dimen/text_size_14sp" />
-        </android.support.design.widget.TextInputLayout>
-
-        <Button
-            android:id="@+id/btnPayment"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_20dp"
-            android:background="@drawable/bg_button"
-            android:text="@string/paynow"
-            android:textColor="@color/white"
-            android:textSize="@dimen/text_size_12sp" />
-
-    </LinearLayout>
 </layout>

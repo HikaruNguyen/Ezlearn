@@ -16,10 +16,11 @@ import com.vn.ezlearn.BuildConfig
 import com.vn.ezlearn.R
 import com.vn.ezlearn.activity.MyApplication
 import com.vn.ezlearn.activity.PaymentActivity
-import com.vn.ezlearn.config.DefineCodeCard
 import com.vn.ezlearn.config.EzlearnService
 import com.vn.ezlearn.config.UserConfig
 import com.vn.ezlearn.databinding.FragmentPaymentByScratchCardsBinding
+import com.vn.ezlearn.nganluong.DefineCodeCard
+import com.vn.ezlearn.nganluong.ErrorCodeCard
 import com.vn.ezlearn.utils.AppUtils
 import okhttp3.ResponseBody
 import rx.Subscriber
@@ -60,20 +61,6 @@ class PaymentByScratchCardsFragment : Fragment() {
                 val intent = Intent(activity, PaymentActivity::class.java)
                 startActivity(intent)
             }
-
-            //                CLog.i("log", cardcode.text.toString())
-//                CLog.i("log", cardserial.text.toString())
-//                CLog.i("Log", selected_card_type)
-//
-//                val merchant_id = BuildConfig.MERCHANT_ID
-//                val password = BuildConfig.MERCHANT_PASS
-//                val mail = BuildConfig.RECEIVER
-//                val merchant_password = AppUtils.md5(merchant_id + "|" + password)
-//                val q = "func=CardCharge&version=2.0&merchant_id=" + merchant_id + "&merchant_account=" + mail + "&merchant_password=" + merchant_password +
-//                        "&pin_card=" + cardcode.getText().toString() + "&card_serial=" + cardserial.text.toString() + "&client_fullname=Nguyen%20Duc%20Manh&client_email=diendc@gmail.com&client_mobile=0904515105"
-//                val URL = "https://www.nganluong.vn/mobile_card.api.post.v2.php?" + q
-//                Log.i("log", URL)
-//                getdata(URL)
         }
         event()
         return paymentByScratchCardsBinding.root
@@ -96,25 +83,37 @@ class PaymentByScratchCardsFragment : Fragment() {
                         paymentByScratchCardsBinding.btnPayment.isEnabled = true
                         if (paymentResult != null && !paymentResult!!.isEmpty()) {
                             val params = paymentResult?.split("\\|".toRegex())?.dropLastWhile { it.isEmpty() }?.toTypedArray()!!
-                            val error_code = params[0]
-                            Log.i("log", error_code)
-                            if (Integer.parseInt(error_code) == 0) {
-                                val card_amount = params[10]
-                                val builder1 = AlertDialog.Builder(activity)
-                                builder1.setMessage("Thành công gía trị thẻ nạp " + card_amount)
-                                builder1.setCancelable(true)
-                                builder1.setPositiveButton("OK",
-                                        { dialog, _ -> dialog.cancel() })
-                                val alert11 = builder1.create()
-                                alert11.show()
-                            } else {
-                                val builder1 = AlertDialog.Builder(activity)
-                                builder1.setMessage("Lỗi - mã lỗi  " + error_code)
-                                builder1.setCancelable(true)
-                                builder1.setPositiveButton("OK",
-                                        { dialog, _ -> dialog.cancel() })
-                                val alert11 = builder1.create()
-                                alert11.show()
+                            val errorCode = params[0]
+                            Log.i("log", errorCode)
+//                            if (Integer.parseInt(errorCode) == 0) {
+//                                val cardAmount = params[10]
+//                                val builder1 = AlertDialog.Builder(activity)
+//                                builder1.setMessage("Thành công gía trị thẻ nạp " + cardAmount)
+//                                builder1.setCancelable(true)
+//                                builder1.setPositiveButton("OK",
+//                                        { dialog, _ -> dialog.cancel() })
+//                                val alert11 = builder1.create()
+//                                alert11.show()
+//                            } else {
+//                                val builder1 = AlertDialog.Builder(activity)
+//                                builder1.setMessage("Lỗi - mã lỗi  " + errorCode)
+//                                builder1.setCancelable(true)
+//                                builder1.setPositiveButton("OK",
+//                                        { dialog, _ -> dialog.cancel() })
+//                                val alert11 = builder1.create()
+//                                alert11.show()
+//                            }
+                            val builder = AlertDialog.Builder(activity)
+                            builder.apply {
+                                setTitle(if (Integer.parseInt(errorCode) == 0) {
+                                    getString(R.string.download_success)
+                                } else {
+                                    getString(R.string.error_code, errorCode)
+                                })
+                                setMessage(ErrorCodeCard.instance.errorCode[Integer.parseInt(errorCode)])
+                                setCancelable(false)
+                                setPositiveButton(getString(R.string.ok), { dialog, _ -> dialog.dismiss() })
+                                show()
                             }
                         }
                     }
