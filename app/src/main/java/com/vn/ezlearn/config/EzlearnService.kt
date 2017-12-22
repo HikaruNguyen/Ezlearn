@@ -6,6 +6,8 @@ import com.vn.ezlearn.BuildConfig
 import com.vn.ezlearn.modelresult.*
 import com.vn.ezlearn.models.*
 import com.vn.ezlearn.network.RxErrorHandlingCallAdapterFactory
+import com.vn.ezlearn.nganluong.bank.modelResult.CheckOrderResult
+import com.vn.ezlearn.nganluong.bank.modelResult.SendOrderResult
 import okhttp3.Cache
 import okhttp3.OkHttpClient
 import okhttp3.ResponseBody
@@ -94,6 +96,33 @@ interface EzlearnService {
                              @Field("client_fullname") client_fullname: String,
                              @Field("client_email") client_email: String,
                              @Field("client_mobile") client_mobile: String): Observable<ResponseBody>
+
+    @FormUrlEncoded
+    @POST("https://www.nganluong.vn/mobile_checkout_api_post.php")
+    fun sendOderRequest(@Field("func") Func: String,
+                        @Field("version") version: String,
+                        @Field("merchant_id") merchant_id: String,
+                        @Field("merchant_account") merchant_account: String,
+                        @Field("order_code") order_code: String,
+                        @Field("total_amount") total_amount: String,
+                        @Field("currency") currency: String,
+                        @Field("language") language: String,
+                        @Field("return_url") return_url: String,
+                        @Field("cancel_url") cancel_url: String,
+                        @Field("notify_url") notify_url: String,
+                        @Field("buyer_fullname") buyer_fullname: String,
+                        @Field("buyer_email") buyer_email: String,
+                        @Field("buyer_mobile") buyer_mobile: String,
+                        @Field("buyer_address") buyer_address: String,
+                        @Field("checksum") checksum: String): Observable<SendOrderResult>
+
+    @FormUrlEncoded
+    @POST("https://www.nganluong.vn/mobile_checkout_api_post.php")
+    fun checkOderRequest(@Field("func") Func: String,
+                        @Field("version") version: String,
+                        @Field("merchant_id") merchant_id: String,
+                        @Field("token_code") token_code: String,
+                        @Field("checksum") checksum: String): Observable<CheckOrderResult>
 
     object Factory {
 

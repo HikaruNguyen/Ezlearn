@@ -20,7 +20,7 @@ import com.vn.ezlearn.config.EzlearnService
 import com.vn.ezlearn.config.UserConfig
 import com.vn.ezlearn.databinding.FragmentPaymentByScratchCardsBinding
 import com.vn.ezlearn.nganluong.DefineCodeCard
-import com.vn.ezlearn.nganluong.ErrorCodeCard
+import com.vn.ezlearn.nganluong.ErrorCodePayment
 import com.vn.ezlearn.utils.AppUtils
 import okhttp3.ResponseBody
 import rx.Subscriber
@@ -42,7 +42,7 @@ class PaymentByScratchCardsFragment : Fragment() {
     private lateinit var paymentByScratchCardsBinding: FragmentPaymentByScratchCardsBinding
     private lateinit var apiService: EzlearnService
     private var mSubscription: Subscription? = null
-    private var selected_card_type = DefineCodeCard.VIETTEL
+    private var selectedCardType = DefineCodeCard.VIETTEL
     private var paymentResult: String? = null
     private lateinit var progressLoading: ProgressDialog
     private var isAttach = true
@@ -73,7 +73,7 @@ class PaymentByScratchCardsFragment : Fragment() {
                 BuildConfig.MERCHANT_ID, DefineCodeCard.RECEIVER,
                 AppUtils.md5(BuildConfig.MERCHANT_ID + "|" + BuildConfig.MERCHANT_PASS),
                 paymentByScratchCardsBinding.cardcode.text.toString(),
-                paymentByScratchCardsBinding.cardserial.text.toString(), selected_card_type,
+                paymentByScratchCardsBinding.cardserial.text.toString(), selectedCardType,
                 UserConfig.getInstance(activity).id.toString(), UserConfig.getInstance(activity).name,
                 UserConfig.getInstance(activity).email, "")
                 .subscribeOn(Schedulers.newThread())
@@ -85,32 +85,15 @@ class PaymentByScratchCardsFragment : Fragment() {
                             val params = paymentResult?.split("\\|".toRegex())?.dropLastWhile { it.isEmpty() }?.toTypedArray()!!
                             val errorCode = params[0]
                             Log.i("log", errorCode)
-//                            if (Integer.parseInt(errorCode) == 0) {
-//                                val cardAmount = params[10]
-//                                val builder1 = AlertDialog.Builder(activity)
-//                                builder1.setMessage("Thành công gía trị thẻ nạp " + cardAmount)
-//                                builder1.setCancelable(true)
-//                                builder1.setPositiveButton("OK",
-//                                        { dialog, _ -> dialog.cancel() })
-//                                val alert11 = builder1.create()
-//                                alert11.show()
-//                            } else {
-//                                val builder1 = AlertDialog.Builder(activity)
-//                                builder1.setMessage("Lỗi - mã lỗi  " + errorCode)
-//                                builder1.setCancelable(true)
-//                                builder1.setPositiveButton("OK",
-//                                        { dialog, _ -> dialog.cancel() })
-//                                val alert11 = builder1.create()
-//                                alert11.show()
-//                            }
                             val builder = AlertDialog.Builder(activity)
                             builder.apply {
                                 setTitle(if (Integer.parseInt(errorCode) == 0) {
-                                    getString(R.string.download_success)
+                                    getString(R.string.success)
                                 } else {
                                     getString(R.string.error_code, errorCode)
                                 })
-                                setMessage(ErrorCodeCard.instance.errorCode[Integer.parseInt(errorCode)])
+                                setMessage(ErrorCodePayment.getInstance(activity)
+                                        .listErrorCodeCard.getValue(Integer.parseInt(errorCode)))
                                 setCancelable(false)
                                 setPositiveButton(getString(R.string.ok), { dialog, _ -> dialog.dismiss() })
                                 show()
@@ -141,11 +124,11 @@ class PaymentByScratchCardsFragment : Fragment() {
         paymentByScratchCardsBinding.rgCard.setOnCheckedChangeListener { group, checkedId ->
             when (checkedId) {
                 R.id.ViettelButton ->
-                    selected_card_type = DefineCodeCard.VIETTEL
+                    selectedCardType = DefineCodeCard.VIETTEL
                 R.id.VinaPhoneButton ->
-                    selected_card_type = DefineCodeCard.VINAPHONE
+                    selectedCardType = DefineCodeCard.VINAPHONE
                 R.id.MobiFoneButton ->
-                    selected_card_type = DefineCodeCard.MOBIFONE
+                    selectedCardType = DefineCodeCard.MOBIFONE
             }
         }
     }

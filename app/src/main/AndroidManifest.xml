@@ -57,6 +57,8 @@
         <activity
             android:name=".activity.PaymentActivity"
             android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".activity.CheckOutActivity" />
+        <activity android:name=".activity.CheckOrderActivity"></activity>
     </application>
 
 </manifest>

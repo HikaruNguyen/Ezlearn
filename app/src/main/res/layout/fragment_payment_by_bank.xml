@@ -1,0 +1,125 @@
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+
+    <ScrollView
+        android:id="@+id/activity_main_scrollView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/bg_main">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="10dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/txtNameOrder"
+                android:textColor="@color/text_black" />
+
+            <EditText
+                android:id="@+id/edFullName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:lines="1"
+                android:paddingLeft="8dp"
+                android:singleLine="true"
+                android:text="Nguyen Duc Manh"
+                android:textAllCaps="true"
+                android:textColor="@color/text_black" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:text="@string/txtAmount"
+                android:textColor="@color/text_black" />
+
+            <EditText
+                android:id="@+id/edAmount"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:inputType="number"
+                android:lines="1"
+                android:paddingLeft="8dp"
+                android:text="20000"
+                android:singleLine="true"
+                android:textColor="@color/text_black" />
+
+            <TextView
+
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:text="@string/txtEmail"
+                android:textColor="@color/text_black" />
+
+            <EditText
+                android:id="@+id/edEmail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:inputType="textEmailAddress"
+                android:lines="1"
+                android:paddingLeft="8dp"
+                android:text="Manh.it.it.it@gmail.com"
+                android:singleLine="true"
+                android:textColor="@color/text_black" />
+
+            <TextView
+
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:text="@string/txtMobile"
+                android:textColor="@color/text_black" />
+
+            <EditText
+                android:id="@+id/edPhoneNumber"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:inputType="phone"
+                android:lines="1"
+                android:paddingLeft="8dp"
+                android:text="01648447202"
+                android:singleLine="true"
+                android:textColor="@color/text_black" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:text="@string/txtAddress"
+                android:textColor="@color/text_black" />
+
+            <EditText
+                android:id="@+id/edAddress"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="HaNoi"
+                android:lines="1"
+                android:paddingLeft="8dp"
+                android:singleLine="true"
+                android:textColor="@color/text_black" />
+
+            <Button
+                android:id="@+id/btnSendOrder"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:background="@drawable/bg_button"
+                android:text="@string/txtSendOrder"
+                android:textAllCaps="true"
+                android:textColor="@color/white" />
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</layout>

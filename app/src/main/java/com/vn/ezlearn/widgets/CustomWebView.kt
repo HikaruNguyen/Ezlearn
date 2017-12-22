@@ -21,6 +21,9 @@ class CustomWebView : WebView {
 
     var position: Int = 0
 
+    var myWebViewClientListener: MyWebViewClientListener? = null
+
+
     constructor(context: Context) : super(context) {
         init()
     }
@@ -35,7 +38,7 @@ class CustomWebView : WebView {
 
     @SuppressLint("SetJavaScriptEnabled")
     private fun init() {
-        this.webViewClient = MyBrowser()
+        this.webViewClient = MyBrowser(myWebViewClientListener)
         val webSettings = this.settings
         webSettings.loadsImagesAutomatically = true
         webSettings.javaScriptEnabled = true
@@ -49,7 +52,7 @@ class CustomWebView : WebView {
 
     }
 
-    private inner class MyBrowser : WebViewClient() {
+    private inner class MyBrowser(var myWebViewClientListener: MyWebViewClientListener?) : WebViewClient() {
 
         override fun shouldOverrideUrlLoading(view: WebView, url: String): Boolean {
             view.loadUrl(url)
@@ -62,6 +65,9 @@ class CustomWebView : WebView {
             if (progressWheel != null) {
                 progressWheel!!.visibility = View.VISIBLE
             }
+            if (myWebViewClientListener != null) {
+                myWebViewClientListener?.onPageStarted(view, url, favicon)
+            }
         }
 
         override fun onPageFinished(view: WebView, url: String) {
@@ -69,9 +75,15 @@ class CustomWebView : WebView {
             if (progressWheel != null) {
                 progressWheel!!.visibility = View.GONE
             }
-
+            if (myWebViewClientListener != null) {
+                myWebViewClientListener?.onPageFinished(view, url)
+            }
         }
 
+    }
 
+    interface MyWebViewClientListener {
+        fun onPageStarted(view: WebView?, url: String?, favicon: Bitmap?)
+        fun onPageFinished(view: WebView, url: String)
     }
 }
