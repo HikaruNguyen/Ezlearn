@@ -5,5 +5,5 @@ package com.vn.ezlearn.interfaces
  */
 
 interface ChangeQuestionListener {
-    fun onChange(position: Int)
+    fun onChange(position: Int?)
 }

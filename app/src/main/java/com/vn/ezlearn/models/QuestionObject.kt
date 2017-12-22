@@ -11,7 +11,13 @@ class QuestionObject {
     var list: List<MyContent>? = null
     var type: Int = 0
 
-    constructor(part: String, fileAudio: String) {
+    constructor(part: String) {
+        this.part = part
+        this.fileAudio = null
+        this.type = TYPE_PART
+    }
+
+    constructor(part: String, fileAudio: String?) {
         this.part = part
         this.fileAudio = fileAudio
         this.type = TYPE_PART

@@ -314,19 +314,31 @@ class TestActivity : BaseActivity(), ChangeQuestionListener, OnCheckAnswerListen
         startActivityForResult(intent, ShowPointActivity.KEY_REQUEST)
     }
 
-    override fun onChange(position: Int) {
+    override fun onChange(position: Int?) {
         if (contentList.size > 0) {
             if (list.size > 0) {
-                val part = (contentList[position].region.region_code
+                val part = (contentList[position!!].region.region_code
                         + " " + contentList[0].region.description)
                 val audioFile = contentList[position].content.file_audio
-                if (!adapter.getItemByPosition(0).part.contentEquals(part)
-                        || !adapter.getItemByPosition(0).fileAudio!!.contentEquals(audioFile!!)) {
-                    adapter.setData(0, QuestionObject(contentList[position].region.region_code
-                            + " " + contentList[0].region.description, audioFile!!))
+                adapter.getItemByPosition(0).part.let {
+                    if (!it.contentEquals(part)
+                            || (audioFile != null
+                            && !adapter.getItemByPosition(0).fileAudio!!.contentEquals(audioFile))) {
+                        if (audioFile != null) {
+                            adapter.setData(0, QuestionObject(contentList[position].region.region_code
+                                    + " " + contentList[0].region.description, audioFile))
+                        } else {
+                            adapter.setData(0, QuestionObject(contentList[position].region.region_code
+                                    + " " + contentList[0].region.description))
+                        }
+
+                    }
                 }
+
             }
-            testViewModel.updatePosition(position, contentList.size)
+            if (position != null) {
+                testViewModel.updatePosition(position, contentList.size)
+            }
         }
 
     }
