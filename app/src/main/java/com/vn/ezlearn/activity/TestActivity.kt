@@ -156,21 +156,17 @@ class TestActivity : BaseActivity(), ChangeQuestionListener, OnCheckAnswerListen
                                                     Question.TYPE_READING -> {
                                                         question.reading?.let {
                                                             if (it.isNotEmpty()) {
-                                                                it.filter {
-                                                                    it.questions != null
-                                                                            && it.questions!!.isNotEmpty()
-                                                                }.forEach { reading ->
-                                                                    reading.questions!!
-                                                                            .map {
-                                                                                it.file_audio = reading.file_audio
-                                                                                MyContent(
-                                                                                        it.id!!,
-                                                                                        question.region!!,
-                                                                                        question.type, it,
-                                                                                        it.content,
-                                                                                        point, isReview!!)
-                                                                            }.forEach {
-                                                                        contentList.add(it)
+                                                                for (reading: Reading in it) {
+                                                                    if (reading.questions!!.isNotEmpty()) {
+                                                                        for (content: Content in reading.questions!!) {
+                                                                            content.file_audio = reading.file_audio
+                                                                            contentList.add(MyContent(
+                                                                                    content.id!!,
+                                                                                    question.region!!,
+                                                                                    question.type, content,
+                                                                                    reading.content,
+                                                                                    point, isReview!!))
+                                                                        }
                                                                     }
                                                                 }
                                                             }
@@ -185,14 +181,16 @@ class TestActivity : BaseActivity(), ChangeQuestionListener, OnCheckAnswerListen
                                         }
                                     }
                                     list.add(QuestionObject(contentList))
-                                    list.add(0, QuestionObject(
-                                            contentList[0].region.region_code
-                                                    + " " + contentList[0].region.description,
-                                            if (contentList[0].content.file_audio.isNullOrEmpty()) {
-                                                ""
-                                            } else {
-                                                contentList[0].content.file_audio!!
-                                            }))
+                                    if (contentList[0].content.file_audio.isNullOrEmpty()) {
+                                        list.add(0, QuestionObject(
+                                                contentList[0].region.region_code
+                                                        + " " + contentList[0].region.description))
+                                    } else {
+                                        list.add(0, QuestionObject(
+                                                contentList[0].region.region_code
+                                                        + " " + contentList[0].region.description,
+                                                contentList[0].content.file_audio!!))
+                                    }
                                     testViewModel.updatePosition(0, contentList.size)
                                     checkReview()
                                     adapter.addAll(list)
