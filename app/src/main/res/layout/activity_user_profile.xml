@@ -220,14 +220,315 @@
                 </LinearLayout>
             </android.support.v7.widget.CardView>
 
-            <android.support.v4.view.ViewPager
-                android:id="@+id/view_pager"
+            <!--<android.support.v4.view.ViewPager-->
+                <!--android:id="@+id/view_pager"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="match_parent"-->
+                <!--android:paddingTop="@dimen/margin_10dp"-->
+                <!--app:layout_behavior="@string/appbar_scrolling_view_behavior" />-->
+
+            <ScrollView
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:paddingTop="@dimen/margin_10dp"
-                app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+                app:layout_behavior="@string/appbar_scrolling_view_behavior"
+                android:layout_height="match_parent">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/bg_main"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@color/white"
+                            android:orientation="vertical"
+                            android:paddingBottom="@dimen/margin_10dp">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:padding="@dimen/margin_10dp"
+                                android:text="@string/user_profile"
+                                android:textColor="@color/text_black"
+                                android:textSize="@dimen/text_size_15sp"
+                                android:textStyle="bold" />
+
+                            <View
+                                android:layout_width="match_parent"
+                                android:layout_height="1dp"
+                                android:background="@color/grey_line" />
 
 
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                android:paddingLeft="@dimen/margin_10dp"
+                                android:paddingRight="@dimen/margin_10dp"
+                                android:paddingTop="@dimen/margin_10dp">
+
+                                <TextView
+                                    android:layout_width="0dip"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:text="@string/nick_name"
+                                    android:textColor="@color/text_black" />
+
+                                <TextView
+                                    android:layout_width="0dip"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="2"
+                                    android:enabled="false"
+                                    android:text="@{userMainViewModel.tvUsername}"
+                                    android:textColor="@color/text_color_content" />
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                android:paddingLeft="@dimen/margin_10dp"
+                                android:paddingRight="@dimen/margin_10dp"
+                                android:paddingTop="@dimen/margin_10dp">
+
+                                <TextView
+                                    android:layout_width="0dip"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:enabled="false"
+                                    android:text="@string/last_name"
+                                    android:textColor="@color/text_black" />
+
+                                <TextView
+                                    android:layout_width="0dip"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="2"
+                                    android:enabled="false"
+                                    android:text="@{userMainViewModel.tvFirstName}"
+                                    android:textColor="@color/text_color_content" />
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                android:paddingLeft="@dimen/margin_10dp"
+                                android:paddingRight="@dimen/margin_10dp"
+                                android:paddingTop="@dimen/margin_10dp">
+
+                                <TextView
+                                    android:layout_width="0dip"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:text="@string/first_name"
+                                    android:textColor="@color/text_black" />
+
+                                <TextView
+                                    android:layout_width="0dip"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="2"
+                                    android:enabled="false"
+                                    android:text="@{userMainViewModel.tvLastName}"
+                                    android:textColor="@color/text_color_content" />
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                android:paddingLeft="@dimen/margin_10dp"
+                                android:paddingRight="@dimen/margin_10dp"
+                                android:paddingTop="@dimen/margin_10dp">
+
+                                <TextView
+                                    android:layout_width="0dip"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:enabled="false"
+                                    android:text="@string/level_study"
+                                    android:textColor="@color/text_black" />
+
+                                <Spinner
+                                    android:layout_width="0dip"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="2"
+                                    android:enabled="false"
+                                    android:textColor="@color/text_color_content" />
+                            </LinearLayout>
+
+                            <View
+                                android:layout_width="match_parent"
+                                android:layout_height="1dp"
+                                android:layout_marginTop="@dimen/margin_5dp"
+                                android:background="@color/grey_line" />
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                android:paddingLeft="@dimen/margin_10dp"
+                                android:paddingRight="@dimen/margin_10dp"
+                                android:paddingTop="@dimen/margin_10dp">
+
+                                <TextView
+                                    android:layout_width="0dip"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:text="@string/balance_"
+                                    android:textColor="@color/text_black" />
+
+                                <TextView
+                                    android:layout_width="0dip"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="2"
+                                    android:text="@{userMainViewModel.tvWalletInfo}"
+                                    android:textColor="@color/text_color_content" />
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                android:paddingLeft="@dimen/margin_10dp"
+                                android:paddingRight="@dimen/margin_10dp"
+                                android:paddingTop="@dimen/margin_10dp">
+
+                                <TextView
+                                    android:layout_width="0dip"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:text="@string/number_practice_"
+                                    android:textColor="@color/text_black" />
+
+                                <TextView
+                                    android:layout_width="0dip"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="2"
+                                    android:text="@{userMainViewModel.tvFreeTimesWorkingInfo}"
+                                    android:textColor="@color/text_color_content" />
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                android:paddingLeft="@dimen/margin_10dp"
+                                android:paddingRight="@dimen/margin_10dp"
+                                android:paddingTop="@dimen/margin_10dp">
+
+                                <TextView
+                                    android:layout_width="0dip"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:text="@string/achievements_"
+                                    android:textColor="@color/text_black" />
+
+                                <TextView
+                                    android:layout_width="0dip"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="2"
+                                    android:text="@{userMainViewModel.tvMarkAccumulationInfo}"
+                                    android:textColor="@color/text_color_content" />
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                android:paddingLeft="@dimen/margin_10dp"
+                                android:paddingRight="@dimen/margin_10dp"
+                                android:paddingTop="@dimen/margin_10dp">
+
+                                <TextView
+                                    android:layout_width="0dip"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:text="@string/rating_"
+                                    android:textColor="@color/text_black" />
+
+                                <TextView
+                                    android:layout_width="0dip"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="2"
+                                    android:text="@string/updating"
+                                    android:textColor="@color/text_color_content" />
+                            </LinearLayout>
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="@dimen/margin_10dp"
+                            android:layout_marginTop="@dimen/margin_10dp"
+                            android:background="@color/white"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:padding="@dimen/margin_10dp"
+                                android:text="@string/user_package"
+                                android:textColor="@color/text_black"
+                                android:textSize="@dimen/text_size_15sp"
+                                android:textStyle="bold" />
+
+                            <View
+                                android:layout_width="match_parent"
+                                android:layout_height="1dp"
+                                android:background="@color/grey_line" />
+
+                            <com.vn.ezlearn.widgets.CRecyclerView
+                                android:id="@+id/rvUserPackage"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content" />
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginEnd="@dimen/margin_10dp"
+                        android:layout_marginStart="@dimen/margin_10dp"
+                        android:gravity="center_horizontal"
+                        android:text="@string/need_complete_profile"
+                        android:textColor="@color/text_gray" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/margin_20dp"
+                        android:layout_marginEnd="@dimen/margin_10dp"
+                        android:layout_marginStart="@dimen/margin_10dp"
+                        android:layout_marginTop="@dimen/margin_16dp">
+
+                        <Button
+                            android:layout_width="0dip"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="@dimen/margin_5dp"
+                            android:layout_weight="1"
+                            android:background="@drawable/bg_button"
+                            android:text="@string/update"
+                            android:textColor="@color/white" />
+
+                        <Button
+                            android:layout_width="0dip"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/margin_5dp"
+                            android:layout_weight="1"
+                            android:background="@drawable/bg_button"
+                            android:text="@string/change_password"
+                            android:textColor="@color/white" />
+                    </LinearLayout>
+                </LinearLayout>
+            </ScrollView>
             <ImageView
                 android:id="@+id/ic_avatar"
                 android:layout_width="@dimen/image_size_90dp"

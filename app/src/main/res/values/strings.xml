@@ -19,6 +19,7 @@
     <string name="message_permission_write">Hãy cung cấp quyền Bộ nhớ để bắt đầu download</string>
     <string name="vnd">VNĐ</string>
     <string name="no_data">Chưa có dữ liệu</string>
+    <string name="null_data">N/A</string>
     <string name="or">Hoặc</string>
     <string name="confirm">Xác nhận</string>
 
