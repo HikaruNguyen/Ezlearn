@@ -11,6 +11,7 @@ import com.vn.ezlearn.R
 import com.vn.ezlearn.models.Content
 import com.vn.ezlearn.models.MyContent
 
+@Suppress("DEPRECATION")
 /**
  * Created by FRAMGIA\nguyen.duc.manh on 15/09/2017.
  */

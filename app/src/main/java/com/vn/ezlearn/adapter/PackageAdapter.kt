@@ -5,6 +5,7 @@ import android.databinding.BindingAdapter
 import android.databinding.DataBindingUtil
 import android.support.v7.app.AlertDialog
 import android.support.v7.widget.RecyclerView
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.ImageView
@@ -27,13 +28,6 @@ import rx.Subscription
 
 class PackageAdapter(context: Context, list: MutableList<Package>) :
         BaseRecyclerAdapter<Package, PackageAdapter.ViewHolder>(context, list) {
-    private lateinit var apiService: EzlearnService
-    private var mSubscription: Subscription? = null
-
-    init {
-        apiService = MyApplication.with(mContext).getEzlearnService()
-    }
-
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val viewDataBinding = holder.viewDataBinding
         viewDataBinding.setVariable(BR.itemPackageViewModel,
@@ -77,11 +71,11 @@ class PackageAdapter(context: Context, list: MutableList<Package>) :
     }
 
     private fun registerPackage(position: Int) {
-
+        Log.d(AppUtils.getTAG(PackageAdapter::class.java), "position: " + position)
     }
 
     private fun cancelPackage(position: Int) {
-
+        Log.d(AppUtils.getTAG(PackageAdapter::class.java), "position: " + position)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {

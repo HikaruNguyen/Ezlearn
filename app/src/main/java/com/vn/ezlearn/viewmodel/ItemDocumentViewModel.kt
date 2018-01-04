@@ -10,6 +10,7 @@ import android.view.View
 import com.vn.ezlearn.R
 import com.vn.ezlearn.models.Document
 
+@Suppress("DEPRECATION")
 /**
  * Created by FRAMGIA\nguyen.duc.manh on 08/11/2017.
  */

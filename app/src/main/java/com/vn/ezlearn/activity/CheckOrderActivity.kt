@@ -1,3 +1,5 @@
+@file:Suppress("DEPRECATION")
+
 package com.vn.ezlearn.activity
 
 import android.app.ProgressDialog
@@ -19,6 +21,7 @@ import rx.Subscription
 import rx.android.schedulers.AndroidSchedulers
 import rx.schedulers.Schedulers
 
+@Suppress("DEPRECATION")
 class CheckOrderActivity : BaseActivity() {
     private lateinit var checkOrderBinding: ActivityCheckOrderBinding
     private lateinit var mTokenCode: String
@@ -126,10 +129,6 @@ class CheckOrderActivity : BaseActivity() {
 
     }
 
-
-    override fun onDestroy() {
-        super.onDestroy()
-    }
 
     companion object {
         val TOKEN_CODE = "token_code"

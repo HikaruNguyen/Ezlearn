@@ -16,7 +16,7 @@ class WrapContentHeightViewPager : ViewPager {
     constructor(context: Context, attrs: AttributeSet) : super(context, attrs) {}
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
-        var mHeightMeasureSpec = heightMeasureSpec
+        val mHeightMeasureSpec: Int
 
         var height = 0
         for (i in 0 until childCount) {

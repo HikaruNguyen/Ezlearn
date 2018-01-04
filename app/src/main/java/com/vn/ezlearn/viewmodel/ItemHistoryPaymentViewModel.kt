@@ -10,6 +10,7 @@ import com.vn.ezlearn.R
 import com.vn.ezlearn.models.HistoryPayment
 import com.vn.ezlearn.utils.AppUtils
 
+@Suppress("DEPRECATION")
 /**
  * Created by FRAMGIA\nguyen.duc.manh on 13/11/2017.
  */

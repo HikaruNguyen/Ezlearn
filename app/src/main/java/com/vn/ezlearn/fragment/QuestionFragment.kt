@@ -23,6 +23,7 @@ import com.vn.ezlearn.models.Content
 import com.vn.ezlearn.models.MyContent
 import com.vn.ezlearn.viewmodel.QuestionViewModel
 
+@Suppress("DEPRECATION")
 /**
  * Created by Windows 10 Version 2 on 9/23/2017.
  */

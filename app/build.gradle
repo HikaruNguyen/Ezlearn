@@ -3,6 +3,14 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
 
 android {
+    signingConfigs {
+        config {
+            keyAlias 'ezlearn'
+            keyPassword 'ezlearn@123'
+            storeFile file("${project.rootDir}/keystore.jks")
+            storePassword 'ezlearn@123'
+        }
+    }
     compileSdkVersion 26
     buildToolsVersion "25.0.3"
     defaultConfig {
@@ -20,20 +28,30 @@ android {
     }
     buildTypes {
         release {
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            buildConfigField "String", "ENDPOINT", "\"http://api.ezlearn.com.vn/\""
+            buildConfigField "String", "ENDPOINT_DOWNLOAD", "\"http://be.ezlearn.com.vn/\""
+            buildConfigField "String", "MERCHANT_ID", "\"51059\""
+            buildConfigField "String", "MERCHANT_PASS", "\"f933062dc1f7bccc23a2915f4fee640a\""
+            debuggable false
+            signingConfig signingConfigs.config
+            applicationVariants.all { variant ->
+                renameAPK(variant, defaultConfig, 'R')
+            }
+        }
+        debug {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-
             buildConfigField "String", "ENDPOINT", "\"http://api.ezlearn.com.vn/\""
             buildConfigField "String", "ENDPOINT_DOWNLOAD", "\"http://be.ezlearn.com.vn/\""
             buildConfigField "String", "MERCHANT_ID", "\"51059\""
             buildConfigField "String", "MERCHANT_PASS", "\"f933062dc1f7bccc23a2915f4fee640a\""
-        }
-
-        debug {
-            buildConfigField "String", "ENDPOINT", "\"http://api.ezlearn.com.vn/\""
-            buildConfigField "String", "ENDPOINT_DOWNLOAD", "\"http://be.ezlearn.com.vn/\""
-            buildConfigField "String", "MERCHANT_ID", "\"51059\""
-            buildConfigField "String", "MERCHANT_PASS", "\"f933062dc1f7bccc23a2915f4fee640a\""
+            debuggable true
+//            signingConfig signingConfigs.config
+//            applicationVariants.all { variant ->
+//                renameAPK(variant, defaultConfig, 'D')
+//            }
         }
     }
     dataBinding {
@@ -44,19 +62,26 @@ android {
 //        targetCompatibility JavaVersion.VERSION_1_8
 //    }
 }
+
+def renameAPK(variant, defaultConfig, buildType) {
+    variant.outputs.each { output ->
+        def formattedDate = new Date().format('yyMMdd')
+
+        def file = output.packageApplication.outputFile
+        def fileName = "Ezlearn" + "_V" + defaultConfig.versionCode + "_" + formattedDate + "_" + buildType + ".apk"
+        output.packageApplication.outputFile = new File(file.parent, fileName)
+    }
+}
+
 def retrofitVersion = '2.1.0'
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile fileTree(include: ['*.jar'], dir: 'libs')
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-
     compile "com.squareup.retrofit2:retrofit:$retrofitVersion"
     compile "com.squareup.retrofit2:converter-gson:$retrofitVersion"
     compile "com.squareup.retrofit2:adapter-rxjava:$retrofitVersion"
-
-
-
     compile "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
     compile 'com.android.support:appcompat-v7:26.+'
     compile 'com.android.support:design:26.+'

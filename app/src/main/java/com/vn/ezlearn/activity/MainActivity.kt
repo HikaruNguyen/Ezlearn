@@ -35,6 +35,7 @@ import rx.Subscription
 import rx.android.schedulers.AndroidSchedulers
 import rx.schedulers.Schedulers
 
+@Suppress("DEPRECATION")
 class MainActivity : AppCompatActivity(), NavigationItemSelected {
     private lateinit var mainBinding: ActivityMainBinding
     private lateinit var mainViewModel: MainViewModel

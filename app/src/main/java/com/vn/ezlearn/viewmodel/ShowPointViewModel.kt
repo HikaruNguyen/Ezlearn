@@ -9,6 +9,7 @@ import android.text.Spanned
 
 import com.vn.ezlearn.R
 
+@Suppress("DEPRECATION")
 /**
  * Created by FRAMGIA\nguyen.duc.manh on 12/10/2017.
  */

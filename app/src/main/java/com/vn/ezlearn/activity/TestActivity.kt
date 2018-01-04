@@ -1,3 +1,5 @@
+@file:Suppress("DEPRECATION")
+
 package com.vn.ezlearn.activity
 
 import android.annotation.SuppressLint
