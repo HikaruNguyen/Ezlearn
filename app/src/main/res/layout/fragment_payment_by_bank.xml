@@ -27,7 +27,6 @@
                 android:lines="1"
                 android:paddingLeft="8dp"
                 android:singleLine="true"
-                android:text="Nguyen Duc Manh"
                 android:textAllCaps="true"
                 android:textColor="@color/text_black" />
 
@@ -46,7 +45,6 @@
                 android:inputType="number"
                 android:lines="1"
                 android:paddingLeft="8dp"
-                android:text="20000"
                 android:singleLine="true"
                 android:textColor="@color/text_black" />
 
@@ -66,7 +64,6 @@
                 android:inputType="textEmailAddress"
                 android:lines="1"
                 android:paddingLeft="8dp"
-                android:text="Manh.it.it.it@gmail.com"
                 android:singleLine="true"
                 android:textColor="@color/text_black" />
 
@@ -86,7 +83,6 @@
                 android:inputType="phone"
                 android:lines="1"
                 android:paddingLeft="8dp"
-                android:text="01648447202"
                 android:singleLine="true"
                 android:textColor="@color/text_black" />
 
@@ -102,7 +98,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
-                android:text="HaNoi"
                 android:lines="1"
                 android:paddingLeft="8dp"
                 android:singleLine="true"

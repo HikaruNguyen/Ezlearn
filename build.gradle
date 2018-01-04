@@ -36,22 +36,22 @@ task convertDimens() {
     def xml480 = xmlOriginal.clone()
 
     xml320.dimen.each { dimen ->
-        def value = dimen.text();
+        def value = dimen.text()
         if (value.contains("sp")) {
             def newValue = value.replace("sp","").toFloat()
-            newValue = round((320/360 * newValue).toFloat(),2);
+            newValue = round((320/360 * newValue).toFloat(),2)
             //println dimen.@name + " --> " + value + " --> " + newValue;
             dimen.value = newValue + "sp"
             //println "New dimen " + dimen.text()
         } else if (value.contains("px")) {
             def newValue = value.replace("px","").toFloat()
-            newValue = round((320/360 * newValue).toFloat(),2);
+            newValue = round((320/360 * newValue).toFloat(),2)
             //println dimen.@name + " --> " + value + " --> " + newValue;
             dimen.value = newValue + "px"
             //println "New dimen " + dimen.text()
         } else {
             def newValue = value.replace("dp","").toFloat()
-            newValue = round((320/360 * newValue).toFloat(),2);
+            newValue = round((320/360 * newValue).toFloat(),2)
             //println dimen.@name + " --> " + value + " --> " + newValue;
             dimen.value = newValue + "dp"
             //println "New dimen " + dimen.text()
@@ -59,22 +59,22 @@ task convertDimens() {
     }
 
     xml480.dimen.each { dimen ->
-        def value = dimen.text();
+        def value = dimen.text()
         if (value.contains("sp")) {
             def newValue = value.replace("sp", "").toFloat()
-            newValue = round((480 / 360 * newValue).toFloat(), 2);
+            newValue = round((480 / 360 * newValue).toFloat(), 2)
             //println dimen.@name + " --> " + value + " --> " + newValue;
             dimen.value = newValue + "sp"
             //println "New dimen " + dimen.text()
         } else if (value.contains("px")) {
             def newValue = value.replace("px","").toFloat()
-            newValue = round((480/360 * newValue).toFloat(),2);
+            newValue = round((480/360 * newValue).toFloat(),2)
             //println dimen.@name + " --> " + value + " --> " + newValue;
             dimen.value = newValue + "px"
             //println "New dimen " + dimen.text()
         } else {
             def newValue = value.replace("dp","").toFloat()
-            newValue = round((480/360 * newValue).toFloat(),2);
+            newValue = round((480/360 * newValue).toFloat(),2)
             //println dimen.@name + " --> " + value + " --> " + newValue;
             dimen.value = newValue + "dp"
             //println "New dimen " + dimen.text()
@@ -87,10 +87,10 @@ task convertDimens() {
     println "Has written 480 file."
 }
 
-public static float round(float d, int decimalPlace) {
-    BigDecimal bd = new BigDecimal(Float.toString(d));
-    bd = bd.setScale(decimalPlace, BigDecimal.ROUND_HALF_UP);
-    return bd.floatValue();
+static float round(float d, int decimalPlace) {
+    BigDecimal bd = new BigDecimal(Float.toString(d))
+    bd = bd.setScale(decimalPlace, BigDecimal.ROUND_HALF_UP)
+    return bd.floatValue()
 }
 
 clean.dependsOn convertDimens
