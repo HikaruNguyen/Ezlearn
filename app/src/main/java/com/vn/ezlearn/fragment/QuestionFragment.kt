@@ -15,6 +15,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.RadioButton
 import android.widget.TextView
+import com.squareup.picasso.Picasso
+import com.vn.ezlearn.BuildConfig
 import com.vn.ezlearn.R
 import com.vn.ezlearn.databinding.FragmentQuestionBinding
 import com.vn.ezlearn.interfaces.OnCheckAnswerListener
@@ -64,7 +66,12 @@ class QuestionFragment : Fragment() {
     }
 
     private fun bindData() {
+
         if (content != null) {
+            if (content!!.content.file_image != null) {
+                Picasso.with(activity).load(BuildConfig.ENDPOINT_DOWNLOAD + content!!.content.file_image).into(fragmentQuestionBinding.imgQuestion)
+            }
+
             when (content?.myAnswer!!) {
                 0 -> {
                     fragmentQuestionBinding.rdAnswerA.isChecked = true

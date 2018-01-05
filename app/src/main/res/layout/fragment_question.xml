@@ -81,11 +81,18 @@
             android:textSize="@dimen/text_size_15sp"
             android:visibility="@{questionViewModel.visiableQuestion}" />
 
+        <com.vn.ezlearn.widgets.ResizableImageViewByWidth
+            android:id="@+id/imgQuestion"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tvQuestion"
+            android:padding="@dimen/margin_10dp" />
+
         <LinearLayout
             android:id="@+id/lnAnswer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/tvQuestion"
+            android:layout_below="@+id/imgQuestion"
             android:orientation="vertical">
 
             <RadioGroup
