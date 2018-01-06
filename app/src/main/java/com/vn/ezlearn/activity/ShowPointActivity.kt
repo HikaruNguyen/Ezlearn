@@ -2,6 +2,7 @@ package com.vn.ezlearn.activity
 
 import android.annotation.SuppressLint
 import android.app.Activity
+import android.app.ProgressDialog
 import android.databinding.DataBindingUtil
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
@@ -14,11 +15,16 @@ import android.widget.RelativeLayout
 import android.widget.ScrollView
 import com.vn.ezlearn.R
 import com.vn.ezlearn.adapter.DialogListQuestionAdapter
+import com.vn.ezlearn.config.EzlearnService
 import com.vn.ezlearn.databinding.ActivityShowPointBinding
+import com.vn.ezlearn.modelresult.BaseResult
 import com.vn.ezlearn.models.MyContent
+import com.vn.ezlearn.network.MyApi
+import com.vn.ezlearn.utils.AppUtils
 import com.vn.ezlearn.utils.CLog
 import com.vn.ezlearn.utils.QuestionUtils
 import com.vn.ezlearn.viewmodel.ShowPointViewModel
+import rx.Subscription
 import java.util.*
 
 class ShowPointActivity : AppCompatActivity() {
@@ -29,19 +35,45 @@ class ShowPointActivity : AppCompatActivity() {
     private var numAnswerNoCorrect: Int = 0
     private var numNoAnswer: Int = 0
 
+    private var id: Int? = null
+    private var timeStart: Long? = null
+    private var timeEnd: Long? = null
+
     private lateinit var myContentList: List<MyContent>
 
     private var widthLinePoint: Int = 0
     private var widthPoint: Int = 0
     private var widthRlPoint = 0
 
+    private lateinit var apiService: EzlearnService
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         showPointBinding = DataBindingUtil.setContentView(this, R.layout.activity_show_point)
         getData()
         setProgressPoint()
         bindListQuestion()
+        postAnswer()
         event()
+    }
+
+    private fun postAnswer() {
+        apiService = MyApplication.with(this@ShowPointActivity).getEzlearnService()
+        val answer = ""
+        val answersWait = ""
+        val myApi = MyApi(apiService.postAnswer(id.toString(),
+                AppUtils.formatLongToTime(timeStart!!),
+                AppUtils.formatLongToTime(timeEnd!!),
+                point, numAnswerCorrect, numAnswerNoCorrect, numNoAnswer, answer, answersWait))
+        myApi.call(object : MyApi.RequestCallBack<BaseResult<String>> {
+            override fun onSuccess(result: BaseResult<String>?) {
+
+            }
+
+            override fun onError(e: Throwable) {
+
+            }
+
+        })
     }
 
     private fun event() {
@@ -66,10 +98,13 @@ class ShowPointActivity : AppCompatActivity() {
 
 
     private fun getData() {
+        val id = intent.getIntExtra(KEY_ID, 0)
         val name = intent.getStringExtra(KEY_NAME)
         val hours = intent.getIntExtra(KEY_HOURS, 0)
         val minutes = intent.getIntExtra(KEY_MINUTES, 0)
         val seconds = intent.getIntExtra(KEY_SECONDS, 0)
+        val timeStart = intent.getLongExtra(KEY_TIME_START, 0)
+        val timeEnd = intent.getLongExtra(KEY_TIME_END, 0)
         myContentList = QuestionUtils.instance.myContentList!!
         for (myContent in myContentList) {
             if (myContent.typeQuestion == MyContent.TYPE_NO_ANSWER) {
@@ -81,7 +116,7 @@ class ShowPointActivity : AppCompatActivity() {
                 }
             }
         }
-        CLog.d(TAG," MyPoint: "+point)
+        CLog.d(TAG, " MyPoint: " + point)
         numAnswerNoCorrect = myContentList.size - numNoAnswer - numAnswerCorrect
         showPointViewModel = ShowPointViewModel(this, point, numAnswerCorrect,
                 numAnswerNoCorrect, numNoAnswer, hours, minutes, seconds, name)
@@ -142,9 +177,12 @@ class ShowPointActivity : AppCompatActivity() {
     companion object {
         private val TAG = ShowPointActivity::class.java.simpleName
         val KEY_REQUEST = 22
+        val KEY_ID = "KEY_ID"
         val KEY_NAME = "KEY_NAME"
         val KEY_HOURS = "KEY_HOURS"
         val KEY_MINUTES = "KEY_MINUTES"
         val KEY_SECONDS = "KEY_SECONDS"
+        val KEY_TIME_START = "KEY_TIME_START"
+        val KEY_TIME_END = "KEY_TIME_END"
     }
 }

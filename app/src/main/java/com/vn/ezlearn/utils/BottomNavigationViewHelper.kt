@@ -26,7 +26,7 @@ object BottomNavigationViewHelper {
 
                 item.setChecked(item.itemData.isChecked)
             }
-        } catch (e: NoSuchFieldException) {
+        } catch (e: Throwable) {
             CLog.e("BNVHelper", "Unable to get shift mode field " + e)
         } catch (e: IllegalAccessException) {
             CLog.e("BNVHelper", "Unable to change value of shift mode" + e)

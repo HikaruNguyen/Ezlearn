@@ -64,6 +64,8 @@ class TestActivity : BaseActivity(), ChangeQuestionListener, OnCheckAnswerListen
     private lateinit var mAnswer: String
     private lateinit var mListAnswer: MutableList<HistoryExam.AnswerHistory>
     private var isReview: Boolean? = false
+    private var timeStart: Long? = null
+    private var timeEnd: Long? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -83,7 +85,6 @@ class TestActivity : BaseActivity(), ChangeQuestionListener, OnCheckAnswerListen
 
     private fun getIntentData() {
         id = intent.getIntExtra(KEY_ID, 0)
-        name = intent.getStringExtra(KEY_NAME)
         name = intent.getStringExtra(KEY_NAME)
         time = intent.getIntExtra(KEY_TIME, -1).toLong()
         if (time >= 0) {
@@ -106,6 +107,7 @@ class TestActivity : BaseActivity(), ChangeQuestionListener, OnCheckAnswerListen
     }
 
     private fun bindData() {
+        timeStart = System.currentTimeMillis()
         adapter = QuestionObjectAdapter(this, ArrayList(), this, this)
         testBinding.rvList.adapter = adapter
         list = ArrayList()
@@ -305,10 +307,13 @@ class TestActivity : BaseActivity(), ChangeQuestionListener, OnCheckAnswerListen
 
         val intent = Intent(this, ShowPointActivity::class.java)
         with(intent) {
+            putExtra(ShowPointActivity.KEY_ID, id)
             putExtra(ShowPointActivity.KEY_NAME, name)
             putExtra(ShowPointActivity.KEY_HOURS, hours)
             putExtra(ShowPointActivity.KEY_MINUTES, minutes)
             putExtra(ShowPointActivity.KEY_SECONDS, seconds)
+            putExtra(ShowPointActivity.KEY_TIME_START, timeStart)
+            putExtra(ShowPointActivity.KEY_TIME_END, System.currentTimeMillis())
         }
 
         startActivityForResult(intent, ShowPointActivity.KEY_REQUEST)

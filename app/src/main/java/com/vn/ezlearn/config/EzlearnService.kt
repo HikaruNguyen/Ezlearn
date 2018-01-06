@@ -119,10 +119,19 @@ interface EzlearnService {
     @FormUrlEncoded
     @POST("https://www.nganluong.vn/mobile_checkout_api_post.php")
     fun checkOderRequest(@Field("func") Func: String,
-                        @Field("version") version: String,
-                        @Field("merchant_id") merchant_id: String,
-                        @Field("token_code") token_code: String,
-                        @Field("checksum") checksum: String): Observable<CheckOrderResult>
+                         @Field("version") version: String,
+                         @Field("merchant_id") merchant_id: String,
+                         @Field("token_code") token_code: String,
+                         @Field("checksum") checksum: String): Observable<CheckOrderResult>
+
+
+    @FormUrlEncoded
+    @POST("index.php?r=subjects/save-test")
+    fun postAnswer(@Field("id") id: String, @Field("time_start") time_start: String,
+                   @Field("time_end") time_end: String, @Field("mark") mark: Float,
+                   @Field("amount_true") amount_true: Int, @Field("amount_false") amount_false: Int,
+                   @Field("amount_miss") amount_miss: Int, @Field("answers") answers: String,
+                   @Field("answers_wait") answers_wait: String): Observable<BaseResult<String>>
 
     object Factory {
 

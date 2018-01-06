@@ -7,6 +7,7 @@ import java.security.NoSuchAlgorithmException
 import java.text.DecimalFormat
 import java.text.ParseException
 import java.text.SimpleDateFormat
+import java.util.*
 
 
 /**
@@ -54,12 +55,17 @@ object AppUtils {
         return ""
     }
 
+    @SuppressLint("SimpleDateFormat")
+    fun formatLongToTime(timeLong: Long): String =
+            SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(Date(timeLong))
+
+
     fun md5(s: String): String {
-        val MD5 = "MD5"
+        val md5 = "MD5"
         try {
             // Create MD5 Hash
             val digest = java.security.MessageDigest
-                    .getInstance(MD5)
+                    .getInstance(md5)
             digest.update(s.toByteArray())
             val messageDigest = digest.digest()
 

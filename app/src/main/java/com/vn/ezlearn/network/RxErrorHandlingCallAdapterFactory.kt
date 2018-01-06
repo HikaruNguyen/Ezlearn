@@ -15,21 +15,14 @@ import java.lang.reflect.Type
  */
 
 class RxErrorHandlingCallAdapterFactory private constructor() : CallAdapter.Factory() {
-    private val original: RxJavaCallAdapterFactory
+    private val original: RxJavaCallAdapterFactory = RxJavaCallAdapterFactory.createWithScheduler(Schedulers.io())
 
-    init {
-        original = RxJavaCallAdapterFactory.createWithScheduler(Schedulers.io())
-    }
-
-    override fun get(returnType: Type, annotations: Array<Annotation>, retrofit: Retrofit): CallAdapter<*> {
-        return RxCallAdapterWrapper(retrofit, original.get(returnType, annotations, retrofit))
-    }
+    override fun get(returnType: Type, annotations: Array<Annotation>, retrofit: Retrofit): CallAdapter<*> =
+            RxCallAdapterWrapper(retrofit, original.get(returnType, annotations, retrofit))
 
     private class RxCallAdapterWrapper internal constructor(private val retrofit: Retrofit, private val wrapped: CallAdapter<*>) : CallAdapter<Observable<*>> {
 
-        override fun responseType(): Type {
-            return wrapped.responseType()
-        }
+        override fun responseType(): Type = wrapped.responseType()
 
         override fun <R> adapt(call: Call<R>): Observable<*> {
             return (wrapped.adapt(call) as Observable<*>)
@@ -56,8 +49,6 @@ class RxErrorHandlingCallAdapterFactory private constructor() : CallAdapter.Fact
 
     companion object {
 
-        fun create(): CallAdapter.Factory {
-            return RxErrorHandlingCallAdapterFactory()
-        }
+        fun create(): CallAdapter.Factory = RxErrorHandlingCallAdapterFactory()
     }
 }
