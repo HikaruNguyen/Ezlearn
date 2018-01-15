@@ -36,7 +36,6 @@ import rx.Subscriber
 import rx.Subscription
 import rx.android.schedulers.AndroidSchedulers
 import rx.schedulers.Schedulers
-import java.util.*
 import java.util.concurrent.TimeUnit
 
 class TestActivity : BaseActivity(), ChangeQuestionListener, OnCheckAnswerListener,
@@ -63,9 +62,12 @@ class TestActivity : BaseActivity(), ChangeQuestionListener, OnCheckAnswerListen
 
     private lateinit var mAnswer: String
     private lateinit var mListAnswer: MutableList<HistoryExam.AnswerHistory>
+    private lateinit var listAnswerPost: MutableList<AnswerPost>
+    private lateinit var listAnswerWait: MutableList<AnswerPost>
     private var isReview: Boolean? = false
     private var timeStart: Long? = null
     private var timeEnd: Long? = null
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -112,6 +114,8 @@ class TestActivity : BaseActivity(), ChangeQuestionListener, OnCheckAnswerListen
         testBinding.rvList.adapter = adapter
         list = ArrayList()
         contentList = ArrayList()
+        listAnswerPost = ArrayList()
+        listAnswerWait = ArrayList()
         callDataApi()
     }
 
@@ -169,7 +173,8 @@ class TestActivity : BaseActivity(), ChangeQuestionListener, OnCheckAnswerListen
                                                                                     question.region!!,
                                                                                     question.type, content,
                                                                                     reading.content,
-                                                                                    point, isReview!!))
+                                                                                    point, isReview!!,
+                                                                                    reading.id.toString()))
                                                                         }
                                                                     }
                                                                 }
@@ -304,6 +309,7 @@ class TestActivity : BaseActivity(), ChangeQuestionListener, OnCheckAnswerListen
         val minutes = seconds % 3600 / 60
         seconds %= 60
         QuestionUtils.instance.myContentList = contentList
+        setListAnswerPost()
 
         val intent = Intent(this, ShowPointActivity::class.java)
         with(intent) {
@@ -314,9 +320,55 @@ class TestActivity : BaseActivity(), ChangeQuestionListener, OnCheckAnswerListen
             putExtra(ShowPointActivity.KEY_SECONDS, seconds)
             putExtra(ShowPointActivity.KEY_TIME_START, timeStart)
             putExtra(ShowPointActivity.KEY_TIME_END, System.currentTimeMillis())
+            putExtra(ShowPointActivity.KEY_JSON_ANSWERS, jsonListAnswer)
+            putExtra(ShowPointActivity.KEY_JSON_ANSWERS_WAIT, jsonListAnswerWait)
         }
 
         startActivityForResult(intent, ShowPointActivity.KEY_REQUEST)
+    }
+
+    private var jsonListAnswer: String? = null
+    private var jsonListAnswerWait: String? = null
+
+    private fun setListAnswerPost() {
+        if (adapter.itemCount > 1) {
+            adapter.getItemByPosition(1).list?.let {
+                for (i in 0 until it.size) {
+                    if (it[i].typeQuestion != MyContent.TYPE_NO_ANSWER) {
+                        val isTrue = if (it[i].isCorrect) {
+                            1
+                        } else {
+                            0
+                        }
+                        if (it[i].content.answer_list == null || it[i].content.answer_list!!.isEmpty()) {
+                            val answerWait = AnswerPost(
+                                    it[i].question_id.toString(),
+                                    it[i].myInput,
+                                    0, 0, it[i].rId)
+                            listAnswerWait.add(answerWait)
+
+//                            val answerPost = AnswerPost(
+//                                    it[i].question_id.toString(),
+//                                    it[i].myAnswerId.toString(),
+//                                    isTrue, 0, it[i].rId)
+//                            listAnswerPost.add(answerPost)
+                        } else {
+                            val answerPost = AnswerPost(
+                                    it[i].question_id.toString(),
+                                    it[i].myAnswerId.toString(),
+                                    isTrue, 1, it[i].rId)
+                            listAnswerPost.add(answerPost)
+                        }
+
+                    }
+                }
+            }
+
+        }
+        val gson = Gson()
+        jsonListAnswer = gson.toJson(listAnswerPost)
+        jsonListAnswerWait = gson.toJson(listAnswerWait)
+
     }
 
     override fun onChange(position: Int?) {
@@ -348,13 +400,14 @@ class TestActivity : BaseActivity(), ChangeQuestionListener, OnCheckAnswerListen
 
     }
 
-    override fun onCheckAnswer(position: Int, answer: Int) {
+    override fun onCheckAnswer(position: Int, answer: Int, answerId: Int?) {
         if (contentList.size > position) {
             val content = contentList[position]
             if (content.content.answer_list != null && content.content.answer_list!!.size > answer) {
                 if (content.typeQuestion != MyContent.TYPE_LATE)
                     content.typeQuestion = MyContent.TYPE_ANSWERED
                 content.isCorrect = content.content.answer_list!![answer].is_true == Answer.TRUE
+                content.myAnswerId = answerId!!
                 contentList[position] = content
             }
 

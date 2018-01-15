@@ -17,7 +17,7 @@ android {
         applicationId "com.vn.ezlearn"
         minSdkVersion 16
         targetSdkVersion 26
-        versionCode 3
+        versionCode 4
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
@@ -103,8 +103,11 @@ dependencies {
     compile 'io.reactivex:rxjava:1.1.9'
     compile 'com.daimajia.numberprogressbar:library:1.4@aar'
     compile 'in.srain.cube:ultra-ptr:1.0.11'
+    compile 'org.greenrobot:eventbus:3.1.1'
+
     testCompile 'junit:junit:4.12'
     kapt 'com.android.databinding:compiler:2.3.2'
+
 }
 repositories {
     mavenCentral()

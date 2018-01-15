@@ -5,7 +5,7 @@ package com.vn.ezlearn.interfaces
  */
 
 interface OnCheckAnswerListener {
-    fun onCheckAnswer(position: Int, answer: Int)
+    fun onCheckAnswer(position: Int, answer: Int, answerId: Int?)
     fun onInputAnswer(position: Int, answer: String)
 
     fun onNeedReview(position: Int)

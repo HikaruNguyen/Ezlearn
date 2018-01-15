@@ -36,7 +36,6 @@ class QuestionFragment : Fragment() {
     private var position: Int = 0
     private var size: Int = 0
     private var content: MyContent? = null
-    private lateinit var mediaPlayer: MediaPlayer
     private var onCheckAnswerListener: OnCheckAnswerListener? = null
     var answer = -1
     var inputAnswer = ""
@@ -145,7 +144,7 @@ class QuestionFragment : Fragment() {
     }
 
     private fun answer(answer: Int) {
-        onCheckAnswerListener!!.onCheckAnswer(position, answer)
+        onCheckAnswerListener!!.onCheckAnswer(position, answer, content!!.content.answer_list!![answer].id)
         this.answer = answer
     }
 

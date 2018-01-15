@@ -16,7 +16,9 @@ class MyContent {
     var point: Float? = null
 
     var myAnswer: Int = -1
+    var myAnswerId: Int = -1
     var myInput: String = ""
+    var rId: String = ""
     var isCorrect: Boolean = false
 
     var isReview: Boolean = false
@@ -31,12 +33,14 @@ class MyContent {
         this.isCorrect = false
         this.typeQuestion = TYPE_NO_ANSWER
         myAnswer = -1
+        myAnswerId = -1
         myInput = ""
+        rId = ""
         this.isReview = isReview
     }
 
     constructor(question_id: Int, region: Region, type: Int?, content: Content, passage: String,
-                point: Float?, isReview: Boolean) {
+                point: Float?, isReview: Boolean, rId: String) {
         this.question_id = question_id
         this.region = region
         this.type = type
@@ -46,7 +50,9 @@ class MyContent {
         this.isCorrect = false
         this.typeQuestion = TYPE_NO_ANSWER
         myAnswer = -1
+        myAnswerId = -1
         myInput = ""
+        this.rId = rId
         this.isReview = isReview
     }
 

@@ -18,6 +18,7 @@ import com.vn.ezlearn.adapter.DialogListQuestionAdapter
 import com.vn.ezlearn.config.EzlearnService
 import com.vn.ezlearn.databinding.ActivityShowPointBinding
 import com.vn.ezlearn.modelresult.BaseResult
+import com.vn.ezlearn.modelresult.CommonResult
 import com.vn.ezlearn.models.MyContent
 import com.vn.ezlearn.network.MyApi
 import com.vn.ezlearn.utils.AppUtils
@@ -38,6 +39,8 @@ class ShowPointActivity : AppCompatActivity() {
     private var id: Int? = null
     private var timeStart: Long? = null
     private var timeEnd: Long? = null
+    private var jsonAnswers: String? = null
+    private var jsonAnswersWait: String? = null
 
     private lateinit var myContentList: List<MyContent>
 
@@ -58,14 +61,22 @@ class ShowPointActivity : AppCompatActivity() {
 
     private fun postAnswer() {
         apiService = MyApplication.with(this@ShowPointActivity).getEzlearnService()
-        val answer = ""
-        val answersWait = ""
+        val answer = if (jsonAnswers == null) {
+            ""
+        } else {
+            jsonAnswers
+        }
+        val answersWait = if (jsonAnswersWait == null) {
+            ""
+        } else {
+            jsonAnswersWait
+        }
         val myApi = MyApi(apiService.postAnswer(id.toString(),
                 AppUtils.formatLongToTime(timeStart!!),
                 AppUtils.formatLongToTime(timeEnd!!),
-                point, numAnswerCorrect, numAnswerNoCorrect, numNoAnswer, answer, answersWait))
-        myApi.call(object : MyApi.RequestCallBack<BaseResult<String>> {
-            override fun onSuccess(result: BaseResult<String>?) {
+                point, numAnswerCorrect, numAnswerNoCorrect, numNoAnswer, answer!!, answersWait!!))
+        myApi.call(object : MyApi.RequestCallBack<CommonResult> {
+            override fun onSuccess(result: CommonResult?) {
 
             }
 
@@ -98,13 +109,15 @@ class ShowPointActivity : AppCompatActivity() {
 
 
     private fun getData() {
-        val id = intent.getIntExtra(KEY_ID, 0)
+        id = intent.getIntExtra(KEY_ID, 0)
         val name = intent.getStringExtra(KEY_NAME)
         val hours = intent.getIntExtra(KEY_HOURS, 0)
         val minutes = intent.getIntExtra(KEY_MINUTES, 0)
         val seconds = intent.getIntExtra(KEY_SECONDS, 0)
-        val timeStart = intent.getLongExtra(KEY_TIME_START, 0)
-        val timeEnd = intent.getLongExtra(KEY_TIME_END, 0)
+        timeStart = intent.getLongExtra(KEY_TIME_START, 0)
+        timeEnd = intent.getLongExtra(KEY_TIME_END, 0)
+        jsonAnswers = intent.getStringExtra(KEY_JSON_ANSWERS)
+        jsonAnswersWait = intent.getStringExtra(KEY_JSON_ANSWERS_WAIT)
         myContentList = QuestionUtils.instance.myContentList!!
         for (myContent in myContentList) {
             if (myContent.typeQuestion == MyContent.TYPE_NO_ANSWER) {
@@ -184,5 +197,7 @@ class ShowPointActivity : AppCompatActivity() {
         val KEY_SECONDS = "KEY_SECONDS"
         val KEY_TIME_START = "KEY_TIME_START"
         val KEY_TIME_END = "KEY_TIME_END"
+        val KEY_JSON_ANSWERS = "JSON_ANSWERS"
+        val KEY_JSON_ANSWERS_WAIT = "JSON_ANSWERS_WAIT"
     }
 }
